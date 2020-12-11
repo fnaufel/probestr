@@ -28,8 +28,32 @@ function alterar_detalhes() {
       rv = rv.replace(' R package.', '.');
       return rv;
     }
-  )
+  );
   
+  // Book source
+  $("#book-repo").html(
+    function(){
+      rv = this.innerHTML.replace('View book source', 'Ver código fonte do livro');
+      return rv;
+    }
+  );
+  
+  // Page source
+  $("#book-source").html(
+    function(){
+      rv = this.innerHTML.replace('View source', 'Ver código fonte');
+      return rv;
+    }
+  )
+
+  // Edit this page
+  $("#book-edit").html(
+    function(){
+      rv = this.innerHTML.replace('Edit this page', 'Editar esta página');
+      return rv;
+    }
+  )
+
 }
 
 // Execute when document is ready

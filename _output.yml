@@ -1,8 +1,9 @@
 bookdown::bs4_book:
   includes:
-    in_header: preamble.html
+    in_header: [preamble.html]
   theme:
     primary: "#637238"
+  repo: https://github.com/fnaufel/probestr
 
 # bookdown::gitbook:
 #   css: style.css
