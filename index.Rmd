@@ -1,0 +1,22 @@
+--- 
+knit: "bookdown::render_book"
+title: "Probabilidade e Estatística com R"
+author: "fnaufel"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+lang: 'pt'
+description: "."
+url: 'https\://fnaufel.github.io'
+github-repo: hadley/r4ds
+cover-image: cover.png
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: []
+biblio-style: apalike
+link-citations: yes
+---
+
+# Prefácio {-}
+
+Um exemplo de nota de rodapé[^1].
+
+[^1]: Conteúdo da nota de rodapé.

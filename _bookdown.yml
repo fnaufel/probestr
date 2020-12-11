@@ -1,0 +1,30 @@
+book_filename: "probestr"
+delete_merged_file: true
+new_session: yes
+
+before_chapter_script: "_common.R"
+
+language:
+  label:
+    fig: 'Figura '
+    tab: 'Tabela '
+    eq: 'Equação '
+    thm: 'Teorema '
+    lem: 'Lema '
+    cor: 'Corolário '
+    prp: 'Proposição '
+    cnj: 'Conjectura '
+    def: 'Definição '
+    exm: 'Exemplo '
+    exr: 'Exercício '
+    proof: 'Prova. '
+    remark: 'Observação. '
+    solution: 'Solução. '
+  ui:
+    edit: Editar
+    chapter_name: 'Capítulo '
+    appendix_name: 'Apêndice '
+
+rmd_files: [
+  "index.Rmd"
+]
