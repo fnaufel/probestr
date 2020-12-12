@@ -70,11 +70,15 @@
   border-bottom: 3px solid;
   margin-top: 1em;
   margin-bottom: 1em;
+  padding-bottom: 0;
 }
 
 h1 > .header-section-number {
+  display: inline-block;
   box-sizing: border-box;
-  border-bottom: 6px solid;
+  border-bottom: 8px solid;
+  margin-bottom: -2px;
+  padding-bottom: 0;
 }
 
 .level2 > h2 {
@@ -83,11 +87,15 @@ h1 > .header-section-number {
   border-bottom: 2px solid;
   margin-top: .8em;
   margin-bottom: .8em;
+  padding-bottom: 0;
 }
 
 h2 > .header-section-number {
+  display: inline-block;
   box-sizing: border-box;
-  border-bottom: 4px solid;
+  border-bottom: 6px solid;
+  margin-bottom: -2px;
+  padding-bottom: 0;
 }
 
 .level3 > h3 {
