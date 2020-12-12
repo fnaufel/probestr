@@ -1,0 +1,113 @@
+--- 
+knit: "bookdown::render_book"
+title: "Probabilidade e Estatística com R"
+author: "fnaufel"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+lang: 'pt'
+description: "Livro interativo de Probabilidade e Estatística com R."
+url: 'https\://fnaufel.github.io'
+github-repo: fnaufel/probestr
+cover-image: cover.png
+site: bookdown::bookdown_site
+bibliography: []
+biblio-style: apalike
+link-citations: yes
+---
+
+# Testes
+
+## Nota de rodapé
+
+* Um exemplo de nota de rodapé[^1].
+
+[^1]: Conteúdo da nota de rodapé.
+
+
+## Destaque
+
+* E um [destaque em amarelo]{.hl}.
+
+
+## Código e gráficos
+
+### Código
+
+* E código:
+
+    ```{r cars}
+    summary(cars)
+    ```
+
+### Gráfico como figura
+
+* E uma figura:
+
+    ```{r pressure, echo=FALSE, fig.cap='Legenda!'}
+    plot(pressure)
+    ```
+
+### Gráfico sem ser figura
+
+* E um gráfico sem ser figura:
+
+```{r echo=FALSE}
+    plot(pressure)
+    ```
+    
+## Imagens
+
+* E uma imagem:
+
+  * Com `include_graphics` e sombra:
+  
+    ```{r, echo=FALSE, out.extra='class="shadow"'}
+    include_graphics('./images/paranormal.png')
+    ```
+  
+  * Com markdown:
+  
+    ![](images/paranormal.png){.center}
+
+  * Melhor usar `include_graphics`.
+  
+  
+## Caixas
+
+* Caixas:
+
+  ::: {.rmdbox}
+  
+  Pura.
+  
+  :::
+
+  ::: {.rmdimportant}
+  
+  Importante.
+  
+  :::
+
+  ::: {.rmdcaution}
+  
+  Caution.
+    
+  :::    
+
+  ::: {.rmdwarning}
+  
+  Aviso.
+    
+  :::
+    
+  ::: {.rmdnote}
+  
+  Nota.
+  
+  :::
+
+  ::: {.rmdtip}
+  
+  Tip.
+  
+  :::
+

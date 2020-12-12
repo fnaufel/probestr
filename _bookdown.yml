@@ -26,5 +26,6 @@ language:
     appendix_name: 'Apêndice '
 
 rmd_files: [
-  "index.Rmd"
+  "index.Rmd",
+  "testes.Rmd"
 ]

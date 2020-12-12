@@ -1,6 +1,8 @@
 set.seed(1014)
 
-knitr::opts_chunk$set(
+library(knitr)
+
+opts_chunk$set(
   collapse = TRUE,
   cache = TRUE,
   out.width = "70%",
@@ -14,6 +16,12 @@ options(dplyr.print_min = 6, dplyr.print_max = 6)
 
 # Supress crayon output
 options(crayon.enabled = FALSE)
+
+# Avoid scientific notation and use a comma as decimal separator
+options(
+  scipen = 15,
+  OutDec = ','
+)
 
 # For nice dataframe summaries
 library(summarytools)
@@ -43,12 +51,6 @@ theme_set(
       panel.border = element_blank(),        # No frame
       panel.grid.minor = element_blank()     # No grid minor lines
     )
-)
-
-# Avoid scientific notation and use a comma as decimal separator
-options(
-  scipen = 15,
-  OutDec = ','
 )
 
 # Format a number with thousand separators (default point)

@@ -1,0 +1,207 @@
+
+/* I don't like the frame around images */
+.inline-figure {
+  border: none;
+}
+
+/* Main title */
+h1.title {
+  font-weight: 700;
+}
+
+/* Blocks with shadow borders */
+.shadow {
+  -moz-box-shadow:    3px 3px 3px 5px #bbb;
+  -webkit-box-shadow: 3px 3px 3px 5px #bbb;
+  box-shadow:         3px 3px 3px 5px #bbb;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+/* Several kinds of boxes */
+
+.rmdbox {
+  margin: 1rem calc(-2px - 0.5em);
+  padding: 1rem;
+  border: 2px solid #ccc;
+  background: #f8f8f8 5px center/3em no-repeat; 
+}
+
+.rmdbox > *:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767.98px) {
+  .rmdbox {
+    margin: 1rem -1rem;
+    border-width: 4px;
+  }
+}
+
+.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
+  padding: 1em 1em 1em 4em;
+  background: #f8f8f8 5px center/3em no-repeat; 
+}
+
+.rmdcaution {
+  background-image: url("images/caution.png");
+}
+
+.rmdimportant {
+  background-image: url("images/important.png");
+}
+
+.rmdnote {
+  background-image: url("images/note.png");
+}
+
+.rmdtip {
+  background-image: url("images/tip.png");
+}
+
+.rmdwarning {
+  background-image: url("images/warning.png");
+}
+
+/* Section headers */
+
+.header-section-number {
+  padding-right: .2em;
+}
+
+.level1 > h1 {
+  font-weight: normal;
+  border-bottom: 2px solid;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+h1 > .header-section-number {
+  display: inline-block;
+  border-bottom: 4px solid;
+}
+
+.level2 > h2 {
+  font-weight: normal;
+  border-bottom: 1px solid;
+  margin-top: .8em;
+  margin-bottom: .8em;
+}
+
+h2 > .header-section-number {
+  display: inline-block;
+  border-bottom: 2px solid;
+}
+
+.level3 > h3 {
+  font-weight: 500;
+  font-style: italic;
+  border-bottom: 0;
+}
+
+h3 > .header-section-number {
+  display: inline-block;
+  font-style: italic;
+  font-weight: 500;
+  border-bottom: 0;
+}
+
+.level4 h4, .level5 h5, .level6 h6 {
+  font-weight: normal;
+  font-style: normal;
+  border-bottom: 0;
+}
+
+.level4 .header-section-number{
+  display: inline-block;
+  font-style: normal;
+  border-bottom: 0;
+}
+
+
+/* Misc */
+
+/*
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+
+p code {
+  white-space: inherit;
+}
+
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+
+pre code {
+  white-space: inherit;
+}
+
+blockquote > p:last-child {
+  text-align: right;
+}
+
+blockquote > p:first-child {
+  text-align: inherit;
+}
+
+.book .book-body .page-wrapper .page-inner section.normal strong {
+  font-weight: 600;
+}
+*/
+
+/* Utilities */
+
+.flushright {
+  text-align: right;
+}
+
+.smallcaps {
+  font-variant: small-caps;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.half-width{
+  width: 50%;
+}
+
+.one-third-width{
+  width: 33%;
+}
+
+.two-thirds-width{
+  width: 67%;
+}
+
+.float-right{
+  float: right;
+}
+
+.float-left{
+  float: left;
+}
+
+.center{
+  display: block;
+  margin: auto;
+}
+
+.vspace{
+  height: 2em;
+}
+
+/* highlight */
+.hl{
+  background-color: yellow;
+}
+
+.framed {
+  border: solid 2px #f1f1f1;
+}
+

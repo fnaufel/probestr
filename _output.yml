@@ -4,6 +4,7 @@ bookdown::bs4_book:
   theme:
     primary: "#637238"
   repo: https://github.com/fnaufel/probestr
+  css: styles.css
 
 # bookdown::gitbook:
 #   css: style.css
