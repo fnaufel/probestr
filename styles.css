@@ -4,11 +4,6 @@
   border: none;
 }
 
-/* Main title */
-h1.title {
-  font-weight: 700;
-}
-
 /* Blocks with shadow borders */
 .shadow {
   -moz-box-shadow:    3px 3px 3px 5px #bbb;
@@ -70,27 +65,29 @@ h1.title {
 }
 
 .level1 > h1 {
+  box-sizing: border-box;
   font-weight: normal;
-  border-bottom: 2px solid;
+  border-bottom: 3px solid;
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
 h1 > .header-section-number {
-  display: inline-block;
-  border-bottom: 4px solid;
+  box-sizing: border-box;
+  border-bottom: 6px solid;
 }
 
 .level2 > h2 {
+  box-sizing: border-box;
   font-weight: normal;
-  border-bottom: 1px solid;
+  border-bottom: 2px solid;
   margin-top: .8em;
   margin-bottom: .8em;
 }
 
 h2 > .header-section-number {
-  display: inline-block;
-  border-bottom: 2px solid;
+  box-sizing: border-box;
+  border-bottom: 4px solid;
 }
 
 .level3 > h3 {
@@ -100,7 +97,6 @@ h2 > .header-section-number {
 }
 
 h3 > .header-section-number {
-  display: inline-block;
   font-style: italic;
   font-weight: 500;
   border-bottom: 0;
@@ -113,7 +109,6 @@ h3 > .header-section-number {
 }
 
 .level4 .header-section-number{
-  display: inline-block;
   font-style: normal;
   border-bottom: 0;
 }
