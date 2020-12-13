@@ -1,0 +1,26 @@
+
+* [0/4] LaTeX
+
+*** TODO Write preamble
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-13 Sun 15:13]
+    :END:
+
+*** TODO Use fancy header
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-13 Sun 15:13]
+    :END:
+
+*** TODO Write environments for boxes
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-13 Sun 15:13]
+    :END:
+
+*** TODO Use package for frames
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-13 Sun 15:20]
+    :END:
+
+* [0/0] HTML
+
+*** 

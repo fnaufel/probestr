@@ -58,14 +58,14 @@ link-citations: yes
 
 * E uma imagem:
 
-  * Com `include_graphics` e sombra:
-  
-    ```{r, echo=FALSE, out.extra='class="shadow"'}
+  * Com `include_graphics`:
+
+    ```{r, echo=FALSE}
     include_graphics('./images/paranormal.png')
     ```
-  
+
   * Com markdown:
-  
+
     ![](images/paranormal.png){.center}
 
   * Melhor usar `include_graphics`.

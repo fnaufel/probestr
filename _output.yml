@@ -1,26 +1,14 @@
 bookdown::bs4_book:
   includes:
-    in_header: [preamble.html]
+    in_header: [html/preamble.html]
   theme:
     primary: "#637238"
   repo: https://github.com/fnaufel/probestr
   css: styles.css
 
-# bookdown::gitbook:
-#   css: style.css
-#   config:
-#     toc:
-#       collapse: section
-#       before: |
-#         <li><a href="./">Probabilidade e Estatística com R</a></li>
-#       after: |
-#         <li><a href="https://github.com/rstudio/bookdown" target="blank">Publicado com bookdown</a></li>
-#     download: ["pdf"]
-# 
 # bookdown::pdf_book:
-#   includes:
-#     in_header: preamble.tex
+#   # includes:
+#   #   in_header: "tex/preamble.tex"
 #   latex_engine: xelatex
 #   citation_package: natbib
 #   keep_tex: yes
-# 

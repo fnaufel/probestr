@@ -3,12 +3,15 @@ knit: "bookdown::render_book"
 title: "Probabilidade e Estatística com R"
 author: "fnaufel"
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
-lang: 'pt'
+lang: 'pt-br'
+
 description: "Livro interativo de Probabilidade e Estatística com R."
 url: 'https\://fnaufel.github.io'
 github-repo: fnaufel/probestr
-cover-image: cover.png
+cover-image: images/cover.png
 site: bookdown::bookdown_site
+
+documentclass: "book"
 bibliography: []
 biblio-style: apalike
 link-citations: yes
