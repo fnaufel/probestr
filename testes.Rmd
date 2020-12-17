@@ -75,39 +75,83 @@ link-citations: yes
 
 * Caixas:
 
-  ::: {.rmdbox}
+  ```{block, type='rmdbox'}
   
-  Pura.
+  ### Pura {-}
   
-  :::
+  Posso usar *markdown* aqui, embora limitadamente.
 
-  ::: {.rmdimportant}
+  Putz, fica tudo em uma linha só.
   
-  Importante.
-  
-  :::
+  Ou não?
 
-  ::: {.rmdcaution}
+  ```  
+
+  ```{block, type='rmdimportant'}
   
-  Caution.
+  ### Importante {-}
+  
+  Posso usar *markdown* aqui, embora limitadamente.
+
+  Putz, fica tudo em uma linha só.
+  
+  Ou não?
+
+  ```
+  
+  ```{block, type='rmdcaution'}
+
+  ### Caution {-}
     
-  :::    
+  Posso usar *markdown* aqui, embora limitadamente.
 
-  ::: {.rmdwarning}
+  Putz, fica tudo em uma linha só.
   
-  Aviso.
+  Ou não?
+
+  ```
+
+  ```{block, type='rmdwarning'}
+  
+  ### Aviso {-}
+
+  Posso usar *markdown* aqui, embora limitadamente.
+
+  Putz, fica tudo em uma linha só.
+  
+  Ou não?
     
-  :::
+  ```
     
-  ::: {.rmdnote}
+  ```{block, type='rmdnote'}
   
-  Nota.
+  ### Nota {-}
   
-  :::
+  Posso usar *markdown* aqui, embora limitadamente.
 
-  ::: {.rmdtip}
+  Putz, fica tudo em uma linha só.
   
-  Tip.
-  
-  :::
+  Ou não?
 
+  ```
+
+  ```{block, type='rmdtip'}
+  
+  ### Tip {-}
+  
+  Posso usar *markdown* aqui, embora limitadamente.
+
+  Putz, fica tudo em uma linha só.
+  
+  Ou não?
+
+  ```
+
+
+## Links
+
+* Um link puro: https://fnaufel.github.io
+
+* Um link com texto: [meu site](https://fnaufel.github.io)
+
+* Um link com texto igual ao link: [https://fnaufel.github.io](https://fnaufel.github.io)

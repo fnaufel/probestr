@@ -17,7 +17,7 @@
 
 .rmdbox {
   margin: 1rem calc(-2px - 0.5em);
-  padding: 1rem;
+  padding: 1em 1em 1em 1em;
   border: 2px solid #ccc;
   background: #f8f8f8 5px center/3em no-repeat; 
 }
@@ -27,15 +27,15 @@
 }
 
 @media (max-width: 767.98px) {
-  .rmdbox {
+  .rmdbox, .rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
     margin: 1rem -1rem;
     border-width: 4px;
   }
 }
 
 .rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
-  padding: 1em 1em 1em 4em;
-  background: #f8f8f8 5px center/3em no-repeat; 
+  padding: 1em 1em 1em 6em;
+  background: #f8f8f8 25px center/3em no-repeat; 
 }
 
 .rmdcaution {
@@ -110,15 +110,31 @@ h3 > .header-section-number {
   border-bottom: 0;
 }
 
-.level4 h4, .level5 h5, .level6 h6 {
+.level4 > h4, .level5 > h5, .level6 > h6 {
   font-weight: normal;
   font-style: normal;
   border-bottom: 0;
 }
 
-.level4 .header-section-number{
+.level4 > .header-section-number{
   font-style: normal;
   border-bottom: 0;
+}
+
+.rmdbox > h3,
+.rmdcaution > h3,
+.rmdimportant > h3, 
+.rmdwarning > h3,
+.rmdtip > h3,
+.rmdnote > h3,
+.rmdbox > h4,
+.rmdcaution > h4,
+.rmdimportant > h4, 
+.rmdwarning > h4,
+.rmdtip > h4,
+.rmdnote > h4 
+{
+  margin-top: 0;
 }
 
 

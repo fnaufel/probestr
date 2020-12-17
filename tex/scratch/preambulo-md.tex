@@ -1,0 +1,329 @@
+\documentclass[12pt]{report}
+
+% Encoding utf-8:
+\usepackage[utf8]{inputenc} 
+
+% Para separar sílabas e gerar texto em português do Brasil:
+\usepackage[brazil]{babel}
+
+% Para bibliografia em português
+\usepackage{babelbib}
+
+% Para usar fontes melhores:
+\usepackage[T1]{fontenc}
+
+% Para usar comandos matemáticos da AMS:
+\usepackage{amssymb,amsmath,amsthm}
+
+% Para poder usar comandos condicionais:
+\usepackage{ifthen}
+
+% Para gerar símbolos de conjuntos de números (\Nat, etc.):
+\usepackage{bbm}
+
+% \dotdiv
+\usepackage{mathabx}
+
+% Variable-size \Set and \mid
+\usepackage{braket}
+
+% Para incluir imagens:
+\usepackage{graphicx}
+
+% Para gerar listas com recursos adicionais:
+\usepackage{paralist}
+
+% Para formatar exercícios e soluções:
+\usepackage{answers}
+
+% Para títulos de capítulos e seções:
+\usepackage{titlesec}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Para a página de título:
+%
+%%%%%%%%%%%%%%% início do código comum da página de título %%%%%%%%%%%%%%%%
+\usepackage{lmodern}
+\usepackage{url}
+\usepackage[svgnames]{xcolor}
+%\ifpdf
+\usepackage{pdfcolmk}
+%\fi
+%% check if using xelatex rather than pdflatex
+%\ifxetex
+%\usepackage{fontspec}
+%\fi
+\usepackage{graphicx}
+%%\usepackage{hyperref}
+%% drawing package
+\usepackage{tikz}
+%% for dingbats
+\usepackage{pifont}
+
+\providecommand{\HUGE}{\Huge}% if not using memoir
+\newlength{\drop}% for my convenience
+%% specify the Webomints family
+\newcommand*{\wb}[2]{\fontsize{#1}{#2}\usefont{U}{webo}{xl}{n}}
+%% select a (FontSite) font by its font family ID
+\newcommand*{\FSfont}[1]{\fontencoding{T1}\fontfamily{#1}\selectfont}
+%% if you don’t have the FontSite fonts either \renewcommand*{\FSfont}[1]{}
+%% or use your own choice of family.
+%% select a (TeX Font) font by its font family ID
+\newcommand*{\TXfont}[1]{\fontencoding{T1}\fontfamily{#1}\selectfont}
+%% Generic publisher’s logo
+\newcommand*{\plogo}{\fbox{$\mathcal{PL}$}}
+
+%% Some shades
+\definecolor{Dark}{gray}{0.2}
+\definecolor{MedDark}{gray}{0.4}
+\definecolor{Medium}{gray}{0.6}
+\definecolor{Light}{gray}{0.8}
+%%%% Additional font series macros
+\makeatletter
+%%%% light series
+%% e.g., kernel doc, section s: line 12 or thereabouts
+\DeclareRobustCommand\ltseries
+{\not@math@alphabet\ltseries\relax
+\fontseries\ltdefault\selectfont}
+%% e.g., kernel doc, section t: line 32 or thereabouts
+\newcommand{\ltdefault}{l}
+%% e.g., kernel doc, section v: line 19 or thereabouts
+\DeclareTextFontCommand{\textlt}{\ltseries}
+% heavy(bold) series
+\DeclareRobustCommand\hbseries
+{\not@math@alphabet\hbseries\relax
+\fontseries\hbdefault\selectfont}
+\newcommand{\hbdefault}{hb}
+\DeclareTextFontCommand{\texthb}{\hbseries}
+\makeatother
+
+%%%%%%%%%%%%%%% fim do código comum da página de título %%%%%%%%%%%%%%%%
+
+% titleBC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\newcommand*{\rotrt}[1]{\rotatebox{90}{#1}}
+\newcommand*{\rotlft}[1]{\rotatebox{-90}{#1}}
+\newcommand*{\topb}{%
+\resizebox*{1.5\unitlength}{\baselineskip}{\rotrt{$\}$}}}
+\newcommand*{\botb}{%
+\resizebox*{1.5\unitlength}{\baselineskip}{\rotlft{$\}$}}}
+\newcommand*{\titleBC}{\begingroup
+\FSfont{5jr}% Fontsite Jenson Recut (Centaur)
+\begin{center}
+\def\CP{\textit{\HUGE Lógica Matemática}}
+\settowidth{\unitlength}{\CP}
+{\color{LightGoldenrod}\topb} \\[\baselineskip]
+\textcolor{Sienna}{\CP} \\[\baselineskip]
+{\color{RosyBrown}\LARGE \&} \\[\baselineskip]
+{\color{RosyBrown}\LARGE Técnicas de Demonstração} \\
+{\color{LightGoldenrod}\botb}
+\end{center}
+\vfill
+\begin{center}
+{\LARGE\textbf{Fernando Náufel do Amaral}}\\
+\vfill
+Departamento de Ciências da Natureza\\
+Pólo Universitário de Rio das Ostras\\
+Universidade Federal Fluminense\\[0.5\baselineskip]
+2018
+\end{center}
+\endgroup}
+
+% titleGM
+% titleCC
+% titleGP
+% titleBWF
+% titleS
+% titleTMB
+
+
+% Para caixas:
+\usepackage[breakable]{tcolorbox}
+
+% Para hiperlinks:
+\usepackage[colorlinks]{hyperref}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Definições de novos comandos e ambientes:
+%
+
+% Símbolo do conjunto dos números naturais:
+\newcommand{\Nat}{\ensuremath{\mathbbm{N}}}
+\newcommand{\Int}{\ensuremath{\mathbbm{Z}}}
+\newcommand{\Rac}{\ensuremath{\mathbbm{Q}}}
+\newcommand{\Reais}{\ensuremath{\mathbbm{R}}}
+
+% Símbolo de predicado (fonte sem serifa):
+\newcommand{\pred}[1]{\textsf{#1}}
+
+% Constantes (fonte sem serifa):
+\newcommand{\const}[1]{\textsf{#1}}
+
+% Várias constantes. Crie mais, se necessário.
+% Use em modo matemático.
+\newcommand{\ca}{\const{a}}
+\newcommand{\cb}{\const{b}}
+\newcommand{\cc}{\const{c}}
+\newcommand{\cd}{\const{d}}
+\newcommand{\ce}{\const{e}}
+
+% Símbolos de função (fonte sem serifa, negrito):
+\newcommand{\func}[1]{\textsf{\textbf{#1}}}
+
+% Várias funções
+\newcommand{\sen}{\func{sen}}
+\newcommand{\arcsen}{\func{arcsen}}
+
+
+%%%%%%%%%%%%%%%%%
+
+% Exemplos numerados por seção:
+\newtheoremstyle{exemplostyle}%
+{4ex}% space above
+{4ex}% space below
+{}% body font
+{}% indent
+{\bfseries}% head font
+{}% punctuation after head
+{\newline}% space after head
+{%
+  \tcbox[colback=black!10!white,colframe=white,boxrule=.5pt]{%
+    \thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}%
+  }%
+}% head spec
+
+\theoremstyle{exemplostyle}
+\newtheorem{exemplo}{Exemplo}[section]
+
+%%%%%%%%%%%%%%%%%%
+
+% Solução de exemplo, sem numeração:
+\newtheoremstyle{solucaostyle}%
+{}% space above
+{}% space below
+{}% body font
+{}% indent
+{\bfseries}% head font
+{\newline}% punctuation after head
+{\newline}% space after head
+{Solução:}% head spec
+
+\theoremstyle{solucaostyle}
+\newtheorem*{solucaoexemplo}{Solução}
+
+%%%%%%%%%%%%%%%%%
+
+% Soluções de exercícios
+\Newassociation{sol}{Solution}{solucoes}
+
+% Não é possível usar listas dentro do ambiente sol quando uso o
+% ambiente list! O primeiro item fica sem label, e o label do primeiro
+% item é impresso em cima do label do segundo item.
+%
+% FIXED: Redefini Solution para não usar ambiente list!
+
+% Bugged:
+% \renewenvironment{Solution}[1]
+% {%
+%   \begin{list}
+%     {}
+%     {%
+%       \setlength{\leftmargin}{3em}%
+%       \item[\textbf{#1)}\quad]%
+%     }%
+% }%
+% {
+%   \end{list}
+%   \vskip 4ex
+% }
+
+\renewenvironment{Solution}[1]
+{%
+  \begin{description}
+  \item[\textbf{#1)}]\mbox{}
+    \vspace*{-2\parsep}
+    \vspace*{-2\parskip}
+}%
+{
+  \end{description}
+}
+
+\newenvironment{exercicios}[1]
+{%
+  \Writetofile{solucoes}{%
+    \protect\section*{#1}%
+%    \protect\addtocontents{toc}{#1}%
+    \vspace{2ex}
+  }
+
+  \vspace{2ex}
+  \begin{enumerate}[\bfseries 1.]
+}
+{%
+  \end{enumerate}
+  \Writetofile{solucoes}{%
+    \protect\newpage
+  }
+}
+
+%%%%%%%%%%%%%%%%%
+
+% Destaque
+
+\newcommand{\destaque}[2][]{%
+
+  \vskip 2ex
+  \begin{tcolorbox}[colback=black!5!white,colframe=black!70!white,boxrule=.5pt,#1]
+    #2
+  \end{tcolorbox}
+  \vskip 2ex
+
+}
+
+% Implementação antiga, sem tcolorbox
+%
+% \newcommand{\destaque}[1]{%
+%   \begin{center}
+%     \fbox{%
+%       \fbox{%
+%           \parbox{.9\linewidth}{%
+%             \begin{center}
+%               #1
+%             \end{center}
+%           }%
+%       }%
+%     }
+%   \end{center}
+% }
+
+
+%%%%%%%%%%%%%%%
+%
+% Titulos de capítulos e seções
+
+\titleformat{\chapter}[display]
+  {\bfseries\Large}
+  {\filleft\MakeUppercase{\chaptertitlename} \Huge\thechapter}
+  {4ex}
+  {\titlerule
+    \vspace{2ex}%
+    \filright}
+  [\vspace{2ex}%
+  \titlerule
+  \vspace{10ex}]
+
+\titleformat{\section}[block]
+  {\bfseries\Large}
+  {\thesection}{.5em}{\titlerule\\[.8ex]\bfseries}
+
+\titleformat{\subsection}[block]
+  {\bfseries}
+  {\thesubsection}{.5em}{\titlerule\\[.8ex]\bfseries}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

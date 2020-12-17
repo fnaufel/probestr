@@ -1,14 +1,21 @@
 bookdown::bs4_book:
+  description: "Livro interativo de Probabilidade e Estatística com R."
+  url: 'https\://fnaufel.github.io'
+  github-repo: fnaufel/probestr
+  site: bookdown::bookdown_site
   includes:
-    in_header: [html/preamble.html]
+    in_header: ['preamble.html']
   theme:
     primary: "#637238"
   repo: https://github.com/fnaufel/probestr
   css: styles.css
 
 # bookdown::pdf_book:
-#   # includes:
-#   #   in_header: "tex/preamble.tex"
+#   includes:
+#     in_header: "tex/00-preambulo.tex"
 #   latex_engine: xelatex
 #   citation_package: natbib
 #   keep_tex: yes
+#   pandoc_args: [
+#     -V, links-as-notes
+#   ]

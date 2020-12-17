@@ -1,26 +1,73 @@
 
-* [0/4] LaTeX
+* https://bookdown.org/yihui/bookdown/
 
-*** TODO Write preamble
+* https://bookdown.org/yihui/rmarkdown/
+
+* [4/8] LaTeX
+
+*** DONE See my logic book
+    CLOSED: [2020-12-15 Tue 17:11]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-15 Tue 17:11]
+    - State "TODO"       from              [2020-12-15 Tue 16:17]
+    :END:
+
+*** DONE Use fancy header: titlesec
+    CLOSED: [2020-12-15 Tue 17:15]
+    :LOGBOOK:
+    - State "DONE"       from "STARTED"    [2020-12-15 Tue 17:15]
+    - State "STARTED"    from "TODO"       [2020-12-15 Tue 17:12]
     - State "TODO"       from              [2020-12-13 Sun 15:13]
     :END:
 
-*** TODO Use fancy header
+*** DONE Make URLs appear in links that have descriptions
+    CLOSED: [2020-12-16 Wed 16:20]
     :LOGBOOK:
-    - State "TODO"       from              [2020-12-13 Sun 15:13]
+    - State "DONE"       from "TODO"       [2020-12-16 Wed 16:20]
+    - State "TODO"       from              [2020-12-15 Tue 17:54]
     :END:
 
-*** TODO Write environments for boxes
+    + Pandoc?
+
+    + Yep. link-as-notes.
+
+*** DONE Keep section headers from breaking between pages
+    CLOSED: [2020-12-16 Wed 16:45]
     :LOGBOOK:
-    - State "TODO"       from              [2020-12-13 Sun 15:13]
+    - State "DONE"       from "TODO"       [2020-12-16 Wed 16:45]
+    - State "TODO"       from              [2020-12-16 Wed 16:21]
     :END:
 
-*** TODO Use package for frames
+    + Used \usepackage[nobottomtitles*]{titlesec}
+
+*** TODO Use package for frames?
     :LOGBOOK:
     - State "TODO"       from              [2020-12-13 Sun 15:20]
     :END:
 
+    + Generated tex uses framed package. Seems limited.
+
+    + Use longfbox instead:
+
+      * [[/usr/share/doc/texlive-doc/latex/longfbox/longfbox.pdf]]
+
+    + No, there is an error when loading the package that says
+      savenotes is already defined.
+
+    + Use [[/usr/share/doc/texlive-doc/latex/tcolorbox/tcolorbox.pdf]]
+
+    + Plus, block2 engine is broken in this version of Bookdown. Use
+      block instead.
+
+*** TODO Write environments for rmdboxes
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-13 Sun 15:13]
+    :END:
+
+*** TODO How to change font size?
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-15 Tue 16:42]
+    :END:
+
 * [0/0] HTML
 
-*** 

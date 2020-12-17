@@ -1,0 +1,143 @@
+
+\hypersetup{
+  colorlinks,
+  breaklinks
+}
+
+% Para bibliografia em português
+\usepackage{babelbib}
+
+% Para títulos de capítulos e seções:
+\usepackage[nobottomtitles*]{titlesec}
+
+%%%%%%%%%%%%%%%
+%
+% Titulos de capítulos e seções
+
+\titleformat{\chapter}[display]%
+{\bfseries\Large}%
+{\filleft\MakeUppercase{\chaptertitlename} \Huge\thechapter}%
+{4ex}%
+{\titlerule%
+  \vspace{2ex}%
+  \filright}%
+[\vspace{2ex}%
+\titlerule%
+\vspace{10ex}]
+
+\titleformat{\section}[block]%
+{\bfseries\Large}%
+{\thesection}{.5em}{\titlerule\\[.8ex]\bfseries}
+
+\titleformat{\subsection}[block]%
+{\bfseries}%
+{\thesubsection}{.5em}{\titlerule\\[.8ex]\bfseries}
+
+
+%%%%%%%%%%%%%%%
+%
+% Caixas
+
+\usepackage{tcolorbox}
+
+\tcbset{
+  sharp corners,
+  boxrule=0.3mm,
+  colback=black!2!white
+}
+
+\newtcolorbox{rmdbox}{
+  colframe=black!40!white,
+}
+
+\newtcolorbox{mycaution}{
+  colframe=red!75!black,
+  sidebyside,
+  lower separated=false,
+  lefthand width=1cm,
+  sidebyside gap=4mm
+}
+
+\newenvironment{rmdcaution}
+{
+  \begin{mycaution}
+    \includegraphics{images/caution.png}
+    \tcblower
+  }
+  {
+  \end{mycaution}
+}
+
+\newtcolorbox{myimportant}{
+  colframe=green!75!black,
+  sidebyside,
+  lower separated=false,
+  lefthand width=1cm,
+  sidebyside gap=4mm
+}
+
+\newenvironment{rmdimportant}
+{
+  \begin{myimportant}
+    \includegraphics{images/important.png}
+    \tcblower
+  }
+  {
+  \end{myimportant}
+}
+
+\newtcolorbox{mywarning}{
+  colframe=yellow!80!black,
+  sidebyside,
+  lower separated=false,
+  lefthand width=1cm,
+  sidebyside gap=4mm
+}
+
+\newenvironment{rmdwarning}
+{
+  \begin{mywarning}
+    \includegraphics{images/warning.png}
+    \tcblower
+  }
+  {
+  \end{mywarning}
+}
+
+\newtcolorbox{mynote}{
+  colframe=yellow!70!black,
+  sidebyside,
+  lower separated=false,
+  lefthand width=1cm,
+  sidebyside gap=4mm
+}
+
+\newenvironment{rmdnote}
+{
+  \begin{mynote}
+    \includegraphics{images/note.png}
+    \tcblower
+  }
+  {
+  \end{mynote}
+}
+
+\newtcolorbox{mytip}{
+  colframe=blue!50!white,
+  sidebyside,
+  lower separated=false,
+  lefthand width=1cm,
+  sidebyside gap=4mm
+}
+
+\newenvironment{rmdtip}
+{
+  \begin{mytip}
+    \includegraphics{images/tip.png}
+    \tcblower
+  }
+  {
+  \end{mytip}
+}
+
+
