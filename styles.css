@@ -1,4 +1,8 @@
 
+a {
+  color: darkred;
+}
+
 /* I don't like the frame around images */
 .inline-figure {
   border: none;

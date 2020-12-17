@@ -13,6 +13,34 @@ embed_yt('6Q_XSoLCIpc')
 
 ## Exercícios
 
+1. Em que momento do vídeo a tela fica preta?
+
+1. Como você faria para achar alguém que tenha conseguido adivinhar $10$ vezes seguidas o lado de uma moeda que cai para cima quando jogada? Isto é muito difícil? Pouco difícil? Fácil? Por quê?
+
+1. População x amostra ?td?
+
+1. Parâmetro x estatística ?td?
+
+1. Qual a graça dos quadrinhos abaixo?
+
+    ```{r echo=FALSE}
+    knitr::include_graphics('images/correlation-pt-600.png')
+    ```
+
+1. Qual é a graça de (xkcd sobre placebo)? ?td? http://xkcd.com/1462/
+
+1. Veja este vídeo sobre o cavalo Hans:
+
+    ```{r echo=FALSE, results='asis', out.extra=center()}
+    embed_yt('G3VkCmdUfZE')
+    ```
+
+   Qual a relação entre essa história e a necessidade de experimentos com duplo cegamento?
+
+1. Diferença entre amostragem com reposição e sem reposição ?td? População infinita. Exemplo com baralho muuuuito grande.
+
+1. Técnicas de amostragem ?td?
+
 
 ## Vídeo 2
 

@@ -73,9 +73,13 @@
     - State "TODO"       from              [2020-12-15 Tue 16:42]
     :END:
 
-* [0/0] HTML
+* [1/1] HTML
 
-*** YouTube embed
+*** DONE YouTube embed
+    CLOSED: [2020-12-17 Thu 17:43]
+    :LOGBOOK:
+    - State "DONE"       from              [2020-12-17 Thu 17:43]
+    :END:
 
     + https://developers.google.com/youtube/player_parameters
 
