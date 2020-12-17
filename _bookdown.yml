@@ -27,5 +27,6 @@ language:
 
 rmd_files: [
   "index.Rmd",
-  "testes.Rmd"
+  "o-que-e.Rmd"
+  # "testes.Rmd"
 ]

@@ -10,12 +10,14 @@ bookdown::bs4_book:
   repo: https://github.com/fnaufel/probestr
   css: styles.css
 
-# bookdown::pdf_book:
-#   includes:
-#     in_header: "tex/00-preambulo.tex"
-#   latex_engine: xelatex
-#   citation_package: natbib
-#   keep_tex: yes
-#   pandoc_args: [
-#     -V, links-as-notes
-#   ]
+bookdown::pdf_book:
+  includes:
+    in_header: "tex/00-preambulo.tex"
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+  pandoc_args: [
+    -V, links-as-notes
+  ]
+  md_extensions: +raw_attribute
+  

@@ -1,0 +1,25 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+
+# O Que É Estatística? {#oque}
+
+## Vídeo 1
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('6Q_XSoLCIpc')
+```
+
+## Exercícios
+
+
+## Vídeo 2
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('492VASxlDRo')
+```
+
+## Exercícios
+
+

@@ -64,3 +64,41 @@ fm <- function(x, big = '.', decimal = '{,}') {
   }
 
 }
+
+
+# To center the results of a chunk (image, video etc.)
+# Usage: 
+#         out.extra=center()
+#         
+center <- function(){
+  
+  if (is_html_output()) {
+    'class="center"'
+  }
+  
+}
+
+
+# To embed YT videos in HTML and the link (centered) in LaTeX
+embed_yt <- function(code) {
+
+  if (is_html_output()) {
+    include_url(
+      paste0(
+        'https://www.youtube.com/embed/',
+        code
+      )
+    )
+  } else {
+    cat(
+      paste0(
+        '```{=latex}\n',
+        '\\begin{center} \\url{https://youtu.be/',
+        code,
+        '} \\end{center}\n',
+        '```'
+      )
+    )
+  }
+  
+}

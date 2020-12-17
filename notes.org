@@ -3,7 +3,7 @@
 
 * https://bookdown.org/yihui/rmarkdown/
 
-* [4/8] LaTeX
+* [6/7] LaTeX
 
 *** DONE See my logic book
     CLOSED: [2020-12-15 Tue 17:11]
@@ -40,8 +40,10 @@
 
     + Used \usepackage[nobottomtitles*]{titlesec}
 
-*** TODO Use package for frames?
+*** DONE Use package for frames?
+    CLOSED: [2020-12-17 Thu 15:00]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-17 Thu 15:00]
     - State "TODO"       from              [2020-12-13 Sun 15:20]
     :END:
 
@@ -59,15 +61,24 @@
     + Plus, block2 engine is broken in this version of Bookdown. Use
       block instead.
 
-*** TODO Write environments for rmdboxes
+*** DONE Write environments for rmdboxes
+    CLOSED: [2020-12-17 Thu 15:00]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-17 Thu 15:00]
     - State "TODO"       from              [2020-12-13 Sun 15:13]
     :END:
 
-*** TODO How to change font size?
+*** TODO Make font size bigger?
     :LOGBOOK:
     - State "TODO"       from              [2020-12-15 Tue 16:42]
     :END:
 
 * [0/0] HTML
 
+*** YouTube embed
+
+    + https://developers.google.com/youtube/player_parameters
+
+    + https://www.youtube.com/embed/<code>
+
+  
