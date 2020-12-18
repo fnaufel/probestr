@@ -1,7 +1,17 @@
 
 function alterar_detalhes() {
   
-  // Campo de busca
+  // Make off-site links open in a new window/tab
+  $("a").attr(
+    "target", function() {
+      // Load local links locally
+      if (this.host == location.host) return "_self"
+      // Load off-site links in a new window
+      else return "_blank";
+    }
+  );
+  
+  // Traduzir campo de busca
   $("#search").attr({
     "placeholder": "Buscar",
     "aria-label": "Buscar"
@@ -19,7 +29,7 @@ function alterar_detalhes() {
     }
   );
   
-  // Footer
+  // Traduzir footer
   $("footer p").html(
     function(){
       rv = this.innerHTML.replace('was written by', 'por');
@@ -30,7 +40,7 @@ function alterar_detalhes() {
     }
   );
   
-  // Book source
+  // Traduzir book source
   $("#book-repo").html(
     function(){
       rv = this.innerHTML.replace('View book source', 'Ver código fonte do livro');
@@ -38,7 +48,7 @@ function alterar_detalhes() {
     }
   );
   
-  // Page source
+  // Traduzir page source
   $("#book-source").html(
     function(){
       rv = this.innerHTML.replace('View source', 'Ver código fonte');
@@ -46,7 +56,7 @@ function alterar_detalhes() {
     }
   )
 
-  // Edit this page
+  // Traduzir edit this page
   $("#book-edit").html(
     function(){
       rv = this.innerHTML.replace('Edit this page', 'Editar esta página');

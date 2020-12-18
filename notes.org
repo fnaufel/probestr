@@ -3,7 +3,42 @@
 
 * https://bookdown.org/yihui/rmarkdown/
 
-* [6/7] LaTeX
+* [2/5] Source
+
+*** TODO Decide how to link to videos with answers
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-18 Fri 15:41]
+    :END:
+
+    + Do not embed.
+
+    + Write raw URL to avoid excessive footnotes.
+
+    + Or use link and write function to render raw url in LaTeX and
+      description in HTML.
+    
+*** TODO Finish exercises for video 1
+  
+*** TODO Write exercises for video 2
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-17 Thu 18:31]
+    :END:
+
+*** DONE Translate xkcd in exercises for video 1
+    CLOSED: [2020-12-18 Fri 15:17]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-18 Fri 15:17]
+    - State "TODO"       from              [2020-12-17 Thu 18:31]
+    :END:
+
+*** DONE Save coin flipping question for later
+    CLOSED: [2020-12-18 Fri 14:20]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-18 Fri 14:20]
+    - State "TODO"       from              [2020-12-18 Fri 13:54]
+    :END:
+
+* [7/7] LaTeX
 
 *** DONE See my logic book
     CLOSED: [2020-12-15 Tue 17:11]
@@ -68,13 +103,33 @@
     - State "TODO"       from              [2020-12-13 Sun 15:13]
     :END:
 
-*** TODO Make font size bigger?
+*** DONE Make font size bigger?
+    CLOSED: [2020-12-18 Fri 15:40]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-18 Fri 15:40]
     - State "TODO"       from              [2020-12-15 Tue 16:42]
     :END:
 
-* [1/1] HTML
+* [3/3] HTML
 
+*** DONE Open nonlocal links in new window
+    CLOSED: [2020-12-18 Fri 14:19]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-18 Fri 14:19]
+    - State "TODO"       from              [2020-12-18 Fri 13:57]
+    :END:
+
+*** DONE Change link color and make bold
+    CLOSED: [2020-12-18 Fri 14:14]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-18 Fri 14:14]
+    - State "TODO"       from              [2020-12-18 Fri 13:56]
+    :END:
+
+    + #0044CC or #2200CC
+
+    + No, chose #9c682d to match color scheme.
+    
 *** DONE YouTube embed
     CLOSED: [2020-12-17 Thu 17:43]
     :LOGBOOK:
@@ -86,3 +141,14 @@
     + https://www.youtube.com/embed/<code>
 
   
+* Contents
+
+*** Probabilidades
+    
+    1. Como você faria para achar alguém que tenha conseguido
+       adivinhar $10$ vezes seguidas o lado de uma moeda que cai para
+       cima quando jogada? Isto é muito difícil? Pouco difícil? Fácil?
+       Por quê?
+
+
+

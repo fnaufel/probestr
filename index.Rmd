@@ -8,6 +8,7 @@ lang: 'pt-br'
 cover-image: images/cover.png
 
 documentclass: "report"
+classoption: '12pt'
 bibliography: []
 biblio-style: apalike
 link-citations: yes
