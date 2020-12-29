@@ -3,7 +3,12 @@
 
 * https://bookdown.org/yihui/rmarkdown/
 
-* [2/5] Source
+* [4/6] Source
+
+*** TODO Continue from https://youtu.be/1kXQDNqm41c?t=519
+    :LOGBOOK:
+    - State "TODO"       from              [2020-12-29 Tue 17:39]
+    :END:
 
 *** TODO Decide how to link to videos with answers
     :LOGBOOK:
@@ -17,10 +22,16 @@
     + Or use link and write function to render raw url in LaTeX and
       description in HTML.
     
-*** TODO Finish exercises for video 1
-  
-*** TODO Write exercises for video 2
+*** DONE Finish exercises for video 1
+    CLOSED: [2020-12-29 Tue 17:38]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-29 Tue 17:38]
+    :END:
+  
+*** DONE Write exercises for video 2
+    CLOSED: [2020-12-29 Tue 17:38]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2020-12-29 Tue 17:38]
     - State "TODO"       from              [2020-12-17 Thu 18:31]
     :END:
 

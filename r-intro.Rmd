@@ -1,0 +1,34 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Introdução a R {#rintro}
+
+## Vídeo 1
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('1kXQDNqm41c')
+```
+
+## Exercícios
+
+1. Para criar sua conta no RStudio Cloud, acesse https://rstudio.cloud/.
+
+1. Se você preferir instalar o R no seu computador, acesse
+
+   * https://cran.r-project.org/ para baixar e instalar o R, e
+   
+   * https://rstudio.com/products/rstudio/download/ para baixar e instalar o RStudio, um IDE específico para R.
+   
+1. 
+
+## Vídeo 2
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('3GEc1oiKDrU')
+```
+
+
+## Exercícios
+
+
