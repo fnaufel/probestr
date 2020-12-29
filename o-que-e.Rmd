@@ -13,13 +13,28 @@ embed_yt('6Q_XSoLCIpc')
 
 ## Exercícios
 
-1. Em que momento do vídeo a tela fica preta?
+1. Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de todos os homens da sua turma de Estatística.
 
-1. População x amostra ?td?
+   * Qual é a amostra?
+   * Qual é a população?
 
-1. Parâmetro x estatística ?td?
+1. Um instituto de pesquisa entrevista um grupo de $1000$ pessoas, perguntando a cada uma se ela vai votar a favor do candidato $A$ na próxima eleição. Dos entrevistados, $600$ responderam que sim. A proporção $0{,}6$ (ou $60\%$) é uma estatística ou um parâmetro?
 
-1. Qual a graça dos quadrinhos na Figura \@ref(fig:xkcd-cor), que também [aparecem no vídeo (com áudio brilhante, aliás)](https://youtu.be/6Q_XSoLCIpc?t=1385)?
+1. Você vê alguma diferença entre as cinco situações abaixo? Quais das situações são equivalentes em termos da probabilidade de conseguir $5$ cartas do mesmo naipe?
+
+   a.  Usando um baralho normal, você retira $10$ cartas e registra as cartas retiradas.
+
+   a.  Usando um baralho normal, você repete a seguinte sequência de ações $10$ vezes: retirar uma carta do baralho, registrar a carta retirada e repor a carta no baralho.
+   
+   a.  Usando uma caixa contendo todas as cartas de $1$ milhão de baralhos reunidos, você retira $10$ cartas e registra as cartas retiradas.
+   
+   a.  Usando uma caixa contendo todas as cartas de $1$ milhão de baralhos reunidos, você repete a seguinte sequência de ações $10$ vezes: retirar uma carta da caixa, registrar a carta retirada e repor a carta na caixa.
+
+   a.  Usando um baralho *infinito*, você retira $10$ cartas e registra as cartas retiradas.
+   
+   a.  Usando um baralho *infinito*, você repete a seguinte sequência de ações $10$ vezes: retirar uma carta do baralho, registrar a carta retirada e repor a carta no baralho.
+
+1. Qual a graça dos quadrinhos na Figura \@ref(fig:xkcd-cor), que também [aparecem no vídeo](https://youtu.be/6Q_XSoLCIpc?t=1385)?
 
     ```{r xkcd-cor, echo=FALSE, fig.cap='(ref:552)'}
     knitr::include_graphics('images/correlation-pt-600.png')
@@ -38,10 +53,6 @@ embed_yt('6Q_XSoLCIpc')
     ```
    Qual a relação entre esta história e a necessidade de duplo cegamento?
 
-1. Diferença entre amostragem com reposição e sem reposição ?td? População infinita. Exemplo com baralho muuuuito grande.
-
-1. Técnicas de amostragem ?td?
-
 
 (ref:552) http://xkcd.com/552/
 
@@ -56,4 +67,17 @@ embed_yt('492VASxlDRo')
 
 ## Exercícios
 
+1. Por que não faz sentido calcular a média dos CEPs de um grupo de pessoas?
+
+1. Uma temperatura de $-40$ graus Celsius é igual a uma temperatura de $-40$ graus Fahrenheit?
+
+1. Uma temperatura de zero graus Celsius é igual a uma temperatura de zero graus Fahrenheit?
+
+1. Uma variação de temperatura de $1$ grau Celsius é igual a uma variação de temperatura de $1$ grau Fahrenheit?
+
+1. Um saldo bancário de zero reais é igual a um saldo bancário de zero dólares?
+
+1. Um produto de $1$ milhão de reais custa o mesmo que um produto de $1$ milhão de dólares?
+
+1. Meses representados por números de $1$ a $12$ são dados de que nível?
 

@@ -143,12 +143,24 @@
   
 * Contents
 
+*** R
+
+    + Fatores ordenados em R: nível ordinal.
+
 *** Probabilidades
     
-    1. Como você faria para achar alguém que tenha conseguido
-       adivinhar $10$ vezes seguidas o lado de uma moeda que cai para
-       cima quando jogada? Isto é muito difícil? Pouco difícil? Fácil?
-       Por quê?
+    + Como você faria para achar alguém que tenha conseguido
+      adivinhar $10$ vezes seguidas o lado de uma moeda que cai para
+      cima quando jogada? Isto é muito difícil? Pouco difícil? Fácil?
+      Por quê?
 
+*** Variáveis aleatórias
 
+    + Derivação da fdp de Poisson:
+
+      - [[./scratch/poisson-derivation.jpg]]
+    
+    + Exercício sobre válvulas:
+
+      - [[./scratch/exercise-valves.jpg]]
 
