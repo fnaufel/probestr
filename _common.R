@@ -56,15 +56,17 @@ theme_set(
 # Format a number with thousand separators (default point)
 # and decimal comma enclosed in curly braces for LaTeX printing.
 # CAREFUL: if called outside math mode, will print the braces!
-fm <- function(x, big = '.', decimal = '{,}') {
+fm <- function(x, big = '.', decimal = '{,}', ...) {
   if (!is.numeric(x)) {
     x
   } else {
-    prettyNum(x, big.mark = big, decimal.mark = decimal)
+    prettyNum(x, big.mark = big, decimal.mark = decimal, ...)
   }
 
 }
 
+# Set this as a hook for inline R code
+knitr::knit_hooks$set(inline = fm)
 
 # To center the results of a chunk (image, video etc.)
 # Usage: 

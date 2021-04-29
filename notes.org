@@ -3,6 +3,14 @@
 
 * https://bookdown.org/yihui/rmarkdown/
 
+* Infrastructure
+
+*** Use checkdown and/or exam?
+
+***** https://agricolamz.github.io/checkdown/
+
+***** http://www.r-exams.org/
+
 * [4/6] Source
 
 *** TODO Continue from https://youtu.be/1kXQDNqm41c?t=519
@@ -152,13 +160,21 @@
     + https://www.youtube.com/embed/<code>
 
   
-* Contents
+* Exercícios
+
+*** Intro
+
+    + Amostra estratificada: exemplo de cross-validation em DS
 
 *** R
 
-    + Fatores ordenados em R: nível ordinal.
+*** Viz
 
-*** Probabilidades
+*** Medidas
+
+    + Mostre que a soma dos desvios é 0.
+
+*** Probabilidade
     
     + Como você faria para achar alguém que tenha conseguido
       adivinhar $10$ vezes seguidas o lado de uma moeda que cai para
@@ -174,4 +190,31 @@
     + Exercício sobre válvulas:
 
       - [[./scratch/exercise-valves.jpg]]
+
+*** Distr. Normal
+
+    + According to the Environmental Protection Agency, chloroform,
+      which in its gaseous form is suspected to be a cancer-causing
+      agent, is present in small quantities in all the country's
+      $240.000$ public water sources. If the mean and standard
+      deviation of the amounts of chloroform present in water sources
+      are $34$ and $53$ micrograms per liter (μg/L), respectively,
+      explain why chloroform amounts do not have a normal
+      distribution.
+
+*** TCL
+
+*** IC
+
+***** Médias e proporções
+
+      + Exercício: no vídeo, z* = -qnorm(...)
+
+        Que outra maneira dá o mesmo resultado para z*?
+
+*** Testes de hipótese
+
+*** Relações entre vars
+
+*** Modelos lineares
 
