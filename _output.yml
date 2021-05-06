@@ -13,7 +13,7 @@ bookdown::bs4_book:
 bookdown::pdf_book:
   includes:
     in_header: "tex/00-preambulo.tex"
-  latex_engine: xelatex
+  latex_engine: "lualatex"
   citation_package: natbib
   keep_tex: yes
   pandoc_args: [
