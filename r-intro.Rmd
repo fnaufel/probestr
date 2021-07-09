@@ -10,6 +10,13 @@ knit: "bookdown::render_book"
 embed_yt('1kXQDNqm41c')
 ```
 
+## Vídeo 2
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('3GEc1oiKDrU')
+```
+
+
 ## Exercícios
 
 1. Para criar sua conta no RStudio Cloud, acesse https://rstudio.cloud/.
@@ -20,15 +27,20 @@ embed_yt('1kXQDNqm41c')
    
    * https://rstudio.com/products/rstudio/download/ para baixar e instalar o RStudio, um IDE específico para R.
    
-1. 
+1. Abra o RStudio Cloud ou o seu RStudio instalado localmente.
 
-## Vídeo 2
+1. Crie um novo projeto. [Sempre trabalhe em projetos para ter seus arquivos organizados.]{.hl}
 
-```{r echo=FALSE, results='asis', out.extra=center()}
-embed_yt('3GEc1oiKDrU')
-```
+1. Para abrir os exercícios sobre R, execute os seguintes comandos no console do RStudio:
 
+    ```{r eval=FALSE}
+    install.packages("swirl")
+    library(swirl)
+    select_language('portuguese', append_rprofile = TRUE)
+    install_course_github(...)
+    swirl()
+    ```
+   
 
-## Exercícios
 
 

@@ -13,9 +13,9 @@
 
 * [4/6] Source
 
-*** TODO Continue from https://youtu.be/1kXQDNqm41c?t=519
+*** TODO Write swirl exercises about R
     :LOGBOOK:
-    - State "TODO"       from              [2020-12-29 Tue 17:39]
+    - State "TODO"       from              [2021-07-09 Fri 14:04]
     :END:
 
 *** TODO Decide how to link to videos with answers
@@ -168,6 +168,8 @@
 
 *** R
 
+    + Usar swirl
+
 *** Viz
 
 *** Medidas
@@ -180,6 +182,23 @@
       adivinhar $10$ vezes seguidas o lado de uma moeda que cai para
       cima quando jogada? Isto é muito difícil? Pouco difícil? Fácil?
       Por quê?
+
+    + A great puzzle from my colleague Bill Child. A card is drawn
+      from an ordinary 52 card deck, and you aim to guess what it is.
+
+      Before making your guess, you are allowed to ask one yes/no
+      question about the card.
+       
+      Which of the 3 questions listed here will best improve your
+      odds?
+      
+      Is the card red?
+      
+      Is the card a face card?
+      
+      Is it the Ace of Spades?
+      
+      None of above is best
 
 *** Variáveis aleatórias
 
@@ -215,6 +234,11 @@
 *** Testes de hipótese
 
 *** Relações entre vars
+    
+***** Use video at [[/home/fnaufel/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/Bookdown/images/many-plots-same-stats.mp4]]
+      :LOGBOOK:
+      - State "TODO"       from              [2021-06-03 Thu 17:24]
+      :END:
 
 *** Modelos lineares
 
