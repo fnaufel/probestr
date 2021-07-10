@@ -31,16 +31,43 @@ embed_yt('3GEc1oiKDrU')
 
 1. Crie um novo projeto. [Sempre trabalhe em projetos para ter seus arquivos organizados.]{.hl}
 
-1. Para abrir os exercícios sobre R, execute os seguintes comandos no console do RStudio:
+1. Para instalar o [`swirl` (pacote do R para exercícios interativos)](https://swirlstats.com/), execute o seguinte comando no console do RStudio:
 
     ```{r eval=FALSE}
     install.packages("swirl")
+    ```
+
+1. Para instalar os exercícios de introdução a R, execute os seguintes comandos no console do RStudio:
+
+    ```{r eval=FALSE}
     library(swirl)
+    install_course_github('fnaufel', 'introR')
+    ```
+
+1. Mude o idioma para português e execute o `swirl`.
+
+    ```{r eval=FALSE}
     select_language('portuguese', append_rprofile = TRUE)
-    install_course_github(...)
     swirl()
     ```
+
+1. Na primeira execução, você vai precisar se identificar (qualquer nome serve). Com essa identificação, o `swirl` vai registrar o seu progresso nas lições.
+
+1. No `swirl`, as perguntas são mostradas no console. Você também deve responder no console. 
+
+1. Às vezes, um *script* será aberto no editor de textos para que você complete um programa. Quando seu programa estiver pronto, salve o arquivo e digite `submit()` no console para o `swirl` processar o *script*.
+
+1. O `swirl` dá instruções claras no console. Na dúvida, digite `info()` no *prompt* do R (`>`). 
+
+1. Se, em vez do *prompt* do R, o console mostrar reticências (`...`), tecle *Enter*.
+
+1. Se nada funcionar, tecle *ESC*.
    
+1. Para sair do `swirl()`, digite `bye()` no *prompt* do R.
 
+1. Para voltar para os exercícios, digite
 
-
+    ```{r eval=FALSE}
+    library(swirl)
+    swirl()
+    ```

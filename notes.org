@@ -13,8 +13,9 @@
 
 * [4/6] Source
 
-*** TODO Write swirl exercises about R
+*** STARTED Write swirl exercises about R
     :LOGBOOK:
+    - State "STARTED"    from "TODO"       [2021-07-09 Fri 18:15]
     - State "TODO"       from              [2021-07-09 Fri 14:04]
     :END:
 
