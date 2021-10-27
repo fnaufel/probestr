@@ -16,7 +16,7 @@ bookdown::bs4_book:
     code_font:
       google:
         family: JetBrains Mono
-  repo: https://github.com/fnaufel/???????
+  repo: https://github.com/fnaufel/probestr
   css: styles.css
   df_print: paged
   template: bs4_book_ptbr.html
