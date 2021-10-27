@@ -1,5 +1,6 @@
 delete_merged_file: true
 before_chapter_script: "_common.R"
+output_dir: "docs"
 
 language:
   label:
@@ -26,5 +27,4 @@ rmd_files: [
   "index.Rmd",
   "o-que-e.Rmd",
   "r-intro.Rmd"
-  # "testes.Rmd"
 ]

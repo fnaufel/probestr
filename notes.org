@@ -161,7 +161,7 @@
     + https://www.youtube.com/embed/<code>
 
   
-* Exercícios
+* Exercícios e conteúdo
 
 *** Intro
 
@@ -176,6 +176,10 @@
 *** Medidas
 
     + Mostre que a soma dos desvios é 0.
+
+    + Euclidian distance = standard deviation 
+
+    + Manhattan distance = absolute deviation
 
 *** Probabilidade
     

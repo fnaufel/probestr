@@ -4,11 +4,10 @@ library(knitr)
 
 opts_chunk$set(
   collapse = TRUE,
-  cache = TRUE,
-  out.width = "70%",
+  cache = FALSE,
+  out.width = "90%",
   fig.align = 'center',
-  fig.width = 6,
-  fig.asp = 0.618,  # 1 / phi
+  fig.width = 7,
   fig.show = "hold"
 )
 
@@ -17,11 +16,21 @@ options(dplyr.print_min = 6, dplyr.print_max = 6)
 # Supress crayon output
 options(crayon.enabled = FALSE)
 
-# Avoid scientific notation and use a comma as decimal separator
 options(
+  # Avoid scientific notation
   scipen = 15,
-  OutDec = ','
+  # Use a comma as decimal separator
+  OutDec = ',',
+  # Number of decimal digits for numbers produced by inline R code
+  fmdigits = 2
 )
+
+# Useful libraries
+library(glue)
+library(patchwork)
+library(latex2exp)
+library(kableExtra)
+options(knitr.kable.NA = '')
 
 # For nice dataframe summaries
 library(summarytools)
@@ -41,11 +50,17 @@ theme_set(
     theme(                                   # with some tweaks
       axis.title.y.left = element_text(
          angle = 0,                          # Never rotate y axis title
-         margin = margin(r = 20),            # Separate y axis title a little 
+         margin = margin(r = 20),            # Separate y axis title a little
          vjust = .5                          # Leave y axis title in the middle
       ),
+      axis.title.y.right = element_text(
+         angle = 0,                          # Never rotate y axis title
+         margin = margin(l = 20),            # Separate y axis title a little
+         vjust = .5                          # Leave y axis title in the middle
+      ),
+      axis.ticks.y.right = element_blank(),  # No ticks on secondary y axis
       axis.title.x.bottom = element_text(
-         margin = margin(t = 20)             # Separate x axis title a little 
+         margin = margin(t = 20)             # Separate x axis title a little
       ),
       axis.line = element_blank(),           # No axis lines
       panel.border = element_blank(),        # No frame
@@ -56,28 +71,53 @@ theme_set(
 # Format a number with thousand separators (default point)
 # and decimal comma enclosed in curly braces for LaTeX printing.
 # CAREFUL: if called outside math mode, will print the braces!
-fm <- function(x, big = '.', decimal = '{,}', ...) {
+fm <- function(
+  x,
+  digits = getOption('fmdigits', default = 4),
+  big = '.',
+  decimal = '{,}',
+  ...
+) {
   if (!is.numeric(x)) {
     x
   } else {
-    prettyNum(x, big.mark = big, decimal.mark = decimal, ...)
+    if (any(x != floor(x))) {
+      # floating point
+      formatC(
+        x,
+        big.mark = big,
+        decimal.mark = decimal,
+        digits = digits,
+        format = 'f',
+        ...
+      )
+    } else {
+      # integer
+      formatC(
+        x,
+        big.mark = big,
+        decimal.mark = decimal,
+        format = 'd',
+        ...
+      )
+    }
   }
-
 }
 
 # Set this as a hook for inline R code
 knitr::knit_hooks$set(inline = fm)
 
+
 # To center the results of a chunk (image, video etc.)
-# Usage: 
+# Usage:
 #         out.extra=center()
-#         
+#
 center <- function(){
-  
+
   if (is_html_output()) {
     'class="center"'
   }
-  
+
 }
 
 
@@ -102,5 +142,5 @@ embed_yt <- function(code) {
       )
     )
   }
-  
+
 }

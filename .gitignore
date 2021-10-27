@@ -3,3 +3,5 @@
 .RData
 .Ruserdata
 auto
+/_main.Rmd
+/_main.tex
