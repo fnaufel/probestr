@@ -3,7 +3,7 @@
 
 title: "Probabilidade e Estatística com R"
 description: "Probabilidade e Estatística com R"
-author: "fnaufel"
+author: "Fernando Náufel"
 date: "`r format(Sys.Date(), '%d/%m/%Y')`"
 lang: 'pt-br'
 

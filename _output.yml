@@ -37,7 +37,6 @@ bookdown::pdf_book:
   citation_package: natbib
   keep_tex: yes
   pandoc_args: [
-    -V, links-as-notes
+    -V, links-as-notes, --variable=subparagraph
   ]
   md_extensions: +raw_attribute
-
