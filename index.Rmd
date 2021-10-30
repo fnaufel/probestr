@@ -4,10 +4,10 @@
 title: "Probabilidade e Estatística com R"
 description: "Probabilidade e Estatística com R"
 author: "Fernando Náufel"
-date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+date: "(versão de `r format(Sys.Date(), '%d/%m/%Y')`)"
 lang: 'pt-br'
 
-cover-image: images/cover.png
+cover-image: "images/640px-Nightingale-mortality.jpg"
 
 documentclass: "report"
 classoption: '12pt'
@@ -18,5 +18,27 @@ link-citations: yes
 
 # Apresentação {- #apresentacao}
 
+![](images/640px-Nightingale-mortality.jpg){.center}
+
+Este livro/site foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano. 
+
+Para atender os alunos do curso de Probabilidade e Estatística do curso de graduação em Ciência da Computação da UFF, decidi gravar aulas em vídeo e disponibilizar os arquivos usados nelas. Foram esses arquivos que deram origem a este livro/site.
+
+Para tirar o máximo proveito deste material, você deve fazer o seguinte:
+
+1. Assistir aos vídeos contidos em cada capítulo. A *playlist* completa está em https://www.youtube.com/playlist?list=PL7SRLwLs7ocaV-Y1vrVU3W7mZnnS0qkWV.
+
+1. Instalar o R no seu computador ou abrir uma conta no RStudio Cloud, para poder usar o R *online*. Você encontra instruções para fazer isto no [capítulo de introdução a R](#rintro).
+
+1. Seguir os *links* para outras fontes *online* que abordam assuntos que não são cobertos em detalhes neste curso.
+
+1. Faça os exercícios. Ao longo do tempo, acrescentarei *links* para vídeos explicando as soluções.
+
+O código-fonte deste livro/site pode ser encontrado [neste repositório do Github](https://github.com/fnaufel/probestr).
+
+Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, [faça o download do arquivo aqui](https://github.com/fnaufel/probestr/blob/master/docs/probestr.pdf).
 
 
+## Exercício {-}
+
+1. Pesquise sobre a imagem do início deste capítulo. Ela foi criada em 1858 por Florence Nightingale.
