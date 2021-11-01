@@ -32,7 +32,7 @@ Para tirar o máximo proveito deste material, você deve fazer o seguinte:
 
 1. Seguir os *links* para outras fontes *online* que abordam assuntos que não são cobertos em detalhes neste curso.
 
-1. Faça os exercícios. Ao longo do tempo, acrescentarei *links* para vídeos explicando as soluções.
+1. Fazer os exercícios. Ao longo do tempo, acrescentarei *links* para vídeos explicando as soluções.
 
 O código-fonte deste livro/site pode ser encontrado [neste repositório do Github](https://github.com/fnaufel/probestr).
 
