@@ -5,7 +5,7 @@ library(knitr)
 opts_chunk$set(
   collapse = TRUE,
   cache = FALSE,
-  out.width = "90%",
+  out.width = "100%",
   fig.align = 'center',
   fig.width = 7,
   fig.show = "hold"
@@ -22,7 +22,11 @@ options(
   # Use a comma as decimal separator
   OutDec = ',',
   # Number of decimal digits for numbers produced by inline R code
-  fmdigits = 2
+  fmdigits = 2,
+  # Width of text output
+  width = ifelse(is_html_output(), 85, 72),
+  # Number of head elements to show in
+  str = strOptions(vec.len = 3)
 )
 
 # Useful libraries
@@ -36,18 +40,28 @@ options(knitr.kable.NA = '')
 library(summarytools)
 st_options(
   plain.ascii = FALSE,
-  dfSummary.varnumbers = FALSE,
   dfSummary.style = 'grid',
-  dfSummary.graph.magnif = .75
+  dfSummary.varnumbers = FALSE,
+  dfSummary.valid.col = FALSE,
+  dfSummary.graph.col = is_html_output(),
+  headings = FALSE,
+  dfSummary.graph.magnif = 1,
+  tmp.img.dir = '/tmp',
+  lang = 'pt',
+  subtitle.emphasis = FALSE
 )
 
 # Tidy!
 library(tidyverse)
 
+# Text size in plots
+plot_text_size = ifelse(is_html_output(), 12, 14)
+  
 # Sober theme for ggplot
 theme_set(
   theme_linedraw() +                         # Set simple theme for ggplot
     theme(                                   # with some tweaks
+      text = element_text(size = plot_text_size),
       axis.title.y.left = element_text(
          angle = 0,                          # Never rotate y axis title
          margin = margin(r = 20),            # Separate y axis title a little

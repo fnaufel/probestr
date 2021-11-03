@@ -20,6 +20,18 @@ link-citations: yes
 
 ![](images/640px-Nightingale-mortality.jpg){.center}
 
+::: {.rmdcaution}
+
+[Atenção]{.hl}
+
+Este material ainda está em construção.
+
+Pode haver mudanças a qualquer momento.
+
+Verifique a data desta versão no rodapé da página *web* ou na capa do arquivo pdf.
+
+:::
+
 Este livro/site foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano. 
 
 Para atender os alunos do curso de Probabilidade e Estatística do curso de graduação em Ciência da Computação da UFF, decidi gravar aulas em vídeo e disponibilizar os arquivos usados nelas. Foram esses arquivos que deram origem a este livro/site.

@@ -26,5 +26,6 @@ language:
 rmd_files: [
   "index.Rmd",
   "o-que-e.Rmd",
-  "r-intro.Rmd"
+  "r-intro.Rmd",
+  "viz-01.Rmd"
 ]

@@ -126,6 +126,10 @@
   breaklinks
 }
 
+% Make page wider
+\usepackage{anysize}
+\marginsize{2cm}{2cm}{1cm}{1cm} %lrtb
+
 % Lexend font
 \usepackage{lexend}
 
@@ -290,7 +294,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 01/11/2021)}
+\date{(versão de 03/11/2021)}
 
 \begin{document}
 \maketitle
@@ -304,6 +308,14 @@
 \addcontentsline{toc}{chapter}{Apresentação}
 
 \includegraphics{images/640px-Nightingale-mortality.jpg}
+
+{\hl{Atenção}}
+
+Este material ainda está em construção.
+
+Pode haver mudanças a qualquer momento.
+
+Verifique a data desta versão no rodapé da página \emph{web} ou na capa do arquivo pdf.
 
 Este livro/site foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano.
 
@@ -523,6 +535,1113 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \FunctionTok{swirl}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+\end{enumerate}
+
+\hypertarget{viz}{%
+\chapter{Visualização com ggplot2}\label{viz}}
+
+\hypertarget{vuxeddeo-1-2}{%
+\section{Vídeo 1}\label{vuxeddeo-1-2}}
+
+\begin{center} \url{https://youtu.be/OBpNjqIIyhI} \end{center}
+
+\hypertarget{componentes-de-um-gruxe1fico-ggplot2}{%
+\section{Componentes de um gráfico ggplot2}\label{componentes-de-um-gruxe1fico-ggplot2}}
+
+\hypertarget{mapeamento-estuxe9tico-mapping-e-geometrias}{%
+\subsection{\texorpdfstring{Mapeamento estético (\emph{mapping}) e geometrias}{Mapeamento estético (mapping) e geometrias}}\label{mapeamento-estuxe9tico-mapping-e-geometrias}}
+
+\begin{center}\includegraphics[width=1\linewidth]{images/countries-1} \end{center}
+
+\begin{longtable}[]{@{}lll@{}}
+\toprule
+Variável & Estética & Geometria \\
+\midrule
+\endhead
+PIB per capita & posição x & ponto \\
+Expectativa de vida & posição y & ponto \\
+População & tamanho & ponto \\
+Continente & cor & ponto \\
+\bottomrule
+\end{longtable}
+
+Algumas outras estéticas:
+
+\begin{itemize}
+\tightlist
+\item
+  Cor de preenchimento
+\item
+  Cor do traço
+\item
+  Tipo do traço (sólido, pontilhado, tracejado etc.)
+\item
+  Forma (círculo, quadrado, triângulo etc.)
+\item
+  Opacidade
+\end{itemize}
+
+Algumas outras geometrias:
+
+\begin{itemize}
+\tightlist
+\item
+  Linhas
+\item
+  Barras ou colunas
+\item
+  \emph{Boxplots}
+\item
+  Histogramas
+\end{itemize}
+
+\hypertarget{escalas-scales}{%
+\subsection{\texorpdfstring{Escalas (\emph{scales})}{Escalas (scales)}}\label{escalas-scales}}
+
+Controlam os detalhes do mapeamento (eixos, cores etc.).
+
+\hypertarget{ruxf3tulos-labels}{%
+\subsection{\texorpdfstring{Rótulos (\emph{labels})}{Rótulos (labels)}}\label{ruxf3tulos-labels}}
+
+Texto.
+
+\hypertarget{outros-componentes}{%
+\subsection{Outros componentes}\label{outros-componentes}}
+
+\begin{itemize}
+\tightlist
+\item
+  Coordenadas
+\item
+  Temas
+\item
+  Legendas (\emph{guides})
+\item
+  Facetas
+\end{itemize}
+
+\hypertarget{conjunto-de-dados}{%
+\section{Conjunto de dados}\label{conjunto-de-dados}}
+
+Dados sobre o sono de diversos mamíferos. Para ver a documentação, digite
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{?msleep}
+\end{Highlighting}
+\end{Shaded}
+
+Vamos atribuir à variável \texttt{df} o \emph{data frame}, que faz parte do pacote \texttt{ggplot2} (que já foi carregado no \emph{chunk} de \emph{setup}, lá em cima):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ msleep}
+\NormalTok{df}
+\DocumentationTok{\#\# \# A tibble: 83 x 11}
+\DocumentationTok{\#\#   name  genus vore  order conservation sleep\_total sleep\_rem sleep\_cycle}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Chee\textasciitilde{} Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA        NA    }
+\DocumentationTok{\#\# 2 Owl \textasciitilde{} Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
+\DocumentationTok{\#\# 3 Moun\textasciitilde{} Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4      NA    }
+\DocumentationTok{\#\# 4 Grea\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3       0.133}
+\DocumentationTok{\#\# 5 Cow   Bos   herbi Arti\textasciitilde{} domesticated         4         0.7       0.667}
+\DocumentationTok{\#\# 6 Thre\textasciitilde{} Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2       0.767}
+\DocumentationTok{\#\# \# ... with 77 more rows, and 3 more variables: awake \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+Vamos examinar a estrutura --- usando R base:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(df)}
+\DocumentationTok{\#\# tibble [83 x 11] (S3: tbl\_df/tbl/data.frame)}
+\DocumentationTok{\#\#  $ name        : chr [1:83] "Cheetah" "Owl monkey" "Mountain beaver" ...}
+\DocumentationTok{\#\#  $ genus       : chr [1:83] "Acinonyx" "Aotus" "Aplodontia" ...}
+\DocumentationTok{\#\#  $ vore        : chr [1:83] "carni" "omni" "herbi" ...}
+\DocumentationTok{\#\#  $ order       : chr [1:83] "Carnivora" "Primates" "Rodentia" ...}
+\DocumentationTok{\#\#  $ conservation: chr [1:83] "lc" NA "nt" ...}
+\DocumentationTok{\#\#  $ sleep\_total : num [1:83] 12,1 17 14,4 14,9 4 14,4 8,7 7 ...}
+\DocumentationTok{\#\#  $ sleep\_rem   : num [1:83] NA 1,8 2,4 2,3 0,7 2,2 1,4 NA ...}
+\DocumentationTok{\#\#  $ sleep\_cycle : num [1:83] NA NA NA 0,133 ...}
+\DocumentationTok{\#\#  $ awake       : num [1:83] 11,9 7 9,6 9,1 20 9,6 15,3 17 ...}
+\DocumentationTok{\#\#  $ brainwt     : num [1:83] NA 0,0155 NA 0,00029 0,423 NA NA NA ...}
+\DocumentationTok{\#\#  $ bodywt      : num [1:83] 50 0,48 1,35 0,019 ...}
+\end{Highlighting}
+\end{Shaded}
+
+Usando \texttt{glimpse}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(df)}
+\DocumentationTok{\#\# Rows: 83}
+\DocumentationTok{\#\# Columns: 11}
+\DocumentationTok{\#\# $ name         \textless{}chr\textgreater{} "Cheetah", "Owl monkey", "Mountain beaver", "Grea\textasciitilde{}}
+\DocumentationTok{\#\# $ genus        \textless{}chr\textgreater{} "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bo\textasciitilde{}}
+\DocumentationTok{\#\# $ vore         \textless{}chr\textgreater{} "carni", "omni", "herbi", "omni", "herbi", "herbi\textasciitilde{}}
+\DocumentationTok{\#\# $ order        \textless{}chr\textgreater{} "Carnivora", "Primates", "Rodentia", "Soricomorph\textasciitilde{}}
+\DocumentationTok{\#\# $ conservation \textless{}chr\textgreater{} "lc", NA, "nt", "lc", "domesticated", NA, "vu", N\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_total  \textless{}dbl\textgreater{} 12,1, 17,0, 14,4, 14,9, 4,0, 14,4, 8,7, 7,0, 10,1\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_rem    \textless{}dbl\textgreater{} NA, 1,8, 2,4, 2,3, 0,7, 2,2, 1,4, NA, 2,9, NA, 0,\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_cycle  \textless{}dbl\textgreater{} NA, NA, NA, 0,1333333, 0,6666667, 0,7666667, 0,38\textasciitilde{}}
+\DocumentationTok{\#\# $ awake        \textless{}dbl\textgreater{} 11,9, 7,0, 9,6, 9,1, 20,0, 9,6, 15,3, 17,0, 13,9,\textasciitilde{}}
+\DocumentationTok{\#\# $ brainwt      \textless{}dbl\textgreater{} NA, 0,01550, NA, 0,00029, 0,42300, NA, NA, NA, 0,\textasciitilde{}}
+\DocumentationTok{\#\# $ bodywt       \textless{}dbl\textgreater{} 50,000, 0,480, 1,350, 0,019, 600,000, 3,850, 20,4\textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+
+Vendo só as primeiras linhas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(df)}
+\DocumentationTok{\#\# \# A tibble: 6 x 11}
+\DocumentationTok{\#\#   name  genus vore  order conservation sleep\_total sleep\_rem sleep\_cycle}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Chee\textasciitilde{} Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA        NA    }
+\DocumentationTok{\#\# 2 Owl \textasciitilde{} Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
+\DocumentationTok{\#\# 3 Moun\textasciitilde{} Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4      NA    }
+\DocumentationTok{\#\# 4 Grea\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3       0.133}
+\DocumentationTok{\#\# 5 Cow   Bos   herbi Arti\textasciitilde{} domesticated         4         0.7       0.667}
+\DocumentationTok{\#\# 6 Thre\textasciitilde{} Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2       0.767}
+\DocumentationTok{\#\# \# ... with 3 more variables: awake \textless{}dbl\textgreater{}, brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+Interativamente, usando \texttt{view}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{view}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+Sumário dos dados usando o pacote \emph{summarytools} (que já foi carregado no \emph{setup}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{dfSummary}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{print}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1928}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3976}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2771}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1325}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+Variável
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estatísticas / Valores
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Freqs (\% de Válidos)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Faltante
+\end{minipage} \\
+\midrule
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+name\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. African elephant\\
+2. African giant pouched rat\\
+3. African striped mouse\\
+4. Arctic fox\\
+5. Arctic ground squirrel\\
+6. Asian elephant\\
+7. Baboon\\
+8. Big brown bat\\
+9. Bottle-nosed dolphin\\
+10. Brazilian tapir\\
+{[} 73 outros {]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+73 (88,0\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+genus\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Panthera\\
+2. Spermophilus\\
+3. Equus\\
+4. Vulpes\\
+5. Acinonyx\\
+6. Aotus\\
+7. Aplodontia\\
+8. Blarina\\
+9. Bos\\
+10. Bradypus\\
+{[} 67 outros {]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+3 ( 3,6\%)\\
+3 ( 3,6\%)\\
+2 ( 2,4\%)\\
+2 ( 2,4\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+67 (80,7\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+vore\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. carni\\
+2. herbi\\
+3. insecti\\
+4. omni\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+19 (25,0\%)\\
+32 (42,1\%)\\
+5 ( 6,6\%)\\
+20 (26,3\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+7\\
+(8,4\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+order\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Rodentia\\
+2. Carnivora\\
+3. Primates\\
+4. Artiodactyla\\
+5. Soricomorpha\\
+6. Cetacea\\
+7. Hyracoidea\\
+8. Perissodactyla\\
+9. Chiroptera\\
+10. Cingulata\\
+{[} 9 outros {]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+22 (26,5\%)\\
+12 (14,5\%)\\
+12 (14,5\%)\\
+6 ( 7,2\%)\\
+5 ( 6,0\%)\\
+3 ( 3,6\%)\\
+3 ( 3,6\%)\\
+3 ( 3,6\%)\\
+2 ( 2,4\%)\\
+2 ( 2,4\%)\\
+13 (15,7\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+conservation\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. cd\\
+2. domesticated\\
+3. en\\
+4. lc\\
+5. nt\\
+6. vu\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+2 ( 3,7\%)\\
+10 (18,5\%)\\
+4 ( 7,4\%)\\
+27 (50,0\%)\\
+4 ( 7,4\%)\\
+7 (13,0\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+29\\
+(34,9\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+sleep\_total\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 10,4 (4,5)\\
+mín \textless{} mediana \textless{} máx:\\
+1,9 \textless{} 10,1 \textless{} 19,9\\
+IQE (CV) : 5,9 (0,4)\strut
+\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+sleep\_rem\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 1,9 (1,3)\\
+mín \textless{} mediana \textless{} máx:\\
+0,1 \textless{} 1,5 \textless{} 6,6\\
+IQE (CV) : 1,5 (0,7)\strut
+\end{minipage} & 32 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+22\\
+(26,5\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+sleep\_cycle\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 0,4 (0,4)\\
+mín \textless{} mediana \textless{} máx:\\
+0,1 \textless{} 0,3 \textless{} 1,5\\
+IQE (CV) : 0,4 (0,8)\strut
+\end{minipage} & 22 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+51\\
+(61,4\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+awake\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 13,6 (4,5)\\
+mín \textless{} mediana \textless{} máx:\\
+4,1 \textless{} 13,9 \textless{} 22,1\\
+IQE (CV) : 5,9 (0,3)\strut
+\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+brainwt\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 0,3 (1)\\
+mín \textless{} mediana \textless{} máx:\\
+0 \textless{} 0 \textless{} 5,7\\
+IQE (CV) : 0,1 (3,5)\strut
+\end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+27\\
+(32,5\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+bodywt\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 166,1 (786,8)\\
+mín \textless{} mediana \textless{} máx:\\
+0 \textless{} 1,7 \textless{} 6654\\
+IQE (CV) : 41,6 (4,7)\strut
+\end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+Há muitos \texttt{NA} em diversas variáveis. Para nossos exemplos simples de visualização, vamos usar as colunas
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{name}
+\item
+  \texttt{genus}
+\item
+  \texttt{order}
+\item
+  \texttt{sleep\_total}
+\item
+  \texttt{awake}
+\item
+  \texttt{bodywt}
+\item
+  \texttt{brainwt}
+\end{itemize}
+
+Mas\ldots{} a coluna que mostra a dieta (\texttt{vore}) tem só 7 \texttt{NA}. Quais são?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(vore)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(name)}
+\DocumentationTok{\#\# \# A tibble: 7 x 1}
+\DocumentationTok{\#\#   name           }
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}          }
+\DocumentationTok{\#\# 1 Vesper mouse   }
+\DocumentationTok{\#\# 2 Desert hedgehog}
+\DocumentationTok{\#\# 3 Deer mouse     }
+\DocumentationTok{\#\# 4 Phalanger      }
+\DocumentationTok{\#\# 5 Rock hyrax     }
+\DocumentationTok{\#\# 6 Mole rat       }
+\DocumentationTok{\#\# \# ... with 1 more row}
+\end{Highlighting}
+\end{Shaded}
+
+OK. Vamos manter a coluna \texttt{vore} também, apesar dos \texttt{NA}. Quando formos usar esta variável, tomaremos cuidado.
+
+Também\ldots{} a coluna \texttt{bodywt} tem 0 como valor mínimo. Como assim?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(name, bodywt) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(bodywt)}
+\DocumentationTok{\#\# \# A tibble: 35 x 2}
+\DocumentationTok{\#\#   name                       bodywt}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                       \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Lesser short{-}tailed shrew   0.005}
+\DocumentationTok{\#\# 2 Little brown bat            0.01 }
+\DocumentationTok{\#\# 3 Greater short{-}tailed shrew  0.019}
+\DocumentationTok{\#\# 4 Deer mouse                  0.021}
+\DocumentationTok{\#\# 5 House mouse                 0.022}
+\DocumentationTok{\#\# 6 Big brown bat               0.023}
+\DocumentationTok{\#\# \# ... with 29 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+Ah, sem problema. A função \texttt{dfSummary} arredondou estes pesos para 0. Os valores de verdade ainda estão na \emph{tibble}.
+
+Vamos criar uma \emph{tibble} nova só com as colunas que nos interessam:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}
+\NormalTok{    name, order, genus, vore, bodywt, }
+\NormalTok{    brainwt, awake, sleep\_total}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+Vamos ver o sumário:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{dfSummary}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{print}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1829}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4024}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2805}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1341}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+Variável
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estatísticas / Valores
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Freqs (\% de Válidos)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Faltante
+\end{minipage} \\
+\midrule
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+name\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. African elephant\\
+2. African giant pouched rat\\
+3. African striped mouse\\
+4. Arctic fox\\
+5. Arctic ground squirrel\\
+6. Asian elephant\\
+7. Baboon\\
+8. Big brown bat\\
+9. Bottle-nosed dolphin\\
+10. Brazilian tapir\\
+{[} 73 outros {]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+73 (88,0\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+order\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Rodentia\\
+2. Carnivora\\
+3. Primates\\
+4. Artiodactyla\\
+5. Soricomorpha\\
+6. Cetacea\\
+7. Hyracoidea\\
+8. Perissodactyla\\
+9. Chiroptera\\
+10. Cingulata\\
+{[} 9 outros {]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+22 (26,5\%)\\
+12 (14,5\%)\\
+12 (14,5\%)\\
+6 ( 7,2\%)\\
+5 ( 6,0\%)\\
+3 ( 3,6\%)\\
+3 ( 3,6\%)\\
+3 ( 3,6\%)\\
+2 ( 2,4\%)\\
+2 ( 2,4\%)\\
+13 (15,7\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+genus\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Panthera\\
+2. Spermophilus\\
+3. Equus\\
+4. Vulpes\\
+5. Acinonyx\\
+6. Aotus\\
+7. Aplodontia\\
+8. Blarina\\
+9. Bos\\
+10. Bradypus\\
+{[} 67 outros {]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+3 ( 3,6\%)\\
+3 ( 3,6\%)\\
+2 ( 2,4\%)\\
+2 ( 2,4\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+1 ( 1,2\%)\\
+67 (80,7\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+vore\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. carni\\
+2. herbi\\
+3. insecti\\
+4. omni\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+19 (25,0\%)\\
+32 (42,1\%)\\
+5 ( 6,6\%)\\
+20 (26,3\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+7\\
+(8,4\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+bodywt\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 166,1 (786,8)\\
+mín \textless{} mediana \textless{} máx:\\
+0 \textless{} 1,7 \textless{} 6654\\
+IQE (CV) : 41,6 (4,7)\strut
+\end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+brainwt\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 0,3 (1)\\
+mín \textless{} mediana \textless{} máx:\\
+0 \textless{} 0 \textless{} 5,7\\
+IQE (CV) : 0,1 (3,5)\strut
+\end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+27\\
+(32,5\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+awake\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 13,6 (4,5)\\
+mín \textless{} mediana \textless{} máx:\\
+4,1 \textless{} 13,9 \textless{} 22,1\\
+IQE (CV) : 5,9 (0,3)\strut
+\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+sleep\_total\\
+{[}numeric{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+Média (dp) : 10,4 (4,5)\\
+mín \textless{} mediana \textless{} máx:\\
+1,9 \textless{} 10,1 \textless{} 19,9\\
+IQE (CV) : 5,9 (0,4)\strut
+\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\hypertarget{gruxe1ficos-de-dispersuxe3o-scatter-plots}{%
+\section{\texorpdfstring{Gráficos de dispersão (\emph{scatter plots})}{Gráficos de dispersão (scatter plots)}}\label{gruxe1ficos-de-dispersuxe3o-scatter-plots}}
+
+\begin{itemize}
+\item
+  Servem para visualizar a \emph{relação} entre {\hl{duas variáveis quantitativas.}}
+\item
+  Essa relação \emph{não} é necessariamente de causalidade.
+\item
+  Isto é, a variável representada no eixo horizontal não determina, necessariamente, os valores da variável representada no eixo vertical.
+\item
+  Pense em associação, correlação, não em causalidade.
+\item
+  Troque as variáveis de eixo, se ajudar a deixar isto claro.
+\end{itemize}
+
+\hypertarget{horas-de-sono-e-peso-corporal}{%
+\subsection{Horas de sono e peso corporal}\label{horas-de-sono-e-peso-corporal}}
+
+Como as variáveis \texttt{sleep\_total} e \texttt{bodywt} estão relacionadas?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-1-1} \end{center}
+
+O que houve? Cadê os pontos?
+
+O problema foi que só especificamos o mapeamento estético. Faltou a geometria.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-2-1} \end{center}
+
+Que horror.
+
+A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de 5 horas por noite.
+
+Estes animais muito pesados estão estragando a escala do eixo \(x\).
+
+Que animais são estes?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textgreater{}} \DecValTok{250}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(name, bodywt) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(bodywt)}
+\DocumentationTok{\#\# \# A tibble: 6 x 2}
+\DocumentationTok{\#\#   name             bodywt}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}             \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Horse              521 }
+\DocumentationTok{\#\# 2 Cow                600 }
+\DocumentationTok{\#\# 3 Pilot whale        800 }
+\DocumentationTok{\#\# 4 Giraffe            900.}
+\DocumentationTok{\#\# 5 Asian elephant    2547 }
+\DocumentationTok{\#\# 6 African elephant  6654}
+\end{Highlighting}
+\end{Shaded}
+
+Além disso, há muitos pontos sobrepostos. Em bom português, temos um problema de \emph{overplotting}.
+
+Existem diversas maneiras de lidar com isso.
+
+A primeira delas é alterando a opacidade dos pontos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-alfa-1} \end{center}
+
+Outra maneira é usar \texttt{geom\_jitter} em vez de \texttt{geom\_point}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_jitter}\NormalTok{(}\AttributeTok{width =} \DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-jitter-1} \end{center}
+
+Vamos mudar a escala do gráfico para nos concentrarmos nos animais menos pesados:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{200}\NormalTok{))}
+\DocumentationTok{\#\# Warning: Removed 7 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-3-1} \end{center}
+
+Nesta escala, a relação entre horas de sono e peso não é mais tão regular.
+
+\hypertarget{horas-de-sono-e-peso-corporal-para-animais-pequenos}{%
+\subsection{Horas de sono e peso corporal para animais pequenos}\label{horas-de-sono-e-peso-corporal-para-animais-pequenos}}
+
+Vamos restringir o gráfico a animais com no máximo \(5\)kg.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{limite }\OtherTok{\textless{}{-}} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+Em vez de mudar a escala do gráfico, vamos filtrar as linhas do \emph{data frame}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-pequenos-1} \end{center}
+
+\hypertarget{incluindo-a-dieta}{%
+\subsection{Incluindo a dieta}\label{incluindo-a-dieta}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total, }\AttributeTok{color =}\NormalTok{ vore)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-dieta-1} \end{center}
+
+\hypertarget{a-estuxe9tica-pode-ser-especificada-na-geom}{%
+\subsection{\texorpdfstring{A estética pode ser especificada na \texttt{geom}}{A estética pode ser especificada na geom}}\label{a-estuxe9tica-pode-ser-especificada-na-geom}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total, }\AttributeTok{color =}\NormalTok{ vore))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-dieta-geom-1} \end{center}
+
+\hypertarget{estuxe9tica-fixa-ou-dependendo-de-variuxe1vel}{%
+\subsection{Estética fixa ou dependendo de variável?}\label{estuxe9tica-fixa-ou-dependendo-de-variuxe1vel}}
+
+Compare o último \emph{chunk} acima com:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total), }\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-cor-1} \end{center}
+
+Um erro comum:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ sleep\_total, }\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-cor-erro-1} \end{center}
+
+\hypertarget{uma-correlauxe7uxe3o-mais-clara}{%
+\subsection{Uma correlação mais clara}\label{uma-correlauxe7uxe3o-mais-clara}}
+
+Peso cerebral versus peso corporal:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ brainwt))}
+\DocumentationTok{\#\# Warning: Removed 27 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-1} \end{center}
+
+Vamos restringir aos animais mais leves e mudar a opacidade:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ brainwt), }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{)}
+\DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-2-1} \end{center}
+
+Vamos incluir horas de sono e dieta:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}
+      \FunctionTok{aes}\NormalTok{(}
+        \AttributeTok{x =}\NormalTok{ bodywt, }
+        \AttributeTok{y =}\NormalTok{ brainwt,}
+        \AttributeTok{size =}\NormalTok{ sleep\_total,}
+        \AttributeTok{color =}\NormalTok{ vore}
+\NormalTok{      ), }
+      \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
+\NormalTok{    )}
+\DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-3-1} \end{center}
+
+Mudar a escala dos tamanhos e incluir rótulos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}
+      \FunctionTok{aes}\NormalTok{(}
+        \AttributeTok{x =}\NormalTok{ bodywt, }
+        \AttributeTok{y =}\NormalTok{ brainwt,}
+        \AttributeTok{size =}\NormalTok{ sleep\_total,}
+        \AttributeTok{color =}\NormalTok{ vore}
+\NormalTok{      ), }
+      \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{scale\_size}\NormalTok{(}
+      \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{title =} \StringTok{\textquotesingle{}Peso do cérebro versus peso corporal\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{subtitle =} \FunctionTok{paste0}\NormalTok{(}
+        \StringTok{\textquotesingle{}para mamíferos com menos de \textquotesingle{}}\NormalTok{, }
+\NormalTok{        limite, }
+        \StringTok{\textquotesingle{} kg\textquotesingle{}}
+\NormalTok{      ),}
+      \AttributeTok{caption =} \StringTok{\textquotesingle{}Fonte: dataset \textasciigrave{}msleep\textasciigrave{}\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}Peso corporal (kg)\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \StringTok{\textquotesingle{}Peso do}\SpecialCharTok{\textbackslash{}n}\StringTok{ cérebro (kg)\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{color =} \StringTok{\textquotesingle{}Dieta\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{size =} \StringTok{\textquotesingle{}Horas}\SpecialCharTok{\textbackslash{}n}\StringTok{de sono\textquotesingle{}}
+\NormalTok{    )}
+\DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-4-1} \end{center}
+
+\hypertarget{histogramas-e-cia.}{%
+\section{Histogramas e cia.}\label{histogramas-e-cia.}}
+
+A idéia agora é agrupar indivíduos em classes, dependendo do valor de uma variável numérica.
+
+Vamos nos concentrar nas horas de sono.
+
+\hypertarget{distribuiuxe7uxf5es-de-frequuxeancia}{%
+\subsection{Distribuições de frequência}\label{distribuiuxe7uxf5es-de-frequuxeancia}}
+
+Em R base, é fácil fazer os agrupamentos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono}\SpecialCharTok{$}\NormalTok{sleep\_total}
+\DocumentationTok{\#\#  [1] 12,1 17,0 14,4 14,9  4,0 14,4  8,7  7,0 10,1  3,0  5,3  9,4 10,0}
+\DocumentationTok{\#\# [14] 12,5 10,3  8,3  9,1 17,4  5,3 18,0  3,9 19,7  2,9  3,1 10,1 10,9}
+\DocumentationTok{\#\# [27] 14,9 12,5  9,8  1,9  2,7  6,2  6,3  8,0  9,5  3,3 19,4 10,1 14,2}
+\DocumentationTok{\#\# [40] 14,3 12,8 12,5 19,9 14,6 11,0  7,7 14,5  8,4  3,8  9,7 15,8 10,4}
+\DocumentationTok{\#\# [53] 13,5  9,4 10,3 11,0 11,5 13,7  3,5  5,6 11,1 18,1  5,4 13,0  8,7}
+\DocumentationTok{\#\# [66]  9,6  8,4 11,3 10,6 16,6 13,8 15,9 12,8  9,1  8,6 15,8  4,4 15,6}
+\DocumentationTok{\#\# [79]  8,9  5,2  6,3 12,5  9,8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono}\SpecialCharTok{$}\NormalTok{sleep\_total }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{range}\NormalTok{()}
+\DocumentationTok{\#\# [1]  1,9 19,9}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono}\SpecialCharTok{$}\NormalTok{sleep\_total }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{cut}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{right =} \ConstantTok{FALSE}\NormalTok{)}
+\DocumentationTok{\#\#  [1] [12,14) [16,18) [14,16) [14,16) [4,6)   [14,16) [8,10)  [6,8)  }
+\DocumentationTok{\#\#  [9] [10,12) [2,4)   [4,6)   [8,10)  [10,12) [12,14) [10,12) [8,10) }
+\DocumentationTok{\#\# [17] [8,10)  [16,18) [4,6)   [18,20) [2,4)   [18,20) [2,4)   [2,4)  }
+\DocumentationTok{\#\# [25] [10,12) [10,12) [14,16) [12,14) [8,10)  [0,2)   [2,4)   [6,8)  }
+\DocumentationTok{\#\# [33] [6,8)   [8,10)  [8,10)  [2,4)   [18,20) [10,12) [14,16) [14,16)}
+\DocumentationTok{\#\# [41] [12,14) [12,14) [18,20) [14,16) [10,12) [6,8)   [14,16) [8,10) }
+\DocumentationTok{\#\# [49] [2,4)   [8,10)  [14,16) [10,12) [12,14) [8,10)  [10,12) [10,12)}
+\DocumentationTok{\#\# [57] [10,12) [12,14) [2,4)   [4,6)   [10,12) [18,20) [4,6)   [12,14)}
+\DocumentationTok{\#\# [65] [8,10)  [8,10)  [8,10)  [10,12) [10,12) [16,18) [12,14) [14,16)}
+\DocumentationTok{\#\# [73] [12,14) [8,10)  [8,10)  [14,16) [4,6)   [14,16) [8,10)  [4,6)  }
+\DocumentationTok{\#\# [81] [6,8)   [12,14) [8,10) }
+\DocumentationTok{\#\# 10 Levels: [0,2) [2,4) [4,6) [6,8) [8,10) [10,12) [12,14) ... [18,20)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono}\SpecialCharTok{$}\NormalTok{sleep\_total }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{cut}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{right =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{table}\NormalTok{(}\AttributeTok{dnn =} \StringTok{\textquotesingle{}Horas de sono\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as.data.frame}\NormalTok{()}
+\DocumentationTok{\#\#    Horas.de.sono Freq}
+\DocumentationTok{\#\# 1          [0,2)    1}
+\DocumentationTok{\#\# 2          [2,4)    8}
+\DocumentationTok{\#\# 3          [4,6)    7}
+\DocumentationTok{\#\# 4          [6,8)    5}
+\DocumentationTok{\#\# 5         [8,10)   17}
+\DocumentationTok{\#\# 6        [10,12)   14}
+\DocumentationTok{\#\# 7        [12,14)   11}
+\DocumentationTok{\#\# 8        [14,16)   12}
+\DocumentationTok{\#\# 9        [16,18)    3}
+\DocumentationTok{\#\# 10       [18,20)    5}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{histograma}{%
+\subsection{Histograma}\label{histograma}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-sono-1} \end{center}
+
+\hypertarget{poluxedgono-de-frequuxeancia}{%
+\subsection{Polígono de frequência}\label{poluxedgono-de-frequuxeancia}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_freqpoly}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{color =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-freqpoly-1} \end{center}
+
+\hypertarget{ogiva-frequuxeancia-acumulada}{%
+\section{Ogiva (frequência acumulada)}\label{ogiva-frequuxeancia-acumulada}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_step}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}ecdf\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/ogiva-1} \end{center}
+
+\hypertarget{ramos-e-folhas}{%
+\section{Ramos e folhas}\label{ramos-e-folhas}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono}\SpecialCharTok{$}\NormalTok{sleep\_total }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{stem}\NormalTok{()}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#   The decimal point is at the |}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#    0 | 9}
+\DocumentationTok{\#\#    2 | 79013589}
+\DocumentationTok{\#\#    4 | 0423346}
+\DocumentationTok{\#\#    6 | 23307}
+\DocumentationTok{\#\#    8 | 03446779114456788}
+\DocumentationTok{\#\#   10 | 01113346900135}
+\DocumentationTok{\#\#   12 | 15555880578}
+\DocumentationTok{\#\#   14 | 234456996889}
+\DocumentationTok{\#\#   16 | 604}
+\DocumentationTok{\#\#   18 | 01479}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{exercuxedcios-3}{%
+\section{Exercícios}\label{exercuxedcios-3}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Construa um histograma da variável \texttt{brainwt}. Escolha o número de classes que você achar melhor. O que acontece com os valores \texttt{NA}?
+\item
+  Construa um \emph{scatter plot} de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis?
 \end{enumerate}
 
 \end{document}

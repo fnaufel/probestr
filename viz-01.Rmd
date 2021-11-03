@@ -1,0 +1,446 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Visualização com ggplot2 {#viz}
+
+## Vídeo 1
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('OBpNjqIIyhI')
+```
+
+
+## Componentes de um gráfico ggplot2
+
+### Mapeamento estético (*mapping*) e geometrias
+
+```{r echo=FALSE, out.width='100%'}
+knitr::include_graphics('images/countries-1.png')
+```
+
+::: {style="width: 50%; margin: auto;"}
+
+| Variável            | Estética  | Geometria |
+|---------------------|-----------|-----------|
+| PIB per capita      | posição x | ponto     |
+| Expectativa de vida | posição y | ponto     |
+| População           | tamanho   | ponto     |
+| Continente          | cor       | ponto     |
+
+:::
+
+Algumas outras estéticas:
+
+* Cor de preenchimento
+* Cor do traço
+* Tipo do traço (sólido, pontilhado, tracejado etc.)
+* Forma (círculo, quadrado, triângulo etc.)
+* Opacidade
+
+
+Algumas outras geometrias:
+
+* Linhas
+* Barras ou colunas
+* *Boxplots*
+* Histogramas
+
+
+### Escalas (*scales*)
+
+Controlam os detalhes do mapeamento (eixos, cores etc.).
+
+
+### Rótulos (*labels*)
+
+Texto.
+
+
+### Outros componentes
+
+* Coordenadas
+* Temas
+* Legendas (*guides*)
+* Facetas
+
+
+## Conjunto de dados
+
+Dados sobre o sono de diversos mamíferos. Para ver a documentação, digite
+
+```{r help, eval=FALSE}
+?msleep
+```
+
+
+Vamos atribuir à variável `df` o *data frame*, que faz parte do pacote `ggplot2` (que já foi carregado no *chunk* de *setup*, lá em cima):
+
+```{r df}
+df <- msleep
+df
+```
+
+Vamos examinar a estrutura --- usando R base:
+
+```{r echo=FALSE}
+options(str = strOptions(vec.len = 3))
+```
+
+```{r str-df}
+str(df)
+```
+
+Usando `glimpse`:
+
+```{r glimpse-df}
+glimpse(df)
+```
+
+Vendo só as primeiras linhas:
+
+```{r head-df}
+head(df)
+```
+
+Interativamente, usando `view`:
+
+```{r view-df}
+view(df)
+```
+
+
+Sumário dos dados usando o pacote *summarytools* (que já foi carregado no *setup*):
+
+```{r summary-df, results='asis'}
+df %>% dfSummary() %>% print()
+```
+
+
+Há muitos `NA` em diversas variáveis. Para nossos exemplos simples de visualização, vamos usar as colunas
+
+* `name` 
+* `genus` 
+* `order` 
+* `sleep_total` 
+* `awake` 
+* `bodywt` 
+* `brainwt` 
+
+Mas... a coluna que mostra a dieta (`vore`) tem só 7 `NA`. Quais são?
+
+```{r df-vore}
+df %>% 
+  filter(is.na(vore)) %>% 
+  select(name)
+```
+
+OK. Vamos manter a coluna `vore` também, apesar dos `NA`. Quando formos usar esta variável, tomaremos cuidado.
+
+Também... a coluna `bodywt` tem 0 como valor mínimo. Como assim?
+
+```{r df-bodywt}
+df %>% 
+  filter(bodywt < 1) %>% 
+  select(name, bodywt) %>% 
+  arrange(bodywt)
+```
+
+Ah, sem problema. A função `dfSummary` arredondou estes pesos para 0. Os valores de verdade ainda estão na *tibble*.
+
+Vamos criar uma *tibble* nova só com as colunas que nos interessam:
+
+```{r sono}
+sono <- df %>% 
+  select(
+    name, order, genus, vore, bodywt, 
+    brainwt, awake, sleep_total
+  )
+```
+
+Vamos ver o sumário:
+
+```{r sumario-sono, results='asis'}
+sono %>% dfSummary() %>% print()
+```
+
+
+## Gráficos de dispersão (*scatter plots*)
+
+* Servem para visualizar a *relação* entre [duas variáveis quantitativas.]{.hl}
+
+* Essa relação *não* é necessariamente de causalidade. 
+
+* Isto é, a variável representada no eixo horizontal não determina,   necessariamente, os valores da variável representada no eixo vertical.
+  
+* Pense em associação, correlação, não em causalidade.
+
+* Troque as variáveis de eixo, se ajudar a deixar isto claro.
+
+
+### Horas de sono e peso corporal
+
+Como as variáveis `sleep_total` e `bodywt` estão relacionadas?
+
+```{r sono-peso-plot-1}
+sono %>% 
+  ggplot(aes(x = bodywt, y = sleep_total))
+```
+
+O que houve? Cadê os pontos?
+
+O problema foi que só especificamos o mapeamento estético. Faltou a geometria.
+
+```{r sono-peso-plot-2}
+sono %>% 
+  ggplot(aes(x = bodywt, y = sleep_total)) +
+  geom_point()
+```
+
+Que horror. 
+
+A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de 5 horas por noite.
+
+Estes animais muito pesados estão estragando a escala do eixo $x$.
+
+Que animais são estes?
+
+```{r pesados}
+sono %>% 
+  filter(bodywt > 250) %>% 
+  select(name, bodywt) %>% 
+  arrange(bodywt)
+```
+
+Além disso, há muitos pontos sobrepostos. Em bom português, temos um problema de *overplotting*. 
+
+Existem diversas maneiras de lidar com isso.
+
+A primeira delas é alterando a opacidade dos pontos:
+
+```{r sono-peso-plot-alfa}
+sono %>% 
+  ggplot(aes(x = bodywt, y = sleep_total)) +
+    geom_point(alpha = 0.2)
+```
+
+Outra maneira é usar `geom_jitter` em vez de `geom_point`:
+
+```{r sono-peso-plot-jitter}
+sono %>% 
+  ggplot(aes(x = bodywt, y = sleep_total)) +
+    geom_jitter(width = 100)
+```
+
+
+Vamos mudar a escala do gráfico para nos concentrarmos nos animais menos pesados:
+
+```{r sono-peso-plot-3}
+sono %>% 
+  ggplot(aes(x = bodywt, y = sleep_total)) +
+    geom_point() +
+    scale_x_continuous(limits = c(0, 200))
+```
+
+Nesta escala, a relação entre horas de sono e peso não é mais tão regular.
+
+### Horas de sono e peso corporal para animais pequenos
+
+Vamos restringir o gráfico a animais com no máximo $5$kg.
+
+```{r limite}
+limite <- 5
+```
+
+
+Em vez de mudar a escala do gráfico, vamos filtrar as linhas do *data frame*:
+
+```{r sono-peso-plot-pequenos}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot(aes(x = bodywt, y = sleep_total)) +
+    geom_point()
+```
+
+### Incluindo a dieta
+
+```{r plot-sono-peso-dieta}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot(aes(x = bodywt, y = sleep_total, color = vore)) +
+    geom_point()
+
+```
+
+
+### A estética pode ser especificada na `geom`
+
+```{r plot-sono-peso-dieta-geom}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot() +
+    geom_point(aes(x = bodywt, y = sleep_total, color = vore))
+```
+
+
+### Estética fixa ou dependendo de variável?
+
+Compare o último *chunk* acima com:
+
+```{r plot-sono-peso-cor}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot() +
+    geom_point(aes(x = bodywt, y = sleep_total), color = 'blue')
+```
+
+Um erro comum:
+
+```{r plot-sono-peso-cor-erro}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot() +
+    geom_point(aes(x = bodywt, y = sleep_total, color = 'blue'))
+```
+
+### Uma correlação mais clara
+
+Peso cerebral versus peso corporal:
+
+```{r cerebro-corpo}
+sono %>% 
+  ggplot() +
+    geom_point(aes(x = bodywt, y = brainwt))
+```
+
+Vamos restringir aos animais mais leves e mudar a opacidade:
+
+```{r cerebro-corpo-2}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot() +
+    geom_point(aes(x = bodywt, y = brainwt), alpha = .5)
+```
+
+Vamos incluir horas de sono e dieta:
+
+```{r cerebro-corpo-3}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot() +
+    geom_point(
+      aes(
+        x = bodywt, 
+        y = brainwt,
+        size = sleep_total,
+        color = vore
+      ), 
+      alpha = .5
+    )
+```
+
+Mudar a escala dos tamanhos e incluir rótulos:
+
+```{r cerebro-corpo-4}
+sono %>% 
+  filter(bodywt < limite) %>% 
+  ggplot() +
+    geom_point(
+      aes(
+        x = bodywt, 
+        y = brainwt,
+        size = sleep_total,
+        color = vore
+      ), 
+      alpha = .5
+    ) +
+    scale_size(
+      breaks = seq(0, 24, 4)
+    ) +
+    labs(
+      title = 'Peso do cérebro versus peso corporal',
+      subtitle = paste0(
+        'para mamíferos com menos de ', 
+        limite, 
+        ' kg'
+      ),
+      caption = 'Fonte: dataset `msleep`',
+      x = 'Peso corporal (kg)',
+      y = 'Peso do\n cérebro (kg)',
+      color = 'Dieta',
+      size = 'Horas\nde sono'
+    )
+```
+
+
+## Histogramas e cia.
+
+A idéia agora é agrupar indivíduos em classes, dependendo do valor de uma variável numérica.
+
+Vamos nos concentrar nas horas de sono.
+
+### Distribuições de frequência
+
+Em R base, é fácil fazer os agrupamentos:
+
+```{r vetor-horas-sono}
+sono$sleep_total
+```
+
+```{r amplitude-sono}
+sono$sleep_total %>% range()
+```
+
+```{r cut-horas-sono}
+sono$sleep_total %>% 
+  cut(breaks = seq(0, 20, 2), right = FALSE)
+```
+
+```{r dist-table-sono}
+sono$sleep_total %>%  
+  cut(breaks = seq(0, 20, 2), right = FALSE) %>% 
+  table(dnn = 'Horas de sono') %>% 
+  as.data.frame()
+```
+
+### Histograma
+
+```{r hist-sono}
+sono %>% 
+  ggplot(aes(x = sleep_total)) +
+    geom_histogram(breaks = seq(0, 20, 2)) +
+    scale_x_continuous(breaks = seq(0, 20, 2))
+```
+
+
+### Polígono de frequência
+
+```{r hist-freqpoly}
+sono %>% 
+  ggplot(aes(x = sleep_total)) +
+    geom_histogram(breaks = seq(0, 20, 2)) +
+    geom_freqpoly(breaks = seq(0, 20, 2), color = 'red') +
+    scale_x_continuous(breaks = seq(0, 20, 2))
+```
+
+## Ogiva (frequência acumulada)
+
+```{r ogiva}
+sono %>% 
+  ggplot(aes(x = sleep_total)) +
+  geom_step(stat = 'ecdf')
+```
+
+
+## Ramos e folhas
+
+```{r stem-and-leaf}
+sono$sleep_total %>% 
+  stem()
+```
+
+## Exercícios
+
+1. Construa um histograma da variável `brainwt`. Escolha o número de classes que você achar melhor. O que acontece com os valores `NA`?
+
+2. Construa um *scatter plot* de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? 

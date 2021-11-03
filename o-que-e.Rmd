@@ -36,7 +36,7 @@ embed_yt('6Q_XSoLCIpc')
 
 1. Qual a graça dos quadrinhos na Figura \@ref(fig:xkcd-cor), que também [aparecem no vídeo](https://youtu.be/6Q_XSoLCIpc?t=1385)?
 
-    ```{r xkcd-cor, echo=FALSE, fig.cap='(ref:552)'}
+    ```{r xkcd-cor, echo=FALSE, fig.cap='(ref:552)', out.width='90%'}
     knitr::include_graphics('images/correlation-pt-600.png')
     ```
 
