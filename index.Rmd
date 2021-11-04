@@ -10,7 +10,8 @@ lang: 'pt-br'
 cover-image: "images/640px-Nightingale-mortality.jpg"
 
 documentclass: "report"
-classoption: '12pt'
+classoption: '11pt'
+geometry: 'margin=1in'
 bibliography: []
 biblio-style: apalike
 link-citations: yes
@@ -18,11 +19,9 @@ link-citations: yes
 
 # Apresentação {- #apresentacao}
 
-![](images/640px-Nightingale-mortality.jpg){.center}
+::: {.rmdcaution latex=1}
 
-::: {.rmdcaution}
-
-[Atenção]{.hl}
+[**Atenção**]{.center}
 
 Este material ainda está em construção.
 
@@ -31,6 +30,8 @@ Pode haver mudanças a qualquer momento.
 Verifique a data desta versão no rodapé da página *web* ou na capa do arquivo pdf.
 
 :::
+
+![](images/640px-Nightingale-mortality.jpg){.center}
 
 Este livro/site foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano. 
 

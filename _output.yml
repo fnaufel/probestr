@@ -42,4 +42,4 @@ bookdown::pdf_book:
     --variable=subparagraph,
     --filter=./filters/hl.py3
   ]
-  md_extensions: +raw_attribute
+  md_extensions: +fenced_divs+bracketed_spans

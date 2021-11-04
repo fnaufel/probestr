@@ -24,7 +24,7 @@ options(
   # Number of decimal digits for numbers produced by inline R code
   fmdigits = 2,
   # Width of text output
-  width = ifelse(is_html_output(), 85, 72),
+  width = ifelse(is_html_output(), 85, 77),
   # Number of head elements to show in
   str = strOptions(vec.len = 3)
 )
@@ -55,7 +55,7 @@ st_options(
 library(tidyverse)
 
 # Text size in plots
-plot_text_size = ifelse(is_html_output(), 12, 14)
+plot_text_size = ifelse(is_html_output(), 12, 13)
   
 # Sober theme for ggplot
 theme_set(

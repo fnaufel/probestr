@@ -4,10 +4,6 @@
   breaklinks
 }
 
-% Make page wider
-\usepackage{anysize}
-\marginsize{2cm}{2cm}{1cm}{1cm} %lrtb
-
 % Lexend font
 \usepackage{lexend}
 
@@ -49,9 +45,10 @@
 \usepackage{tcolorbox}
 
 \tcbset{
-  sharp corners,
+  rounded corners,
   boxrule=0.3mm,
-  colback=black!2!white
+  colback=black!2!white,
+  parbox=false
 }
 
 \newtcolorbox{rmdbox}{
