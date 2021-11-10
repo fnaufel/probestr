@@ -3,6 +3,8 @@
 
 * https://bookdown.org/yihui/rmarkdown/
 
+* [[file:~/Documents/OrgFiles/r.org::*Bookdown][Bookdown]]
+    
 * Infrastructure
 
 *** Use checkdown and/or exam?
@@ -11,7 +13,40 @@
 
 ***** http://www.r-exams.org/
 
-* [4/6] Source
+* [8/13] Source
+
+*** STARTED Escrever capítulo visualização
+    :LOGBOOK:
+    CLOCK: [2021-11-10 Wed 10:35]--[2021-11-10 Wed 11:59] =>  1:24
+    CLOCK: [2021-11-03 Wed 17:14]--[2021-11-03 Wed 20:13] =>  2:59
+    CLOCK: [2021-11-02 Tue 12:52]--[2021-11-02 Tue 13:15] =>  0:23
+    - State "STARTED"    from "TODO"       [2021-11-02 Tue 12:52]
+    - State "TODO"       from              [2021-11-01 Mon 13:29]
+    :END:
+
+    + [X] Add source for GAP plot
+
+    + [X] Add text before GAP plot
+
+    + [X] Implement pdf callouts as pandoc filters? No, there is a lua
+      filter for that. I only needed "latex=1" in the fenced div,
+
+    + [X] Reduce # of elements str shows
+
+    + [X] Make page wider in pdf output
+
+    + [X] Data summary not showing in pdf output
+
+    + [X] Tweak width of some R code (too wide for pdf output)
+
+    + [X] Width of text output too large in pdf, ok in html
+
+    + [X] Size of text in plots too small in pdf
+
+*** TODO Escrever exercícios visualização (swirl?)
+    :LOGBOOK:
+    - State "TODO"       from              [2021-11-01 Mon 13:31]
+    :END:
 
 *** STARTED Write swirl exercises about R
     :LOGBOOK:
@@ -31,6 +66,41 @@
     + Or use link and write function to render raw url in LaTeX and
       description in HTML.
     
+*** DONE Incluir link no meu site
+    CLOSED: [2021-11-01 Mon 12:48]
+    :LOGBOOK:
+    - State "DONE"       from "STARTED"    [2021-11-01 Mon 12:48]
+    CLOCK: [2021-11-01 Mon 12:35]--[2021-11-01 Mon 12:48] =>  0:13
+    - State "STARTED"    from "TODO"       [2021-11-01 Mon 12:34]
+    - State "TODO"       from              [2021-10-27 Wed 17:37]
+    :END:
+
+*** DONE Anunciar no Moodle e no Telegram
+    CLOSED: [2021-11-01 Mon 13:29]
+    :LOGBOOK:
+    - State "DONE"       from "STARTED"    [2021-11-01 Mon 13:29]
+    CLOCK: [2021-11-01 Mon 12:48]--[2021-11-01 Mon 13:29] =>  0:41
+    - State "STARTED"    from "TODO"       [2021-11-01 Mon 12:48]
+    - State "TODO"       from              [2021-10-27 Wed 17:34]
+    :END:
+
+*** DONE Escrever pequena apresentação
+    CLOSED: [2021-10-30 Sat 19:11]
+    :LOGBOOK:
+    - State "DONE"       from "STARTED"    [2021-10-30 Sat 19:11]
+    CLOCK: [2021-10-30 Sat 18:25]--[2021-10-30 Sat 19:11] =>  0:46
+    - State "STARTED"    from "TODO"       [2021-10-30 Sat 18:55]
+    - State "TODO"       from              [2021-10-27 Wed 17:31]
+    :END:
+
+*** DONE Achar figura de capa
+    CLOSED: [2021-10-30 Sat 18:54]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2021-10-30 Sat 18:54]
+    CLOCK: [2021-10-30 Sat 18:15]--[2021-10-30 Sat 18:20] =>  0:05
+    - State "TODO"       from              [2021-10-27 Wed 17:32]
+    :END:
+
 *** DONE Finish exercises for video 1
     CLOSED: [2020-12-29 Tue 17:38]
     :LOGBOOK:
@@ -58,77 +128,91 @@
     - State "TODO"       from              [2020-12-18 Fri 13:54]
     :END:
 
-* [7/7] LaTeX
+* [8/10] LaTeX
 
-*** DONE See my logic book
-    CLOSED: [2020-12-15 Tue 17:11]
-    :LOGBOOK:
-    - State "DONE"       from "TODO"       [2020-12-15 Tue 17:11]
-    - State "TODO"       from              [2020-12-15 Tue 16:17]
-    :END:
+** DONE Do not use df_print: kable
+   CLOSED: [2021-11-10 Wed 11:59]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2021-11-10 Wed 11:59]
+   - State "TODO"       from              [2021-11-10 Wed 11:48]
+   :END:
 
-*** DONE Use fancy header: titlesec
-    CLOSED: [2020-12-15 Tue 17:15]
-    :LOGBOOK:
-    - State "DONE"       from "STARTED"    [2020-12-15 Tue 17:15]
-    - State "STARTED"    from "TODO"       [2020-12-15 Tue 17:12]
-    - State "TODO"       from              [2020-12-13 Sun 15:13]
-    :END:
+** TODO Fix spacing around chunks and figures in pdf output
+   :LOGBOOK:
+   - State "TODO"       from              [2021-11-10 Wed 11:44]
+   :END:
 
-*** DONE Make URLs appear in links that have descriptions
-    CLOSED: [2020-12-16 Wed 16:20]
-    :LOGBOOK:
-    - State "DONE"       from "TODO"       [2020-12-16 Wed 16:20]
-    - State "TODO"       from              [2020-12-15 Tue 17:54]
-    :END:
+   + Make pdf more legible.
+    
+** DONE See my logic book
+   CLOSED: [2020-12-15 Tue 17:11]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2020-12-15 Tue 17:11]
+   - State "TODO"       from              [2020-12-15 Tue 16:17]
+   :END:
 
-    + Pandoc?
+** DONE Use fancy header: titlesec
+   CLOSED: [2020-12-15 Tue 17:15]
+   :LOGBOOK:
+   - State "DONE"       from "STARTED"    [2020-12-15 Tue 17:15]
+   - State "STARTED"    from "TODO"       [2020-12-15 Tue 17:12]
+   - State "TODO"       from              [2020-12-13 Sun 15:13]
+   :END:
 
-    + Yep. link-as-notes.
+** DONE Make URLs appear in links that have descriptions
+   CLOSED: [2020-12-16 Wed 16:20]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2020-12-16 Wed 16:20]
+   - State "TODO"       from              [2020-12-15 Tue 17:54]
+   :END:
 
-*** DONE Keep section headers from breaking between pages
-    CLOSED: [2020-12-16 Wed 16:45]
-    :LOGBOOK:
-    - State "DONE"       from "TODO"       [2020-12-16 Wed 16:45]
-    - State "TODO"       from              [2020-12-16 Wed 16:21]
-    :END:
+   + Pandoc?
 
-    + Used \usepackage[nobottomtitles*]{titlesec}
+   + Yep. link-as-notes.
 
-*** DONE Use package for frames?
-    CLOSED: [2020-12-17 Thu 15:00]
-    :LOGBOOK:
-    - State "DONE"       from "TODO"       [2020-12-17 Thu 15:00]
-    - State "TODO"       from              [2020-12-13 Sun 15:20]
-    :END:
+** DONE Keep section headers from breaking between pages
+   CLOSED: [2020-12-16 Wed 16:45]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2020-12-16 Wed 16:45]
+   - State "TODO"       from              [2020-12-16 Wed 16:21]
+   :END:
 
-    + Generated tex uses framed package. Seems limited.
+   + Used \usepackage[nobottomtitles*]{titlesec}
 
-    + Use longfbox instead:
+** DONE Use package for frames?
+   CLOSED: [2020-12-17 Thu 15:00]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2020-12-17 Thu 15:00]
+   - State "TODO"       from              [2020-12-13 Sun 15:20]
+   :END:
 
-      * [[/usr/share/doc/texlive-doc/latex/longfbox/longfbox.pdf]]
+   + Generated tex uses framed package. Seems limited.
 
-    + No, there is an error when loading the package that says
-      savenotes is already defined.
+   + Use longfbox instead:
 
-    + Use [[/usr/share/doc/texlive-doc/latex/tcolorbox/tcolorbox.pdf]]
+     * [[/usr/share/doc/texlive-doc/latex/longfbox/longfbox.pdf]]
 
-    + Plus, block2 engine is broken in this version of Bookdown. Use
-      block instead.
+   + No, there is an error when loading the package that says
+     savenotes is already defined.
 
-*** DONE Write environments for rmdboxes
-    CLOSED: [2020-12-17 Thu 15:00]
-    :LOGBOOK:
-    - State "DONE"       from "TODO"       [2020-12-17 Thu 15:00]
-    - State "TODO"       from              [2020-12-13 Sun 15:13]
-    :END:
+   + Use [[/usr/share/doc/texlive-doc/latex/tcolorbox/tcolorbox.pdf]]
 
-*** DONE Make font size bigger?
-    CLOSED: [2020-12-18 Fri 15:40]
-    :LOGBOOK:
-    - State "DONE"       from "TODO"       [2020-12-18 Fri 15:40]
-    - State "TODO"       from              [2020-12-15 Tue 16:42]
-    :END:
+   + Plus, block2 engine is broken in this version of Bookdown. Use
+     block instead.
+
+** DONE Write environments for rmdboxes
+   CLOSED: [2020-12-17 Thu 15:00]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2020-12-17 Thu 15:00]
+   - State "TODO"       from              [2020-12-13 Sun 15:13]
+   :END:
+
+** DONE Make font size bigger?
+   CLOSED: [2020-12-18 Fri 15:40]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2020-12-18 Fri 15:40]
+   - State "TODO"       from              [2020-12-15 Tue 16:42]
+   :END:
 
 * [3/3] HTML
 
@@ -246,4 +330,5 @@
       :END:
 
 *** Modelos lineares
+
 

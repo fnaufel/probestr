@@ -9,7 +9,7 @@ bookdown::bs4_book:
     base_font:
       google:
         family: Lexend
-        wght: 500
+        wght: 400
     heading_font:
       google:
         family: Roboto
@@ -35,6 +35,7 @@ bookdown::pdf_book:
     in_header: "tex/00-preambulo.tex"
   latex_engine: xelatex
   citation_package: natbib
+  df_print: tibble
   keep_tex: yes
   pandoc_args: [
     -V, 

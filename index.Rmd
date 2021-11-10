@@ -17,19 +17,20 @@ biblio-style: apalike
 link-citations: yes
 ---
 
+
 # Apresentação {- #apresentacao}
 
 ::: {.rmdcaution latex=1}
 
-[**Atenção**]{.center}
+**Atenção**
 
 Este material ainda está em construção.
 
 Pode haver mudanças a qualquer momento.
 
-Verifique a data desta versão no rodapé da página *web* ou na capa do arquivo pdf.
-
+Verifique, no rodapé da página *web* ou na capa do arquivo pdf, a data desta versão.
 :::
+
 
 ![](images/640px-Nightingale-mortality.jpg){.center}
 

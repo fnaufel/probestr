@@ -13,156 +13,195 @@ embed_yt('OBpNjqIIyhI')
 
 ## Componentes de um gráfico ggplot2
 
-### Mapeamento estético (*mapping*) e geometrias
+### Geometrias e mapeamentos estéticos (*mappings*)
+
+* Observe o gráfico abaixo, obtido de https://www.gapminder.org/downloads/updated-gapminder-world-poster-2015/.
 
 ```{r echo=FALSE, out.width='100%'}
 knitr::include_graphics('images/countries-1.png')
 ```
 
-::: {style="width: 50%; margin: auto;"}
+* O gráfico mostra como, em cada país, a saúde (mais precisamente, a expectativa de vida) se relaciona com a riqueza (mais precisamente, o PIB).
 
-| Variável            | Estética  | Geometria |
-|---------------------|-----------|-----------|
-| PIB per capita      | posição x | ponto     |
-| Expectativa de vida | posição y | ponto     |
-| População           | tamanho   | ponto     |
-| Continente          | cor       | ponto     |
+* Além da expectativa de vida e o do PIB, o gráfico traz mais informações sobre cada país.
 
-:::
+* Cada país é representado por um ponto (a [geometria]{.hl}).
 
-Algumas outras estéticas:
+* Informações sobre cada país são representadas por características do ponto correspondente (as [estéticas]{.hl}):
 
-* Cor de preenchimento
-* Cor do traço
-* Tipo do traço (sólido, pontilhado, tracejado etc.)
-* Forma (círculo, quadrado, triângulo etc.)
-* Opacidade
+  ::: {style="width: 50%; margin: auto;"}
+  
+  | Variável            | Geometria | Estética  |
+  |---------------------|-----------|-----------|
+  | PIB per capita      | ponto     | posição x |
+  | Expectativa de vida | ponto     | posição y |
+  | População           | ponto     | tamanho   |
+  | Continente          | ponto     | cor       |
+  
+  :::
 
+* Você pode usar outras estéticas para representar informações:
 
-Algumas outras geometrias:
+  * Cor de preenchimento.
+  * Cor do traço.
+  * Tipo do traço (sólido, pontilhado, tracejado etc.).
+  * Forma (círculo, quadrado, triângulo etc.).
+  * Opacidade.
+  * etc.
 
-* Linhas
-* Barras ou colunas
-* *Boxplots*
-* Histogramas
+* Você pode usar outras geometrias:
 
-
+  * Linhas.
+  * Barras ou colunas.
+  * Caixas.
+  * etc.
+  
+  
 ### Escalas (*scales*)
 
-Controlam os detalhes do mapeamento (eixos, cores etc.).
+* Controlam os detalhes da geometria e do mapeamento (eixos, cores etc.).
+
+* Os eixos do gráfico acima são escalas [contínuas]{.hl}, com valores reais.
+
+* Observe o eixo horizontal. Os valores não aumentam linearmente, mas sim exponencialmente: cada passo à direita equivale a *dobrar* o valor do PIB. O eixo horizontal segue uma [escala logarítmica]{.hl}.
+
+* Os tamanhos dos pontos formam uma escala [discreta]{.hl}, com $4$ valores possíveis (veja a legenda no canto inferior direito do gráfico).
+
+* As cores também formam uma escala discreta.
 
 
 ### Rótulos (*labels*)
 
-Texto.
+* O gráfico também representa informação na forma de texto.
+
+* Além de rótulos (por exemplo, o texto que identifica cada eixo), [o texto também pode, ele mesmo, ser uma geometria, com suas próprias estéticas:]{.hl} observe como o nome de cada país é escrito em um tamanho proporcional à sua população.
 
 
 ### Outros componentes
 
-* Coordenadas
-* Temas
-* Legendas (*guides*)
-* Facetas
+* Coordenadas:
+
+  * Este gráfico usa [coordenadas cartesianas]{.hl}, com eixos $x$ e $y$.
+  
+  * Existem gráficos que usam um sistema de [coordenadas polares]{.hl}.
+
+* Temas:
+
+  * Incluem todos os elementos "decorativos": cor de fundo, linhas de grade, etc. Ajudam a facilitar a leitura e a interpretação.
+  
+  * No gráfico acima, um detalhe interessante do tema é a divisão de cada eixo em segmentos claros e segmentos escuros.
+  
+* Legendas (*guides*).
+
+* Facetas:
+
+  * Às vezes, um gráfico é composto por múltiplos subgráficos.
+  
+  * Cada subgráfico é uma [faceta]{.hl}.
+  
+  * Facetas evitam que informações demais sejam apresentadas no mesmo lugar.
 
 
 ## Conjunto de dados
 
-Dados sobre o sono de diversos mamíferos. Para ver a documentação, digite
+* Nossos exemplos de gráficos vão usar dados sobre o sono de diversos mamíferos. 
 
-```{r help, eval=FALSE}
-?msleep
-```
+* O conjunto de dados se chama `msleep` e está incluído no pacote `ggplot2`.
 
+* Para ver a documentação, digite
 
-Vamos atribuir à variável `df` o *data frame*, que faz parte do pacote `ggplot2` (que já foi carregado no *chunk* de *setup*, lá em cima):
+  ```{r help, eval=FALSE}
+  library(ggplot2)
+  ?msleep
+  ```
 
-```{r df}
-df <- msleep
-df
-```
+* Vamos atribuir o conjunto de dados à variável `df`:
 
-Vamos examinar a estrutura --- usando R base:
+  ```{r df}
+  df <- msleep
+  df
+  ```
 
-```{r echo=FALSE}
-options(str = strOptions(vec.len = 3))
-```
+* Vamos examinar a estrutura --- usando R base:
 
-```{r str-df}
-str(df)
-```
+  ```{r echo=FALSE}
+  options(str = strOptions(vec.len = 3))
+  ```
 
-Usando `glimpse`:
+  ```{r str-df}
+  str(df)
+  ```
 
-```{r glimpse-df}
-glimpse(df)
-```
+* Podemos usar `glimpse`, uma função do `tidyverse`:
 
-Vendo só as primeiras linhas:
+  ```{r glimpse-df}
+  glimpse(df)
+  ```
 
-```{r head-df}
-head(df)
-```
+* Para examinar só as primeiras linhas do *data frame*:
 
-Interativamente, usando `view`:
+  ```{r head-df}
+  head(df)
+  ```
 
-```{r view-df}
-view(df)
-```
+* Para examinar o *data frame* interativamente:
 
+  ```{r view-df}
+  view(df)
+  ```
 
-Sumário dos dados usando o pacote *summarytools* (que já foi carregado no *setup*):
+* Podemos produzir um sumário dos dados usando o pacote *summarytools* (que já foi carregado neste documento):
 
-```{r summary-df, results='asis'}
-df %>% dfSummary() %>% print()
-```
+  ```{r summary-df, results='asis'}
+  df %>% dfSummary() %>% print()
+  ```
 
+* Vemos que há muitos `NA` em diversas variáveis. Para nossos exemplos simples de visualização, vamos usar as colunas
 
-Há muitos `NA` em diversas variáveis. Para nossos exemplos simples de visualização, vamos usar as colunas
+  * `name` 
+  * `genus` 
+  * `order` 
+  * `sleep_total` 
+  * `awake` 
+  * `bodywt` 
+  * `brainwt` 
 
-* `name` 
-* `genus` 
-* `order` 
-* `sleep_total` 
-* `awake` 
-* `bodywt` 
-* `brainwt` 
+* Mas... a coluna que mostra a dieta (`vore`) tem só 7 `NA`. Quais são?
 
-Mas... a coluna que mostra a dieta (`vore`) tem só 7 `NA`. Quais são?
+  ```{r df-vore}
+  df %>% 
+    filter(is.na(vore)) %>% 
+    select(name)
+  ```
 
-```{r df-vore}
-df %>% 
-  filter(is.na(vore)) %>% 
-  select(name)
-```
+* OK. Vamos manter a coluna `vore` também, apesar dos `NA`. Quando formos usar esta variável, tomaremos cuidado.
 
-OK. Vamos manter a coluna `vore` também, apesar dos `NA`. Quando formos usar esta variável, tomaremos cuidado.
+* Também... a coluna `bodywt` tem 0 como valor mínimo. Como assim?
 
-Também... a coluna `bodywt` tem 0 como valor mínimo. Como assim?
+  ```{r df-bodywt}
+  df %>% 
+    filter(bodywt < 1) %>% 
+    select(name, bodywt) %>% 
+    arrange(bodywt)
+  ```
 
-```{r df-bodywt}
-df %>% 
-  filter(bodywt < 1) %>% 
-  select(name, bodywt) %>% 
-  arrange(bodywt)
-```
+* Ah, sem problema. A função `dfSummary` arredondou estes pesos para 0. Os valores de verdade ainda estão na *tibble*.
 
-Ah, sem problema. A função `dfSummary` arredondou estes pesos para 0. Os valores de verdade ainda estão na *tibble*.
+* Vamos criar uma *tibble* nova, só com as colunas que nos interessam:
 
-Vamos criar uma *tibble* nova só com as colunas que nos interessam:
+  ```{r sono}
+  sono <- df %>% 
+    select(
+      name, order, genus, vore, bodywt, 
+      brainwt, awake, sleep_total
+    )
+  ```
 
-```{r sono}
-sono <- df %>% 
-  select(
-    name, order, genus, vore, bodywt, 
-    brainwt, awake, sleep_total
-  )
-```
+* Vamos ver o sumário:
 
-Vamos ver o sumário:
-
-```{r sumario-sono, results='asis'}
-sono %>% dfSummary() %>% print()
-```
+  ```{r sumario-sono, results='asis'}
+  sono %>% dfSummary() %>% print()
+  ```
 
 
 ## Gráficos de dispersão (*scatter plots*)

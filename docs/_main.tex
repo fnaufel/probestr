@@ -178,6 +178,7 @@
   colframe=black!40!white,
 }
 
+
 \newtcolorbox{mycaution}{
   colframe=red!75!black,
   sidebyside,
@@ -292,7 +293,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 04/11/2021)}
+\date{(versão de 10/11/2021)}
 
 \begin{document}
 \maketitle
@@ -306,13 +307,13 @@
 \addcontentsline{toc}{chapter}{Apresentação}
 
 \begin{rmdcaution}
-{\textbf{Atenção}}
+\textbf{Atenção}
 
 Este material ainda está em construção.
 
 Pode haver mudanças a qualquer momento.
 
-Verifique a data desta versão no rodapé da página \emph{web} ou na capa do arquivo pdf.
+Verifique, no rodapé da página \emph{web} ou na capa do arquivo pdf, a data desta versão.
 
 \end{rmdcaution}
 
@@ -549,110 +550,174 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \hypertarget{componentes-de-um-gruxe1fico-ggplot2}{%
 \section{Componentes de um gráfico ggplot2}\label{componentes-de-um-gruxe1fico-ggplot2}}
 
-\hypertarget{mapeamento-estuxe9tico-mapping-e-geometrias}{%
-\subsection{\texorpdfstring{Mapeamento estético (\emph{mapping}) e geometrias}{Mapeamento estético (mapping) e geometrias}}\label{mapeamento-estuxe9tico-mapping-e-geometrias}}
+\hypertarget{geometrias-e-mapeamentos-estuxe9ticos-mappings}{%
+\subsection{\texorpdfstring{Geometrias e mapeamentos estéticos (\emph{mappings})}{Geometrias e mapeamentos estéticos (mappings)}}\label{geometrias-e-mapeamentos-estuxe9ticos-mappings}}
+
+\begin{itemize}
+\tightlist
+\item
+  Observe o gráfico abaixo, obtido de \url{https://www.gapminder.org/downloads/updated-gapminder-world-poster-2015/}.
+\end{itemize}
 
 \begin{center}\includegraphics[width=1\linewidth]{images/countries-1} \end{center}
 
-\begin{longtable}[]{@{}lll@{}}
-\toprule
-Variável & Estética & Geometria \\
-\midrule
-\endhead
-PIB per capita & posição x & ponto \\
-Expectativa de vida & posição y & ponto \\
-População & tamanho & ponto \\
-Continente & cor & ponto \\
-\bottomrule
-\end{longtable}
-
-Algumas outras estéticas:
-
 \begin{itemize}
-\tightlist
 \item
-  Cor de preenchimento
+  O gráfico mostra como, em cada país, a saúde (mais precisamente, a expectativa de vida) se relaciona com a riqueza (mais precisamente, o PIB).
 \item
-  Cor do traço
+  Além da expectativa de vida e o do PIB, o gráfico traz mais informações sobre cada país.
 \item
-  Tipo do traço (sólido, pontilhado, tracejado etc.)
+  Cada país é representado por um ponto (a {\hl{geometria}}).
 \item
-  Forma (círculo, quadrado, triângulo etc.)
-\item
-  Opacidade
-\end{itemize}
+  Informações sobre cada país são representadas por características do ponto correspondente (as {\hl{estéticas}}):
 
-Algumas outras geometrias:
+  \begin{longtable}[]{@{}lll@{}}
+  \toprule
+  Variável & Geometria & Estética \\
+  \midrule
+  \endhead
+  PIB per capita & ponto & posição x \\
+  Expectativa de vida & ponto & posição y \\
+  População & ponto & tamanho \\
+  Continente & ponto & cor \\
+  \bottomrule
+  \end{longtable}
+\item
+  Você pode usar outras estéticas para representar informações:
 
-\begin{itemize}
-\tightlist
+  \begin{itemize}
+  \tightlist
+  \item
+    Cor de preenchimento.
+  \item
+    Cor do traço.
+  \item
+    Tipo do traço (sólido, pontilhado, tracejado etc.).
+  \item
+    Forma (círculo, quadrado, triângulo etc.).
+  \item
+    Opacidade.
+  \item
+    etc.
+  \end{itemize}
 \item
-  Linhas
-\item
-  Barras ou colunas
-\item
-  \emph{Boxplots}
-\item
-  Histogramas
+  Você pode usar outras geometrias:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Linhas.
+  \item
+    Barras ou colunas.
+  \item
+    Caixas.
+  \item
+    etc.
+  \end{itemize}
 \end{itemize}
 
 \hypertarget{escalas-scales}{%
 \subsection{\texorpdfstring{Escalas (\emph{scales})}{Escalas (scales)}}\label{escalas-scales}}
 
-Controlam os detalhes do mapeamento (eixos, cores etc.).
+\begin{itemize}
+\item
+  Controlam os detalhes da geometria e do mapeamento (eixos, cores etc.).
+\item
+  Os eixos do gráfico acima são escalas {\hl{contínuas}}, com valores reais.
+\item
+  Observe o eixo horizontal. Os valores não aumentam linearmente, mas sim exponencialmente: cada passo à direita equivale a \emph{dobrar} o valor do PIB. O eixo horizontal segue uma {\hl{escala logarítmica}}.
+\item
+  Os tamanhos dos pontos formam uma escala {\hl{discreta}}, com \(4\) valores possíveis (veja a legenda no canto inferior direito do gráfico).
+\item
+  As cores também formam uma escala discreta.
+\end{itemize}
 
 \hypertarget{ruxf3tulos-labels}{%
 \subsection{\texorpdfstring{Rótulos (\emph{labels})}{Rótulos (labels)}}\label{ruxf3tulos-labels}}
 
-Texto.
+\begin{itemize}
+\item
+  O gráfico também representa informação na forma de texto.
+\item
+  Além de rótulos (por exemplo, o texto que identifica cada eixo), {\hl{o texto também pode, ele mesmo, ser uma geometria, com suas próprias estéticas:}} observe como o nome de cada país é escrito em um tamanho proporcional à sua população.
+\end{itemize}
 
 \hypertarget{outros-componentes}{%
 \subsection{Outros componentes}\label{outros-componentes}}
 
 \begin{itemize}
-\tightlist
 \item
-  Coordenadas
+  Coordenadas:
+
+  \begin{itemize}
+  \item
+    Este gráfico usa {\hl{coordenadas cartesianas}}, com eixos \(x\) e \(y\).
+  \item
+    Existem gráficos que usam um sistema de {\hl{coordenadas polares}}.
+  \end{itemize}
 \item
-  Temas
+  Temas:
+
+  \begin{itemize}
+  \item
+    Incluem todos os elementos ``decorativos'': cor de fundo, linhas de grade, etc. Ajudam a facilitar a leitura e a interpretação.
+  \item
+    No gráfico acima, um detalhe interessante do tema é a divisão de cada eixo em segmentos claros e segmentos escuros.
+  \end{itemize}
 \item
-  Legendas (\emph{guides})
+  Legendas (\emph{guides}).
 \item
-  Facetas
+  Facetas:
+
+  \begin{itemize}
+  \item
+    Às vezes, um gráfico é composto por múltiplos subgráficos.
+  \item
+    Cada subgráfico é uma {\hl{faceta}}.
+  \item
+    Facetas evitam que informações demais sejam apresentadas no mesmo lugar.
+  \end{itemize}
 \end{itemize}
 
 \hypertarget{conjunto-de-dados}{%
 \section{Conjunto de dados}\label{conjunto-de-dados}}
 
-Dados sobre o sono de diversos mamíferos. Para ver a documentação, digite
+\begin{itemize}
+\item
+  Nossos exemplos de gráficos vão usar dados sobre o sono de diversos mamíferos.
+\item
+  O conjunto de dados se chama \texttt{msleep} e está incluído no pacote \texttt{ggplot2}.
+\item
+  Para ver a documentação, digite
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
 \NormalTok{?msleep}
 \end{Highlighting}
 \end{Shaded}
-
-Vamos atribuir à variável \texttt{df} o \emph{data frame}, que faz parte do pacote \texttt{ggplot2} (que já foi carregado no \emph{chunk} de \emph{setup}, lá em cima):
+\item
+  Vamos atribuir o conjunto de dados à variável \texttt{df}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ msleep}
 \NormalTok{df}
 \DocumentationTok{\#\# \# A tibble: 83 x 11}
-\DocumentationTok{\#\#   name      genus vore  order  conservation sleep\_total sleep\_rem sleep\_cycle}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}     \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}  \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 Cheetah   Acin\textasciitilde{} carni Carni\textasciitilde{} lc                  12.1      NA        NA    }
-\DocumentationTok{\#\# 2 Owl monk\textasciitilde{} Aotus omni  Prima\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
-\DocumentationTok{\#\# 3 Mountain\textasciitilde{} Aplo\textasciitilde{} herbi Roden\textasciitilde{} nt                  14.4       2.4      NA    }
-\DocumentationTok{\#\# 4 Greater \textasciitilde{} Blar\textasciitilde{} omni  Soric\textasciitilde{} lc                  14.9       2.3       0.133}
-\DocumentationTok{\#\# 5 Cow       Bos   herbi Artio\textasciitilde{} domesticated         4         0.7       0.667}
-\DocumentationTok{\#\# 6 Three{-}to\textasciitilde{} Brad\textasciitilde{} herbi Pilosa \textless{}NA\textgreater{}                14.4       2.2       0.767}
-\DocumentationTok{\#\# \# ... with 77 more rows, and 3 more variables: awake \textless{}dbl\textgreater{}, brainwt \textless{}dbl\textgreater{},}
-\DocumentationTok{\#\# \#   bodywt \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\#   name   genus vore  order conservation sleep\_total sleep\_rem sleep\_cycle}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Cheet\textasciitilde{} Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA        NA    }
+\DocumentationTok{\#\# 2 Owl m\textasciitilde{} Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
+\DocumentationTok{\#\# 3 Mount\textasciitilde{} Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4      NA    }
+\DocumentationTok{\#\# 4 Great\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3       0.133}
+\DocumentationTok{\#\# 5 Cow    Bos   herbi Arti\textasciitilde{} domesticated         4         0.7       0.667}
+\DocumentationTok{\#\# 6 Three\textasciitilde{} Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2       0.767}
+\DocumentationTok{\#\# \# ... with 77 more rows, and 3 more variables: awake \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
-
-Vamos examinar a estrutura --- usando R base:
+\item
+  Vamos examinar a estrutura --- usando R base:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -671,55 +736,55 @@ Vamos examinar a estrutura --- usando R base:
 \DocumentationTok{\#\#  $ bodywt      : num [1:83] 50 0,48 1,35 0,019 ...}
 \end{Highlighting}
 \end{Shaded}
-
-Usando \texttt{glimpse}:
+\item
+  Podemos usar \texttt{glimpse}, uma função do \texttt{tidyverse}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{glimpse}\NormalTok{(df)}
 \DocumentationTok{\#\# Rows: 83}
 \DocumentationTok{\#\# Columns: 11}
-\DocumentationTok{\#\# $ name         \textless{}chr\textgreater{} "Cheetah", "Owl monkey", "Mountain beaver", "Greater s\textasciitilde{}}
-\DocumentationTok{\#\# $ genus        \textless{}chr\textgreater{} "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bos", "\textasciitilde{}}
-\DocumentationTok{\#\# $ vore         \textless{}chr\textgreater{} "carni", "omni", "herbi", "omni", "herbi", "herbi", "c\textasciitilde{}}
-\DocumentationTok{\#\# $ order        \textless{}chr\textgreater{} "Carnivora", "Primates", "Rodentia", "Soricomorpha", "\textasciitilde{}}
-\DocumentationTok{\#\# $ conservation \textless{}chr\textgreater{} "lc", NA, "nt", "lc", "domesticated", NA, "vu", NA, "d\textasciitilde{}}
-\DocumentationTok{\#\# $ sleep\_total  \textless{}dbl\textgreater{} 12,1, 17,0, 14,4, 14,9, 4,0, 14,4, 8,7, 7,0, 10,1, 3,0\textasciitilde{}}
-\DocumentationTok{\#\# $ sleep\_rem    \textless{}dbl\textgreater{} NA, 1,8, 2,4, 2,3, 0,7, 2,2, 1,4, NA, 2,9, NA, 0,6, 0,\textasciitilde{}}
-\DocumentationTok{\#\# $ sleep\_cycle  \textless{}dbl\textgreater{} NA, NA, NA, 0,1333333, 0,6666667, 0,7666667, 0,3833333\textasciitilde{}}
-\DocumentationTok{\#\# $ awake        \textless{}dbl\textgreater{} 11,9, 7,0, 9,6, 9,1, 20,0, 9,6, 15,3, 17,0, 13,9, 21,0\textasciitilde{}}
-\DocumentationTok{\#\# $ brainwt      \textless{}dbl\textgreater{} NA, 0,01550, NA, 0,00029, 0,42300, NA, NA, NA, 0,07000\textasciitilde{}}
-\DocumentationTok{\#\# $ bodywt       \textless{}dbl\textgreater{} 50,000, 0,480, 1,350, 0,019, 600,000, 3,850, 20,490, 0\textasciitilde{}}
+\DocumentationTok{\#\# $ name         \textless{}chr\textgreater{} "Cheetah", "Owl monkey", "Mountain beaver", "Great\textasciitilde{}}
+\DocumentationTok{\#\# $ genus        \textless{}chr\textgreater{} "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bos\textasciitilde{}}
+\DocumentationTok{\#\# $ vore         \textless{}chr\textgreater{} "carni", "omni", "herbi", "omni", "herbi", "herbi"\textasciitilde{}}
+\DocumentationTok{\#\# $ order        \textless{}chr\textgreater{} "Carnivora", "Primates", "Rodentia", "Soricomorpha\textasciitilde{}}
+\DocumentationTok{\#\# $ conservation \textless{}chr\textgreater{} "lc", NA, "nt", "lc", "domesticated", NA, "vu", NA\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_total  \textless{}dbl\textgreater{} 12,1, 17,0, 14,4, 14,9, 4,0, 14,4, 8,7, 7,0, 10,1,\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_rem    \textless{}dbl\textgreater{} NA, 1,8, 2,4, 2,3, 0,7, 2,2, 1,4, NA, 2,9, NA, 0,6\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_cycle  \textless{}dbl\textgreater{} NA, NA, NA, 0,1333333, 0,6666667, 0,7666667, 0,383\textasciitilde{}}
+\DocumentationTok{\#\# $ awake        \textless{}dbl\textgreater{} 11,9, 7,0, 9,6, 9,1, 20,0, 9,6, 15,3, 17,0, 13,9, \textasciitilde{}}
+\DocumentationTok{\#\# $ brainwt      \textless{}dbl\textgreater{} NA, 0,01550, NA, 0,00029, 0,42300, NA, NA, NA, 0,0\textasciitilde{}}
+\DocumentationTok{\#\# $ bodywt       \textless{}dbl\textgreater{} 50,000, 0,480, 1,350, 0,019, 600,000, 3,850, 20,49\textasciitilde{}}
 \end{Highlighting}
 \end{Shaded}
-
-Vendo só as primeiras linhas:
+\item
+  Para examinar só as primeiras linhas do \emph{data frame}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(df)}
 \DocumentationTok{\#\# \# A tibble: 6 x 11}
-\DocumentationTok{\#\#   name      genus vore  order  conservation sleep\_total sleep\_rem sleep\_cycle}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}     \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}  \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 Cheetah   Acin\textasciitilde{} carni Carni\textasciitilde{} lc                  12.1      NA        NA    }
-\DocumentationTok{\#\# 2 Owl monk\textasciitilde{} Aotus omni  Prima\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
-\DocumentationTok{\#\# 3 Mountain\textasciitilde{} Aplo\textasciitilde{} herbi Roden\textasciitilde{} nt                  14.4       2.4      NA    }
-\DocumentationTok{\#\# 4 Greater \textasciitilde{} Blar\textasciitilde{} omni  Soric\textasciitilde{} lc                  14.9       2.3       0.133}
-\DocumentationTok{\#\# 5 Cow       Bos   herbi Artio\textasciitilde{} domesticated         4         0.7       0.667}
-\DocumentationTok{\#\# 6 Three{-}to\textasciitilde{} Brad\textasciitilde{} herbi Pilosa \textless{}NA\textgreater{}                14.4       2.2       0.767}
+\DocumentationTok{\#\#   name   genus vore  order conservation sleep\_total sleep\_rem sleep\_cycle}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Cheet\textasciitilde{} Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA        NA    }
+\DocumentationTok{\#\# 2 Owl m\textasciitilde{} Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
+\DocumentationTok{\#\# 3 Mount\textasciitilde{} Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4      NA    }
+\DocumentationTok{\#\# 4 Great\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3       0.133}
+\DocumentationTok{\#\# 5 Cow    Bos   herbi Arti\textasciitilde{} domesticated         4         0.7       0.667}
+\DocumentationTok{\#\# 6 Three\textasciitilde{} Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2       0.767}
 \DocumentationTok{\#\# \# ... with 3 more variables: awake \textless{}dbl\textgreater{}, brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
-
-Interativamente, usando \texttt{view}:
+\item
+  Para examinar o \emph{data frame} interativamente:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{view}\NormalTok{(df)}
 \end{Highlighting}
 \end{Shaded}
-
-Sumário dos dados usando o pacote \emph{summarytools} (que já foi carregado no \emph{setup}):
+\item
+  Podemos produzir um sumário dos dados usando o pacote \emph{summarytools} (que já foi carregado neste documento):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -727,250 +792,250 @@ Sumário dos dados usando o pacote \emph{summarytools} (que já foi carregado no
 \end{Highlighting}
 \end{Shaded}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1928}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3976}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2771}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1325}}@{}}
-\toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Variável
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Estatísticas / Valores
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Freqs (\% de Válidos)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Faltante
-\end{minipage} \\
-\midrule
-\endhead
-\begin{minipage}[t]{\linewidth}\raggedright
-name\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. African elephant\\
-2. African giant pouched rat\\
-3. African striped mouse\\
-4. Arctic fox\\
-5. Arctic ground squirrel\\
-6. Asian elephant\\
-7. Baboon\\
-8. Big brown bat\\
-9. Bottle-nosed dolphin\\
-10. Brazilian tapir\\
-{[} 73 outros {]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-73 (88,0\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-genus\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Panthera\\
-2. Spermophilus\\
-3. Equus\\
-4. Vulpes\\
-5. Acinonyx\\
-6. Aotus\\
-7. Aplodontia\\
-8. Blarina\\
-9. Bos\\
-10. Bradypus\\
-{[} 67 outros {]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-3 ( 3,6\%)\\
-3 ( 3,6\%)\\
-2 ( 2,4\%)\\
-2 ( 2,4\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-67 (80,7\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-vore\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. carni\\
-2. herbi\\
-3. insecti\\
-4. omni\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-19 (25,0\%)\\
-32 (42,1\%)\\
-5 ( 6,6\%)\\
-20 (26,3\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-7\\
-(8,4\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-order\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Rodentia\\
-2. Carnivora\\
-3. Primates\\
-4. Artiodactyla\\
-5. Soricomorpha\\
-6. Cetacea\\
-7. Hyracoidea\\
-8. Perissodactyla\\
-9. Chiroptera\\
-10. Cingulata\\
-{[} 9 outros {]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-22 (26,5\%)\\
-12 (14,5\%)\\
-12 (14,5\%)\\
-6 ( 7,2\%)\\
-5 ( 6,0\%)\\
-3 ( 3,6\%)\\
-3 ( 3,6\%)\\
-3 ( 3,6\%)\\
-2 ( 2,4\%)\\
-2 ( 2,4\%)\\
-13 (15,7\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-conservation\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. cd\\
-2. domesticated\\
-3. en\\
-4. lc\\
-5. nt\\
-6. vu\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-2 ( 3,7\%)\\
-10 (18,5\%)\\
-4 ( 7,4\%)\\
-27 (50,0\%)\\
-4 ( 7,4\%)\\
-7 (13,0\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-29\\
-(34,9\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-sleep\_total\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 10,4 (4,5)\\
-mín \textless{} mediana \textless{} máx:\\
-1,9 \textless{} 10,1 \textless{} 19,9\\
-IQE (CV) : 5,9 (0,4)\strut
-\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-sleep\_rem\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 1,9 (1,3)\\
-mín \textless{} mediana \textless{} máx:\\
-0,1 \textless{} 1,5 \textless{} 6,6\\
-IQE (CV) : 1,5 (0,7)\strut
-\end{minipage} & 32 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-22\\
-(26,5\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-sleep\_cycle\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 0,4 (0,4)\\
-mín \textless{} mediana \textless{} máx:\\
-0,1 \textless{} 0,3 \textless{} 1,5\\
-IQE (CV) : 0,4 (0,8)\strut
-\end{minipage} & 22 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-51\\
-(61,4\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-awake\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 13,6 (4,5)\\
-mín \textless{} mediana \textless{} máx:\\
-4,1 \textless{} 13,9 \textless{} 22,1\\
-IQE (CV) : 5,9 (0,3)\strut
-\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-brainwt\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 0,3 (1)\\
-mín \textless{} mediana \textless{} máx:\\
-0 \textless{} 0 \textless{} 5,7\\
-IQE (CV) : 0,1 (3,5)\strut
-\end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-27\\
-(32,5\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-bodywt\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 166,1 (786,8)\\
-mín \textless{} mediana \textless{} máx:\\
-0 \textless{} 1,7 \textless{} 6654\\
-IQE (CV) : 41,6 (4,7)\strut
-\end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\bottomrule
-\end{longtable}
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1928}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3976}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2771}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1325}}@{}}
+  \toprule
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Variável
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Estatísticas / Valores
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Freqs (\% de Válidos)
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Faltante
+  \end{minipage} \\
+  \midrule
+  \endhead
+  \begin{minipage}[t]{\linewidth}\raggedright
+  name\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. African elephant\\
+  2. African giant pouched rat\\
+  3. African striped mouse\\
+  4. Arctic fox\\
+  5. Arctic ground squirrel\\
+  6. Asian elephant\\
+  7. Baboon\\
+  8. Big brown bat\\
+  9. Bottle-nosed dolphin\\
+  10. Brazilian tapir\\
+  {[} 73 outros {]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  73 (88,0\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  genus\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. Panthera\\
+  2. Spermophilus\\
+  3. Equus\\
+  4. Vulpes\\
+  5. Acinonyx\\
+  6. Aotus\\
+  7. Aplodontia\\
+  8. Blarina\\
+  9. Bos\\
+  10. Bradypus\\
+  {[} 67 outros {]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  3 ( 3,6\%)\\
+  3 ( 3,6\%)\\
+  2 ( 2,4\%)\\
+  2 ( 2,4\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  67 (80,7\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  vore\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. carni\\
+  2. herbi\\
+  3. insecti\\
+  4. omni\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  19 (25,0\%)\\
+  32 (42,1\%)\\
+  5 ( 6,6\%)\\
+  20 (26,3\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  7\\
+  (8,4\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  order\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. Rodentia\\
+  2. Carnivora\\
+  3. Primates\\
+  4. Artiodactyla\\
+  5. Soricomorpha\\
+  6. Cetacea\\
+  7. Hyracoidea\\
+  8. Perissodactyla\\
+  9. Chiroptera\\
+  10. Cingulata\\
+  {[} 9 outros {]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  22 (26,5\%)\\
+  12 (14,5\%)\\
+  12 (14,5\%)\\
+  6 ( 7,2\%)\\
+  5 ( 6,0\%)\\
+  3 ( 3,6\%)\\
+  3 ( 3,6\%)\\
+  3 ( 3,6\%)\\
+  2 ( 2,4\%)\\
+  2 ( 2,4\%)\\
+  13 (15,7\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  conservation\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. cd\\
+  2. domesticated\\
+  3. en\\
+  4. lc\\
+  5. nt\\
+  6. vu\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  2 ( 3,7\%)\\
+  10 (18,5\%)\\
+  4 ( 7,4\%)\\
+  27 (50,0\%)\\
+  4 ( 7,4\%)\\
+  7 (13,0\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  29\\
+  (34,9\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  sleep\_total\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 10,4 (4,5)\\
+  mín \textless{} mediana \textless{} máx:\\
+  1,9 \textless{} 10,1 \textless{} 19,9\\
+  IQE (CV) : 5,9 (0,4)\strut
+  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  sleep\_rem\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 1,9 (1,3)\\
+  mín \textless{} mediana \textless{} máx:\\
+  0,1 \textless{} 1,5 \textless{} 6,6\\
+  IQE (CV) : 1,5 (0,7)\strut
+  \end{minipage} & 32 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  22\\
+  (26,5\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  sleep\_cycle\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 0,4 (0,4)\\
+  mín \textless{} mediana \textless{} máx:\\
+  0,1 \textless{} 0,3 \textless{} 1,5\\
+  IQE (CV) : 0,4 (0,8)\strut
+  \end{minipage} & 22 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  51\\
+  (61,4\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  awake\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 13,6 (4,5)\\
+  mín \textless{} mediana \textless{} máx:\\
+  4,1 \textless{} 13,9 \textless{} 22,1\\
+  IQE (CV) : 5,9 (0,3)\strut
+  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  brainwt\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 0,3 (1)\\
+  mín \textless{} mediana \textless{} máx:\\
+  0 \textless{} 0 \textless{} 5,7\\
+  IQE (CV) : 0,1 (3,5)\strut
+  \end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  27\\
+  (32,5\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  bodywt\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 166,1 (786,8)\\
+  mín \textless{} mediana \textless{} máx:\\
+  0 \textless{} 1,7 \textless{} 6654\\
+  IQE (CV) : 41,6 (4,7)\strut
+  \end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \bottomrule
+  \end{longtable}
+\item
+  Vemos que há muitos \texttt{NA} em diversas variáveis. Para nossos exemplos simples de visualização, vamos usar as colunas
 
-Há muitos \texttt{NA} em diversas variáveis. Para nossos exemplos simples de visualização, vamos usar as colunas
-
-\begin{itemize}
-\tightlist
+  \begin{itemize}
+  \tightlist
+  \item
+    \texttt{name}
+  \item
+    \texttt{genus}
+  \item
+    \texttt{order}
+  \item
+    \texttt{sleep\_total}
+  \item
+    \texttt{awake}
+  \item
+    \texttt{bodywt}
+  \item
+    \texttt{brainwt}
+  \end{itemize}
 \item
-  \texttt{name}
-\item
-  \texttt{genus}
-\item
-  \texttt{order}
-\item
-  \texttt{sleep\_total}
-\item
-  \texttt{awake}
-\item
-  \texttt{bodywt}
-\item
-  \texttt{brainwt}
-\end{itemize}
-
-Mas\ldots{} a coluna que mostra a dieta (\texttt{vore}) tem só 7 \texttt{NA}. Quais são?
+  Mas\ldots{} a coluna que mostra a dieta (\texttt{vore}) tem só 7 \texttt{NA}. Quais são?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -989,10 +1054,10 @@ Mas\ldots{} a coluna que mostra a dieta (\texttt{vore}) tem só 7 \texttt{NA}. Q
 \DocumentationTok{\#\# \# ... with 1 more row}
 \end{Highlighting}
 \end{Shaded}
-
-OK. Vamos manter a coluna \texttt{vore} também, apesar dos \texttt{NA}. Quando formos usar esta variável, tomaremos cuidado.
-
-Também\ldots{} a coluna \texttt{bodywt} tem 0 como valor mínimo. Como assim?
+\item
+  OK. Vamos manter a coluna \texttt{vore} também, apesar dos \texttt{NA}. Quando formos usar esta variável, tomaremos cuidado.
+\item
+  Também\ldots{} a coluna \texttt{bodywt} tem 0 como valor mínimo. Como assim?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1012,10 +1077,10 @@ Também\ldots{} a coluna \texttt{bodywt} tem 0 como valor mínimo. Como assim?
 \DocumentationTok{\#\# \# ... with 29 more rows}
 \end{Highlighting}
 \end{Shaded}
-
-Ah, sem problema. A função \texttt{dfSummary} arredondou estes pesos para 0. Os valores de verdade ainda estão na \emph{tibble}.
-
-Vamos criar uma \emph{tibble} nova só com as colunas que nos interessam:
+\item
+  Ah, sem problema. A função \texttt{dfSummary} arredondou estes pesos para 0. Os valores de verdade ainda estão na \emph{tibble}.
+\item
+  Vamos criar uma \emph{tibble} nova, só com as colunas que nos interessam:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1026,8 +1091,8 @@ Vamos criar uma \emph{tibble} nova só com as colunas que nos interessam:
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
-
-Vamos ver o sumário:
+\item
+  Vamos ver o sumário:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1035,183 +1100,184 @@ Vamos ver o sumário:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1829}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4024}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2805}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1341}}@{}}
-\toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Variável
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Estatísticas / Valores
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Freqs (\% de Válidos)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Faltante
-\end{minipage} \\
-\midrule
-\endhead
-\begin{minipage}[t]{\linewidth}\raggedright
-name\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. African elephant\\
-2. African giant pouched rat\\
-3. African striped mouse\\
-4. Arctic fox\\
-5. Arctic ground squirrel\\
-6. Asian elephant\\
-7. Baboon\\
-8. Big brown bat\\
-9. Bottle-nosed dolphin\\
-10. Brazilian tapir\\
-{[} 73 outros {]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-73 (88,0\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-order\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Rodentia\\
-2. Carnivora\\
-3. Primates\\
-4. Artiodactyla\\
-5. Soricomorpha\\
-6. Cetacea\\
-7. Hyracoidea\\
-8. Perissodactyla\\
-9. Chiroptera\\
-10. Cingulata\\
-{[} 9 outros {]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-22 (26,5\%)\\
-12 (14,5\%)\\
-12 (14,5\%)\\
-6 ( 7,2\%)\\
-5 ( 6,0\%)\\
-3 ( 3,6\%)\\
-3 ( 3,6\%)\\
-3 ( 3,6\%)\\
-2 ( 2,4\%)\\
-2 ( 2,4\%)\\
-13 (15,7\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-genus\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Panthera\\
-2. Spermophilus\\
-3. Equus\\
-4. Vulpes\\
-5. Acinonyx\\
-6. Aotus\\
-7. Aplodontia\\
-8. Blarina\\
-9. Bos\\
-10. Bradypus\\
-{[} 67 outros {]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-3 ( 3,6\%)\\
-3 ( 3,6\%)\\
-2 ( 2,4\%)\\
-2 ( 2,4\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-1 ( 1,2\%)\\
-67 (80,7\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-vore\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. carni\\
-2. herbi\\
-3. insecti\\
-4. omni\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-19 (25,0\%)\\
-32 (42,1\%)\\
-5 ( 6,6\%)\\
-20 (26,3\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-7\\
-(8,4\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-bodywt\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 166,1 (786,8)\\
-mín \textless{} mediana \textless{} máx:\\
-0 \textless{} 1,7 \textless{} 6654\\
-IQE (CV) : 41,6 (4,7)\strut
-\end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-brainwt\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 0,3 (1)\\
-mín \textless{} mediana \textless{} máx:\\
-0 \textless{} 0 \textless{} 5,7\\
-IQE (CV) : 0,1 (3,5)\strut
-\end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-27\\
-(32,5\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-awake\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 13,6 (4,5)\\
-mín \textless{} mediana \textless{} máx:\\
-4,1 \textless{} 13,9 \textless{} 22,1\\
-IQE (CV) : 5,9 (0,3)\strut
-\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-sleep\_total\\
-{[}numeric{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-Média (dp) : 10,4 (4,5)\\
-mín \textless{} mediana \textless{} máx:\\
-1,9 \textless{} 10,1 \textless{} 19,9\\
-IQE (CV) : 5,9 (0,4)\strut
-\end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\bottomrule
-\end{longtable}
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1829}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4024}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2805}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1341}}@{}}
+  \toprule
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Variável
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Estatísticas / Valores
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Freqs (\% de Válidos)
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Faltante
+  \end{minipage} \\
+  \midrule
+  \endhead
+  \begin{minipage}[t]{\linewidth}\raggedright
+  name\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. African elephant\\
+  2. African giant pouched rat\\
+  3. African striped mouse\\
+  4. Arctic fox\\
+  5. Arctic ground squirrel\\
+  6. Asian elephant\\
+  7. Baboon\\
+  8. Big brown bat\\
+  9. Bottle-nosed dolphin\\
+  10. Brazilian tapir\\
+  {[} 73 outros {]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  73 (88,0\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  order\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. Rodentia\\
+  2. Carnivora\\
+  3. Primates\\
+  4. Artiodactyla\\
+  5. Soricomorpha\\
+  6. Cetacea\\
+  7. Hyracoidea\\
+  8. Perissodactyla\\
+  9. Chiroptera\\
+  10. Cingulata\\
+  {[} 9 outros {]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  22 (26,5\%)\\
+  12 (14,5\%)\\
+  12 (14,5\%)\\
+  6 ( 7,2\%)\\
+  5 ( 6,0\%)\\
+  3 ( 3,6\%)\\
+  3 ( 3,6\%)\\
+  3 ( 3,6\%)\\
+  2 ( 2,4\%)\\
+  2 ( 2,4\%)\\
+  13 (15,7\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  genus\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. Panthera\\
+  2. Spermophilus\\
+  3. Equus\\
+  4. Vulpes\\
+  5. Acinonyx\\
+  6. Aotus\\
+  7. Aplodontia\\
+  8. Blarina\\
+  9. Bos\\
+  10. Bradypus\\
+  {[} 67 outros {]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  3 ( 3,6\%)\\
+  3 ( 3,6\%)\\
+  2 ( 2,4\%)\\
+  2 ( 2,4\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  1 ( 1,2\%)\\
+  67 (80,7\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  vore\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. carni\\
+  2. herbi\\
+  3. insecti\\
+  4. omni\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  19 (25,0\%)\\
+  32 (42,1\%)\\
+  5 ( 6,6\%)\\
+  20 (26,3\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  7\\
+  (8,4\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  bodywt\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 166,1 (786,8)\\
+  mín \textless{} mediana \textless{} máx:\\
+  0 \textless{} 1,7 \textless{} 6654\\
+  IQE (CV) : 41,6 (4,7)\strut
+  \end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  brainwt\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 0,3 (1)\\
+  mín \textless{} mediana \textless{} máx:\\
+  0 \textless{} 0 \textless{} 5,7\\
+  IQE (CV) : 0,1 (3,5)\strut
+  \end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  27\\
+  (32,5\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  awake\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 13,6 (4,5)\\
+  mín \textless{} mediana \textless{} máx:\\
+  4,1 \textless{} 13,9 \textless{} 22,1\\
+  IQE (CV) : 5,9 (0,3)\strut
+  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  sleep\_total\\
+  {[}numeric{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  Média (dp) : 10,4 (4,5)\\
+  mín \textless{} mediana \textless{} máx:\\
+  1,9 \textless{} 10,1 \textless{} 19,9\\
+  IQE (CV) : 5,9 (0,4)\strut
+  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \bottomrule
+  \end{longtable}
+\end{itemize}
 
 \hypertarget{gruxe1ficos-de-dispersuxe3o-scatter-plots}{%
 \section{\texorpdfstring{Gráficos de dispersão (\emph{scatter plots})}{Gráficos de dispersão (scatter plots)}}\label{gruxe1ficos-de-dispersuxe3o-scatter-plots}}
@@ -1513,12 +1579,13 @@ Em R base, é fácil fazer os agrupamentos:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sono}\SpecialCharTok{$}\NormalTok{sleep\_total}
-\DocumentationTok{\#\#  [1] 12,1 17,0 14,4 14,9  4,0 14,4  8,7  7,0 10,1  3,0  5,3  9,4 10,0 12,5}
-\DocumentationTok{\#\# [15] 10,3  8,3  9,1 17,4  5,3 18,0  3,9 19,7  2,9  3,1 10,1 10,9 14,9 12,5}
-\DocumentationTok{\#\# [29]  9,8  1,9  2,7  6,2  6,3  8,0  9,5  3,3 19,4 10,1 14,2 14,3 12,8 12,5}
-\DocumentationTok{\#\# [43] 19,9 14,6 11,0  7,7 14,5  8,4  3,8  9,7 15,8 10,4 13,5  9,4 10,3 11,0}
-\DocumentationTok{\#\# [57] 11,5 13,7  3,5  5,6 11,1 18,1  5,4 13,0  8,7  9,6  8,4 11,3 10,6 16,6}
-\DocumentationTok{\#\# [71] 13,8 15,9 12,8  9,1  8,6 15,8  4,4 15,6  8,9  5,2  6,3 12,5  9,8}
+\DocumentationTok{\#\#  [1] 12,1 17,0 14,4 14,9  4,0 14,4  8,7  7,0 10,1  3,0  5,3  9,4 10,0}
+\DocumentationTok{\#\# [14] 12,5 10,3  8,3  9,1 17,4  5,3 18,0  3,9 19,7  2,9  3,1 10,1 10,9}
+\DocumentationTok{\#\# [27] 14,9 12,5  9,8  1,9  2,7  6,2  6,3  8,0  9,5  3,3 19,4 10,1 14,2}
+\DocumentationTok{\#\# [40] 14,3 12,8 12,5 19,9 14,6 11,0  7,7 14,5  8,4  3,8  9,7 15,8 10,4}
+\DocumentationTok{\#\# [53] 13,5  9,4 10,3 11,0 11,5 13,7  3,5  5,6 11,1 18,1  5,4 13,0  8,7}
+\DocumentationTok{\#\# [66]  9,6  8,4 11,3 10,6 16,6 13,8 15,9 12,8  9,1  8,6 15,8  4,4 15,6}
+\DocumentationTok{\#\# [79]  8,9  5,2  6,3 12,5  9,8}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1533,16 +1600,17 @@ Em R base, é fácil fazer os agrupamentos:
 \begin{Highlighting}[]
 \NormalTok{sono}\SpecialCharTok{$}\NormalTok{sleep\_total }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{cut}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{right =} \ConstantTok{FALSE}\NormalTok{)}
-\DocumentationTok{\#\#  [1] [12,14) [16,18) [14,16) [14,16) [4,6)   [14,16) [8,10)  [6,8)   [10,12)}
-\DocumentationTok{\#\# [10] [2,4)   [4,6)   [8,10)  [10,12) [12,14) [10,12) [8,10)  [8,10)  [16,18)}
-\DocumentationTok{\#\# [19] [4,6)   [18,20) [2,4)   [18,20) [2,4)   [2,4)   [10,12) [10,12) [14,16)}
-\DocumentationTok{\#\# [28] [12,14) [8,10)  [0,2)   [2,4)   [6,8)   [6,8)   [8,10)  [8,10)  [2,4)  }
-\DocumentationTok{\#\# [37] [18,20) [10,12) [14,16) [14,16) [12,14) [12,14) [18,20) [14,16) [10,12)}
-\DocumentationTok{\#\# [46] [6,8)   [14,16) [8,10)  [2,4)   [8,10)  [14,16) [10,12) [12,14) [8,10) }
-\DocumentationTok{\#\# [55] [10,12) [10,12) [10,12) [12,14) [2,4)   [4,6)   [10,12) [18,20) [4,6)  }
-\DocumentationTok{\#\# [64] [12,14) [8,10)  [8,10)  [8,10)  [10,12) [10,12) [16,18) [12,14) [14,16)}
-\DocumentationTok{\#\# [73] [12,14) [8,10)  [8,10)  [14,16) [4,6)   [14,16) [8,10)  [4,6)   [6,8)  }
-\DocumentationTok{\#\# [82] [12,14) [8,10) }
+\DocumentationTok{\#\#  [1] [12,14) [16,18) [14,16) [14,16) [4,6)   [14,16) [8,10)  [6,8)  }
+\DocumentationTok{\#\#  [9] [10,12) [2,4)   [4,6)   [8,10)  [10,12) [12,14) [10,12) [8,10) }
+\DocumentationTok{\#\# [17] [8,10)  [16,18) [4,6)   [18,20) [2,4)   [18,20) [2,4)   [2,4)  }
+\DocumentationTok{\#\# [25] [10,12) [10,12) [14,16) [12,14) [8,10)  [0,2)   [2,4)   [6,8)  }
+\DocumentationTok{\#\# [33] [6,8)   [8,10)  [8,10)  [2,4)   [18,20) [10,12) [14,16) [14,16)}
+\DocumentationTok{\#\# [41] [12,14) [12,14) [18,20) [14,16) [10,12) [6,8)   [14,16) [8,10) }
+\DocumentationTok{\#\# [49] [2,4)   [8,10)  [14,16) [10,12) [12,14) [8,10)  [10,12) [10,12)}
+\DocumentationTok{\#\# [57] [10,12) [12,14) [2,4)   [4,6)   [10,12) [18,20) [4,6)   [12,14)}
+\DocumentationTok{\#\# [65] [8,10)  [8,10)  [8,10)  [10,12) [10,12) [16,18) [12,14) [14,16)}
+\DocumentationTok{\#\# [73] [12,14) [8,10)  [8,10)  [14,16) [4,6)   [14,16) [8,10)  [4,6)  }
+\DocumentationTok{\#\# [81] [6,8)   [12,14) [8,10) }
 \DocumentationTok{\#\# 10 Levels: [0,2) [2,4) [4,6) [6,8) [8,10) [10,12) [12,14) ... [18,20)}
 \end{Highlighting}
 \end{Shaded}
@@ -1553,17 +1621,16 @@ Em R base, é fácil fazer os agrupamentos:
   \FunctionTok{cut}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{right =} \ConstantTok{FALSE}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{table}\NormalTok{(}\AttributeTok{dnn =} \StringTok{\textquotesingle{}Horas de sono\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{as.data.frame}\NormalTok{()}
-\DocumentationTok{\#\#    Horas.de.sono Freq}
-\DocumentationTok{\#\# 1          [0,2)    1}
-\DocumentationTok{\#\# 2          [2,4)    8}
-\DocumentationTok{\#\# 3          [4,6)    7}
-\DocumentationTok{\#\# 4          [6,8)    5}
-\DocumentationTok{\#\# 5         [8,10)   17}
-\DocumentationTok{\#\# 6        [10,12)   14}
-\DocumentationTok{\#\# 7        [12,14)   11}
-\DocumentationTok{\#\# 8        [14,16)   12}
-\DocumentationTok{\#\# 9        [16,18)    3}
-\DocumentationTok{\#\# 10       [18,20)    5}
+\DocumentationTok{\#\# \# A tibble: 10 x 2}
+\DocumentationTok{\#\#   Horas.de.sono  Freq}
+\DocumentationTok{\#\#   \textless{}fct\textgreater{}         \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 [0,2)             1}
+\DocumentationTok{\#\# 2 [2,4)             8}
+\DocumentationTok{\#\# 3 [4,6)             7}
+\DocumentationTok{\#\# 4 [6,8)             5}
+\DocumentationTok{\#\# 5 [8,10)           17}
+\DocumentationTok{\#\# 6 [10,12)          14}
+\DocumentationTok{\#\# \# ... with 4 more rows}
 \end{Highlighting}
 \end{Shaded}
 

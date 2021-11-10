@@ -46,6 +46,7 @@ main a {
   padding: 1em 1em 3ex 1em;
   border: 2px solid #ccc;
   background: #f8f8f8;
+  border-radius: 10px;
 }
 
 .rmdbox > *:last-child, .rmdnote > *:last-child, .rmdcaution > *:last-child, .rmdimportant > *:last-child, .rmdtip > *:last-child, .rmdwarning > *:last-child {
@@ -64,6 +65,7 @@ main a {
   border: 2px solid #ccc;
   padding: 1em 1em 3ex 6em;
   background: #f8f8f8 25px calc(10% + 10px) no-repeat;
+  border-radius: 10px;
 }
 
 .rmdcaution {
