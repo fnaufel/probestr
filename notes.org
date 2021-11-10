@@ -17,7 +17,8 @@
 
 *** STARTED Escrever capítulo visualização
     :LOGBOOK:
-    CLOCK: [2021-11-10 Wed 14:34]
+    CLOCK: [2021-11-10 Wed 17:00]
+    CLOCK: [2021-11-10 Wed 14:34]--[2021-11-10 Wed 16:00] =>  1:26
     CLOCK: [2021-11-10 Wed 14:00]--[2021-11-10 Wed 14:12] =>  0:12
     CLOCK: [2021-11-10 Wed 10:35]--[2021-11-10 Wed 11:59] =>  1:24
     CLOCK: [2021-11-03 Wed 17:14]--[2021-11-03 Wed 20:13] =>  2:59
@@ -132,12 +133,12 @@
 
 * [8/10] LaTeX
 
-** DONE Do not use df_print: kable
-   CLOSED: [2021-11-10 Wed 11:59]
+** TODO Check font styles
    :LOGBOOK:
-   - State "DONE"       from "TODO"       [2021-11-10 Wed 11:59]
-   - State "TODO"       from              [2021-11-10 Wed 11:48]
+   - State "TODO"       from              [2021-11-10 Wed 17:41]
    :END:
+
+   + Code? OK
 
 ** TODO Fix spacing around chunks and figures in pdf output
    :LOGBOOK:
@@ -146,6 +147,13 @@
 
    + Make pdf more legible.
     
+** DONE Do not use df_print: kable
+   CLOSED: [2021-11-10 Wed 11:59]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2021-11-10 Wed 11:59]
+   - State "TODO"       from              [2021-11-10 Wed 11:48]
+   :END:
+
 ** DONE See my logic book
    CLOSED: [2020-12-15 Tue 17:11]
    :LOGBOOK:

@@ -208,275 +208,348 @@ knitr::include_graphics('images/countries-1.png')
 
 * Servem para visualizar a *relação* entre [duas variáveis quantitativas.]{.hl}
 
-* Essa relação *não* é necessariamente de causalidade. 
+* [Essa relação *não* é necessariamente de causa e efeito. ]{.hl}
 
-* Isto é, a variável representada no eixo horizontal não determina,   necessariamente, os valores da variável representada no eixo vertical.
+* Isto é, a variável do eixo horizontal não determina, necessariamente, os valores da variável do eixo vertical.
   
-* Pense em associação, correlação, não em causalidade.
+* Pense em [associação]{.hl}, [correlação]{.hl}, não em causalidade.
 
 * Troque as variáveis de eixo, se ajudar a deixar isto claro.
 
 
 ### Horas de sono e peso corporal
 
-Como as variáveis `sleep_total` e `bodywt` estão relacionadas?
+* Como as variáveis `sleep_total` e `bodywt` estão relacionadas?
 
-```{r sono-peso-plot-1}
-sono %>% 
-  ggplot(aes(x = bodywt, y = sleep_total))
-```
+  ```{r sono-peso-plot-1}
+  sono %>% 
+    ggplot(aes(x = bodywt, y = sleep_total))
+  ```
 
-O que houve? Cadê os pontos?
+* O que houve? Cadê os pontos?
 
-O problema foi que só especificamos o mapeamento estético. Faltou a geometria.
+* O problema foi que só especificamos o mapeamento estético (com `aes`, que são as iniciais de *aesthetics*). [Faltou a geometria.]{.hl}
 
-```{r sono-peso-plot-2}
-sono %>% 
-  ggplot(aes(x = bodywt, y = sleep_total)) +
-  geom_point()
-```
+  ```{r sono-peso-plot-2}
+  sono %>% 
+    ggplot(aes(x = bodywt, y = sleep_total)) +
+    geom_point()
+  ```
 
-Que horror. 
+* Que horror. 
 
-A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de 5 horas por noite.
+* A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de $5$ horas por noite.
 
-Estes animais muito pesados estão estragando a escala do eixo $x$.
+* Estes animais muito pesados estão estragando a escala do eixo $x$.
 
-Que animais são estes?
+* Que animais são estes?
 
-```{r pesados}
-sono %>% 
-  filter(bodywt > 250) %>% 
-  select(name, bodywt) %>% 
-  arrange(bodywt)
-```
+  ```{r pesados}
+  sono %>% 
+    filter(bodywt > 250) %>% 
+    select(name, bodywt) %>% 
+    arrange(bodywt)
+  ```
 
-Além disso, há muitos pontos sobrepostos. Em bom português, temos um problema de *overplotting*. 
+* Além disso, há muitos pontos sobrepostos. Em bom português, temos um problema de *overplotting*. 
 
-Existem diversas maneiras de lidar com isso.
+* Existem diversas maneiras de lidar com isso.
 
-A primeira delas é alterando a opacidade dos pontos:
+* A primeira delas é [alterando a opacidade dos pontos]{.hl}. Isto é um ajuste na geometria apenas, pois a opacidade, aqui, não representa informação nenhuma.
 
-```{r sono-peso-plot-alfa}
-sono %>% 
-  ggplot(aes(x = bodywt, y = sleep_total)) +
-    geom_point(alpha = 0.2)
-```
+  ```{r sono-peso-plot-alfa}
+  sono %>% 
+    ggplot(aes(x = bodywt, y = sleep_total)) +
+      geom_point(alpha = 0.2)
+  ```
 
-Outra maneira é usar `geom_jitter` em vez de `geom_point`:
+* Outra maneira é usar `geom_jitter` em vez de `geom_point`. "*Jitter*" significa "tremer". As posições dos pontos são ligeiramente perturbadas, para evitar colisões. Perdemos precisão, mas a visualização fica melhor.
 
-```{r sono-peso-plot-jitter}
-sono %>% 
-  ggplot(aes(x = bodywt, y = sleep_total)) +
-    geom_jitter(width = 100)
-```
+  ```{r sono-peso-plot-jitter}
+  sono %>% 
+    ggplot(aes(x = bodywt, y = sleep_total)) +
+      geom_jitter(width = 100)
+  ```
 
 
-Vamos mudar a escala do gráfico para nos concentrarmos nos animais menos pesados:
+* Vamos mudar os limites do gráfico para nos concentrarmos nos animais menos pesados. Observe que [isto é um ajuste na escala]{.hl}.
 
-```{r sono-peso-plot-3}
-sono %>% 
-  ggplot(aes(x = bodywt, y = sleep_total)) +
-    geom_point() +
-    scale_x_continuous(limits = c(0, 200))
-```
+  ```{r sono-peso-plot-3}
+  sono %>% 
+    ggplot(aes(x = bodywt, y = sleep_total)) +
+      geom_point() +
+      scale_x_continuous(limits = c(0, 200))
+  ```
 
-Nesta escala, a relação entre horas de sono e peso não é mais tão regular.
+* Nestes limites, a relação entre horas de sono e peso não é mais tão pronunciada.
+
 
 ### Horas de sono e peso corporal para animais pequenos
 
-Vamos restringir o gráfico a animais com no máximo $5$kg.
+* Vamos restringir o gráfico a animais com no máximo $5$kg.
 
-```{r limite}
-limite <- 5
-```
+  ```{r limite}
+  limite <- 5
+  ```
 
+* Em vez de mudar a escala do gráfico, vamos filtrar as linhas do *data frame*:
 
-Em vez de mudar a escala do gráfico, vamos filtrar as linhas do *data frame*:
-
-```{r sono-peso-plot-pequenos}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot(aes(x = bodywt, y = sleep_total)) +
-    geom_point()
-```
+  ```{r sono-peso-plot-pequenos}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot(aes(x = bodywt, y = sleep_total)) +
+      geom_point()
+  ```
 
 ### Incluindo a dieta
 
-```{r plot-sono-peso-dieta}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot(aes(x = bodywt, y = sleep_total, color = vore)) +
-    geom_point()
+* Com a estética `color`. Observe como a legenda aparece automaticamente.
 
-```
+  ```{r plot-sono-peso-dieta}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot(aes(x = bodywt, y = sleep_total, color = vore)) +
+      geom_point()
+  
+  ```
 
 
 ### A estética pode ser especificada na `geom`
 
-```{r plot-sono-peso-dieta-geom}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot() +
-    geom_point(aes(x = bodywt, y = sleep_total, color = vore))
-```
+* Compare com o código anterior.
+
+  ```{r plot-sono-peso-dieta-geom}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot() +
+      geom_point(aes(x = bodywt, y = sleep_total, color = vore))
+  ```
+
+* Fazendo deste modo, a estética só vale para uma geometria. Se você acrescentar outras geometrias (linhas, por exemplo), a estética não valerá para elas.
 
 
-### Estética fixa ou dependendo de variável?
+### Aparência fixa ou dependendo de variável?
 
-Compare o último *chunk* acima com:
+* Se for fixa, não é estética. Não representa informação.
 
-```{r plot-sono-peso-cor}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot() +
-    geom_point(aes(x = bodywt, y = sleep_total), color = 'blue')
-```
+* Se depender de variável, é estética. Representa informação.
 
-Um erro comum:
+* Compare o último *chunk* acima com:
 
-```{r plot-sono-peso-cor-erro}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot() +
-    geom_point(aes(x = bodywt, y = sleep_total, color = 'blue'))
-```
+  ```{r plot-sono-peso-cor}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot() +
+      geom_point(aes(x = bodywt, y = sleep_total), color = 'blue')
+  ```
+
+* Se for uma estética, precisa estar [associada a uma variável]{.hl}, não a um valor fixo. Um erro comum seria fazer:
+
+  ```{r plot-sono-peso-cor-erro}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot() +
+      geom_point(aes(x = bodywt, y = sleep_total, color = 'blue'))
+  ```
+
 
 ### Uma correlação mais clara
 
-Peso cerebral versus peso corporal:
+* Peso cerebral versus peso corporal:
 
-```{r cerebro-corpo}
-sono %>% 
-  ggplot() +
-    geom_point(aes(x = bodywt, y = brainwt))
-```
+  ```{r cerebro-corpo}
+  sono %>% 
+    ggplot() +
+      geom_point(aes(x = bodywt, y = brainwt))
+  ```
 
-Vamos restringir aos animais mais leves e mudar a opacidade:
+* Vamos restringir aos animais mais leves e mudar a opacidade:
 
-```{r cerebro-corpo-2}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot() +
-    geom_point(aes(x = bodywt, y = brainwt), alpha = .5)
-```
+  ```{r cerebro-corpo-2}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot() +
+      geom_point(aes(x = bodywt, y = brainwt), alpha = .5)
+  ```
 
-Vamos incluir horas de sono e dieta:
+* Vamos incluir horas de sono e dieta. Observe as estéticas usadas.
 
-```{r cerebro-corpo-3}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot() +
-    geom_point(
-      aes(
-        x = bodywt, 
-        y = brainwt,
-        size = sleep_total,
-        color = vore
-      ), 
-      alpha = .5
-    )
-```
+  ```{r cerebro-corpo-3}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot() +
+      geom_point(
+        aes(
+          x = bodywt, 
+          y = brainwt,
+          size = sleep_total,
+          color = vore
+        ), 
+        alpha = .5
+      )
+  ```
 
-Mudar a escala dos tamanhos e incluir rótulos:
+* Vamos mudar a escala dos tamanhos e incluir rótulos:
 
-```{r cerebro-corpo-4}
-sono %>% 
-  filter(bodywt < limite) %>% 
-  ggplot() +
-    geom_point(
-      aes(
-        x = bodywt, 
-        y = brainwt,
-        size = sleep_total,
-        color = vore
-      ), 
-      alpha = .5
-    ) +
-    scale_size(
-      breaks = seq(0, 24, 4)
-    ) +
-    labs(
-      title = 'Peso do cérebro versus peso corporal',
-      subtitle = paste0(
-        'para mamíferos com menos de ', 
-        limite, 
-        ' kg'
-      ),
-      caption = 'Fonte: dataset `msleep`',
-      x = 'Peso corporal (kg)',
-      y = 'Peso do\n cérebro (kg)',
-      color = 'Dieta',
-      size = 'Horas\nde sono'
-    )
-```
+  ```{r cerebro-corpo-4}
+  sono %>% 
+    filter(bodywt < limite) %>% 
+    ggplot() +
+      geom_point(
+        aes(
+          x = bodywt, 
+          y = brainwt,
+          size = sleep_total,
+          color = vore
+        ), 
+        alpha = .5
+      ) +
+      scale_size(
+        breaks = seq(0, 24, 4)
+      ) +
+      labs(
+        title = 'Peso do cérebro versus peso corporal',
+        subtitle = paste0(
+          'para mamíferos com menos de ', 
+          limite, 
+          ' kg'
+        ),
+        caption = 'Fonte: dataset `msleep`',
+        x = 'Peso corporal (kg)',
+        y = 'Peso do\n cérebro (kg)',
+        color = 'Dieta',
+        size = 'Horas\nde sono'
+      )
+  ```
 
 
 ## Histogramas e cia.
 
-A idéia agora é agrupar indivíduos em classes, dependendo do valor de uma variável numérica.
+* A idéia agora é [agrupar indivíduos em classes,]{.hl} dependendo do valor de uma variável quantitativa.
 
-Vamos nos concentrar nas horas de sono.
 
 ### Distribuições de frequência
 
-Em R base, é fácil fazer os agrupamentos:
+* Vamos nos concentrar nas horas de sono.
 
-```{r vetor-horas-sono}
-sono$sleep_total
-```
+  ```{r vetor-horas-sono}
+  sono$sleep_total
+  ```
 
-```{r amplitude-sono}
-sono$sleep_total %>% range()
-```
+* Antes de montar o histograma, vamos construir uma [distribuição de frequência.]{.hl}
 
-```{r cut-horas-sono}
-sono$sleep_total %>% 
-  cut(breaks = seq(0, 20, 2), right = FALSE)
-```
+* A [amplitude]{.hl} é a diferença entre o valor máximo e o valor mínimo. A função `range` não retorna a amplitude, mas sim os valores mínimo e máximo:
 
-```{r dist-table-sono}
-sono$sleep_total %>%  
-  cut(breaks = seq(0, 20, 2), right = FALSE) %>% 
-  table(dnn = 'Horas de sono') %>% 
-  as.data.frame()
-```
+  ```{r amplitude-sono}
+  sono$sleep_total %>% range()
+  ```
+
+* Vamos decidir que cada classe vai ter $2$ horas. A função `cut` substitui os valores do vetor pelos nomes das classes:
+
+  ```{r cut-horas-sono}
+  sono$sleep_total %>% 
+    cut(breaks = seq(0, 20, 2), right = FALSE)
+  ```
+
+* A função `table` faz a contagem dos elementos de cada classe:
+
+  ```{r dist-table-sono}
+  sono$sleep_total %>%  
+    cut(breaks = seq(0, 20, 2), right = FALSE) %>% 
+    table(dnn = 'Horas de sono') %>% 
+    as.data.frame()
+  ```
 
 ### Histograma
 
-```{r hist-sono}
-sono %>% 
-  ggplot(aes(x = sleep_total)) +
-    geom_histogram(breaks = seq(0, 20, 2)) +
-    scale_x_continuous(breaks = seq(0, 20, 2))
-```
+* Na verdade, o `ggplot2` já faz esses cálculos para nós.
 
+* O *default* é criar $30$ classes (*bins*):
+
+  ```{r hist-sono1}
+  sono %>% 
+    ggplot(aes(x = sleep_total)) +
+      geom_histogram()
+  ```
+
+* Vamos mudar isto passando um vetor de limites das classes (*breaks*):
+
+  ```{r hist-sono2}
+  sono %>% 
+    ggplot(aes(x = sleep_total)) +
+      geom_histogram(breaks = seq(0, 20, 2)) +
+      scale_x_continuous(breaks = seq(0, 20, 2))
+  ```
 
 ### Polígono de frequência
 
-```{r hist-freqpoly}
-sono %>% 
-  ggplot(aes(x = sleep_total)) +
-    geom_histogram(breaks = seq(0, 20, 2)) +
-    geom_freqpoly(breaks = seq(0, 20, 2), color = 'red') +
-    scale_x_continuous(breaks = seq(0, 20, 2))
-```
+* Em vez das barras do histograma, podemos desenhar uma linha ligando seus topos.
 
-## Ogiva (frequência acumulada)
+* O resultado é um [polígono de frequência]{.hl}.
 
-```{r ogiva}
-sono %>% 
-  ggplot(aes(x = sleep_total)) +
-  geom_step(stat = 'ecdf')
-```
+  ```{r hist-freqpoly}
+  pf <- sono %>% 
+    ggplot(aes(x = sleep_total)) +
+      geom_freqpoly(breaks = seq(0, 20, 2), color = 'red') +
+      scale_x_continuous(breaks = seq(0, 20, 2))
+      
+  pf
+  ```
+
+* Vamos sobrepor o polígono de frequência ao histograma, para deixar claro o que está acontecendo:
+
+  ```{r hist-freqpoly2}
+  pf + geom_histogram(breaks = seq(0, 20, 2), alpha = .3)
+  ```
+
+
+## Ogiva
+
+* A ogiva é um gráfico que mostra a [frequência acumulada]{.hl}: para cada valor $v$ da variável no eixo $x$, a proporção de indivíduos com valor menor ou igual a $v$.
+
+* A geometria `geom_step` gera o gráfico de uma [função degrau]{.hl}. 
+
+* Cada geometria está ligada a uma [`stat`], um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria [a função `ecdf` (*empirical cumulative distribution function*), que calcula as frequências acumuladas.]{.hl}
+
+  ```{r ogiva}
+  sono %>% 
+    ggplot(aes(x = sleep_total)) +
+      geom_step(stat = 'ecdf') +
+      scale_x_continuous(breaks = seq(0, 20, 2)) +
+      scale_y_continuous(breaks = seq(0, 1, .1)) +
+      labs(y = NULL)
+  ```
+
+* Com a ogiva, podemos obter informações difíceis de visualizar no histograma. Por exemplo: 
+
+  * Cerca de $20\%$ dos mamíferos têm menos de $6$ horas de sono.
+
+  * Cerca de metade dos mamíferos têm menos de $10$ horas de sono.
+
+  * Cerca de $10\%$ dos mamíferos têm mais de $16$ horas de sono.
 
 
 ## Ramos e folhas
 
-```{r stem-and-leaf}
-sono$sleep_total %>% 
-  stem()
-```
+* No início dos anos $1900$, quando estatísticas eram feitas à mão, Arthur Bowley criou os [diagramas de ramos e folhas]{.hl}.
+
+* Um diagrama de ramos e folhas é, basicamente, uma listagem de todos os valores de uma variável, agrupados de maneira que todos os valores de uma classe (i.e., de uma linha) têm os algarismos iniciais dentro de um intervalo.
+
+* Para as horas de sono dos mamíferos:
+
+  ```{r stem-and-leaf}
+  sono$sleep_total %>% 
+    stem()
+  ```
+
+* A primeira linha representa um indivíduo com $0{,}9$ horas de sono.
+
+* A penúltima linha representa $3$ valores:
+
+  * $16{,}6$
+  * $17{,}0$
+  * $17{,}4$
+  
 
 ## Exercícios
 

@@ -1286,11 +1286,11 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \item
   Servem para visualizar a \emph{relação} entre {\hl{duas variáveis quantitativas.}}
 \item
-  Essa relação \emph{não} é necessariamente de causalidade.
+  {\hl{Essa relação \emph{não} é necessariamente de causa e efeito.}}
 \item
-  Isto é, a variável representada no eixo horizontal não determina, necessariamente, os valores da variável representada no eixo vertical.
+  Isto é, a variável do eixo horizontal não determina, necessariamente, os valores da variável do eixo vertical.
 \item
-  Pense em associação, correlação, não em causalidade.
+  Pense em {\hl{associação}}, {\hl{correlação}}, não em causalidade.
 \item
   Troque as variáveis de eixo, se ajudar a deixar isto claro.
 \end{itemize}
@@ -1298,7 +1298,9 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \hypertarget{horas-de-sono-e-peso-corporal}{%
 \subsection{Horas de sono e peso corporal}\label{horas-de-sono-e-peso-corporal}}
 
-Como as variáveis \texttt{sleep\_total} e \texttt{bodywt} estão relacionadas?
+\begin{itemize}
+\item
+  Como as variáveis \texttt{sleep\_total} e \texttt{bodywt} estão relacionadas?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1307,11 +1309,11 @@ Como as variáveis \texttt{sleep\_total} e \texttt{bodywt} estão relacionadas?
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-1-1} \end{center}
-
-O que houve? Cadê os pontos?
-
-O problema foi que só especificamos o mapeamento estético. Faltou a geometria.
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-1-1} \end{center}
+\item
+  O que houve? Cadê os pontos?
+\item
+  O problema foi que só especificamos o mapeamento estético (com \texttt{aes}, que são as iniciais de \emph{aesthetics}). {\hl{Faltou a geometria.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1321,15 +1323,15 @@ O problema foi que só especificamos o mapeamento estético. Faltou a geometria.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-2-1} \end{center}
-
-Que horror.
-
-A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de 5 horas por noite.
-
-Estes animais muito pesados estão estragando a escala do eixo \(x\).
-
-Que animais são estes?
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-2-1} \end{center}
+\item
+  Que horror.
+\item
+  A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de \(5\) horas por noite.
+\item
+  Estes animais muito pesados estão estragando a escala do eixo \(x\).
+\item
+  Que animais são estes?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1348,12 +1350,12 @@ Que animais são estes?
 \DocumentationTok{\#\# 6 African elephant  6654}
 \end{Highlighting}
 \end{Shaded}
-
-Além disso, há muitos pontos sobrepostos. Em bom português, temos um problema de \emph{overplotting}.
-
-Existem diversas maneiras de lidar com isso.
-
-A primeira delas é alterando a opacidade dos pontos:
+\item
+  Além disso, há muitos pontos sobrepostos. Em bom português, temos um problema de \emph{overplotting}.
+\item
+  Existem diversas maneiras de lidar com isso.
+\item
+  A primeira delas é {\hl{alterando a opacidade dos pontos}}. Isto é um ajuste na geometria apenas, pois a opacidade, aqui, não representa informação nenhuma.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1363,9 +1365,9 @@ A primeira delas é alterando a opacidade dos pontos:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-alfa-1} \end{center}
-
-Outra maneira é usar \texttt{geom\_jitter} em vez de \texttt{geom\_point}:
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-alfa-1} \end{center}
+\item
+  Outra maneira é usar \texttt{geom\_jitter} em vez de \texttt{geom\_point}. ``\emph{Jitter}'' significa ``tremer''. As posições dos pontos são ligeiramente perturbadas, para evitar colisões. Perdemos precisão, mas a visualização fica melhor.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1375,9 +1377,9 @@ Outra maneira é usar \texttt{geom\_jitter} em vez de \texttt{geom\_point}:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-jitter-1} \end{center}
-
-Vamos mudar a escala do gráfico para nos concentrarmos nos animais menos pesados:
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-jitter-1} \end{center}
+\item
+  Vamos mudar os limites do gráfico para nos concentrarmos nos animais menos pesados. Observe que {\hl{isto é um ajuste na escala}}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1389,22 +1391,25 @@ Vamos mudar a escala do gráfico para nos concentrarmos nos animais menos pesado
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-3-1} \end{center}
-
-Nesta escala, a relação entre horas de sono e peso não é mais tão regular.
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-3-1} \end{center}
+\item
+  Nestes limites, a relação entre horas de sono e peso não é mais tão pronunciada.
+\end{itemize}
 
 \hypertarget{horas-de-sono-e-peso-corporal-para-animais-pequenos}{%
 \subsection{Horas de sono e peso corporal para animais pequenos}\label{horas-de-sono-e-peso-corporal-para-animais-pequenos}}
 
-Vamos restringir o gráfico a animais com no máximo \(5\)kg.
+\begin{itemize}
+\item
+  Vamos restringir o gráfico a animais com no máximo \(5\)kg.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{limite }\OtherTok{\textless{}{-}} \DecValTok{5}
 \end{Highlighting}
 \end{Shaded}
-
-Em vez de mudar a escala do gráfico, vamos filtrar as linhas do \emph{data frame}:
+\item
+  Em vez de mudar a escala do gráfico, vamos filtrar as linhas do \emph{data frame}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1415,10 +1420,15 @@ Em vez de mudar a escala do gráfico, vamos filtrar as linhas do \emph{data fram
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-pequenos-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-pequenos-1} \end{center}
+\end{itemize}
 
 \hypertarget{incluindo-a-dieta}{%
 \subsection{Incluindo a dieta}\label{incluindo-a-dieta}}
+
+\begin{itemize}
+\item
+  Com a estética \texttt{color}. Observe como a legenda aparece automaticamente.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1429,10 +1439,15 @@ Em vez de mudar a escala do gráfico, vamos filtrar as linhas do \emph{data fram
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-dieta-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-dieta-1} \end{center}
+\end{itemize}
 
 \hypertarget{a-estuxe9tica-pode-ser-especificada-na-geom}{%
 \subsection{\texorpdfstring{A estética pode ser especificada na \texttt{geom}}{A estética pode ser especificada na geom}}\label{a-estuxe9tica-pode-ser-especificada-na-geom}}
+
+\begin{itemize}
+\item
+  Compare com o código anterior.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1443,12 +1458,21 @@ Em vez de mudar a escala do gráfico, vamos filtrar as linhas do \emph{data fram
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-dieta-geom-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-dieta-geom-1} \end{center}
+\item
+  Fazendo deste modo, a estética só vale para uma geometria. Se você acrescentar outras geometrias (linhas, por exemplo), a estética não valerá para elas.
+\end{itemize}
 
-\hypertarget{estuxe9tica-fixa-ou-dependendo-de-variuxe1vel}{%
-\subsection{Estética fixa ou dependendo de variável?}\label{estuxe9tica-fixa-ou-dependendo-de-variuxe1vel}}
+\hypertarget{aparuxeancia-fixa-ou-dependendo-de-variuxe1vel}{%
+\subsection{Aparência fixa ou dependendo de variável?}\label{aparuxeancia-fixa-ou-dependendo-de-variuxe1vel}}
 
-Compare o último \emph{chunk} acima com:
+\begin{itemize}
+\item
+  Se for fixa, não é estética. Não representa informação.
+\item
+  Se depender de variável, é estética. Representa informação.
+\item
+  Compare o último \emph{chunk} acima com:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1459,9 +1483,9 @@ Compare o último \emph{chunk} acima com:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-cor-1} \end{center}
-
-Um erro comum:
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-cor-1} \end{center}
+\item
+  Se for uma estética, precisa estar {\hl{associada a uma variável}}, não a um valor fixo. Um erro comum seria fazer:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1472,12 +1496,15 @@ Um erro comum:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-cor-erro-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-sono-peso-cor-erro-1} \end{center}
+\end{itemize}
 
 \hypertarget{uma-correlauxe7uxe3o-mais-clara}{%
 \subsection{Uma correlação mais clara}\label{uma-correlauxe7uxe3o-mais-clara}}
 
-Peso cerebral versus peso corporal:
+\begin{itemize}
+\item
+  Peso cerebral versus peso corporal:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1488,9 +1515,9 @@ Peso cerebral versus peso corporal:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-1} \end{center}
-
-Vamos restringir aos animais mais leves e mudar a opacidade:
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-1} \end{center}
+\item
+  Vamos restringir aos animais mais leves e mudar a opacidade:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1502,9 +1529,9 @@ Vamos restringir aos animais mais leves e mudar a opacidade:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-2-1} \end{center}
-
-Vamos incluir horas de sono e dieta:
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-2-1} \end{center}
+\item
+  Vamos incluir horas de sono e dieta. Observe as estéticas usadas.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1524,9 +1551,9 @@ Vamos incluir horas de sono e dieta:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-3-1} \end{center}
-
-Mudar a escala dos tamanhos e incluir rótulos:
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-3-1} \end{center}
+\item
+  Vamos mudar a escala dos tamanhos e incluir rótulos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1562,19 +1589,24 @@ Mudar a escala dos tamanhos e incluir rótulos:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-4-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-4-1} \end{center}
+\end{itemize}
 
 \hypertarget{histogramas-e-cia.}{%
 \section{Histogramas e cia.}\label{histogramas-e-cia.}}
 
-A idéia agora é agrupar indivíduos em classes, dependendo do valor de uma variável numérica.
-
-Vamos nos concentrar nas horas de sono.
+\begin{itemize}
+\tightlist
+\item
+  A idéia agora é {\hl{agrupar indivíduos em classes,}} dependendo do valor de uma variável quantitativa.
+\end{itemize}
 
 \hypertarget{distribuiuxe7uxf5es-de-frequuxeancia}{%
 \subsection{Distribuições de frequência}\label{distribuiuxe7uxf5es-de-frequuxeancia}}
 
-Em R base, é fácil fazer os agrupamentos:
+\begin{itemize}
+\item
+  Vamos nos concentrar nas horas de sono.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1588,6 +1620,10 @@ Em R base, é fácil fazer os agrupamentos:
 \DocumentationTok{\#\# [79]  8,9  5,2  6,3 12,5  9,8}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Antes de montar o histograma, vamos construir uma {\hl{distribuição de frequência.}}
+\item
+  A {\hl{amplitude}} é a diferença entre o valor máximo e o valor mínimo. A função \texttt{range} não retorna a amplitude, mas sim os valores mínimo e máximo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1595,6 +1631,8 @@ Em R base, é fácil fazer os agrupamentos:
 \DocumentationTok{\#\# [1]  1,9 19,9}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Vamos decidir que cada classe vai ter \(2\) horas. A função \texttt{cut} substitui os valores do vetor pelos nomes das classes:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1614,6 +1652,8 @@ Em R base, é fácil fazer os agrupamentos:
 \DocumentationTok{\#\# 10 Levels: [0,2) [2,4) [4,6) [6,8) [8,10) [10,12) [12,14) ... [18,20)}
 \end{Highlighting}
 \end{Shaded}
+\item
+  A função \texttt{table} faz a contagem dos elementos de cada classe:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1633,10 +1673,30 @@ Em R base, é fácil fazer os agrupamentos:
 \DocumentationTok{\#\# \# ... with 4 more rows}
 \end{Highlighting}
 \end{Shaded}
+\end{itemize}
 
 \hypertarget{histograma}{%
 \subsection{Histograma}\label{histograma}}
 
+\begin{itemize}
+\item
+  Na verdade, o \texttt{ggplot2} já faz esses cálculos para nós.
+\item
+  O \emph{default} é criar \(30\) classes (\emph{bins}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_histogram}\NormalTok{()}
+\DocumentationTok{\#\# \textasciigrave{}stat\_bin()\textasciigrave{} using \textasciigrave{}bins = 30\textasciigrave{}. Pick better value with \textasciigrave{}binwidth\textasciigrave{}.}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-sono1-1} \end{center}
+\item
+  Vamos mudar isto passando um vetor de limites das classes (\emph{breaks}):
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
@@ -1646,38 +1706,88 @@ Em R base, é fácil fazer os agrupamentos:
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-sono-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-sono2-1} \end{center}
+\end{itemize}
 
 \hypertarget{poluxedgono-de-frequuxeancia}{%
 \subsection{Polígono de frequência}\label{poluxedgono-de-frequuxeancia}}
 
+\begin{itemize}
+\item
+  Em vez das barras do histograma, podemos desenhar uma linha ligando seus topos.
+\item
+  O resultado é um {\hl{polígono de frequência}}.
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{pf }\OtherTok{\textless{}{-}}\NormalTok{ sono }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
     \FunctionTok{geom\_freqpoly}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{color =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
     \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+
+\NormalTok{pf}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-freqpoly-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-freqpoly-1} \end{center}
+\item
+  Vamos sobrepor o polígono de frequência ao histograma, para deixar claro o que está acontecendo:
 
-\hypertarget{ogiva-frequuxeancia-acumulada}{%
-\section{Ogiva (frequência acumulada)}\label{ogiva-frequuxeancia-acumulada}}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pf }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-freqpoly2-1} \end{center}
+\end{itemize}
+
+\hypertarget{ogiva}{%
+\section{Ogiva}\label{ogiva}}
+
+\begin{itemize}
+\item
+  A ogiva é um gráfico que mostra a {\hl{frequência acumulada}}: para cada valor \(v\) da variável no eixo \(x\), a proporção de indivíduos com valor menor ou igual a \(v\).
+\item
+  A geometria \texttt{geom\_step} gera o gráfico de uma {\hl{função degrau}}.
+\item
+  Cada geometria está ligada a uma {[}\texttt{stat}{]}, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria {\hl{a função \texttt{ecdf} (\emph{empirical cumulative distribution function}), que calcula as frequências acumuladas.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_step}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}ecdf\textquotesingle{}}\NormalTok{)}
+    \FunctionTok{geom\_step}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}ecdf\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/ogiva-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/ogiva-1} \end{center}
+\item
+  Com a ogiva, podemos obter informações difíceis de visualizar no histograma. Por exemplo:
+
+  \begin{itemize}
+  \item
+    Cerca de \(20\%\) dos mamíferos têm menos de \(6\) horas de sono.
+  \item
+    Cerca de metade dos mamíferos têm menos de \(10\) horas de sono.
+  \item
+    Cerca de \(10\%\) dos mamíferos têm mais de \(16\) horas de sono.
+  \end{itemize}
+\end{itemize}
 
 \hypertarget{ramos-e-folhas}{%
 \section{Ramos e folhas}\label{ramos-e-folhas}}
+
+\begin{itemize}
+\item
+  No início dos anos \(1900\), quando estatísticas eram feitas à mão, Arthur Bowley criou os {\hl{diagramas de ramos e folhas}}.
+\item
+  Um diagrama de ramos e folhas é, basicamente, uma listagem de todos os valores de uma variável, agrupados de maneira que todos os valores de uma classe (i.e., de uma linha) têm os algarismos iniciais dentro de um intervalo.
+\item
+  Para as horas de sono dos mamíferos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1698,6 +1808,21 @@ Em R base, é fácil fazer os agrupamentos:
 \DocumentationTok{\#\#   18 | 01479}
 \end{Highlighting}
 \end{Shaded}
+\item
+  A primeira linha representa um indivíduo com \(0{,}9\) horas de sono.
+\item
+  A penúltima linha representa \(3\) valores:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \(16{,}6\)
+  \item
+    \(17{,}0\)
+  \item
+    \(17{,}4\)
+  \end{itemize}
+\end{itemize}
 
 \hypertarget{exercuxedcios-3}{%
 \section{Exercícios}\label{exercuxedcios-3}}
