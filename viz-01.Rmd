@@ -152,7 +152,7 @@ knitr::include_graphics('images/countries-1.png')
 
 * Podemos produzir um sumário dos dados usando o pacote *summarytools* (que já foi carregado neste documento):
 
-  ```{r summary-df, results='asis'}
+  ```{r summary-df, results='asis', message=FALSE}
   df %>% dfSummary() %>% print()
   ```
 
@@ -199,7 +199,7 @@ knitr::include_graphics('images/countries-1.png')
 
 * Vamos ver o sumário:
 
-  ```{r sumario-sono, results='asis'}
+  ```{r sumario-sono, results='asis', message=FALSE}
   sono %>% dfSummary() %>% print()
   ```
 
