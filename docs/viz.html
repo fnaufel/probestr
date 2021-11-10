@@ -80,8 +80,8 @@
 </ul>
 <div class="inline-figure"><img src="images/countries-1.png" width="100%" style="display: block; margin: auto;"></div>
 <ul>
-<li><p>O gráfico mostra como, em cada país, a saúde (mais precisamente, a expectativa de vida) se relaciona com a riqueza (mais precisamente, o PIB).</p></li>
-<li><p>Além da expectativa de vida e o do PIB, o gráfico traz mais informações sobre cada país.</p></li>
+<li><p>O gráfico mostra como, em cada país, a saúde (mais precisamente, a expectativa de vida) se relaciona com a riqueza (mais precisamente, o PIB <em>per capita</em>).</p></li>
+<li><p>Além da expectativa de vida e o do PIB <em>per capita</em>, o gráfico traz mais informações sobre cada país.</p></li>
 <li><p>Cada país é representado por um ponto (a <span class="hl">geometria</span>).</p></li>
 <li>
 <p>Informações sobre cada país são representadas por características do ponto correspondente (as <span class="hl">estéticas</span>):</p>
@@ -94,7 +94,8 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>PIB per capita</td>
+<td>PIB <em>per capita</em>
+</td>
 <td>ponto</td>
 <td>posição x</td>
 </tr>
@@ -144,7 +145,7 @@
 <span class="header-section-number">3.2.2</span> Escalas (<em>scales</em>)<a class="anchor" aria-label="anchor" href="#escalas-scales"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
-<li><p>Controlam os detalhes da geometria e do mapeamento (eixos, cores etc.).</p></li>
+<li><p>As escalas controlam os detalhes da aparência da geometria e do mapeamento (eixos, cores etc.).</p></li>
 <li><p>Os eixos do gráfico acima são escalas <span class="hl">contínuas</span>, com valores reais.</p></li>
 <li><p>Observe o eixo horizontal. Os valores não aumentam linearmente, mas sim exponencialmente: cada passo à direita equivale a <em>dobrar</em> o valor do PIB. O eixo horizontal segue uma <span class="hl">escala logarítmica</span>.</p></li>
 <li><p>Os tamanhos dos pontos formam uma escala <span class="hl">discreta</span>, com <span class="math inline">\(4\)</span> valores possíveis (veja a legenda no canto inferior direito do gráfico).</p></li>
@@ -268,13 +269,14 @@
 <li>
 <p>Podemos produzir um sumário dos dados usando o pacote <em>summarytools</em> (que já foi carregado neste documento):</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<table style="width:100%;" class="table table-sm">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">## temporary images written to '/home/fnaufel/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/Bookdown/dfimg'</span></code></pre></div>
+<table class="table table-sm">
 <colgroup>
-<col width="15%">
-<col width="31%">
+<col width="14%">
+<col width="30%">
 <col width="21%">
-<col width="21%">
+<col width="22%">
 <col width="10%">
 </colgroup>
 <thead><tr class="header">
@@ -310,7 +312,7 @@
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 73 (88,0%)</td>
-<td><img src="/tmp/ds0077.png"></td>
+<td><img src="dfimg/ds0001.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -339,7 +341,7 @@
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 67 (80,7%)</td>
-<td><img src="/tmp/ds0078.png"></td>
+<td><img src="dfimg/ds0002.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -354,7 +356,7 @@
 32 (42,1%)<br>
 5 ( 6,6%)<br>
 20 (26,3%)</td>
-<td><img src="/tmp/ds0079.png"></td>
+<td><img src="dfimg/ds0003.png"></td>
 <td>7<br>
 (8,4%)</td>
 </tr>
@@ -383,7 +385,7 @@
 2 ( 2,4%)<br>
 2 ( 2,4%)<br>
 13 (15,7%)</td>
-<td><img src="/tmp/ds0080.png"></td>
+<td><img src="dfimg/ds0004.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -402,7 +404,7 @@
 27 (50,0%)<br>
 4 ( 7,4%)<br>
 7 (13,0%)</td>
-<td><img src="/tmp/ds0081.png"></td>
+<td><img src="dfimg/ds0005.png"></td>
 <td>29<br>
 (34,9%)</td>
 </tr>
@@ -414,7 +416,7 @@ mín &lt; mediana &lt; máx:<br>
 1,9 &lt; 10,1 &lt; 19,9<br>
 IQE (CV) : 5,9 (0,4)</td>
 <td>65 valores distintos</td>
-<td><img src="/tmp/ds0082.png"></td>
+<td><img src="dfimg/ds0006.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -426,7 +428,7 @@ mín &lt; mediana &lt; máx:<br>
 0,1 &lt; 1,5 &lt; 6,6<br>
 IQE (CV) : 1,5 (0,7)</td>
 <td>32 valores distintos</td>
-<td><img src="/tmp/ds0083.png"></td>
+<td><img src="dfimg/ds0007.png"></td>
 <td>22<br>
 (26,5%)</td>
 </tr>
@@ -438,7 +440,7 @@ mín &lt; mediana &lt; máx:<br>
 0,1 &lt; 0,3 &lt; 1,5<br>
 IQE (CV) : 0,4 (0,8)</td>
 <td>22 valores distintos</td>
-<td><img src="/tmp/ds0084.png"></td>
+<td><img src="dfimg/ds0008.png"></td>
 <td>51<br>
 (61,4%)</td>
 </tr>
@@ -450,7 +452,7 @@ mín &lt; mediana &lt; máx:<br>
 4,1 &lt; 13,9 &lt; 22,1<br>
 IQE (CV) : 5,9 (0,3)</td>
 <td>65 valores distintos</td>
-<td><img src="/tmp/ds0085.png"></td>
+<td><img src="dfimg/ds0009.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -462,7 +464,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 0 &lt; 5,7<br>
 IQE (CV) : 0,1 (3,5)</td>
 <td>53 valores distintos</td>
-<td><img src="/tmp/ds0086.png"></td>
+<td><img src="dfimg/ds0010.png"></td>
 <td>27<br>
 (32,5%)</td>
 </tr>
@@ -474,7 +476,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 1,7 &lt; 6654<br>
 IQE (CV) : 41,6 (4,7)</td>
 <td>82 valores distintos</td>
-<td><img src="/tmp/ds0087.png"></td>
+<td><img src="dfimg/ds0011.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -532,13 +534,14 @@ IQE (CV) : 41,6 (4,7)</td>
 <li>
 <p>Vamos ver o sumário:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<table class="table table-sm">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">## temporary images written to '/home/fnaufel/Documents/UFF/Ensino/Disciplinas/Probabilidade-e-estatistica/Bookdown/dfimg'</span></code></pre></div>
+<table style="width:100%;" class="table table-sm">
 <colgroup>
 <col width="14%">
 <col width="31%">
 <col width="21%">
-<col width="21%">
+<col width="22%">
 <col width="10%">
 </colgroup>
 <thead><tr class="header">
@@ -574,7 +577,7 @@ IQE (CV) : 41,6 (4,7)</td>
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 73 (88,0%)</td>
-<td><img src="/tmp/ds0088.png"></td>
+<td><img src="dfimg/ds0012.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -603,7 +606,7 @@ IQE (CV) : 41,6 (4,7)</td>
 2 ( 2,4%)<br>
 2 ( 2,4%)<br>
 13 (15,7%)</td>
-<td><img src="/tmp/ds0089.png"></td>
+<td><img src="dfimg/ds0013.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -632,7 +635,7 @@ IQE (CV) : 41,6 (4,7)</td>
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 67 (80,7%)</td>
-<td><img src="/tmp/ds0090.png"></td>
+<td><img src="dfimg/ds0014.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -647,7 +650,7 @@ IQE (CV) : 41,6 (4,7)</td>
 32 (42,1%)<br>
 5 ( 6,6%)<br>
 20 (26,3%)</td>
-<td><img src="/tmp/ds0091.png"></td>
+<td><img src="dfimg/ds0015.png"></td>
 <td>7<br>
 (8,4%)</td>
 </tr>
@@ -659,7 +662,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 1,7 &lt; 6654<br>
 IQE (CV) : 41,6 (4,7)</td>
 <td>82 valores distintos</td>
-<td><img src="/tmp/ds0092.png"></td>
+<td><img src="dfimg/ds0016.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -671,7 +674,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 0 &lt; 5,7<br>
 IQE (CV) : 0,1 (3,5)</td>
 <td>53 valores distintos</td>
-<td><img src="/tmp/ds0093.png"></td>
+<td><img src="dfimg/ds0017.png"></td>
 <td>27<br>
 (32,5%)</td>
 </tr>
@@ -683,7 +686,7 @@ mín &lt; mediana &lt; máx:<br>
 4,1 &lt; 13,9 &lt; 22,1<br>
 IQE (CV) : 5,9 (0,3)</td>
 <td>65 valores distintos</td>
-<td><img src="/tmp/ds0094.png"></td>
+<td><img src="dfimg/ds0018.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -695,7 +698,7 @@ mín &lt; mediana &lt; máx:<br>
 1,9 &lt; 10,1 &lt; 19,9<br>
 IQE (CV) : 5,9 (0,4)</td>
 <td>65 valores distintos</td>
-<td><img src="/tmp/ds0095.png"></td>
+<td><img src="dfimg/ds0019.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>

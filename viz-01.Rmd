@@ -21,9 +21,9 @@ embed_yt('OBpNjqIIyhI')
 knitr::include_graphics('images/countries-1.png')
 ```
 
-* O gráfico mostra como, em cada país, a saúde (mais precisamente, a expectativa de vida) se relaciona com a riqueza (mais precisamente, o PIB).
+* O gráfico mostra como, em cada país, a saúde (mais precisamente, a expectativa de vida) se relaciona com a riqueza (mais precisamente, o PIB *per capita*).
 
-* Além da expectativa de vida e o do PIB, o gráfico traz mais informações sobre cada país.
+* Além da expectativa de vida e o do PIB *per capita*, o gráfico traz mais informações sobre cada país.
 
 * Cada país é representado por um ponto (a [geometria]{.hl}).
 
@@ -33,7 +33,7 @@ knitr::include_graphics('images/countries-1.png')
   
   | Variável            | Geometria | Estética  |
   |---------------------|-----------|-----------|
-  | PIB per capita      | ponto     | posição x |
+  | PIB *per capita*    | ponto     | posição x |
   | Expectativa de vida | ponto     | posição y |
   | População           | ponto     | tamanho   |
   | Continente          | ponto     | cor       |
@@ -59,7 +59,7 @@ knitr::include_graphics('images/countries-1.png')
   
 ### Escalas (*scales*)
 
-* Controlam os detalhes da geometria e do mapeamento (eixos, cores etc.).
+* As escalas controlam os detalhes da aparência da geometria e do mapeamento (eixos, cores etc.).
 
 * Os eixos do gráfico acima são escalas [contínuas]{.hl}, com valores reais.
 

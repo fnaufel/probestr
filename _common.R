@@ -46,7 +46,7 @@ st_options(
   dfSummary.graph.col = is_html_output(),
   headings = FALSE,
   dfSummary.graph.magnif = 1,
-  tmp.img.dir = '/tmp',
+  tmp.img.dir = 'dfimg',
   lang = 'pt',
   subtitle.emphasis = FALSE
 )
