@@ -553,6 +553,119 @@ knitr::include_graphics('images/countries-1.png')
 
 ## Exercícios
 
+::: {.rmdimportant latex=1}
+
+Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.
+
+:::
+
+### Mamíferos e sono
+
+::: {.rmdbox latex=1}
+
+Use o *data frame* `sono` definido como 
+
+```{r eval=FALSE}
+library(ggplot2)
+
+sono <- msleep %>% 
+  select(
+    name, order, genus, vore, bodywt, 
+    brainwt, awake, sleep_total
+  )
+```
+
+:::
+
 1. Construa um histograma da variável `brainwt`. Escolha o número de classes que você achar melhor. O que acontece com os valores `NA`?
 
-2. Construa um *scatter plot* de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? 
+1. Descubra que função da forma `scale_x_...` usar para fazer com que o eixo $x$ tenha uma escala logarítmica. Gere um novo histograma.
+
+1. Qual dos dois histogramas é melhor para responder a pergunta "*Qual a faixa de peso cerebral que tem mais animais?*" de forma satisfatória?
+
+1. Construa um *scatter plot* de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? Se precisar, concentre-se em um subconjunto dos dados.
+
+1. Usando `geom_smooth` (pesquise a respeito), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+
+
+### Igualdade de gênero entre furacões?
+
+[Este artigo](https://www.pnas.org/content/111/24/8782) tenta achar uma relação entre o gênero do nome de um furacão e a quantidade de vítimas fatais provocadas por ele.
+
+::: {.rmdbox latex=1}
+
+Os dados estão no pacote `DAAG`, que deve ser instalado:
+
+```{r eval=FALSE}
+if (!require(DAAG))
+  install.packages("DAAG")
+```
+
+Vamos usar apenas algumas das variáveis, com nomes em português.
+
+```{r eval=FALSE}
+df <- hurricNamed %>% 
+  as_tibble() %>% 
+  transmute(
+    id = paste(Year, Name, sep = '-'),
+    nome = Name,
+    ano = Year,
+    velocidade = LF.WindsMPH * 1.8,     # convertido para km/h
+    pressao = LF.PressureMB,            # mbar
+    prejuizo = BaseDam2014 %>% round(), # milhões de dólares de 2014
+    mortes = deaths,
+    genero = mf
+  )
+```
+
+:::
+
+1. Crie histogramas para as seguintes variáveis, escolhendo a quantidade de barras que você achar melhor. 
+
+   * `velocidade`
+   
+   * `prejuizo`
+   
+   * `mortes`
+   
+   Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.
+   
+   Comente os histogramas. 
+
+1. Os histogramas de prejuízos e mortes não ficaram bons. Vamos gerar histogramas transformados.
+
+   No *data frame*, crie duas novas colunas:
+   
+   * `logprejuizo`: *logaritmo* do prejuízo (na base $10$)
+   
+   * `logmortes`: *logaritmo* do número de mortes (na base $10$)
+   
+   Agora, gere histogramas destas duas novas variáveis.
+
+1. O que significa o valor do logaritmo do prejuízo na base $10$?
+
+1. O que significa o valor do logaritmo do número de mortes na base $10$?
+
+1. Por que o histograma do logaritmo do número de mortes vem com uma mensagem de aviso? 
+
+1. Por que isto não acontece com o logaritmo do prejuízo?
+
+1. Faça um gráfico de dispersão com `pressao` no eixo $y$ e `velocidade` no eixo $x$.
+
+1. Usando `geom_smooth` (pesquise a respeito), sobreponha uma reta de regressão ao gráfico, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+
+1. Faça um gráfico de dispersão com `logmortes` no eixo $y$ e `pressao` no eixo $x$.
+
+1. Usando `geom_smooth`, sobreponha uma reta de regressão ao gráfico, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+
+1. Faça um gráfico de dispersão com `logmortes` no eixo $y$ e `pressao` no eixo $x$, com pontos coloridos de acordo com o gênero do nome do furacão.
+
+1. Usando `geom_smooth`, sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+
+::: {.rmdcaution latex=1}
+
+Visualizações como esta ajudam a explorar os dados, mas não servem para testar rigorosamente a hipótese de que furacões mulheres matam mais do que furacões homens. 
+
+Mais adiante no curso, vamos aprender a fazer testes mais rigorosos sobre hipóteses como esta.
+
+:::

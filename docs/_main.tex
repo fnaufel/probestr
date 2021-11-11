@@ -170,7 +170,7 @@
 \tcbset{
   rounded corners,
   boxrule=0.3mm,
-  colback=black!2!white,
+  colback=black!.5!white,
   parbox=false
 }
 
@@ -1827,12 +1827,140 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \hypertarget{exercuxedcios-3}{%
 \section{Exercícios}\label{exercuxedcios-3}}
 
+\begin{rmdimportant}
+Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.
+
+\end{rmdimportant}
+
+\hypertarget{mamuxedferos-e-sono}{%
+\subsection{Mamíferos e sono}\label{mamuxedferos-e-sono}}
+
+\begin{rmdbox}
+
+Use o \emph{data frame} \texttt{sono} definido como
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{sono }\OtherTok{\textless{}{-}}\NormalTok{ msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}
+\NormalTok{    name, order, genus, vore, bodywt, }
+\NormalTok{    brainwt, awake, sleep\_total}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\end{rmdbox}
+
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
   Construa um histograma da variável \texttt{brainwt}. Escolha o número de classes que você achar melhor. O que acontece com os valores \texttt{NA}?
 \item
-  Construa um \emph{scatter plot} de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis?
+  Descubra que função da forma \texttt{scale\_x\_...} usar para fazer com que o eixo \(x\) tenha uma escala logarítmica. Gere um novo histograma.
+\item
+  Qual dos dois histogramas é melhor para responder a pergunta ``\emph{Qual a faixa de peso cerebral que tem mais animais?}'' de forma satisfatória?
+\item
+  Construa um \emph{scatter plot} de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? Se precisar, concentre-se em um subconjunto dos dados.
+\item
+  Usando \texttt{geom\_smooth} (pesquise a respeito), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \end{enumerate}
+
+\hypertarget{igualdade-de-guxeanero-entre-furacuxf5es}{%
+\subsection{Igualdade de gênero entre furacões?}\label{igualdade-de-guxeanero-entre-furacuxf5es}}
+
+\href{https://www.pnas.org/content/111/24/8782}{Este artigo} tenta achar uma relação entre o gênero do nome de um furacão e a quantidade de vítimas fatais provocadas por ele.
+
+\begin{rmdbox}
+
+Os dados estão no pacote \texttt{DAAG}, que deve ser instalado:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(DAAG))}
+  \FunctionTok{install.packages}\NormalTok{(}\StringTok{"DAAG"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Vamos usar apenas algumas das variáveis, com nomes em português.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ hurricNamed }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{transmute}\NormalTok{(}
+    \AttributeTok{id =} \FunctionTok{paste}\NormalTok{(Year, Name, }\AttributeTok{sep =} \StringTok{\textquotesingle{}{-}\textquotesingle{}}\NormalTok{),}
+    \AttributeTok{nome =}\NormalTok{ Name,}
+    \AttributeTok{ano =}\NormalTok{ Year,}
+    \AttributeTok{velocidade =}\NormalTok{ LF.WindsMPH }\SpecialCharTok{*} \FloatTok{1.8}\NormalTok{,     }\CommentTok{\# convertido para km/h}
+    \AttributeTok{pressao =}\NormalTok{ LF.PressureMB,            }\CommentTok{\# mbar}
+    \AttributeTok{prejuizo =}\NormalTok{ BaseDam2014 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{round}\NormalTok{(), }\CommentTok{\# milhões de dólares de 2014}
+    \AttributeTok{mortes =}\NormalTok{ deaths,}
+    \AttributeTok{genero =}\NormalTok{ mf}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\end{rmdbox}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Crie histogramas para as seguintes variáveis, escolhendo a quantidade de barras que você achar melhor.
+
+  \begin{itemize}
+  \item
+    \texttt{velocidade}
+  \item
+    \texttt{prejuizo}
+  \item
+    \texttt{mortes}
+  \end{itemize}
+
+  Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.
+
+  Comente os histogramas.
+\item
+  Os histogramas de prejuízos e mortes não ficaram bons. Vamos gerar histogramas transformados.
+
+  No \emph{data frame}, crie duas novas colunas:
+
+  \begin{itemize}
+  \item
+    \texttt{logprejuizo}: \emph{logaritmo} do prejuízo (na base \(10\))
+  \item
+    \texttt{logmortes}: \emph{logaritmo} do número de mortes (na base \(10\))
+  \end{itemize}
+
+  Agora, gere histogramas destas duas novas variáveis.
+\item
+  O que significa o valor do logaritmo do prejuízo na base \(10\)?
+\item
+  O que significa o valor do logaritmo do número de mortes na base \(10\)?
+\item
+  Por que o histograma do logaritmo do número de mortes vem com uma mensagem de aviso?
+\item
+  Por que isto não acontece com o logaritmo do prejuízo?
+\item
+  Faça um gráfico de dispersão com \texttt{pressao} no eixo \(y\) e \texttt{velocidade} no eixo \(x\).
+\item
+  Usando \texttt{geom\_smooth} (pesquise a respeito), sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
+\item
+  Faça um gráfico de dispersão com \texttt{logmortes} no eixo \(y\) e \texttt{pressao} no eixo \(x\).
+\item
+  Usando \texttt{geom\_smooth}, sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
+\item
+  Faça um gráfico de dispersão com \texttt{logmortes} no eixo \(y\) e \texttt{pressao} no eixo \(x\), com pontos coloridos de acordo com o gênero do nome do furacão.
+\item
+  Usando \texttt{geom\_smooth}, sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
+\end{enumerate}
+
+\begin{rmdcaution}
+Visualizações como esta ajudam a explorar os dados, mas não servem para testar rigorosamente a hipótese de que furacões mulheres matam mais do que furacões homens.
+
+Mais adiante no curso, vamos aprender a fazer testes mais rigorosos sobre hipóteses como esta.
+
+\end{rmdcaution}
 
 \end{document}

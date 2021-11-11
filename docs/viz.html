@@ -1126,10 +1126,94 @@ IQE (CV) : 5,9 (0,4)</td>
 <h2>
 <span class="header-section-number">3.8</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-3"><i class="fas fa-link"></i></a>
 </h2>
+<div class="rmdimportant">
+<p>Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.</p>
+</div>
+<div id="mamíferos-e-sono" class="section level3" number="3.8.1">
+<h3>
+<span class="header-section-number">3.8.1</span> Mamíferos e sono<a class="anchor" aria-label="anchor" href="#mam%C3%ADferos-e-sono"><i class="fas fa-link"></i></a>
+</h3>
+<div class="rmdbox">
+<p>Use o <em>data frame</em> <code>sono</code> definido como</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+
+<span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span>
+    <span class="va">name</span>, <span class="va">order</span>, <span class="va">genus</span>, <span class="va">vore</span>, <span class="va">bodywt</span>, 
+    <span class="va">brainwt</span>, <span class="va">awake</span>, <span class="va">sleep_total</span>
+  <span class="op">)</span></code></pre></div>
+</div>
 <ol style="list-style-type: decimal">
 <li><p>Construa um histograma da variável <code>brainwt</code>. Escolha o número de classes que você achar melhor. O que acontece com os valores <code>NA</code>?</p></li>
-<li><p>Construa um <em>scatter plot</em> de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis?</p></li>
+<li><p>Descubra que função da forma <code>scale_x_...</code> usar para fazer com que o eixo <span class="math inline">\(x\)</span> tenha uma escala logarítmica. Gere um novo histograma.</p></li>
+<li><p>Qual dos dois histogramas é melhor para responder a pergunta “<em>Qual a faixa de peso cerebral que tem mais animais?</em>” de forma satisfatória?</p></li>
+<li><p>Construa um <em>scatter plot</em> de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? Se precisar, concentre-se em um subconjunto dos dados.</p></li>
+<li><p>Usando <code>geom_smooth</code> (pesquise a respeito), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
+</div>
+<div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.8.2">
+<h3>
+<span class="header-section-number">3.8.2</span> Igualdade de gênero entre furacões?<a class="anchor" aria-label="anchor" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="https://www.pnas.org/content/111/24/8782">Este artigo</a> tenta achar uma relação entre o gênero do nome de um furacão e a quantidade de vítimas fatais provocadas por ele.</p>
+<div class="rmdbox">
+<p>Os dados estão no pacote <code>DAAG</code>, que deve ser instalado:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va">DAAG</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"DAAG"</span><span class="op">)</span></code></pre></div>
+<p>Vamos usar apenas algumas das variáveis, com nomes em português.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">hurricNamed</span> <span class="op">%&gt;%</span> 
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">transmute</span><span class="op">(</span>
+    id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">Year</span>, <span class="va">Name</span>, sep <span class="op">=</span> <span class="st">'-'</span><span class="op">)</span>,
+    nome <span class="op">=</span> <span class="va">Name</span>,
+    ano <span class="op">=</span> <span class="va">Year</span>,
+    velocidade <span class="op">=</span> <span class="va">LF.WindsMPH</span> <span class="op">*</span> <span class="fl">1.8</span>,     <span class="co"># convertido para km/h</span>
+    pressao <span class="op">=</span> <span class="va">LF.PressureMB</span>,            <span class="co"># mbar</span>
+    prejuizo <span class="op">=</span> <span class="va">BaseDam2014</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">)</span>, <span class="co"># milhões de dólares de 2014</span>
+    mortes <span class="op">=</span> <span class="va">deaths</span>,
+    genero <span class="op">=</span> <span class="va">mf</span>
+  <span class="op">)</span></code></pre></div>
+</div>
+<ol style="list-style-type: decimal">
+<li>
+<p>Crie histogramas para as seguintes variáveis, escolhendo a quantidade de barras que você achar melhor.</p>
+<ul>
+<li><p><code>velocidade</code></p></li>
+<li><p><code>prejuizo</code></p></li>
+<li><p><code>mortes</code></p></li>
+</ul>
+<p>Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.</p>
+<p>Comente os histogramas.</p>
+</li>
+<li>
+<p>Os histogramas de prejuízos e mortes não ficaram bons. Vamos gerar histogramas transformados.</p>
+<p>No <em>data frame</em>, crie duas novas colunas:</p>
+<ul>
+<li><p><code>logprejuizo</code>: <em>logaritmo</em> do prejuízo (na base <span class="math inline">\(10\)</span>)</p></li>
+<li><p><code>logmortes</code>: <em>logaritmo</em> do número de mortes (na base <span class="math inline">\(10\)</span>)</p></li>
+</ul>
+<p>Agora, gere histogramas destas duas novas variáveis.</p>
+</li>
+<li><p>O que significa o valor do logaritmo do prejuízo na base <span class="math inline">\(10\)</span>?</p></li>
+<li><p>O que significa o valor do logaritmo do número de mortes na base <span class="math inline">\(10\)</span>?</p></li>
+<li><p>Por que o histograma do logaritmo do número de mortes vem com uma mensagem de aviso?</p></li>
+<li><p>Por que isto não acontece com o logaritmo do prejuízo?</p></li>
+<li><p>Faça um gráfico de dispersão com <code>pressao</code> no eixo <span class="math inline">\(y\)</span> e <code>velocidade</code> no eixo <span class="math inline">\(x\)</span>.</p></li>
+<li><p>Usando <code>geom_smooth</code> (pesquise a respeito), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Faça um gráfico de dispersão com <code>logmortes</code> no eixo <span class="math inline">\(y\)</span> e <code>pressao</code> no eixo <span class="math inline">\(x\)</span>.</p></li>
+<li><p>Usando <code>geom_smooth</code>, sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Faça um gráfico de dispersão com <code>logmortes</code> no eixo <span class="math inline">\(y\)</span> e <code>pressao</code> no eixo <span class="math inline">\(x\)</span>, com pontos coloridos de acordo com o gênero do nome do furacão.</p></li>
+<li><p>Usando <code>geom_smooth</code>, sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+</ol>
+<div class="rmdcaution">
+<p>Visualizações como esta ajudam a explorar os dados, mas não servem para testar rigorosamente a hipótese de que furacões mulheres matam mais do que furacões homens.</p>
+<p>Mais adiante no curso, vamos aprender a fazer testes mais rigorosos sobre hipóteses como esta.</p>
+</div>
+
+</div>
 </div>
 </div>
   <div class="chapter-nav">
@@ -1168,7 +1252,12 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 <li><a class="nav-link" href="#ogiva"><span class="header-section-number">3.6</span> Ogiva</a></li>
 <li><a class="nav-link" href="#ramos-e-folhas"><span class="header-section-number">3.7</span> Ramos e folhas</a></li>
-<li><a class="nav-link" href="#exerc%C3%ADcios-3"><span class="header-section-number">3.8</span> Exercícios</a></li>
+<li>
+<a class="nav-link" href="#exerc%C3%ADcios-3"><span class="header-section-number">3.8</span> Exercícios</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#mam%C3%ADferos-e-sono"><span class="header-section-number">3.8.1</span> Mamíferos e sono</a></li>
+<li><a class="nav-link" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><span class="header-section-number">3.8.2</span> Igualdade de gênero entre furacões?</a></li>
+</ul>
+</li>
 </ul>
 
       <div class="book-extra">
