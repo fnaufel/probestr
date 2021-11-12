@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Capítulo 3 Visualização com ggplot2 | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
-<meta name="description" content="3.1 Vídeo 1    3.2 Componentes de um gráfico ggplot2  3.2.1 Geometrias e mapeamentos estéticos (mappings) Observe o gráfico abaixo, obtido de...">
+<meta name="description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  3.1 Vídeo 1    3.2 Componentes de um gráfico ggplot2  3.2.1 Geometrias e mapeamentos estéticos...">
 <meta name="generator" content="bookdown 0.24 with bs4_book()">
 <meta property="og:title" content="Capítulo 3 Visualização com ggplot2 | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
-<meta property="og:description" content="3.1 Vídeo 1    3.2 Componentes de um gráfico ggplot2  3.2.1 Geometrias e mapeamentos estéticos (mappings) Observe o gráfico abaixo, obtido de...">
+<meta property="og:description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  3.1 Vídeo 1    3.2 Componentes de um gráfico ggplot2  3.2.1 Geometrias e mapeamentos estéticos...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Capítulo 3 Visualização com ggplot2 | Probabilidade e Estatística com R">
-<meta name="twitter:description" content="3.1 Vídeo 1    3.2 Componentes de um gráfico ggplot2  3.2.1 Geometrias e mapeamentos estéticos (mappings) Observe o gráfico abaixo, obtido de...">
+<meta name="twitter:description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  3.1 Vídeo 1    3.2 Componentes de um gráfico ggplot2  3.2.1 Geometrias e mapeamentos estéticos...">
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -60,6 +60,9 @@
 <h1>
 <span class="header-section-number">Capítulo 3</span> Visualização com ggplot2<a class="anchor" aria-label="anchor" href="#viz"><i class="fas fa-link"></i></a>
 </h1>
+<div class="rmdtip">
+<p>Busque mais informações sobre os pacotes <code>tidyverse</code> e <code>ggplot2</code> <a href="index.html#refrec">nas referências recomendadas</a>.</p>
+</div>
 <div id="vídeo-1-2" class="section level2" number="3.1">
 <h2>
 <span class="header-section-number">3.1</span> Vídeo 1<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-1-2"><i class="fas fa-link"></i></a>
@@ -1065,14 +1068,19 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>A ogiva é um gráfico que mostra a <span class="hl">frequência acumulada</span>: para cada valor <span class="math inline">\(v\)</span> da variável no eixo <span class="math inline">\(x\)</span>, a proporção de indivíduos com valor menor ou igual a <span class="math inline">\(v\)</span>.</p></li>
 <li><p>A geometria <code>geom_step</code> gera o gráfico de uma <span class="hl">função degrau</span>.</p></li>
 <li>
-<p>Cada geometria está ligada a uma [<code>stat</code>], um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria <span class="hl">a função <code>ecdf</code> (<em>empirical cumulative distribution function</em>), que calcula as frequências acumuladas.</span></p>
+<p>Cada geometria está ligada a uma <span class="hl"><code>stat</code></span>, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria <span class="hl">a função <code>ecdf</code> (<em>empirical cumulative distribution function</em>), do pacote <code>stats</code>, que calcula as frequências acumuladas.</span></p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">'ecdf'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
+<span class="co">## </span>
+<span class="co">## Attaching package: 'stats'</span>
+<span class="co">## The following objects are masked from 'package:dplyr':</span>
+<span class="co">## </span>
+<span class="co">##     filter, lag</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/ogiva-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
@@ -1146,10 +1154,10 @@ IQE (CV) : 5,9 (0,4)</td>
 </div>
 <ol style="list-style-type: decimal">
 <li><p>Construa um histograma da variável <code>brainwt</code>. Escolha o número de classes que você achar melhor. O que acontece com os valores <code>NA</code>?</p></li>
-<li><p>Descubra que função da forma <code>scale_x_...</code> usar para fazer com que o eixo <span class="math inline">\(x\)</span> tenha uma escala logarítmica. Gere um novo histograma.</p></li>
+<li><p><a href="http://sillasgonzaga.com/material/curso_visualizacao/ggplot2-parte-ii.html#customizando-escalas">Descubra que função da forma <code>scale_x_...</code> usar</a> para fazer com que o eixo <span class="math inline">\(x\)</span> tenha uma escala logarítmica. Gere um novo histograma.</p></li>
 <li><p>Qual dos dois histogramas é melhor para responder a pergunta “<em>Qual a faixa de peso cerebral que tem mais animais?</em>” de forma satisfatória?</p></li>
 <li><p>Construa um <em>scatter plot</em> de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? Se precisar, concentre-se em um subconjunto dos dados.</p></li>
-<li><p>Usando <code>geom_smooth</code> (pesquise a respeito), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
 </div>
 <div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.8.2">
@@ -1202,11 +1210,11 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Por que o histograma do logaritmo do número de mortes vem com uma mensagem de aviso?</p></li>
 <li><p>Por que isto não acontece com o logaritmo do prejuízo?</p></li>
 <li><p>Faça um gráfico de dispersão com <code>pressao</code> no eixo <span class="math inline">\(y\)</span> e <code>velocidade</code> no eixo <span class="math inline">\(x\)</span>.</p></li>
-<li><p>Usando <code>geom_smooth</code> (pesquise a respeito), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 <li><p>Faça um gráfico de dispersão com <code>logmortes</code> no eixo <span class="math inline">\(y\)</span> e <code>pressao</code> no eixo <span class="math inline">\(x\)</span>.</p></li>
-<li><p>Usando <code>geom_smooth</code>, sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 <li><p>Faça um gráfico de dispersão com <code>logmortes</code> no eixo <span class="math inline">\(y\)</span> e <code>pressao</code> no eixo <span class="math inline">\(x\)</span>, com pontos coloridos de acordo com o gênero do nome do furacão.</p></li>
-<li><p>Usando <code>geom_smooth</code>, sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
 <div class="rmdcaution">
 <p>Visualizações como esta ajudam a explorar os dados, mas não servem para testar rigorosamente a hipótese de que furacões mulheres matam mais do que furacões homens.</p>
@@ -1275,7 +1283,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 11/11/2021)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 12/11/2021)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

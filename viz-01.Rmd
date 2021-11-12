@@ -4,6 +4,13 @@ knit: "bookdown::render_book"
 
 # Visualização com ggplot2 {#viz}
 
+::: {.rmdtip latex=1}
+
+Busque mais informações sobre os pacotes `tidyverse` e `ggplot2` [nas referências recomendadas](#refrec).
+
+:::
+
+
 ## Vídeo 1
 
 ```{r echo=FALSE, results='asis', out.extra=center()}
@@ -509,7 +516,7 @@ knitr::include_graphics('images/countries-1.png')
 
 * A geometria `geom_step` gera o gráfico de uma [função degrau]{.hl}. 
 
-* Cada geometria está ligada a uma [`stat`], um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria [a função `ecdf` (*empirical cumulative distribution function*), que calcula as frequências acumuladas.]{.hl}
+* Cada geometria está ligada a uma [`stat`]{.hl}, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria [a função `ecdf` (*empirical cumulative distribution function*), do pacote `stats`, que calcula as frequências acumuladas.]{.hl}
 
   ```{r ogiva}
   sono %>% 
@@ -579,13 +586,13 @@ sono <- msleep %>%
 
 1. Construa um histograma da variável `brainwt`. Escolha o número de classes que você achar melhor. O que acontece com os valores `NA`?
 
-1. Descubra que função da forma `scale_x_...` usar para fazer com que o eixo $x$ tenha uma escala logarítmica. Gere um novo histograma.
+1. [Descubra que função da forma `scale_x_...` usar](http://sillasgonzaga.com/material/curso_visualizacao/ggplot2-parte-ii.html#customizando-escalas) para fazer com que o eixo $x$ tenha uma escala logarítmica. Gere um novo histograma.
 
 1. Qual dos dois histogramas é melhor para responder a pergunta "*Qual a faixa de peso cerebral que tem mais animais?*" de forma satisfatória?
 
 1. Construa um *scatter plot* de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? Se precisar, concentre-se em um subconjunto dos dados.
 
-1. Usando `geom_smooth` (pesquise a respeito), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+1. Usando `geom_smooth` ([leia a respeito](https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos)), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
 
 
 ### Igualdade de gênero entre furacões?
@@ -652,15 +659,15 @@ df <- hurricNamed %>%
 
 1. Faça um gráfico de dispersão com `pressao` no eixo $y$ e `velocidade` no eixo $x$.
 
-1. Usando `geom_smooth` (pesquise a respeito), sobreponha uma reta de regressão ao gráfico, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+1. Usando `geom_smooth` ([leia a respeito](https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos)), sobreponha uma reta de regressão ao gráfico, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
 
 1. Faça um gráfico de dispersão com `logmortes` no eixo $y$ e `pressao` no eixo $x$.
 
-1. Usando `geom_smooth`, sobreponha uma reta de regressão ao gráfico, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+1. Usando `geom_smooth` ([leia a respeito](https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos)), sobreponha uma reta de regressão ao gráfico, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
 
 1. Faça um gráfico de dispersão com `logmortes` no eixo $y$ e `pressao` no eixo $x$, com pontos coloridos de acordo com o gênero do nome do furacão.
 
-1. Usando `geom_smooth`, sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
+1. Usando `geom_smooth` ([leia a respeito](https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos)), sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método `lm` e sem o erro padrão (i.e., com `se = FALSE`). O que você observa? Discuta.
 
 ::: {.rmdcaution latex=1}
 

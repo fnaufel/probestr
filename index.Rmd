@@ -53,6 +53,27 @@ O código-fonte deste livro/site pode ser encontrado [neste repositório do Gith
 Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, [faça o download do arquivo aqui](https://github.com/fnaufel/probestr/blob/master/docs/probestr.pdf).
 
 
+## Referências recomendadas {- #refrec}
+
+### Em português {-}
+
+* Sillas Gonzaga, *Introdução a R para Visualização e Apresentação de Dados*,
+http://sillasgonzaga.com/material/curso_visualizacao/index.html
+
+* Allan Vieira de Castro Quadros, *Introdução à Análise de Dados em R utilizando Tidyverse*, https://allanvc.github.io/book_IADR-T/
+
+* Paulo Felipe de Oliveira, Saulo Guerra, Robert McDonnel, *Ciência de Dados com R – Introdução*, https://cdr.ibpad.com.br/index.html
+
+* Curso R, *Ciência de Dados em R*, https://livro.curso-r.com/
+
+
+### Em inglês {-}
+
+* Garrett Grolemund, Hadley Wickham, *R for Data Science*, https://r4ds.had.co.nz/
+
+* Chester Ismay, Albert Y. Kim, *A ModernDive into R and the Tidyverse*, https://moderndive.com/
+
+
 ## Exercício {-}
 
 1. Pesquise sobre a imagem do início deste capítulo. Ela foi criada em 1858 por Florence Nightingale.

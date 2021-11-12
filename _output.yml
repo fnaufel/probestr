@@ -5,7 +5,7 @@ bookdown::bs4_book:
   includes:
     in_header: ['preamble.html']
   theme:
-    primary: "#7c480d"
+    primary: "#086a6a"
     base_font:
       google:
         family: Lexend

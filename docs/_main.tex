@@ -293,7 +293,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 11/11/2021)}
+\date{(versão de 12/11/2021)}
 
 \begin{document}
 \maketitle
@@ -340,6 +340,37 @@ Para tirar o máximo proveito deste material, você deve fazer o seguinte:
 O código-fonte deste livro/site pode ser encontrado \href{https://github.com/fnaufel/probestr}{neste repositório do Github}.
 
 Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://github.com/fnaufel/probestr/blob/master/docs/probestr.pdf}{faça o download do arquivo aqui}.
+
+\hypertarget{refrec}{%
+\section*{Referências recomendadas}\label{refrec}}
+\addcontentsline{toc}{section}{Referências recomendadas}
+
+\hypertarget{em-portuguuxeas}{%
+\subsection*{Em português}\label{em-portuguuxeas}}
+\addcontentsline{toc}{subsection}{Em português}
+
+\begin{itemize}
+\item
+  Sillas Gonzaga, \emph{Introdução a R para Visualização e Apresentação de Dados},
+  \url{http://sillasgonzaga.com/material/curso_visualizacao/index.html}
+\item
+  Allan Vieira de Castro Quadros, \emph{Introdução à Análise de Dados em R utilizando Tidyverse}, \url{https://allanvc.github.io/book_IADR-T/}
+\item
+  Paulo Felipe de Oliveira, Saulo Guerra, Robert McDonnel, \emph{Ciência de Dados com R -- Introdução}, \url{https://cdr.ibpad.com.br/index.html}
+\item
+  Curso R, \emph{Ciência de Dados em R}, \url{https://livro.curso-r.com/}
+\end{itemize}
+
+\hypertarget{em-ingluxeas}{%
+\subsection*{Em inglês}\label{em-ingluxeas}}
+\addcontentsline{toc}{subsection}{Em inglês}
+
+\begin{itemize}
+\item
+  Garrett Grolemund, Hadley Wickham, \emph{R for Data Science}, \url{https://r4ds.had.co.nz/}
+\item
+  Chester Ismay, Albert Y. Kim, \emph{A ModernDive into R and the Tidyverse}, \url{https://moderndive.com/}
+\end{itemize}
 
 \hypertarget{exercuxedcio}{%
 \section*{Exercício}\label{exercuxedcio}}
@@ -541,6 +572,11 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 
 \hypertarget{viz}{%
 \chapter{Visualização com ggplot2}\label{viz}}
+
+\begin{rmdtip}
+Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2} \protect\hyperlink{refrec}{nas referências recomendadas}.
+
+\end{rmdtip}
 
 \hypertarget{vuxeddeo-1-2}{%
 \section{Vídeo 1}\label{vuxeddeo-1-2}}
@@ -1751,7 +1787,7 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \item
   A geometria \texttt{geom\_step} gera o gráfico de uma {\hl{função degrau}}.
 \item
-  Cada geometria está ligada a uma {[}\texttt{stat}{]}, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria {\hl{a função \texttt{ecdf} (\emph{empirical cumulative distribution function}), que calcula as frequências acumuladas.}}
+  Cada geometria está ligada a uma {\hl{\texttt{stat}}}, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria {\hl{a função \texttt{ecdf} (\emph{empirical cumulative distribution function}), do pacote \texttt{stats}, que calcula as frequências acumuladas.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1761,6 +1797,11 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
     \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
     \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
     \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# Attaching package: \textquotesingle{}stats\textquotesingle{}}
+\DocumentationTok{\#\# The following objects are masked from \textquotesingle{}package:dplyr\textquotesingle{}:}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#     filter, lag}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1858,13 +1899,13 @@ Use o \emph{data frame} \texttt{sono} definido como
 \item
   Construa um histograma da variável \texttt{brainwt}. Escolha o número de classes que você achar melhor. O que acontece com os valores \texttt{NA}?
 \item
-  Descubra que função da forma \texttt{scale\_x\_...} usar para fazer com que o eixo \(x\) tenha uma escala logarítmica. Gere um novo histograma.
+  \href{http://sillasgonzaga.com/material/curso_visualizacao/ggplot2-parte-ii.html\#customizando-escalas}{Descubra que função da forma \texttt{scale\_x\_...} usar} para fazer com que o eixo \(x\) tenha uma escala logarítmica. Gere um novo histograma.
 \item
   Qual dos dois histogramas é melhor para responder a pergunta ``\emph{Qual a faixa de peso cerebral que tem mais animais?}'' de forma satisfatória?
 \item
   Construa um \emph{scatter plot} de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? Se precisar, concentre-se em um subconjunto dos dados.
 \item
-  Usando \texttt{geom\_smooth} (pesquise a respeito), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
+  Usando \texttt{geom\_smooth} (\href{https://cdr.ibpad.com.br/ggplot2.html\#objetos-geom\%C3\%A9tricos-e-tipos-de-gr\%C3\%A1ficos}{leia a respeito}), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \end{enumerate}
 
 \hypertarget{igualdade-de-guxeanero-entre-furacuxf5es}{%
@@ -1945,15 +1986,15 @@ Vamos usar apenas algumas das variáveis, com nomes em português.
 \item
   Faça um gráfico de dispersão com \texttt{pressao} no eixo \(y\) e \texttt{velocidade} no eixo \(x\).
 \item
-  Usando \texttt{geom\_smooth} (pesquise a respeito), sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
+  Usando \texttt{geom\_smooth} (\href{https://cdr.ibpad.com.br/ggplot2.html\#objetos-geom\%C3\%A9tricos-e-tipos-de-gr\%C3\%A1ficos}{leia a respeito}), sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \item
   Faça um gráfico de dispersão com \texttt{logmortes} no eixo \(y\) e \texttt{pressao} no eixo \(x\).
 \item
-  Usando \texttt{geom\_smooth}, sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
+  Usando \texttt{geom\_smooth} (\href{https://cdr.ibpad.com.br/ggplot2.html\#objetos-geom\%C3\%A9tricos-e-tipos-de-gr\%C3\%A1ficos}{leia a respeito}), sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \item
   Faça um gráfico de dispersão com \texttt{logmortes} no eixo \(y\) e \texttt{pressao} no eixo \(x\), com pontos coloridos de acordo com o gênero do nome do furacão.
 \item
-  Usando \texttt{geom\_smooth}, sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
+  Usando \texttt{geom\_smooth} (\href{https://cdr.ibpad.com.br/ggplot2.html\#objetos-geom\%C3\%A9tricos-e-tipos-de-gr\%C3\%A1ficos}{leia a respeito}), sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \end{enumerate}
 
 \begin{rmdcaution}
