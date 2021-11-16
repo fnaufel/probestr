@@ -271,6 +271,33 @@
 
 % For highlighting using \hl{}
 \usepackage{soul}
+
+% Code chunks and output
+\usepackage[framemethod=pgf]{mdframed}
+\renewenvironment{Shaded}{
+  \begin{mdframed}[%
+    roundcorner=2pt,%
+    innerleftmargin=5pt,%
+    innerrightmargin=5pt,%
+    topline=true,%
+    leftline=true,%
+    rightline=true,%
+    bottomline=true,%
+    linewidth=0.5pt,%
+    linecolor=black!20,%
+    backgroundcolor=black!2,%
+    skipabove=2ex,%
+    skipbelow=2.5ex%
+  ]%
+}
+{
+  \end{mdframed}
+}
+
+% End of preamble for bookdowntemplate01
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
@@ -293,7 +320,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 12/11/2021)}
+\date{(versão de 16/11/2021)}
 
 \begin{document}
 \maketitle
@@ -740,16 +767,16 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ msleep}
 \NormalTok{df}
 \DocumentationTok{\#\# \# A tibble: 83 x 11}
-\DocumentationTok{\#\#   name   genus vore  order conservation sleep\_total sleep\_rem sleep\_cycle}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 Cheet\textasciitilde{} Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA        NA    }
-\DocumentationTok{\#\# 2 Owl m\textasciitilde{} Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
-\DocumentationTok{\#\# 3 Mount\textasciitilde{} Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4      NA    }
-\DocumentationTok{\#\# 4 Great\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3       0.133}
-\DocumentationTok{\#\# 5 Cow    Bos   herbi Arti\textasciitilde{} domesticated         4         0.7       0.667}
-\DocumentationTok{\#\# 6 Three\textasciitilde{} Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2       0.767}
-\DocumentationTok{\#\# \# ... with 77 more rows, and 3 more variables: awake \textless{}dbl\textgreater{},}
-\DocumentationTok{\#\# \#   brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\#   name         genus   vore  order   conservation sleep\_total sleep\_rem}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}        \textless{}chr\textgreater{}   \textless{}chr\textgreater{} \textless{}chr\textgreater{}   \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Cheetah      Acinon\textasciitilde{} carni Carniv\textasciitilde{} lc                  12.1      NA  }
+\DocumentationTok{\#\# 2 Owl monkey   Aotus   omni  Primat\textasciitilde{} \textless{}NA\textgreater{}                17         1.8}
+\DocumentationTok{\#\# 3 Mountain be\textasciitilde{} Aplodo\textasciitilde{} herbi Rodent\textasciitilde{} nt                  14.4       2.4}
+\DocumentationTok{\#\# 4 Greater sho\textasciitilde{} Blarina omni  Sorico\textasciitilde{} lc                  14.9       2.3}
+\DocumentationTok{\#\# 5 Cow          Bos     herbi Artiod\textasciitilde{} domesticated         4         0.7}
+\DocumentationTok{\#\# 6 Three{-}toed \textasciitilde{} Bradyp\textasciitilde{} herbi Pilosa  \textless{}NA\textgreater{}                14.4       2.2}
+\DocumentationTok{\#\# \# ... with 77 more rows, and 4 more variables: sleep\_cycle \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   awake \textless{}dbl\textgreater{}, brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 \item
@@ -780,17 +807,17 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \FunctionTok{glimpse}\NormalTok{(df)}
 \DocumentationTok{\#\# Rows: 83}
 \DocumentationTok{\#\# Columns: 11}
-\DocumentationTok{\#\# $ name         \textless{}chr\textgreater{} "Cheetah", "Owl monkey", "Mountain beaver", "Great\textasciitilde{}}
-\DocumentationTok{\#\# $ genus        \textless{}chr\textgreater{} "Acinonyx", "Aotus", "Aplodontia", "Blarina", "Bos\textasciitilde{}}
-\DocumentationTok{\#\# $ vore         \textless{}chr\textgreater{} "carni", "omni", "herbi", "omni", "herbi", "herbi"\textasciitilde{}}
-\DocumentationTok{\#\# $ order        \textless{}chr\textgreater{} "Carnivora", "Primates", "Rodentia", "Soricomorpha\textasciitilde{}}
-\DocumentationTok{\#\# $ conservation \textless{}chr\textgreater{} "lc", NA, "nt", "lc", "domesticated", NA, "vu", NA\textasciitilde{}}
-\DocumentationTok{\#\# $ sleep\_total  \textless{}dbl\textgreater{} 12,1, 17,0, 14,4, 14,9, 4,0, 14,4, 8,7, 7,0, 10,1,\textasciitilde{}}
-\DocumentationTok{\#\# $ sleep\_rem    \textless{}dbl\textgreater{} NA, 1,8, 2,4, 2,3, 0,7, 2,2, 1,4, NA, 2,9, NA, 0,6\textasciitilde{}}
-\DocumentationTok{\#\# $ sleep\_cycle  \textless{}dbl\textgreater{} NA, NA, NA, 0,1333333, 0,6666667, 0,7666667, 0,383\textasciitilde{}}
-\DocumentationTok{\#\# $ awake        \textless{}dbl\textgreater{} 11,9, 7,0, 9,6, 9,1, 20,0, 9,6, 15,3, 17,0, 13,9, \textasciitilde{}}
-\DocumentationTok{\#\# $ brainwt      \textless{}dbl\textgreater{} NA, 0,01550, NA, 0,00029, 0,42300, NA, NA, NA, 0,0\textasciitilde{}}
-\DocumentationTok{\#\# $ bodywt       \textless{}dbl\textgreater{} 50,000, 0,480, 1,350, 0,019, 600,000, 3,850, 20,49\textasciitilde{}}
+\DocumentationTok{\#\# $ name         \textless{}chr\textgreater{} "Cheetah", "Owl monkey", "Mountain beaver", "Gre\textasciitilde{}}
+\DocumentationTok{\#\# $ genus        \textless{}chr\textgreater{} "Acinonyx", "Aotus", "Aplodontia", "Blarina", "B\textasciitilde{}}
+\DocumentationTok{\#\# $ vore         \textless{}chr\textgreater{} "carni", "omni", "herbi", "omni", "herbi", "herb\textasciitilde{}}
+\DocumentationTok{\#\# $ order        \textless{}chr\textgreater{} "Carnivora", "Primates", "Rodentia", "Soricomorp\textasciitilde{}}
+\DocumentationTok{\#\# $ conservation \textless{}chr\textgreater{} "lc", NA, "nt", "lc", "domesticated", NA, "vu", \textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_total  \textless{}dbl\textgreater{} 12,1, 17,0, 14,4, 14,9, 4,0, 14,4, 8,7, 7,0, 10,\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_rem    \textless{}dbl\textgreater{} NA, 1,8, 2,4, 2,3, 0,7, 2,2, 1,4, NA, 2,9, NA, 0\textasciitilde{}}
+\DocumentationTok{\#\# $ sleep\_cycle  \textless{}dbl\textgreater{} NA, NA, NA, 0,1333333, 0,6666667, 0,7666667, 0,3\textasciitilde{}}
+\DocumentationTok{\#\# $ awake        \textless{}dbl\textgreater{} 11,9, 7,0, 9,6, 9,1, 20,0, 9,6, 15,3, 17,0, 13,9\textasciitilde{}}
+\DocumentationTok{\#\# $ brainwt      \textless{}dbl\textgreater{} NA, 0,01550, NA, 0,00029, 0,42300, NA, NA, NA, 0\textasciitilde{}}
+\DocumentationTok{\#\# $ bodywt       \textless{}dbl\textgreater{} 50,000, 0,480, 1,350, 0,019, 600,000, 3,850, 20,\textasciitilde{}}
 \end{Highlighting}
 \end{Shaded}
 \item
@@ -800,15 +827,16 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(df)}
 \DocumentationTok{\#\# \# A tibble: 6 x 11}
-\DocumentationTok{\#\#   name   genus vore  order conservation sleep\_total sleep\_rem sleep\_cycle}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}       \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 Cheet\textasciitilde{} Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA        NA    }
-\DocumentationTok{\#\# 2 Owl m\textasciitilde{} Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8      NA    }
-\DocumentationTok{\#\# 3 Mount\textasciitilde{} Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4      NA    }
-\DocumentationTok{\#\# 4 Great\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3       0.133}
-\DocumentationTok{\#\# 5 Cow    Bos   herbi Arti\textasciitilde{} domesticated         4         0.7       0.667}
-\DocumentationTok{\#\# 6 Three\textasciitilde{} Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2       0.767}
-\DocumentationTok{\#\# \# ... with 3 more variables: awake \textless{}dbl\textgreater{}, brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\#   name         genus   vore  order   conservation sleep\_total sleep\_rem}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}        \textless{}chr\textgreater{}   \textless{}chr\textgreater{} \textless{}chr\textgreater{}   \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Cheetah      Acinon\textasciitilde{} carni Carniv\textasciitilde{} lc                  12.1      NA  }
+\DocumentationTok{\#\# 2 Owl monkey   Aotus   omni  Primat\textasciitilde{} \textless{}NA\textgreater{}                17         1.8}
+\DocumentationTok{\#\# 3 Mountain be\textasciitilde{} Aplodo\textasciitilde{} herbi Rodent\textasciitilde{} nt                  14.4       2.4}
+\DocumentationTok{\#\# 4 Greater sho\textasciitilde{} Blarina omni  Sorico\textasciitilde{} lc                  14.9       2.3}
+\DocumentationTok{\#\# 5 Cow          Bos     herbi Artiod\textasciitilde{} domesticated         4         0.7}
+\DocumentationTok{\#\# 6 Three{-}toed \textasciitilde{} Bradyp\textasciitilde{} herbi Pilosa  \textless{}NA\textgreater{}                14.4       2.2}
+\DocumentationTok{\#\# \# ... with 4 more variables: sleep\_cycle \textless{}dbl\textgreater{}, awake \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
 \end{Highlighting}
 \end{Shaded}
 \item
