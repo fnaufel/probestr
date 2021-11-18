@@ -430,6 +430,12 @@ knitr::include_graphics('images/countries-1.png')
   ```
 
 
+## Vídeo 2
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('c-LoZ9e8xWc')
+```
+
 ## Histogramas e cia.
 
 * A idéia agora é [agrupar indivíduos em classes,]{.hl} dependendo do valor de uma variável quantitativa.

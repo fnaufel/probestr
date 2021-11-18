@@ -158,3 +158,8 @@ embed_yt <- function(code) {
   }
 
 }
+
+# Conflicts
+library(conflicted)
+conflict_prefer("view", "tibble")
+conflict_prefer("filter", "dplyr")

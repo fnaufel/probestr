@@ -49,6 +49,7 @@
 <li><a class="" href="oque.html"><span class="header-section-number">1</span> O Que É Estatística?</a></li>
 <li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
 <li><a class="active" href="viz.html"><span class="header-section-number">3</span> Visualização com ggplot2</a></li>
+<li><a class="" href="viz2.html"><span class="header-section-number">4</span> Visualização com ggplot2 (continuação)</a></li>
 </ul>
 
         <div class="book-extra">
@@ -947,16 +948,23 @@ IQE (CV) : 5,9 (0,4)</td>
 </ul>
 </div>
 </div>
-<div id="histogramas-e-cia." class="section level2" number="3.5">
+<div id="vídeo-2-2" class="section level2" number="3.5">
 <h2>
-<span class="header-section-number">3.5</span> Histogramas e cia.<a class="anchor" aria-label="anchor" href="#histogramas-e-cia."><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.5</span> Vídeo 2<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-2-2"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/c-LoZ9e8xWc" width="100%" height="400px" data-external="1" class="center">
+</iframe>
+</div>
+<div id="histogramas-e-cia." class="section level2" number="3.6">
+<h2>
+<span class="header-section-number">3.6</span> Histogramas e cia.<a class="anchor" aria-label="anchor" href="#histogramas-e-cia."><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>A idéia agora é <span class="hl">agrupar indivíduos em classes,</span> dependendo do valor de uma variável quantitativa.</li>
 </ul>
-<div id="distribuições-de-frequência" class="section level3" number="3.5.1">
+<div id="distribuições-de-frequência" class="section level3" number="3.6.1">
 <h3>
-<span class="header-section-number">3.5.1</span> Distribuições de frequência<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%B5es-de-frequ%C3%AAncia"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6.1</span> Distribuições de frequência<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%B5es-de-frequ%C3%AAncia"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li>
@@ -1008,9 +1016,9 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 </ul>
 </div>
-<div id="histograma" class="section level3" number="3.5.2">
+<div id="histograma" class="section level3" number="3.6.2">
 <h3>
-<span class="header-section-number">3.5.2</span> Histograma<a class="anchor" aria-label="anchor" href="#histograma"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6.2</span> Histograma<a class="anchor" aria-label="anchor" href="#histograma"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li><p>Na verdade, o <code>ggplot2</code> já faz esses cálculos para nós.</p></li>
@@ -1034,9 +1042,9 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 </ul>
 </div>
-<div id="polígono-de-frequência" class="section level3" number="3.5.3">
+<div id="polígono-de-frequência" class="section level3" number="3.6.3">
 <h3>
-<span class="header-section-number">3.5.3</span> Polígono de frequência<a class="anchor" aria-label="anchor" href="#pol%C3%ADgono-de-frequ%C3%AAncia"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6.3</span> Polígono de frequência<a class="anchor" aria-label="anchor" href="#pol%C3%ADgono-de-frequ%C3%AAncia"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li><p>Em vez das barras do histograma, podemos desenhar uma linha ligando seus topos.</p></li>
@@ -1060,9 +1068,9 @@ IQE (CV) : 5,9 (0,4)</td>
 </ul>
 </div>
 </div>
-<div id="ogiva" class="section level2" number="3.6">
+<div id="ogiva" class="section level2" number="3.7">
 <h2>
-<span class="header-section-number">3.6</span> Ogiva<a class="anchor" aria-label="anchor" href="#ogiva"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.7</span> Ogiva<a class="anchor" aria-label="anchor" href="#ogiva"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li><p>A ogiva é um gráfico que mostra a <span class="hl">frequência acumulada</span>: para cada valor <span class="math inline">\(v\)</span> da variável no eixo <span class="math inline">\(x\)</span>, a proporção de indivíduos com valor menor ou igual a <span class="math inline">\(v\)</span>.</p></li>
@@ -1075,12 +1083,7 @@ IQE (CV) : 5,9 (0,4)</td>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">'ecdf'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-<span class="co">## </span>
-<span class="co">## Attaching package: 'stats'</span>
-<span class="co">## The following objects are masked from 'package:dplyr':</span>
-<span class="co">## </span>
-<span class="co">##     filter, lag</span></code></pre></div>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/ogiva-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
@@ -1093,9 +1096,9 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 </ul>
 </div>
-<div id="ramos-e-folhas" class="section level2" number="3.7">
+<div id="ramos-e-folhas" class="section level2" number="3.8">
 <h2>
-<span class="header-section-number">3.7</span> Ramos e folhas<a class="anchor" aria-label="anchor" href="#ramos-e-folhas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.8</span> Ramos e folhas<a class="anchor" aria-label="anchor" href="#ramos-e-folhas"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li><p>No início dos anos <span class="math inline">\(1900\)</span>, quando estatísticas eram feitas à mão, Arthur Bowley criou os <span class="hl">diagramas de ramos e folhas</span>.</p></li>
@@ -1130,16 +1133,16 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 </ul>
 </div>
-<div id="exercícios-3" class="section level2" number="3.8">
+<div id="exercícios-3" class="section level2" number="3.9">
 <h2>
-<span class="header-section-number">3.8</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.9</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-3"><i class="fas fa-link"></i></a>
 </h2>
 <div class="rmdimportant">
 <p>Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.</p>
 </div>
-<div id="mamíferos-e-sono" class="section level3" number="3.8.1">
+<div id="mamíferos-e-sono" class="section level3" number="3.9.1">
 <h3>
-<span class="header-section-number">3.8.1</span> Mamíferos e sono<a class="anchor" aria-label="anchor" href="#mam%C3%ADferos-e-sono"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.9.1</span> Mamíferos e sono<a class="anchor" aria-label="anchor" href="#mam%C3%ADferos-e-sono"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdbox">
 <p>Use o <em>data frame</em> <code>sono</code> definido como</p>
@@ -1160,9 +1163,9 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
 </div>
-<div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.8.2">
+<div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.9.2">
 <h3>
-<span class="header-section-number">3.8.2</span> Igualdade de gênero entre furacões?<a class="anchor" aria-label="anchor" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.9.2</span> Igualdade de gênero entre furacões?<a class="anchor" aria-label="anchor" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://www.pnas.org/content/111/24/8782">Este artigo</a> tenta achar uma relação entre o gênero do nome de um furacão e a quantidade de vítimas fatais provocadas por ele.</p>
 <div class="rmdbox">
@@ -1226,7 +1229,7 @@ IQE (CV) : 5,9 (0,4)</td>
 </div>
   <div class="chapter-nav">
 <div class="prev"><a href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></div>
-<div class="empty"></div>
+<div class="next"><a href="viz2.html"><span class="header-section-number">4</span> Visualização com ggplot2 (continuação)</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
       <ul class="nav navbar-nav">
@@ -1251,19 +1254,20 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><a class="nav-link" href="#uma-correla%C3%A7%C3%A3o-mais-clara"><span class="header-section-number">3.4.6</span> Uma correlação mais clara</a></li>
 </ul>
 </li>
+<li><a class="nav-link" href="#v%C3%ADdeo-2-2"><span class="header-section-number">3.5</span> Vídeo 2</a></li>
 <li>
-<a class="nav-link" href="#histogramas-e-cia."><span class="header-section-number">3.5</span> Histogramas e cia.</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#distribui%C3%A7%C3%B5es-de-frequ%C3%AAncia"><span class="header-section-number">3.5.1</span> Distribuições de frequência</a></li>
-<li><a class="nav-link" href="#histograma"><span class="header-section-number">3.5.2</span> Histograma</a></li>
-<li><a class="nav-link" href="#pol%C3%ADgono-de-frequ%C3%AAncia"><span class="header-section-number">3.5.3</span> Polígono de frequência</a></li>
+<a class="nav-link" href="#histogramas-e-cia."><span class="header-section-number">3.6</span> Histogramas e cia.</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#distribui%C3%A7%C3%B5es-de-frequ%C3%AAncia"><span class="header-section-number">3.6.1</span> Distribuições de frequência</a></li>
+<li><a class="nav-link" href="#histograma"><span class="header-section-number">3.6.2</span> Histograma</a></li>
+<li><a class="nav-link" href="#pol%C3%ADgono-de-frequ%C3%AAncia"><span class="header-section-number">3.6.3</span> Polígono de frequência</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#ogiva"><span class="header-section-number">3.6</span> Ogiva</a></li>
-<li><a class="nav-link" href="#ramos-e-folhas"><span class="header-section-number">3.7</span> Ramos e folhas</a></li>
+<li><a class="nav-link" href="#ogiva"><span class="header-section-number">3.7</span> Ogiva</a></li>
+<li><a class="nav-link" href="#ramos-e-folhas"><span class="header-section-number">3.8</span> Ramos e folhas</a></li>
 <li>
-<a class="nav-link" href="#exerc%C3%ADcios-3"><span class="header-section-number">3.8</span> Exercícios</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#mam%C3%ADferos-e-sono"><span class="header-section-number">3.8.1</span> Mamíferos e sono</a></li>
-<li><a class="nav-link" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><span class="header-section-number">3.8.2</span> Igualdade de gênero entre furacões?</a></li>
+<a class="nav-link" href="#exerc%C3%ADcios-3"><span class="header-section-number">3.9</span> Exercícios</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#mam%C3%ADferos-e-sono"><span class="header-section-number">3.9.1</span> Mamíferos e sono</a></li>
+<li><a class="nav-link" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><span class="header-section-number">3.9.2</span> Igualdade de gênero entre furacões?</a></li>
 </ul>
 </li>
 </ul>
@@ -1283,7 +1287,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 16/11/2021)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 18/11/2021)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

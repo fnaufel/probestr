@@ -320,7 +320,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 16/11/2021)}
+\date{(versão de 18/11/2021)}
 
 \begin{document}
 \maketitle
@@ -1656,6 +1656,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-4-1} \end{center}
 \end{itemize}
 
+\hypertarget{vuxeddeo-2-2}{%
+\section{Vídeo 2}\label{vuxeddeo-2-2}}
+
+\begin{center} \url{https://youtu.be/c-LoZ9e8xWc} \end{center}
+
 \hypertarget{histogramas-e-cia.}{%
 \section{Histogramas e cia.}\label{histogramas-e-cia.}}
 
@@ -1825,11 +1830,6 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
     \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
     \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, .}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
     \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\# Attaching package: \textquotesingle{}stats\textquotesingle{}}
-\DocumentationTok{\#\# The following objects are masked from \textquotesingle{}package:dplyr\textquotesingle{}:}
-\DocumentationTok{\#\# }
-\DocumentationTok{\#\#     filter, lag}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2031,5 +2031,707 @@ Visualizações como esta ajudam a explorar os dados, mas não servem para testa
 Mais adiante no curso, vamos aprender a fazer testes mais rigorosos sobre hipóteses como esta.
 
 \end{rmdcaution}
+
+\hypertarget{viz2}{%
+\chapter{Visualização com ggplot2 (continuação)}\label{viz2}}
+
+\begin{rmdtip}
+Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2} \protect\hyperlink{refrec}{nas referências recomendadas}.
+
+\end{rmdtip}
+
+\hypertarget{vuxeddeo-1-3}{%
+\section{Vídeo 1}\label{vuxeddeo-1-3}}
+
+\begin{center} \url{https://youtu.be/TjgLDeIQHIc} \end{center}
+
+\hypertarget{boxplots}{%
+\section{Boxplots}\label{boxplots}}
+
+\hypertarget{dataset}{%
+\subsection{Dataset}\label{dataset}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\OtherTok{\textless{}{-}}\NormalTok{ msleep }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(name, vore, order, sleep\_total)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{mediana-e-quartis}{%
+\subsection{Mediana e quartis}\label{mediana-e-quartis}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas }\OtherTok{\textless{}{-}}\NormalTok{ sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(sleep\_total) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{sort}\NormalTok{()}
+
+\NormalTok{horas}
+\DocumentationTok{\#\#  [1]  1,9  2,7  2,9  3,0  3,1  3,3  3,5  3,8  3,9  4,0  4,4  5,2  5,3}
+\DocumentationTok{\#\# [14]  5,3  5,4  5,6  6,2  6,3  6,3  7,0  7,7  8,0  8,3  8,4  8,4  8,6}
+\DocumentationTok{\#\# [27]  8,7  8,7  8,9  9,1  9,1  9,4  9,4  9,5  9,6  9,7  9,8  9,8 10,0}
+\DocumentationTok{\#\# [40] 10,1 10,1 10,1 10,3 10,3 10,4 10,6 10,9 11,0 11,0 11,1 11,3 11,5}
+\DocumentationTok{\#\# [53] 12,1 12,5 12,5 12,5 12,5 12,8 12,8 13,0 13,5 13,7 13,8 14,2 14,3}
+\DocumentationTok{\#\# [66] 14,4 14,4 14,5 14,6 14,9 14,9 15,6 15,8 15,8 15,9 16,6 17,0 17,4}
+\DocumentationTok{\#\# [79] 18,0 18,1 19,4 19,7 19,9}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(horas)}
+\DocumentationTok{\#\# [1] 83}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas[}\FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{]}
+\DocumentationTok{\#\# [1] 10,1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{median}\NormalTok{(horas)}
+\DocumentationTok{\#\# [1] 10,1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas[}
+  \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{4}\NormalTok{,}
+    \FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{,}
+    \DecValTok{3} \SpecialCharTok{*} \FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{4}
+\NormalTok{  )}
+\NormalTok{]}
+\DocumentationTok{\#\# [1]  7,0 10,1 13,7}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{quantile}\NormalTok{(}\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{75}\NormalTok{))}
+\DocumentationTok{\#\#   25\%   50\%   75\% }
+\DocumentationTok{\#\#  7,85 10,10 13,75}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(horas)}
+\DocumentationTok{\#\# [1] 10,43373}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(horas)}
+\DocumentationTok{\#\#    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. }
+\DocumentationTok{\#\#    1,90    7,85   10,10   10,43   13,75   19,90}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{gerando-boxplots}{%
+\subsection{Gerando boxplots}\label{gerando-boxplots}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{\textquotesingle{}gray\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-32-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_step}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}ecdf\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-33-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ vore, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{\textquotesingle{}gray\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-34-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(vore }\SpecialCharTok{==} \StringTok{\textquotesingle{}omni\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(sleep\_total) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{IQR}\NormalTok{()}
+\DocumentationTok{\#\# [1] 1,825}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ vore, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{\textquotesingle{}gray\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{stat\_summary}\NormalTok{(}
+      \AttributeTok{fun =}\NormalTok{ mean, }
+      \AttributeTok{geom =} \StringTok{\textquotesingle{}point\textquotesingle{}}\NormalTok{, }
+      \AttributeTok{color =} \StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{, }
+      \AttributeTok{shape =} \StringTok{\textquotesingle{}cross\textquotesingle{}}\NormalTok{, }
+      \AttributeTok{size =} \DecValTok{5}\NormalTok{,}
+      \AttributeTok{stroke =} \DecValTok{1}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-36-1} \end{center}
+
+\hypertarget{muxe9dia-times-mediana}{%
+\subsection{\texorpdfstring{Média \(\times\) mediana}{Média \textbackslash times mediana}}\label{muxe9dia-times-mediana}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{receita }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{valor =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{3.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10000}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{receita}
+\DocumentationTok{\#\# \# A tibble: 8 x 1}
+\DocumentationTok{\#\#   valor}
+\DocumentationTok{\#\#   \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1   1  }
+\DocumentationTok{\#\# 2   2  }
+\DocumentationTok{\#\# 3   2  }
+\DocumentationTok{\#\# 4   3.5}
+\DocumentationTok{\#\# 5   1  }
+\DocumentationTok{\#\# 6   4  }
+\DocumentationTok{\#\# \# ... with 2 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(receita)}
+\DocumentationTok{\#\#      valor          }
+\DocumentationTok{\#\#  Min.   :    1,000  }
+\DocumentationTok{\#\#  1st Qu.:    1,000  }
+\DocumentationTok{\#\#  Median :    2,000  }
+\DocumentationTok{\#\#  Mean   : 1251,812  }
+\DocumentationTok{\#\#  3rd Qu.:    3,625  }
+\DocumentationTok{\#\#  Max.   :10000,000}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{vuxeddeo-2-3}{%
+\section{Vídeo 2}\label{vuxeddeo-2-3}}
+
+\begin{center} \url{https://youtu.be/QqnOvgBXJ-s} \end{center}
+
+\hypertarget{gruxe1ficos-de-barras-e-de-colunas}{%
+\section{Gráficos de barras e de colunas}\label{gruxe1ficos-de-barras-e-de-colunas}}
+
+\hypertarget{dataset-1}{%
+\subsection{Dataset}\label{dataset-1}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{HairEyeColor}
+\DocumentationTok{\#\# , , Sex = Male}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#        Eye}
+\DocumentationTok{\#\# Hair    Brown Blue Hazel Green}
+\DocumentationTok{\#\#   Black    32   11    10     3}
+\DocumentationTok{\#\#   Brown    53   50    25    15}
+\DocumentationTok{\#\#   Red      10   10     7     7}
+\DocumentationTok{\#\#   Blond     3   30     5     8}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\# , , Sex = Female}
+\DocumentationTok{\#\# }
+\DocumentationTok{\#\#        Eye}
+\DocumentationTok{\#\# Hair    Brown Blue Hazel Green}
+\DocumentationTok{\#\#   Black    36    9     5     2}
+\DocumentationTok{\#\#   Brown    66   34    29    14}
+\DocumentationTok{\#\#   Red      16    7     7     7}
+\DocumentationTok{\#\#   Blond     4   64     5     8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_orig }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(HairEyeColor) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{uncount}\NormalTok{(Freq) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_orig }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{dfSummary}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{print}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3472}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3194}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+Variável
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estatísticas / Valores
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Freqs (\% de Válidos)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Faltante
+\end{minipage} \\
+\midrule
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+Hair\\
+{[}factor{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Black\\
+2. Brown\\
+3. Red\\
+4. Blond\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+108 (18,2\%)\\
+286 (48,3\%)\\
+71 (12,0\%)\\
+127 (21,5\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+Eye\\
+{[}factor{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Brown\\
+2. Blue\\
+3. Hazel\\
+4. Green\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+220 (37,2\%)\\
+215 (36,3\%)\\
+93 (15,7\%)\\
+64 (10,8\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+Sex\\
+{[}factor{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Male\\
+2. Female\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+279 (47,1\%)\\
+313 (52,9\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cabelo }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{\textquotesingle{}Brown\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Castanhos\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Blond\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Louros\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Black\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Pretos\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Red\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Ruivos\textquotesingle{}}
+\NormalTok{)}
+
+\NormalTok{olhos }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{\textquotesingle{}Brown\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Castanhos\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Blue\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Azuis\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Hazel\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Avelã\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Green\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Verdes\textquotesingle{}}
+\NormalTok{)}
+
+\NormalTok{sexo }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{\textquotesingle{}Male\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Homem\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Female\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Mulher\textquotesingle{}}
+\NormalTok{)}
+
+\NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df\_orig }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{transmute}\NormalTok{(}
+    \AttributeTok{Cabelos =}\NormalTok{ cabelo[Hair],}
+    \AttributeTok{Olhos =}\NormalTok{ olhos[Eye],}
+    \AttributeTok{Sexo =}\NormalTok{ sexo[Sex]}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{dfSummary}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{print}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1918}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3425}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3151}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1507}}@{}}
+\toprule
+\begin{minipage}[b]{\linewidth}\raggedright
+Variável
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Estatísticas / Valores
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Freqs (\% de Válidos)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Faltante
+\end{minipage} \\
+\midrule
+\endhead
+\begin{minipage}[t]{\linewidth}\raggedright
+Cabelos\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Castanhos\\
+2. Louros\\
+3. Pretos\\
+4. Ruivos\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+108 (18,2\%)\\
+286 (48,3\%)\\
+71 (12,0\%)\\
+127 (21,5\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+Olhos\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Avelã\\
+2. Azuis\\
+3. Castanhos\\
+4. Verdes\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+93 (15,7\%)\\
+215 (36,3\%)\\
+220 (37,2\%)\\
+64 (10,8\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\begin{minipage}[t]{\linewidth}\raggedright
+Sexo\\
+{[}character{]}\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+1. Homem\\
+2. Mulher\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+279 (47,1\%)\\
+313 (52,9\%)\strut
+\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+0\\
+(0,0\%)\strut
+\end{minipage} \\
+\bottomrule
+\end{longtable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Cabelos)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-45-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(Cabelos)))) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-46-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-47-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-48-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-49-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-50-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Olhos)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-51-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Olhos)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-52-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Olhos)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Sexo) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{title =} \StringTok{\textquotesingle{}Cores de cabelos e olhos por sexo\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}\NormalTok{,}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}Cabelos\textquotesingle{}}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-53-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sexo, }\AttributeTok{fill =} \FunctionTok{fct\_infreq}\NormalTok{(Olhos))) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Cabelos, }\AttributeTok{labeller =}\NormalTok{ label\_both) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}\NormalTok{,}
+      \AttributeTok{fill =} \StringTok{\textquotesingle{}Olhos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{title =} \StringTok{\textquotesingle{}Cor dos olhos e sexo por cor dos cabelos\textquotesingle{}}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-54-1} \end{center}
+
+\hypertarget{dataframe-juxe1-contendo-os-totais}{%
+\subsection{\texorpdfstring{\emph{Dataframe} já contendo os totais}{Dataframe já contendo os totais}}\label{dataframe-juxe1-contendo-os-totais}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_tot }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(Sexo, Cabelos, Olhos)}
+
+\NormalTok{df\_tot}
+\DocumentationTok{\#\# \# A tibble: 32 x 4}
+\DocumentationTok{\#\#   Sexo  Cabelos   Olhos         n}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{} \textless{}chr\textgreater{}     \textless{}chr\textgreater{}     \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Homem Castanhos Avelã        10}
+\DocumentationTok{\#\# 2 Homem Castanhos Azuis        11}
+\DocumentationTok{\#\# 3 Homem Castanhos Castanhos    32}
+\DocumentationTok{\#\# 4 Homem Castanhos Verdes        3}
+\DocumentationTok{\#\# 5 Homem Louros    Avelã        25}
+\DocumentationTok{\#\# 6 Homem Louros    Azuis        50}
+\DocumentationTok{\#\# \# ... with 26 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_tot }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Cabelos, }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-56-1} \end{center}
+
+\hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
+\section{Gráficos de linha e séries temporais}\label{gruxe1ficos-de-linha-e-suxe9ries-temporais}}
+
+\hypertarget{dataset-2}{%
+\subsection{Dataset}\label{dataset-2}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{WorldPhones}
+\DocumentationTok{\#\#      N.Amer Europe Asia S.Amer Oceania Africa Mid.Amer}
+\DocumentationTok{\#\# 1951  45939  21574 2876   1815    1646     89      555}
+\DocumentationTok{\#\# 1956  60423  29990 4708   2568    2366   1411      733}
+\DocumentationTok{\#\# 1957  64721  32510 5230   2695    2526   1546      773}
+\DocumentationTok{\#\# 1958  68484  35218 6662   2845    2691   1663      836}
+\DocumentationTok{\#\# 1959  71799  37598 6856   3000    2868   1769      911}
+\DocumentationTok{\#\# 1960  76036  40341 8220   3145    3054   1905     1008}
+\DocumentationTok{\#\# 1961  79831  43173 9053   3338    3224   2005     1076}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fones }\OtherTok{\textless{}{-}}\NormalTok{ WorldPhones }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{as\_tibble}\NormalTok{(}\AttributeTok{rownames =} \StringTok{\textquotesingle{}Ano\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Ano =} \FunctionTok{as.numeric}\NormalTok{(Ano))}
+
+\NormalTok{fones}
+\DocumentationTok{\#\# \# A tibble: 7 x 8}
+\DocumentationTok{\#\#     Ano N.Amer Europe  Asia S.Amer Oceania Africa Mid.Amer}
+\DocumentationTok{\#\#   \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}   \textless{}dbl\textgreater{}  \textless{}dbl\textgreater{}    \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1  1951  45939  21574  2876   1815    1646     89      555}
+\DocumentationTok{\#\# 2  1956  60423  29990  4708   2568    2366   1411      733}
+\DocumentationTok{\#\# 3  1957  64721  32510  5230   2695    2526   1546      773}
+\DocumentationTok{\#\# 4  1958  68484  35218  6662   2845    2691   1663      836}
+\DocumentationTok{\#\# 5  1959  71799  37598  6856   3000    2868   1769      911}
+\DocumentationTok{\#\# 6  1960  76036  40341  8220   3145    3054   1905     1008}
+\DocumentationTok{\#\# \# ... with 1 more row}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fones\_long }\OtherTok{\textless{}{-}}\NormalTok{ fones }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+    \AttributeTok{cols =} \SpecialCharTok{{-}}\NormalTok{Ano,}
+    \AttributeTok{names\_to =} \StringTok{\textquotesingle{}Região\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{values\_to =} \StringTok{\textquotesingle{}n\textquotesingle{}}
+\NormalTok{  )}
+
+\NormalTok{fones\_long}
+\DocumentationTok{\#\# \# A tibble: 49 x 3}
+\DocumentationTok{\#\#     Ano Região      n}
+\DocumentationTok{\#\#   \textless{}dbl\textgreater{} \textless{}chr\textgreater{}   \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1  1951 N.Amer  45939}
+\DocumentationTok{\#\# 2  1951 Europe  21574}
+\DocumentationTok{\#\# 3  1951 Asia     2876}
+\DocumentationTok{\#\# 4  1951 S.Amer   1815}
+\DocumentationTok{\#\# 5  1951 Oceania  1646}
+\DocumentationTok{\#\# 6  1951 Africa     89}
+\DocumentationTok{\#\# \# ... with 43 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fones\_long }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Ano, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{group =}\NormalTok{ Região, }\AttributeTok{color =}\NormalTok{ Região)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{1951}\SpecialCharTok{:}\DecValTok{1961}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-60-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fones\_long }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}
+      \FunctionTok{aes}\NormalTok{(}
+        \AttributeTok{x =}\NormalTok{ Ano, }
+        \AttributeTok{y =}\NormalTok{ n, }
+        \AttributeTok{group =}\NormalTok{ Região, }
+        \AttributeTok{color =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_reorder}\NormalTok{(Região, n))}
+\NormalTok{      )}
+\NormalTok{  ) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{1951}\SpecialCharTok{:}\DecValTok{1961}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{color =} \StringTok{\textquotesingle{}Região\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,}
+      \AttributeTok{title =} \StringTok{\textquotesingle{}Quantidade de aparelhos de telefone por ano, por região\textquotesingle{}}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-61-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fones\_long }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(Região }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}S.Amer\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Oceania\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Ano, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{group =}\NormalTok{ Região, }\AttributeTok{color =}\NormalTok{ Região)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{1951}\SpecialCharTok{:}\DecValTok{1961}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-62-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tsibble)}
+\NormalTok{?}\StringTok{\textasciigrave{}}\AttributeTok{tsibble{-}package}\StringTok{\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{referuxeancias-sobre-visualizauxe7uxe3o-e-r}{%
+\section{Referências sobre visualização e R}\label{referuxeancias-sobre-visualizauxe7uxe3o-e-r}}
+
+\begin{rmdtip}
+Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2} \protect\hyperlink{refrec}{nas referências recomendadas}.
+
+\end{rmdtip}
 
 \end{document}
