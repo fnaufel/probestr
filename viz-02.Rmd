@@ -18,59 +18,138 @@ embed_yt('TjgLDeIQHIc')
 ```
 
 
-## Boxplots
+## *Boxplots*
 
-### Dataset
+### Conjunto de dados
 
-```{r}
-sono <- msleep %>% 
-  select(name, vore, order, sleep_total)
-```
+* Vamos continuar a trabalhar com os dados sobre as horas de sono de alguns mamíferos:
+
+  ```{r}
+  sono <- msleep %>% 
+    select(name, vore, order, sleep_total)
+    
+  sono
+  ```
 
 
 ### Mediana e quartis
 
-```{r}
-horas <- sono %>% 
-  pull(sleep_total) %>% 
-  sort()
+* Para entender *boxplots*, precisamos antes entender algumas medidas.
 
-horas
-```
+* Se tomarmos as quantidades de horas de sono de todos os animais do conjunto de dados e [classificarmos estas quantidades em ordem crescente]{.hl}, vamos ter:
 
-```{r}
-length(horas)
-```
+  ```{r}
+  horas <- sono %>% 
+    pull(sleep_total) %>% 
+    sort()
+  
+  horas
+  ```
 
-```{r}
-horas[length(horas) / 2]
-```
+* Quantos valores são?
 
-```{r}
-median(horas)
-```
+  ```{r}
+  length(horas)
+  ```
 
-```{r}
-horas[
-  c(
-    length(horas) / 4,
-    length(horas) / 2,
-    3 * length(horas) / 4
-  )
-]
-```
+* O valor que está [bem no meio desta fila]{.hl} --- i.e., na posição $`r ceiling(length(horas) / 2)`$ --- é a [mediana]{.hl}:
 
-```{r}
-horas %>% quantile(c(.25, .5, .75))
-```
+  ```{r}
+  horas[ceiling(length(horas) / 2)]
+  ```
 
-```{r}
-mean(horas)
-```
+* Em R:
 
-```{r}
-summary(horas)
-```
+  ```{r}
+  median(horas)
+  ```
+
+  ::: {.rmdcaution latex=1}
+  
+  Mediana e média são coisas muito diferentes.
+  
+  Por acaso, neste exemplo, a média das horas é próxima da mediana:
+
+  ```{r}
+  mean(horas)
+  ```
+
+  Isto costuma acontecer quando a distribuição dos dados é aproximadamente simétrica.
+
+  :::
+
+* Os [quartis]{.hl} são os valores que estão nas posições $\frac14$, $\frac12$ e $\frac34$ da fila. São o [primeiro, segundo e terceiro quartis]{.hl}.
+
+* [Sim, a mediana é o segundo quartil.]{.hl}
+
+  ```{r}
+  horas[
+    c(
+      ceiling(length(horas) / 4),
+      ceiling(length(horas) / 2),
+      ceiling(3 * length(horas) / 4)
+    )
+  ]
+  ```
+
+* Em R, a [função `quantile`]{.hl} generaliza esta idéia: dado um número $q$ entre $0$ e $1$, [o quantil (com "N") $q$ é o elemento que está na posição que corresponde à fração $q$ da fila ordenada.]{.hl}
+
+  ```{r}
+  horas %>% quantile(c(.25, .5, .75))
+  ```
+
+* Na verdade, o algoritmo para calcular o quantil $q$ [é um pouco mais complexo](https://pt.wikipedia.org/wiki/Quantil#Quantis_de_uma_amostra); por isso, existem diferenças entre os valores que calculamos "à mão", acima, e os valores retornados por `quantile`.
+
+* Em R, a [função `summary`]{.hl} mostra o [mínimo]{.hl}, os [quartis (com "R")]{.hl}, a [média]{.hl}, e o [máximo]{.hl} de um vetor:
+
+  ```{r}
+  summary(horas)
+  ```
+
+
+### Média $\times$ mediana
+
+* Vamos ver um exemplo simples para entender a diferença entre a média e a mediana.
+
+* Imagine o seguinte vetor com as receitas mensais de algumas pessoas (em milhares de reais:)
+
+  ```{r}
+  receitas <- c(1, 2, 2, 3.5, 1, 4, 1)
+  ```
+
+* Eis a mediana e a média deste vetor:
+
+  ```{r}
+  summary(receitas)[c('Median', 'Mean')]
+  ```
+
+* A mediana e a média são bem próximas.
+
+* Imagine, agora, que adicionamos ao vetor um sujeito com receita mensal de $100$ mil reais:
+
+  ```{r}
+  receitas <- c(1, 2, 2, 3.5, 1, 4, 1, 100)
+  ```
+
+* Eis a nova mediana e a nova média:
+
+  ```{r}
+  summary(receitas)[c('Median', 'Mean')]
+  ```
+
+* O sujeito com a receita de $`r median(receitas)`$ mil reais continua no meio da fila, mas a média (que é a soma de todas as receitas, dividida pelo número de indivíduos) ficou muito diferente.
+
+* A receita do novo sujeito é um [valor discrepante]{.hl}, ou, em inglês, um [*outlier*]{.hl}.
+
+::: {.rmdimportant latex=1}
+
+**Conclusão:** 
+
+A [mediana é robusta]{.hl}, pouco afetada por *outliers*.
+
+A [média é pouco robusta]{.hl}, muito sensível a *outliers*.
+
+:::
 
 
 ### Gerando boxplots
@@ -81,13 +160,6 @@ sono %>%
     geom_boxplot(fill = 'gray') +
     scale_x_continuous(breaks = NULL) +
     scale_y_continuous(breaks = seq(0, 20, 2))
-```
-
-```{r}
-sono %>% 
-  ggplot(aes(x = sleep_total)) +
-    geom_step(stat = 'ecdf') +
-    ylab(NULL)
 ```
 
 ```{r}
@@ -109,7 +181,10 @@ sono %>%
   ggplot(aes(x = vore, y = sleep_total)) +
     geom_boxplot(fill = 'gray') +
     scale_y_continuous(breaks = seq(0, 20, 2)) +
-    geom_point(color = 'blue', alpha = .3) +
+    geom_point(
+      color = 'blue', 
+      alpha = .3
+    ) +
     stat_summary(
       fun = mean, 
       geom = 'point', 
@@ -117,22 +192,13 @@ sono %>%
       shape = 'cross', 
       size = 5,
       stroke = 1
+    ) +
+    labs(
+      title = 'Sono total de diversos mamíferos, por dieta',
+      subtitle = '(o X vermelho representa a média)',
+      x = 'dieta',
+      y = 'sono total\n(em horas)'
     )
-```
-
-
-### Média $\times$ mediana
-
-```{r}
-receita <- tibble(
-  valor = c(1, 2, 2, 3.5, 1, 4, 1, 10000)
-)
-
-receita
-```
-
-```{r}
-summary(receita)
 ```
 
 

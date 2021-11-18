@@ -41,6 +41,7 @@ bookdown::pdf_book:
     -V, 
     links-as-notes, 
     --variable=subparagraph,
+    --filter=./filters/dollar.py3,
     --filter=./filters/hl.py3
   ]
   md_extensions: +fenced_divs+bracketed_spans

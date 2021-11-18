@@ -28,5 +28,6 @@ rmd_files: [
   "o-que-e.Rmd",
   "r-intro.Rmd",
   "viz-01.Rmd",
-  "viz-02.Rmd"
+  "viz-02.Rmd",
+  "medidas.Rmd"
 ]
