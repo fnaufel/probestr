@@ -1,0 +1,366 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Visualização com ggplot2 (continuação) {#viz2}
+
+::: {.rmdtip latex=1}
+
+Busque mais informações sobre os pacotes `tidyverse` e `ggplot2` [nas referências recomendadas](#refrec).
+
+:::
+
+
+## Vídeo 1
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('TjgLDeIQHIc')
+```
+
+
+## Boxplots
+
+### Dataset
+
+```{r}
+sono <- msleep %>% 
+  select(name, vore, order, sleep_total)
+```
+
+
+### Mediana e quartis
+
+```{r}
+horas <- sono %>% 
+  pull(sleep_total) %>% 
+  sort()
+
+horas
+```
+
+```{r}
+length(horas)
+```
+
+```{r}
+horas[length(horas) / 2]
+```
+
+```{r}
+median(horas)
+```
+
+```{r}
+horas[
+  c(
+    length(horas) / 4,
+    length(horas) / 2,
+    3 * length(horas) / 4
+  )
+]
+```
+
+```{r}
+horas %>% quantile(c(.25, .5, .75))
+```
+
+```{r}
+mean(horas)
+```
+
+```{r}
+summary(horas)
+```
+
+
+### Gerando boxplots
+
+```{r}
+sono %>% 
+  ggplot(aes(y = sleep_total)) +
+    geom_boxplot(fill = 'gray') +
+    scale_x_continuous(breaks = NULL) +
+    scale_y_continuous(breaks = seq(0, 20, 2))
+```
+
+```{r}
+sono %>% 
+  ggplot(aes(x = sleep_total)) +
+    geom_step(stat = 'ecdf') +
+    ylab(NULL)
+```
+
+```{r}
+sono %>% 
+  ggplot(aes(x = vore, y = sleep_total)) +
+    geom_boxplot(fill = 'gray') +
+    scale_y_continuous(breaks = seq(0, 20, 2))
+```
+
+```{r}
+sono %>% 
+  filter(vore == 'omni') %>% 
+  pull(sleep_total) %>% 
+  IQR()
+```
+
+```{r}
+sono %>% 
+  ggplot(aes(x = vore, y = sleep_total)) +
+    geom_boxplot(fill = 'gray') +
+    scale_y_continuous(breaks = seq(0, 20, 2)) +
+    geom_point(color = 'blue', alpha = .3) +
+    stat_summary(
+      fun = mean, 
+      geom = 'point', 
+      color = 'red', 
+      shape = 'cross', 
+      size = 5,
+      stroke = 1
+    )
+```
+
+
+### Média $\times$ mediana
+
+```{r}
+receita <- tibble(
+  valor = c(1, 2, 2, 3.5, 1, 4, 1, 10000)
+)
+
+receita
+```
+
+```{r}
+summary(receita)
+```
+
+
+## Vídeo 2
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('QqnOvgBXJ-s')
+```
+
+
+## Gráficos de barras e de colunas
+
+### Dataset
+
+```{r}
+HairEyeColor
+```
+
+```{r}
+df_orig <- as.data.frame(HairEyeColor) %>% 
+  uncount(Freq) %>% 
+  as_tibble()
+```
+
+```{r results='asis', message=FALSE}
+df_orig %>% dfSummary() %>% print()
+```
+
+```{r}
+cabelo <- c(
+  'Brown' = 'Castanhos',
+  'Blond' = 'Louros',
+  'Black' = 'Pretos',
+  'Red' = 'Ruivos'
+)
+
+olhos <- c(
+  'Brown' = 'Castanhos',
+  'Blue' = 'Azuis',
+  'Hazel' = 'Avelã',
+  'Green' = 'Verdes'
+)
+
+sexo <- c(
+  'Male' = 'Homem',
+  'Female' = 'Mulher'
+)
+
+df <- df_orig %>% 
+  transmute(
+    Cabelos = cabelo[Hair],
+    Olhos = olhos[Eye],
+    Sexo = sexo[Sex]
+  )
+
+```
+
+```{r results='asis', message=FALSE}
+df %>% dfSummary() %>% print()
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = Cabelos)) +
+    geom_bar()
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_rev(fct_infreq(Cabelos)))) +
+    geom_bar()
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
+    geom_bar()
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
+    geom_bar() +
+    scale_fill_discrete(type = c('blue', 'red'))
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
+    geom_bar() +
+    scale_fill_discrete(type = c('blue', 'red')) +
+    coord_flip()
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
+    geom_bar(position = 'dodge') +
+    scale_fill_discrete(type = c('blue', 'red'))
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_infreq(Cabelos), fill = Olhos)) +
+    geom_bar() +
+    scale_fill_discrete(type = c('#908050', 'blue', 'brown', 'green'))
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_infreq(Cabelos), fill = Olhos)) +
+    geom_bar(position = 'dodge') +
+    scale_fill_discrete(type = c('#908050', 'blue', 'brown', 'green'))
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = fct_infreq(Cabelos), fill = Olhos)) +
+    geom_bar(position = 'dodge') +
+    scale_fill_discrete(type = c('#908050', 'blue', 'brown', 'green')) +
+    facet_wrap(~Sexo) +
+    labs(
+      title = 'Cores de cabelos e olhos por sexo',
+      y = NULL,
+      x = 'Cabelos'
+    )
+```
+
+```{r}
+df %>% 
+  ggplot(aes(x = Sexo, fill = fct_infreq(Olhos))) +
+    geom_bar(position = 'dodge') +
+    facet_wrap(~Cabelos, labeller = label_both) +
+    scale_fill_discrete(type = c('brown', 'blue', '#908050', 'green')) +
+    labs(
+      x = NULL,
+      y = NULL,
+      fill = 'Olhos',
+      title = 'Cor dos olhos e sexo por cor dos cabelos'
+    )
+```
+
+### *Dataframe* já contendo os totais
+
+```{r}
+df_tot <- df %>% 
+  count(Sexo, Cabelos, Olhos)
+
+df_tot
+```
+
+```{r}
+df_tot %>% 
+  ggplot(aes(x = Cabelos, y = n)) +
+    geom_col()
+```
+
+## Gráficos de linha e séries temporais
+
+### Dataset
+
+```{r}
+WorldPhones
+```
+
+```{r}
+fones <- WorldPhones %>% 
+  as_tibble(rownames = 'Ano') %>% 
+  mutate(Ano = as.numeric(Ano))
+
+fones
+```
+
+```{r}
+fones_long <- fones %>% 
+  pivot_longer(
+    cols = -Ano,
+    names_to = 'Região',
+    values_to = 'n'
+  )
+
+fones_long
+```
+
+```{r}
+fones_long %>% 
+  ggplot(aes(x = Ano, y = n, group = Região, color = Região)) +
+    geom_line() +
+    scale_x_continuous(breaks = 1951:1961)
+```
+
+```{r}
+fones_long %>% 
+  ggplot(
+      aes(
+        x = Ano, 
+        y = n, 
+        group = Região, 
+        color = fct_rev(fct_reorder(Região, n))
+      )
+  ) +
+    geom_line() +
+    scale_x_continuous(breaks = 1951:1961) +
+    labs(
+      color = 'Região',
+      y = '',
+      x = NULL,
+      title = 'Quantidade de aparelhos de telefone por ano, por região'
+    )
+```
+
+```{r}
+fones_long %>%
+  filter(Região %in% c('S.Amer', 'Oceania')) %>% 
+  ggplot(aes(x = Ano, y = n, group = Região, color = Região)) +
+    geom_line() +
+    scale_x_continuous(breaks = 1951:1961)
+```
+
+```{r eval=FALSE}
+library(tsibble)
+?`tsibble-package`
+```
+
+## Referências sobre visualização e R
+
+::: {.rmdtip latex=1}
+
+Busque mais informações sobre os pacotes `tidyverse` e `ggplot2` [nas referências recomendadas](#refrec).
+
+:::

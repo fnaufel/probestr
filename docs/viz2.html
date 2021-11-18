@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Capítulo 4 Visualização com ggplot2 (continuação) | Probabilidade e Estatística com R</title>
+<meta name="author" content="Fernando Náufel">
+<meta name="description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  4.1 Vídeo 1    4.2 Boxplots  4.2.1 Dataset sono &lt;- msleep %&gt;%  select(name, vore, order, sleep_total) ...">
+<meta name="generator" content="bookdown 0.24 with bs4_book()">
+<meta property="og:title" content="Capítulo 4 Visualização com ggplot2 (continuação) | Probabilidade e Estatística com R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
+<meta property="og:description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  4.1 Vídeo 1    4.2 Boxplots  4.2.1 Dataset sono &lt;- msleep %&gt;%  select(name, vore, order, sleep_total) ...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Capítulo 4 Visualização com ggplot2 (continuação) | Probabilidade e Estatística com R">
+<meta name="twitter:description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  4.1 Vídeo 1    4.2 Boxplots  4.2.1 Dataset sono &lt;- msleep %&gt;%  select(name, vore, order, sleep_total) ...">
+<meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Lexend-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
+<link href="libs/_Roboto-0.4.0/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="styles.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Ir para conteúdo principal</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Probabilidade e Estatística com R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar sumário</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+</form>
+
+      <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Apresentação</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O Que É Estatística?</a></li>
+<li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
+<li><a class="" href="viz.html"><span class="header-section-number">3</span> Visualização com ggplot2</a></li>
+<li><a class="active" href="viz2.html"><span class="header-section-number">4</span> Visualização com ggplot2 (continuação)</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/fnaufel/probestr">Ver código-fonte do livro <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="viz2" class="section level1" number="4">
+<h1>
+<span class="header-section-number">Capítulo 4</span> Visualização com ggplot2 (continuação)<a class="anchor" aria-label="anchor" href="#viz2"><i class="fas fa-link"></i></a>
+</h1>
+<div class="rmdtip">
+<p>Busque mais informações sobre os pacotes <code>tidyverse</code> e <code>ggplot2</code> <a href="index.html#refrec">nas referências recomendadas</a>.</p>
+</div>
+<div id="vídeo-1-3" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Vídeo 1<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-1-3"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/TjgLDeIQHIc" width="100%" height="400px" data-external="1" class="center">
+</iframe>
+</div>
+<div id="boxplots" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Boxplots<a class="anchor" aria-label="anchor" href="#boxplots"><i class="fas fa-link"></i></a>
+</h2>
+<div id="dataset" class="section level3" number="4.2.1">
+<h3>
+<span class="header-section-number">4.2.1</span> Dataset<a class="anchor" aria-label="anchor" href="#dataset"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">vore</span>, <span class="va">order</span>, <span class="va">sleep_total</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="mediana-e-quartis" class="section level3" number="4.2.2">
+<h3>
+<span class="header-section-number">4.2.2</span> Mediana e quartis<a class="anchor" aria-label="anchor" href="#mediana-e-quartis"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu">pull</span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">horas</span>
+<span class="co">##  [1]  1,9  2,7  2,9  3,0  3,1  3,3  3,5  3,8  3,9  4,0  4,4  5,2  5,3  5,3  5,4  5,6</span>
+<span class="co">## [17]  6,2  6,3  6,3  7,0  7,7  8,0  8,3  8,4  8,4  8,6  8,7  8,7  8,9  9,1  9,1  9,4</span>
+<span class="co">## [33]  9,4  9,5  9,6  9,7  9,8  9,8 10,0 10,1 10,1 10,1 10,3 10,3 10,4 10,6 10,9 11,0</span>
+<span class="co">## [49] 11,0 11,1 11,3 11,5 12,1 12,5 12,5 12,5 12,5 12,8 12,8 13,0 13,5 13,7 13,8 14,2</span>
+<span class="co">## [65] 14,3 14,4 14,4 14,5 14,6 14,9 14,9 15,6 15,8 15,8 15,9 16,6 17,0 17,4 18,0 18,1</span>
+<span class="co">## [81] 19,4 19,7 19,9</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
+<span class="co">## [1] 83</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">]</span>
+<span class="co">## [1] 10,1</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
+<span class="co">## [1] 10,1</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">4</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span>,
+    <span class="fl">3</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">4</span>
+  <span class="op">)</span>
+<span class="op">]</span>
+<span class="co">## [1]  7,0 10,1 13,7</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span>
+<span class="co">##   25%   50%   75% </span>
+<span class="co">##  7,85 10,10 13,75</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
+<span class="co">## [1] 10,43373</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
+<span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
+<span class="co">##    1,90    7,85   10,10   10,43   13,75   19,90</span></code></pre></div>
+</div>
+<div id="gerando-boxplots" class="section level3" number="4.2.3">
+<h3>
+<span class="header-section-number">4.2.3</span> Gerando boxplots<a class="anchor" aria-label="anchor" href="#gerando-boxplots"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-32-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">'ecdf'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-33-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">vore</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">vore</span> <span class="op">==</span> <span class="st">'omni'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">pull</span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">## [1] 1,825</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">vore</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'blue'</span>, alpha <span class="op">=</span> <span class="fl">.3</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span>
+      fun <span class="op">=</span> <span class="va">mean</span>, 
+      geom <span class="op">=</span> <span class="st">'point'</span>, 
+      color <span class="op">=</span> <span class="st">'red'</span>, 
+      shape <span class="op">=</span> <span class="st">'cross'</span>, 
+      size <span class="op">=</span> <span class="fl">5</span>,
+      stroke <span class="op">=</span> <span class="fl">1</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="média-times-mediana" class="section level3" number="4.2.4">
+<h3>
+<span class="header-section-number">4.2.4</span> Média <span class="math inline">\(\times\)</span> mediana<a class="anchor" aria-label="anchor" href="#m%C3%A9dia-times-mediana"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">receita</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
+  valor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3.5</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">10000</span><span class="op">)</span>
+<span class="op">)</span>
+
+<span class="va">receita</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["valor"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"1,0"},{"1":"2,0"},{"1":"2,0"},{"1":"3,5"},{"1":"1,0"},{"1":"4,0"},{"1":"1,0"},{"1":"10000,0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">receita</span><span class="op">)</span>
+<span class="co">##      valor          </span>
+<span class="co">##  Min.   :    1,000  </span>
+<span class="co">##  1st Qu.:    1,000  </span>
+<span class="co">##  Median :    2,000  </span>
+<span class="co">##  Mean   : 1251,812  </span>
+<span class="co">##  3rd Qu.:    3,625  </span>
+<span class="co">##  Max.   :10000,000</span></code></pre></div>
+</div>
+</div>
+<div id="vídeo-2-3" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Vídeo 2<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-2-3"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/QqnOvgBXJ-s" width="100%" height="400px" data-external="1" class="center">
+</iframe>
+</div>
+<div id="gráficos-de-barras-e-de-colunas" class="section level2" number="4.4">
+<h2>
+<span class="header-section-number">4.4</span> Gráficos de barras e de colunas<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-barras-e-de-colunas"><i class="fas fa-link"></i></a>
+</h2>
+<div id="dataset-1" class="section level3" number="4.4.1">
+<h3>
+<span class="header-section-number">4.4.1</span> Dataset<a class="anchor" aria-label="anchor" href="#dataset-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">HairEyeColor</span>
+<span class="co">## , , Sex = Male</span>
+<span class="co">## </span>
+<span class="co">##        Eye</span>
+<span class="co">## Hair    Brown Blue Hazel Green</span>
+<span class="co">##   Black    32   11    10     3</span>
+<span class="co">##   Brown    53   50    25    15</span>
+<span class="co">##   Red      10   10     7     7</span>
+<span class="co">##   Blond     3   30     5     8</span>
+<span class="co">## </span>
+<span class="co">## , , Sex = Female</span>
+<span class="co">## </span>
+<span class="co">##        Eye</span>
+<span class="co">## Hair    Brown Blue Hazel Green</span>
+<span class="co">##   Black    36    9     5     2</span>
+<span class="co">##   Brown    66   34    29    14</span>
+<span class="co">##   Red      16    7     7     7</span>
+<span class="co">##   Blond     4   64     5     8</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">uncount</span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_orig</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<colgroup>
+<col width="11%">
+<col width="26%">
+<col width="24%">
+<col width="25%">
+<col width="11%">
+</colgroup>
+<thead><tr class="header">
+<th>Variável</th>
+<th>Estatísticas / Valores</th>
+<th>Freqs (% de Válidos)</th>
+<th>Grafo</th>
+<th>Faltante</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Hair<br>
+[factor]</td>
+<td>1. Black<br>
+2. Brown<br>
+3. Red<br>
+4. Blond</td>
+<td>108 (18,2%)<br>
+286 (48,3%)<br>
+71 (12,0%)<br>
+127 (21,5%)</td>
+<td><img src="dfimg/ds0020.png"></td>
+<td>0<br>
+(0,0%)</td>
+</tr>
+<tr class="even">
+<td>Eye<br>
+[factor]</td>
+<td>1. Brown<br>
+2. Blue<br>
+3. Hazel<br>
+4. Green</td>
+<td>220 (37,2%)<br>
+215 (36,3%)<br>
+93 (15,7%)<br>
+64 (10,8%)</td>
+<td><img src="dfimg/ds0021.png"></td>
+<td>0<br>
+(0,0%)</td>
+</tr>
+<tr class="odd">
+<td>Sex<br>
+[factor]</td>
+<td>1. Male<br>
+2. Female</td>
+<td>279 (47,1%)<br>
+313 (52,9%)</td>
+<td><img src="dfimg/ds0022.png"></td>
+<td>0<br>
+(0,0%)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cabelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+  <span class="st">'Brown'</span> <span class="op">=</span> <span class="st">'Castanhos'</span>,
+  <span class="st">'Blond'</span> <span class="op">=</span> <span class="st">'Louros'</span>,
+  <span class="st">'Black'</span> <span class="op">=</span> <span class="st">'Pretos'</span>,
+  <span class="st">'Red'</span> <span class="op">=</span> <span class="st">'Ruivos'</span>
+<span class="op">)</span>
+
+<span class="va">olhos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+  <span class="st">'Brown'</span> <span class="op">=</span> <span class="st">'Castanhos'</span>,
+  <span class="st">'Blue'</span> <span class="op">=</span> <span class="st">'Azuis'</span>,
+  <span class="st">'Hazel'</span> <span class="op">=</span> <span class="st">'Avelã'</span>,
+  <span class="st">'Green'</span> <span class="op">=</span> <span class="st">'Verdes'</span>
+<span class="op">)</span>
+
+<span class="va">sexo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+  <span class="st">'Male'</span> <span class="op">=</span> <span class="st">'Homem'</span>,
+  <span class="st">'Female'</span> <span class="op">=</span> <span class="st">'Mulher'</span>
+<span class="op">)</span>
+
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df_orig</span> <span class="op">%&gt;%</span> 
+  <span class="fu">transmute</span><span class="op">(</span>
+    Cabelos <span class="op">=</span> <span class="va">cabelo</span><span class="op">[</span><span class="va">Hair</span><span class="op">]</span>,
+    Olhos <span class="op">=</span> <span class="va">olhos</span><span class="op">[</span><span class="va">Eye</span><span class="op">]</span>,
+    Sexo <span class="op">=</span> <span class="va">sexo</span><span class="op">[</span><span class="va">Sex</span><span class="op">]</span>
+  <span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="14%">
+<col width="25%">
+<col width="23%">
+<col width="24%">
+<col width="11%">
+</colgroup>
+<thead><tr class="header">
+<th>Variável</th>
+<th>Estatísticas / Valores</th>
+<th>Freqs (% de Válidos)</th>
+<th>Grafo</th>
+<th>Faltante</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Cabelos<br>
+[character]</td>
+<td>1. Castanhos<br>
+2. Louros<br>
+3. Pretos<br>
+4. Ruivos</td>
+<td>108 (18,2%)<br>
+286 (48,3%)<br>
+71 (12,0%)<br>
+127 (21,5%)</td>
+<td><img src="dfimg/ds0023.png"></td>
+<td>0<br>
+(0,0%)</td>
+</tr>
+<tr class="even">
+<td>Olhos<br>
+[character]</td>
+<td>1. Avelã<br>
+2. Azuis<br>
+3. Castanhos<br>
+4. Verdes</td>
+<td>93 (15,7%)<br>
+215 (36,3%)<br>
+220 (37,2%)<br>
+64 (10,8%)</td>
+<td><img src="dfimg/ds0024.png"></td>
+<td>0<br>
+(0,0%)</td>
+</tr>
+<tr class="odd">
+<td>Sexo<br>
+[character]</td>
+<td>1. Homem<br>
+2. Mulher</td>
+<td>279 (47,1%)<br>
+313 (52,9%)</td>
+<td><img src="dfimg/ds0025.png"></td>
+<td>0<br>
+(0,0%)</td>
+</tr>
+</tbody>
+</table></div>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Cabelos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sexo</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      title <span class="op">=</span> <span class="st">'Cores de cabelos e olhos por sexo'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>,
+      x <span class="op">=</span> <span class="st">'Cabelos'</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sexo</span>, fill <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Olhos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Cabelos</span>, labeller <span class="op">=</span> <span class="va">label_both</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'brown'</span>, <span class="st">'blue'</span>, <span class="st">'#908050'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="cn">NULL</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>,
+      fill <span class="op">=</span> <span class="st">'Olhos'</span>,
+      title <span class="op">=</span> <span class="st">'Cor dos olhos e sexo por cor dos cabelos'</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="dataframe-já-contendo-os-totais" class="section level3" number="4.4.2">
+<h3>
+<span class="header-section-number">4.4.2</span> <em>Dataframe</em> já contendo os totais<a class="anchor" aria-label="anchor" href="#dataframe-j%C3%A1-contendo-os-totais"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_tot</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">Sexo</span>, <span class="va">Cabelos</span>, <span class="va">Olhos</span><span class="op">)</span>
+
+<span class="va">df_tot</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Sexo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Cabelos"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Olhos"],"name":[3],"type":["chr"],"align":["left"]},{"label":["n"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"Homem","2":"Castanhos","3":"Avelã","4":"10"},{"1":"Homem","2":"Castanhos","3":"Azuis","4":"11"},{"1":"Homem","2":"Castanhos","3":"Castanhos","4":"32"},{"1":"Homem","2":"Castanhos","3":"Verdes","4":"3"},{"1":"Homem","2":"Louros","3":"Avelã","4":"25"},{"1":"Homem","2":"Louros","3":"Azuis","4":"50"},{"1":"Homem","2":"Louros","3":"Castanhos","4":"53"},{"1":"Homem","2":"Louros","3":"Verdes","4":"15"},{"1":"Homem","2":"Pretos","3":"Avelã","4":"7"},{"1":"Homem","2":"Pretos","3":"Azuis","4":"10"},{"1":"Homem","2":"Pretos","3":"Castanhos","4":"10"},{"1":"Homem","2":"Pretos","3":"Verdes","4":"7"},{"1":"Homem","2":"Ruivos","3":"Avelã","4":"5"},{"1":"Homem","2":"Ruivos","3":"Azuis","4":"30"},{"1":"Homem","2":"Ruivos","3":"Castanhos","4":"3"},{"1":"Homem","2":"Ruivos","3":"Verdes","4":"8"},{"1":"Mulher","2":"Castanhos","3":"Avelã","4":"5"},{"1":"Mulher","2":"Castanhos","3":"Azuis","4":"9"},{"1":"Mulher","2":"Castanhos","3":"Castanhos","4":"36"},{"1":"Mulher","2":"Castanhos","3":"Verdes","4":"2"},{"1":"Mulher","2":"Louros","3":"Avelã","4":"29"},{"1":"Mulher","2":"Louros","3":"Azuis","4":"34"},{"1":"Mulher","2":"Louros","3":"Castanhos","4":"66"},{"1":"Mulher","2":"Louros","3":"Verdes","4":"14"},{"1":"Mulher","2":"Pretos","3":"Avelã","4":"7"},{"1":"Mulher","2":"Pretos","3":"Azuis","4":"7"},{"1":"Mulher","2":"Pretos","3":"Castanhos","4":"16"},{"1":"Mulher","2":"Pretos","3":"Verdes","4":"7"},{"1":"Mulher","2":"Ruivos","3":"Avelã","4":"5"},{"1":"Mulher","2":"Ruivos","3":"Azuis","4":"64"},{"1":"Mulher","2":"Ruivos","3":"Castanhos","4":"4"},{"1":"Mulher","2":"Ruivos","3":"Verdes","4":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_tot</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Cabelos</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-56-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+</div>
+<div id="gráficos-de-linha-e-séries-temporais" class="section level2" number="4.5">
+<h2>
+<span class="header-section-number">4.5</span> Gráficos de linha e séries temporais<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-linha-e-s%C3%A9ries-temporais"><i class="fas fa-link"></i></a>
+</h2>
+<div id="dataset-2" class="section level3" number="4.5.1">
+<h3>
+<span class="header-section-number">4.5.1</span> Dataset<a class="anchor" aria-label="anchor" href="#dataset-2"><i class="fas fa-link"></i></a>
+</h3>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">WorldPhones</span>
+<span class="co">##      N.Amer Europe Asia S.Amer Oceania Africa Mid.Amer</span>
+<span class="co">## 1951  45939  21574 2876   1815    1646     89      555</span>
+<span class="co">## 1956  60423  29990 4708   2568    2366   1411      733</span>
+<span class="co">## 1957  64721  32510 5230   2695    2526   1546      773</span>
+<span class="co">## 1958  68484  35218 6662   2845    2691   1663      836</span>
+<span class="co">## 1959  71799  37598 6856   3000    2868   1769      911</span>
+<span class="co">## 1960  76036  40341 8220   3145    3054   1905     1008</span>
+<span class="co">## 1961  79831  43173 9053   3338    3224   2005     1076</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fones</span> <span class="op">&lt;-</span> <span class="va">WorldPhones</span> <span class="op">%&gt;%</span> 
+  <span class="fu">as_tibble</span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">'Ano'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>Ano <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Ano</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">fones</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Ano"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["N.Amer"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Europe"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Asia"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["S.Amer"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Oceania"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Africa"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Mid.Amer"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"1951","2":"45939","3":"21574","4":"2876","5":"1815","6":"1646","7":"89","8":"555"},{"1":"1956","2":"60423","3":"29990","4":"4708","5":"2568","6":"2366","7":"1411","8":"733"},{"1":"1957","2":"64721","3":"32510","4":"5230","5":"2695","6":"2526","7":"1546","8":"773"},{"1":"1958","2":"68484","3":"35218","4":"6662","5":"2845","6":"2691","7":"1663","8":"836"},{"1":"1959","2":"71799","3":"37598","4":"6856","5":"3000","6":"2868","7":"1769","8":"911"},{"1":"1960","2":"76036","3":"40341","4":"8220","5":"3145","6":"3054","7":"1905","8":"1008"},{"1":"1961","2":"79831","3":"43173","4":"9053","5":"3338","6":"3224","7":"2005","8":"1076"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">&lt;-</span> <span class="va">fones</span> <span class="op">%&gt;%</span> 
+  <span class="fu">pivot_longer</span><span class="op">(</span>
+    cols <span class="op">=</span> <span class="op">-</span><span class="va">Ano</span>,
+    names_to <span class="op">=</span> <span class="st">'Região'</span>,
+    values_to <span class="op">=</span> <span class="st">'n'</span>
+  <span class="op">)</span>
+
+<span class="va">fones_long</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Ano"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Região"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1951","2":"N.Amer","3":"45939"},{"1":"1951","2":"Europe","3":"21574"},{"1":"1951","2":"Asia","3":"2876"},{"1":"1951","2":"S.Amer","3":"1815"},{"1":"1951","2":"Oceania","3":"1646"},{"1":"1951","2":"Africa","3":"89"},{"1":"1951","2":"Mid.Amer","3":"555"},{"1":"1956","2":"N.Amer","3":"60423"},{"1":"1956","2":"Europe","3":"29990"},{"1":"1956","2":"Asia","3":"4708"},{"1":"1956","2":"S.Amer","3":"2568"},{"1":"1956","2":"Oceania","3":"2366"},{"1":"1956","2":"Africa","3":"1411"},{"1":"1956","2":"Mid.Amer","3":"733"},{"1":"1957","2":"N.Amer","3":"64721"},{"1":"1957","2":"Europe","3":"32510"},{"1":"1957","2":"Asia","3":"5230"},{"1":"1957","2":"S.Amer","3":"2695"},{"1":"1957","2":"Oceania","3":"2526"},{"1":"1957","2":"Africa","3":"1546"},{"1":"1957","2":"Mid.Amer","3":"773"},{"1":"1958","2":"N.Amer","3":"68484"},{"1":"1958","2":"Europe","3":"35218"},{"1":"1958","2":"Asia","3":"6662"},{"1":"1958","2":"S.Amer","3":"2845"},{"1":"1958","2":"Oceania","3":"2691"},{"1":"1958","2":"Africa","3":"1663"},{"1":"1958","2":"Mid.Amer","3":"836"},{"1":"1959","2":"N.Amer","3":"71799"},{"1":"1959","2":"Europe","3":"37598"},{"1":"1959","2":"Asia","3":"6856"},{"1":"1959","2":"S.Amer","3":"3000"},{"1":"1959","2":"Oceania","3":"2868"},{"1":"1959","2":"Africa","3":"1769"},{"1":"1959","2":"Mid.Amer","3":"911"},{"1":"1960","2":"N.Amer","3":"76036"},{"1":"1960","2":"Europe","3":"40341"},{"1":"1960","2":"Asia","3":"8220"},{"1":"1960","2":"S.Amer","3":"3145"},{"1":"1960","2":"Oceania","3":"3054"},{"1":"1960","2":"Africa","3":"1905"},{"1":"1960","2":"Mid.Amer","3":"1008"},{"1":"1961","2":"N.Amer","3":"79831"},{"1":"1961","2":"Europe","3":"43173"},{"1":"1961","2":"Asia","3":"9053"},{"1":"1961","2":"S.Amer","3":"3338"},{"1":"1961","2":"Oceania","3":"3224"},{"1":"1961","2":"Africa","3":"2005"},{"1":"1961","2":"Mid.Amer","3":"1076"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ano</span>, y <span class="op">=</span> <span class="va">n</span>, group <span class="op">=</span> <span class="va">Região</span>, color <span class="op">=</span> <span class="va">Região</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1951</span><span class="op">:</span><span class="fl">1961</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-60-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
+      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
+        x <span class="op">=</span> <span class="va">Ano</span>, 
+        y <span class="op">=</span> <span class="va">n</span>, 
+        group <span class="op">=</span> <span class="va">Região</span>, 
+        color <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_reorder</span><span class="op">(</span><span class="va">Região</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span>
+      <span class="op">)</span>
+  <span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1951</span><span class="op">:</span><span class="fl">1961</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      color <span class="op">=</span> <span class="st">'Região'</span>,
+      y <span class="op">=</span> <span class="st">''</span>,
+      x <span class="op">=</span> <span class="cn">NULL</span>,
+      title <span class="op">=</span> <span class="st">'Quantidade de aparelhos de telefone por ano, por região'</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-61-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Região</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'S.Amer'</span>, <span class="st">'Oceania'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ano</span>, y <span class="op">=</span> <span class="va">n</span>, group <span class="op">=</span> <span class="va">Região</span>, color <span class="op">=</span> <span class="va">Região</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1951</span><span class="op">:</span><span class="fl">1961</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tsibble.tidyverts.org">tsibble</a></span><span class="op">)</span>
+<span class="op">?</span><span class="va">`tsibble-package`</span></code></pre></div>
+</div>
+</div>
+<div id="referências-sobre-visualização-e-r" class="section level2" number="4.6">
+<h2>
+<span class="header-section-number">4.6</span> Referências sobre visualização e R<a class="anchor" aria-label="anchor" href="#refer%C3%AAncias-sobre-visualiza%C3%A7%C3%A3o-e-r"><i class="fas fa-link"></i></a>
+</h2>
+<div class="rmdtip">
+<p>Busque mais informações sobre os pacotes <code>tidyverse</code> e <code>ggplot2</code> <a href="index.html#refrec">nas referências recomendadas</a>.</p>
+</div>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="viz.html"><span class="header-section-number">3</span> Visualização com ggplot2</a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#viz2"><span class="header-section-number">4</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="nav-link" href="#v%C3%ADdeo-1-3"><span class="header-section-number">4.1</span> Vídeo 1</a></li>
+<li>
+<a class="nav-link" href="#boxplots"><span class="header-section-number">4.2</span> Boxplots</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dataset"><span class="header-section-number">4.2.1</span> Dataset</a></li>
+<li><a class="nav-link" href="#mediana-e-quartis"><span class="header-section-number">4.2.2</span> Mediana e quartis</a></li>
+<li><a class="nav-link" href="#gerando-boxplots"><span class="header-section-number">4.2.3</span> Gerando boxplots</a></li>
+<li><a class="nav-link" href="#m%C3%A9dia-times-mediana"><span class="header-section-number">4.2.4</span> Média \(\times\) mediana</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#v%C3%ADdeo-2-3"><span class="header-section-number">4.3</span> Vídeo 2</a></li>
+<li>
+<a class="nav-link" href="#gr%C3%A1ficos-de-barras-e-de-colunas"><span class="header-section-number">4.4</span> Gráficos de barras e de colunas</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#dataset-1"><span class="header-section-number">4.4.1</span> Dataset</a></li>
+<li><a class="nav-link" href="#dataframe-j%C3%A1-contendo-os-totais"><span class="header-section-number">4.4.2</span> Dataframe já contendo os totais</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#gr%C3%A1ficos-de-linha-e-s%C3%A9ries-temporais"><span class="header-section-number">4.5</span> Gráficos de linha e séries temporais</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#dataset-2"><span class="header-section-number">4.5.1</span> Dataset</a></li></ul>
+</li>
+<li><a class="nav-link" href="#refer%C3%AAncias-sobre-visualiza%C3%A7%C3%A3o-e-r"><span class="header-section-number">4.6</span> Referências sobre visualização e R</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/fnaufel/probestr/blob/master/viz-02.Rmd">Ver código-fonte <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/fnaufel/probestr/edit/master/viz-02.Rmd">Editar esta página <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 18/11/2021)</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Criado com o <a class="text-light" href="https://bookdown.org">pacote bookdown</a> do R.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
