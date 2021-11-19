@@ -153,7 +153,7 @@ knitr::include_graphics('images/countries-1.png')
 
 * Para examinar o *data frame* interativamente:
 
-  ```{r view-df}
+  ```{r view-df, eval=FALSE}
   view(df)
   ```
 
@@ -366,8 +366,22 @@ knitr::include_graphics('images/countries-1.png')
 
   ```{r cerebro-corpo}
   sono %>% 
-    ggplot() +
-      geom_point(aes(x = bodywt, y = brainwt))
+    ggplot(aes(x = bodywt, y = brainwt)) +
+      geom_point()
+  ```
+
+* A mensagem de aviso (*warning*) diz que há $27$ valores faltantes (`NA`) em `bodywt` ou `brainwt`. De fato:
+
+  ```{r}
+  sono %>% 
+    filter(is.na(bodywt)) %>% 
+    count()
+  ```
+
+  ```{r}
+  sono %>% 
+    filter(is.na(brainwt)) %>% 
+    count()
   ```
 
 * Vamos restringir aos animais mais leves e mudar a opacidade:
@@ -375,8 +389,8 @@ knitr::include_graphics('images/countries-1.png')
   ```{r cerebro-corpo-2}
   sono %>% 
     filter(bodywt < limite) %>% 
-    ggplot() +
-      geom_point(aes(x = bodywt, y = brainwt), alpha = .5)
+    ggplot(aes(x = bodywt, y = brainwt)) +
+      geom_point(alpha = .5)
   ```
 
 * Vamos incluir horas de sono e dieta. Observe as estéticas usadas.
@@ -384,33 +398,31 @@ knitr::include_graphics('images/countries-1.png')
   ```{r cerebro-corpo-3}
   sono %>% 
     filter(bodywt < limite) %>% 
-    ggplot() +
-      geom_point(
-        aes(
-          x = bodywt, 
-          y = brainwt,
-          size = sleep_total,
-          color = vore
-        ), 
-        alpha = .5
+    ggplot(
+      aes(
+        x = bodywt, 
+        y = brainwt,
+        size = sleep_total,
+        color = vore
       )
+    ) +
+      geom_point(alpha = .5)
   ```
 
 * Vamos mudar a escala dos tamanhos e incluir rótulos:
 
   ```{r cerebro-corpo-4}
-  sono %>% 
+  grafico <- sono %>% 
     filter(bodywt < limite) %>% 
-    ggplot() +
-      geom_point(
-        aes(
-          x = bodywt, 
-          y = brainwt,
-          size = sleep_total,
-          color = vore
-        ), 
-        alpha = .5
-      ) +
+    ggplot(
+      aes(
+        x = bodywt, 
+        y = brainwt,
+        size = sleep_total,
+        color = vore
+      )
+    ) +
+      geom_point(alpha = .5) +
       scale_size(
         breaks = seq(0, 24, 4)
       ) +
@@ -427,7 +439,61 @@ knitr::include_graphics('images/countries-1.png')
         color = 'Dieta',
         size = 'Horas\nde sono'
       )
+      
+  grafico
   ```
+
+* Vamos mudar as cores usadas para a dieta, usando uma escala diferente.
+
+  ```{r}
+  grafico2 <- grafico +
+    scale_color_discrete(
+      palette = 'RdBu',
+      na.value = 'black',
+      type = scale_color_brewer
+    )
+  
+  grafico2
+  ```
+
+* Observe como usamos o gráfico já salvo na variável `grafico` e simplesmente acrescentamos a nova escala. Este tipo de "montagem" de gráficos `ggplot2` é bem conveniente, para evitar repetição de código.
+
+* Um último ajuste na aparência: os pontos na legenda "Dieta" estão pequenos demais. Quase não identificamos as cores deles. 
+
+  Vamos usar a função `guides` para modificar (*override*) a estética `color` --- [apenas na legenda, não nos pontos mostrados no gráfico, cujos tamanhos representam o número de horas de sono]{.hl} --- tornando o tamanho maior. [Leia mais sobre `override.aes`neste *link* (em inglês)](https://ggplot2-book.org/scale-colour.html#guide_legend).
+  
+  ```{r}
+  grafico3 <- grafico2 +
+    guides(color = guide_legend(override.aes = list(size = 10)))
+    
+  grafico3
+  ```
+
+* Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:
+
+  * De fato, existe uma correlação entre peso cerebral e peso corporal: quanto maior o peso corporal, maior o peso cerebral. Nada surprenndente.
+  
+  * []{#grafico4} Podemos fazer o `ggplot2` traçar uma reta de regressão com a geometria `geom_smooth`. Vamos falar mais sobre correlação [em um capítulo futuro](#correlacao). 
+  
+    ```{r}
+    grafico4 <- grafico3 +
+      geom_smooth(
+        aes(group = 1), 
+        show.legend = FALSE,
+        method = 'lm', 
+        se = FALSE
+      )
+    
+    grafico4
+    ```
+  
+  * Todos os carnívoros têm peso corporal maior que $1$kg e peso cerebral maior ou igual a $10$g.
+  
+  * Só um carnívoro dorme $8$ horas ou menos. Qual?
+  
+  * Todos os insetívoros --- com exceção de um (qual?) --- são muito leves e dormem muito.
+  
+  * Todos os onívoros têm menos de $2$kg de peso corporal e $20$g ou menos de peso cerebral.
 
 
 ## Vídeo 2
@@ -485,14 +551,33 @@ embed_yt('c-LoZ9e8xWc')
       geom_histogram()
   ```
 
-* Vamos mudar isto passando um vetor de limites das classes (*breaks*):
+* Vamos mudar isto passando um vetor de limites das classes (*breaks*). Vamos acrescentar rótulos também:
 
   ```{r hist-sono2}
   sono %>% 
     ggplot(aes(x = sleep_total)) +
       geom_histogram(breaks = seq(0, 20, 2)) +
-      scale_x_continuous(breaks = seq(0, 20, 2))
+      scale_x_continuous(breaks = seq(0, 20, 2)) +
+      labs(
+        title = 'Horas de sono de diversos mamíferos',
+        x = 'horas de sono',
+        y = NULL,
+        caption = 'Fonte: dataset `msleep`'
+      )
   ```
+
+* Nossas impressões:
+
+  * A classe que mais tem elementos é a de $8$ a $10$ horas.
+  
+  * A distribuição é mais ou menos simétrica. 
+  
+  * A distribuição tem forma aproximada de sino: há poucos mamíferos com valores extremos de horas de sono; a maioria está próxima do valor médio:
+  
+    ```{r}
+    mean(sono$sleep_total)
+    ```
+  
 
 ### Polígono de frequência
 
@@ -572,7 +657,24 @@ Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.
 
 :::
 
-### Mamíferos e sono
+### Peso cerebral e peso corporal
+
+1. Observe os [comandos que geraram o gráfico `grafico4`](#grafico4).
+
+1. O que acontece se você retirar `aes(group = 1)` da chamada a `geom_smooth`? Explique.
+
+1. O que acontece se você mudar `show.legend = FALSE` para `show.legend = TRUE` na chamada a `geom_smooth`? Explique.
+
+1. O que acontece se você mudar `se = FALSE` para `se = TRUE` na chamada a `geom_smooth`? Explique.
+  
+1. Acrescente ao gráfico a camada `facet_wrap(~vore)`. O que acontece? 
+
+1. Examine o *data frame* `sono` e identifique o único insetívoro com mais de $4$kg.
+
+1. Instale o pacote `gg_repel` e acrescente ao gráfico `grafico4` (não facetado) a geometria `geom_label_repel` (consulte a ajuda) para rotular o mamífero insetívoro identificado no item anterior com o seu nome, [sem cobrir outros pontos do gráfico]{.hl}. Cuidado para não alterar a legenda que já existe.
+
+
+### Peso cerebral e horas de sono
 
 ::: {.rmdbox latex=1}
 
