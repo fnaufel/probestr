@@ -31,12 +31,31 @@ Pode haver mudanças a qualquer momento.
 Verifique, no rodapé da página *web* ou na capa do arquivo pdf, a data desta versão.
 :::
 
+```{r echo=FALSE, results='asis'}
+if (is_html_output()) {
+  cat('<div style=\'height: 100px\'></div>')
+} else {
+  cat('\\newpage\n')
+}
+```
+
 
 ![](images/640px-Nightingale-mortality.jpg){.center}
 
-Este livro/site foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano. 
+```{r echo=FALSE, results='asis'}
+if (is_html_output()) {
+  cat('<div style=\'height: 100px\'></div>')
+} else {
+  cat('\\vspace{2cm}\n')
+}
+```
 
-Para atender os alunos do curso de Probabilidade e Estatística do curso de graduação em Ciência da Computação da UFF, decidi gravar aulas em vídeo e disponibilizar os arquivos usados nelas. Foram esses arquivos que deram origem a este livro/site.
+
+Este livro/*site* foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano. 
+
+Para atender os alunos do curso de Probabilidade e Estatística do curso de graduação em Ciência da Computação da UFF, decidi gravar aulas em vídeo e disponibilizar os arquivos usados nelas. Foram esses arquivos que deram origem a este livro/*site*.
+
+Este livro/*site* foi construído para pessoas que já saibam programar, embora não necessariamente em R.
 
 Para tirar o máximo proveito deste material, você deve fazer o seguinte:
 
@@ -44,13 +63,19 @@ Para tirar o máximo proveito deste material, você deve fazer o seguinte:
 
 1. Instalar o R no seu computador ou abrir uma conta no RStudio Cloud, para poder usar o R *online*. Você encontra instruções para fazer isto no [capítulo de introdução a R](#rintro).
 
+1. Baixar, [neste repositório do Github](https://github.com/fnaufel/probestr), o código-fonte deste livro/*site*, para poder rodar e alterar os exemplos.
+
 1. Seguir os *links* para outras fontes *online* que abordam assuntos que não são cobertos em detalhes neste curso.
 
 1. Fazer os exercícios. Ao longo do tempo, acrescentarei *links* para vídeos explicando as soluções.
 
-O código-fonte deste livro/site pode ser encontrado [neste repositório do Github](https://github.com/fnaufel/probestr).
+::: {.rmdimportant latex=1}
 
-Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, [faça o download do arquivo aqui](https://github.com/fnaufel/probestr/blob/master/docs/probestr.pdf).
+[Se você estiver lendo este material na *web*, você pode clicar nos comandos e funções que aparecem nos blocos de código em R]{.hl} para abrir páginas da documentação sobre eles.
+
+Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, [faça o *download* do arquivo aqui](https://github.com/fnaufel/probestr/blob/master/docs/probestr.pdf).
+
+:::
 
 
 ## Referências recomendadas {- #refrec}
@@ -77,3 +102,4 @@ http://sillasgonzaga.com/material/curso_visualizacao/index.html
 ## Exercício {-}
 
 1. Pesquise sobre a imagem do início deste capítulo. Ela foi criada em 1858 por Florence Nightingale.
+
