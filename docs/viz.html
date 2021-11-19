@@ -50,6 +50,7 @@
 <li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
 <li><a class="active" href="viz.html"><span class="header-section-number">3</span> Visualização com ggplot2</a></li>
 <li><a class="" href="viz2.html"><span class="header-section-number">4</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="" href="medidas.html"><span class="header-section-number">5</span> Medidas</a></li>
 </ul>
 
         <div class="book-extra">
@@ -878,54 +879,73 @@ IQE (CV) : 5,9 (0,4)</td>
 <p>Peso cerebral versus peso corporal:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">brainwt</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## Warning: Removed 27 rows containing missing values (geom_point).</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/cerebro-corpo-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
-<p>Vamos restringir aos animais mais leves e mudar a opacidade:</p>
+<p>A mensagem de aviso (<em>warning</em>) diz que há <span class="math inline">\(27\)</span> valores faltantes (<code>NA</code>) em <code>bodywt</code> ou <code>brainwt</code>. De fato:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">bodywt</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"27"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</li>
+<li>
+<p>Vamos restringir aos animais mais leves e mudar a opacidade:</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">brainwt</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>
 <span class="co">## Warning: Removed 18 rows containing missing values (geom_point).</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/cerebro-corpo-2-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Vamos incluir horas de sono e dieta. Observe as estéticas usadas.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
-        x <span class="op">=</span> <span class="va">bodywt</span>, 
-        y <span class="op">=</span> <span class="va">brainwt</span>,
-        size <span class="op">=</span> <span class="va">sleep_total</span>,
-        color <span class="op">=</span> <span class="va">vore</span>
-      <span class="op">)</span>, 
-      alpha <span class="op">=</span> <span class="fl">.5</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="va">bodywt</span>, 
+      y <span class="op">=</span> <span class="va">brainwt</span>,
+      size <span class="op">=</span> <span class="va">sleep_total</span>,
+      color <span class="op">=</span> <span class="va">vore</span>
     <span class="op">)</span>
+  <span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span>
 <span class="co">## Warning: Removed 18 rows containing missing values (geom_point).</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/cerebro-corpo-3-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Vamos mudar a escala dos tamanhos e incluir rótulos:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">grafico</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>
-      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
-        x <span class="op">=</span> <span class="va">bodywt</span>, 
-        y <span class="op">=</span> <span class="va">brainwt</span>,
-        size <span class="op">=</span> <span class="va">sleep_total</span>,
-        color <span class="op">=</span> <span class="va">vore</span>
-      <span class="op">)</span>, 
-      alpha <span class="op">=</span> <span class="fl">.5</span>
-    <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="va">bodywt</span>, 
+      y <span class="op">=</span> <span class="va">brainwt</span>,
+      size <span class="op">=</span> <span class="va">sleep_total</span>,
+      color <span class="op">=</span> <span class="va">vore</span>
+    <span class="op">)</span>
+  <span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html">scale_size</a></span><span class="op">(</span>
       breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">24</span>, <span class="fl">4</span><span class="op">)</span>
     <span class="op">)</span> <span class="op">+</span>
@@ -942,8 +962,63 @@ IQE (CV) : 5,9 (0,4)</td>
       color <span class="op">=</span> <span class="st">'Dieta'</span>,
       size <span class="op">=</span> <span class="st">'Horas\nde sono'</span>
     <span class="op">)</span>
+
+<span class="va">grafico</span>
 <span class="co">## Warning: Removed 18 rows containing missing values (geom_point).</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/cerebro-corpo-4-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Vamos mudar as cores usadas para a dieta, usando uma escala diferente.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">grafico2</span> <span class="op">&lt;-</span> <span class="va">grafico</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_color_discrete</a></span><span class="op">(</span>
+    palette <span class="op">=</span> <span class="st">'RdBu'</span>,
+    na.value <span class="op">=</span> <span class="st">'black'</span>,
+    type <span class="op">=</span> <span class="va">scale_color_brewer</span>
+  <span class="op">)</span>
+
+<span class="va">grafico2</span>
+<span class="co">## Warning: Removed 18 rows containing missing values (geom_point).</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Observe como usamos o gráfico já salvo na variável <code>grafico</code> e simplesmente acrescentamos a nova escala. Este tipo de “montagem” de gráficos <code>ggplot2</code> é bem conveniente, para evitar repetição de código.</p></li>
+<li>
+<p>Um último ajuste na aparência: os pontos na legenda “Dieta” estão pequenos demais. Quase não identificamos as cores deles.</p>
+<p>Vamos usar a função <code>guides</code> para modificar (<em>override</em>) a estética <code>color</code> — <span class="hl">apenas na legenda, não nos pontos mostrados no gráfico, cujos tamanhos representam o número de horas de sono</span> — tornando o tamanho maior. <a href="https://ggplot2-book.org/scale-colour.html#guide_legend">Leia mais sobre <code>override.aes</code>neste <em>link</em> (em inglês)</a>.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">grafico3</span> <span class="op">&lt;-</span> <span class="va">grafico2</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="va">grafico3</span>
+<span class="co">## Warning: Removed 18 rows containing missing values (geom_point).</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:</p>
+<ul>
+<li><p>De fato, existe uma correlação entre peso cerebral e peso corporal: quanto maior o peso corporal, maior o peso cerebral. Nada surprenndente.</p></li>
+<li>
+<p><span id="grafico4"></span> Podemos fazer o <code>ggplot2</code> traçar uma reta de regressão com a geometria <code>geom_smooth</code>. Vamos falar mais sobre correlação <a href="#correlacao">em um capítulo futuro</a>.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">grafico4</span> <span class="op">&lt;-</span> <span class="va">grafico3</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, 
+    show.legend <span class="op">=</span> <span class="cn">FALSE</span>,
+    method <span class="op">=</span> <span class="st">'lm'</span>, 
+    se <span class="op">=</span> <span class="cn">FALSE</span>
+  <span class="op">)</span>
+
+<span class="va">grafico4</span>
+<span class="co">## `geom_smooth()` using formula 'y ~ x'</span>
+<span class="co">## Warning: Removed 18 rows containing non-finite values (stat_smooth).</span>
+<span class="co">## Warning: Removed 18 rows containing missing values (geom_point).</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Todos os carnívoros têm peso corporal maior que <span class="math inline">\(1\)</span>kg e peso cerebral maior ou igual a <span class="math inline">\(10\)</span>g.</p></li>
+<li><p>Só um carnívoro dorme <span class="math inline">\(8\)</span> horas ou menos. Qual?</p></li>
+<li><p>Todos os insetívoros — com exceção de um (qual?) — são muito leves e dormem muito.</p></li>
+<li><p>Todos os onívoros têm menos de <span class="math inline">\(2\)</span>kg de peso corporal e <span class="math inline">\(20\)</span>g ou menos de peso cerebral.</p></li>
+</ul>
 </li>
 </ul>
 </div>
@@ -969,7 +1044,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <ul>
 <li>
 <p>Vamos nos concentrar nas horas de sono.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span>
 <span class="co">##  [1] 12,1 17,0 14,4 14,9  4,0 14,4  8,7  7,0 10,1  3,0  5,3  9,4 10,0 12,5 10,3  8,3</span>
 <span class="co">## [17]  9,1 17,4  5,3 18,0  3,9 19,7  2,9  3,1 10,1 10,9 14,9 12,5  9,8  1,9  2,7  6,2</span>
@@ -981,13 +1056,13 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Antes de montar o histograma, vamos construir uma <span class="hl">distribuição de frequência.</span></p></li>
 <li>
 <p>A <span class="hl">amplitude</span> é a diferença entre o valor máximo e o valor mínimo. A função <code>range</code> não retorna a amplitude, mas sim os valores mínimo e máximo:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## [1]  1,9 19,9</span></code></pre></div>
 </li>
 <li>
 <p>Vamos decidir que cada classe vai ter <span class="math inline">\(2\)</span> horas. A função <code>cut</code> substitui os valores do vetor pelos nomes das classes:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">##  [1] [12,14) [16,18) [14,16) [14,16) [4,6)   [14,16) [8,10)  [6,8)   [10,12) [2,4)  </span>
@@ -1003,7 +1078,7 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 <li>
 <p>A função <code>table</code> faz a contagem dos elementos de cada classe:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span>  
   <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span>dnn <span class="op">=</span> <span class="st">'Horas de sono'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1024,7 +1099,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Na verdade, o <code>ggplot2</code> já faz esses cálculos para nós.</p></li>
 <li>
 <p>O <em>default</em> é criar <span class="math inline">\(30\)</span> classes (<em>bins</em>):</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span>
@@ -1032,13 +1107,32 @@ IQE (CV) : 5,9 (0,4)</td>
 <div class="inline-figure"><img src="_main_files/figure-html/hist-sono1-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
-<p>Vamos mudar isto passando um vetor de limites das classes (<em>breaks</em>):</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<p>Vamos mudar isto passando um vetor de limites das classes (<em>breaks</em>). Vamos acrescentar rótulos também:</p>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      title <span class="op">=</span> <span class="st">'Horas de sono de diversos mamíferos'</span>,
+      x <span class="op">=</span> <span class="st">'horas de sono'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>,
+      caption <span class="op">=</span> <span class="st">'Fonte: dataset `msleep`'</span>
+    <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/hist-sono2-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Nossas impressões:</p>
+<ul>
+<li><p>A classe que mais tem elementos é a de <span class="math inline">\(8\)</span> a <span class="math inline">\(10\)</span> horas.</p></li>
+<li><p>A distribuição é mais ou menos simétrica.</p></li>
+<li>
+<p>A distribuição tem forma aproximada de sino: há poucos mamíferos com valores extremos de horas de sono; a maioria está próxima do valor médio:</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span><span class="op">)</span>
+<span class="co">## [1] 10,43373</span></code></pre></div>
+</li>
+</ul>
 </li>
 </ul>
 </div>
@@ -1050,7 +1144,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Em vez das barras do histograma, podemos desenhar uma linha ligando seus topos.</p></li>
 <li>
 <p>O resultado é um <span class="hl">polígono de frequência</span>.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'red'</span><span class="op">)</span> <span class="op">+</span>
@@ -1061,7 +1155,7 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 <li>
 <p>Vamos sobrepor o polígono de frequência ao histograma, para deixar claro o que está acontecendo:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pf</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">.3</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/hist-freqpoly2-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
@@ -1077,7 +1171,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>A geometria <code>geom_step</code> gera o gráfico de uma <span class="hl">função degrau</span>.</p></li>
 <li>
 <p>Cada geometria está ligada a uma <span class="hl"><code>stat</code></span>, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria <span class="hl">a função <code>ecdf</code> (<em>empirical cumulative distribution function</em>), do pacote <code>stats</code>, que calcula as frequências acumuladas.</span></p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">'ecdf'</span><span class="op">)</span> <span class="op">+</span>
@@ -1105,7 +1199,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Um diagrama de ramos e folhas é, basicamente, uma listagem de todos os valores de uma variável, agrupados de maneira que todos os valores de uma classe (i.e., de uma linha) têm os algarismos iniciais dentro de um intervalo.</p></li>
 <li>
 <p>Para as horas de sono dos mamíferos:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/graphics/stem.html">stem</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">## </span>
@@ -1140,13 +1234,27 @@ IQE (CV) : 5,9 (0,4)</td>
 <div class="rmdimportant">
 <p>Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.</p>
 </div>
-<div id="mamíferos-e-sono" class="section level3" number="3.9.1">
+<div id="peso-cerebral-e-peso-corporal" class="section level3" number="3.9.1">
 <h3>
-<span class="header-section-number">3.9.1</span> Mamíferos e sono<a class="anchor" aria-label="anchor" href="#mam%C3%ADferos-e-sono"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.9.1</span> Peso cerebral e peso corporal<a class="anchor" aria-label="anchor" href="#peso-cerebral-e-peso-corporal"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li><p>Observe os <a href="viz.html#grafico4">comandos que geraram o gráfico <code>grafico4</code></a>.</p></li>
+<li><p>O que acontece se você retirar <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes(group = 1)</a></code> da chamada a <code>geom_smooth</code>? Explique.</p></li>
+<li><p>O que acontece se você mudar <code>show.legend = FALSE</code> para <code>show.legend = TRUE</code> na chamada a <code>geom_smooth</code>? Explique.</p></li>
+<li><p>O que acontece se você mudar <code>se = FALSE</code> para <code>se = TRUE</code> na chamada a <code>geom_smooth</code>? Explique.</p></li>
+<li><p>Acrescente ao gráfico a camada <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap(~vore)</a></code>. O que acontece?</p></li>
+<li><p>Examine o <em>data frame</em> <code>sono</code> e identifique o único insetívoro com mais de <span class="math inline">\(4\)</span>kg.</p></li>
+<li><p>Instale o pacote <code>gg_repel</code> e acrescente ao gráfico <code>grafico4</code> (não facetado) a geometria <code>geom_label_repel</code> (consulte a ajuda) para rotular o mamífero insetívoro identificado no item anterior com o seu nome, <span class="hl">sem cobrir outros pontos do gráfico</span>. Cuidado para não alterar a legenda que já existe.</p></li>
+</ol>
+</div>
+<div id="peso-cerebral-e-horas-de-sono" class="section level3" number="3.9.2">
+<h3>
+<span class="header-section-number">3.9.2</span> Peso cerebral e horas de sono<a class="anchor" aria-label="anchor" href="#peso-cerebral-e-horas-de-sono"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdbox">
 <p>Use o <em>data frame</em> <code>sono</code> definido como</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">%&gt;%</span> 
@@ -1163,18 +1271,18 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
 </div>
-<div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.9.2">
+<div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.9.3">
 <h3>
-<span class="header-section-number">3.9.2</span> Igualdade de gênero entre furacões?<a class="anchor" aria-label="anchor" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.9.3</span> Igualdade de gênero entre furacões?<a class="anchor" aria-label="anchor" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://www.pnas.org/content/111/24/8782">Este artigo</a> tenta achar uma relação entre o gênero do nome de um furacão e a quantidade de vítimas fatais provocadas por ele.</p>
 <div class="rmdbox">
 <p>Os dados estão no pacote <code>DAAG</code>, que deve ser instalado:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va">DAAG</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"DAAG"</span><span class="op">)</span></code></pre></div>
 <p>Vamos usar apenas algumas das variáveis, com nomes em português.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">hurricNamed</span> <span class="op">%&gt;%</span> 
   <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">transmute</span><span class="op">(</span>
@@ -1266,8 +1374,9 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><a class="nav-link" href="#ramos-e-folhas"><span class="header-section-number">3.8</span> Ramos e folhas</a></li>
 <li>
 <a class="nav-link" href="#exerc%C3%ADcios-3"><span class="header-section-number">3.9</span> Exercícios</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#mam%C3%ADferos-e-sono"><span class="header-section-number">3.9.1</span> Mamíferos e sono</a></li>
-<li><a class="nav-link" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><span class="header-section-number">3.9.2</span> Igualdade de gênero entre furacões?</a></li>
+<li><a class="nav-link" href="#peso-cerebral-e-peso-corporal"><span class="header-section-number">3.9.1</span> Peso cerebral e peso corporal</a></li>
+<li><a class="nav-link" href="#peso-cerebral-e-horas-de-sono"><span class="header-section-number">3.9.2</span> Peso cerebral e horas de sono</a></li>
+<li><a class="nav-link" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><span class="header-section-number">3.9.3</span> Igualdade de gênero entre furacões?</a></li>
 </ul>
 </li>
 </ul>
@@ -1287,7 +1396,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 18/11/2021)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 19/11/2021)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

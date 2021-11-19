@@ -124,7 +124,9 @@
 
 \hypersetup{
   colorlinks,
-  breaklinks
+  breaklinks,
+  linkcolor=magenta,
+  urlcolor=blue
 }
 
 % Lexend font
@@ -158,8 +160,8 @@
 
 \titleformat{\subsection}[block]%
 {\bfseries}%
-{\thesubsection}{.5em}{\titlerule\\[.8ex]\bfseries}
-
+{\thesubsection}{.5em}{\titlerule\\[.8ex]\bfseries}%
+[\vspace{1ex}]
 
 %%%%%%%%%%%%%%%
 %
@@ -320,7 +322,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 18/11/2021)}
+\date{(versão de 19/11/2021)}
 
 \begin{document}
 \maketitle
@@ -344,11 +346,17 @@ Verifique, no rodapé da página \emph{web} ou na capa do arquivo pdf, a data de
 
 \end{rmdcaution}
 
+\newpage
+
 \includegraphics{images/640px-Nightingale-mortality.jpg}
 
-Este livro/site foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano.
+\vspace{2cm}
 
-Para atender os alunos do curso de Probabilidade e Estatística do curso de graduação em Ciência da Computação da UFF, decidi gravar aulas em vídeo e disponibilizar os arquivos usados nelas. Foram esses arquivos que deram origem a este livro/site.
+Este livro/\emph{site} foi iniciado em 2020, durante a pandemia de COVID-19, quando a Universidade Federal Fluminense (UFF) funcionou em regime de ensino remoto durante mais de um ano.
+
+Para atender os alunos do curso de Probabilidade e Estatística do curso de graduação em Ciência da Computação da UFF, decidi gravar aulas em vídeo e disponibilizar os arquivos usados nelas. Foram esses arquivos que deram origem a este livro/\emph{site}.
+
+Este livro/\emph{site} foi construído para pessoas que já saibam programar, embora não necessariamente em R.
 
 Para tirar o máximo proveito deste material, você deve fazer o seguinte:
 
@@ -359,14 +367,19 @@ Para tirar o máximo proveito deste material, você deve fazer o seguinte:
 \item
   Instalar o R no seu computador ou abrir uma conta no RStudio Cloud, para poder usar o R \emph{online}. Você encontra instruções para fazer isto no \protect\hyperlink{rintro}{capítulo de introdução a R}.
 \item
+  Baixar, \href{https://github.com/fnaufel/probestr}{neste repositório do Github}, o código-fonte deste livro/\emph{site}, para poder rodar e alterar os exemplos.
+\item
   Seguir os \emph{links} para outras fontes \emph{online} que abordam assuntos que não são cobertos em detalhes neste curso.
 \item
   Fazer os exercícios. Ao longo do tempo, acrescentarei \emph{links} para vídeos explicando as soluções.
 \end{enumerate}
 
-O código-fonte deste livro/site pode ser encontrado \href{https://github.com/fnaufel/probestr}{neste repositório do Github}.
+\begin{rmdimportant}
+{\hl{Se você estiver lendo este material na \emph{web}, você pode clicar nos comandos e funções que aparecem nos blocos de código em R}} para abrir páginas da documentação sobre eles.
 
-Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://github.com/fnaufel/probestr/blob/master/docs/probestr.pdf}{faça o download do arquivo aqui}.
+Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://github.com/fnaufel/probestr/blob/master/docs/probestr.pdf}{faça o \emph{download} do arquivo aqui}.
+
+\end{rmdimportant}
 
 \hypertarget{refrec}{%
 \section*{Referências recomendadas}\label{refrec}}
@@ -434,24 +447,24 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
     Qual é a população?
   \end{itemize}
 \item
-  Um instituto de pesquisa entrevista um grupo de \(1000\) pessoas, perguntando a cada uma se ela vai votar a favor do candidato \(A\) na próxima eleição. Dos entrevistados, \(600\) responderam que sim. A proporção \(0{,}6\) (ou \(60\%\)) é uma estatística ou um parâmetro?
+  Um instituto de pesquisa entrevista um grupo de $1000$ pessoas, perguntando a cada uma se ela vai votar a favor do candidato $A$ na próxima eleição. Dos entrevistados, $600$ responderam que sim. A proporção $0{,}6$ (ou $60\%$) é uma estatística ou um parâmetro?
 \item
-  Você vê alguma diferença entre as cinco situações abaixo? Quais das situações são equivalentes em termos da probabilidade de conseguir \(10\) cartas do mesmo naipe?
+  Você vê alguma diferença entre as cinco situações abaixo? Quais das situações são equivalentes em termos da probabilidade de conseguir $10$ cartas do mesmo naipe?
 
   \begin{enumerate}
   \def\labelenumii{\alph{enumii}.}
   \item
-    Usando um baralho normal, você retira \(10\) cartas e registra as cartas retiradas.
+    Usando um baralho normal, você retira $10$ cartas e registra as cartas retiradas.
   \item
-    Usando um baralho normal, você repete a seguinte sequência de ações \(10\) vezes: retirar uma carta do baralho, registrar a carta retirada e repor a carta no baralho.
+    Usando um baralho normal, você repete a seguinte sequência de ações $10$ vezes: retirar uma carta do baralho, registrar a carta retirada e repor a carta no baralho.
   \item
-    Usando uma caixa contendo todas as cartas de \(1\) milhão de baralhos reunidos, você retira \(10\) cartas e registra as cartas retiradas.
+    Usando uma caixa contendo todas as cartas de $1$ milhão de baralhos reunidos, você retira $10$ cartas e registra as cartas retiradas.
   \item
-    Usando uma caixa contendo todas as cartas de \(1\) milhão de baralhos reunidos, você repete a seguinte sequência de ações \(10\) vezes: retirar uma carta da caixa, registrar a carta retirada e repor a carta na caixa.
+    Usando uma caixa contendo todas as cartas de $1$ milhão de baralhos reunidos, você repete a seguinte sequência de ações $10$ vezes: retirar uma carta da caixa, registrar a carta retirada e repor a carta na caixa.
   \item
-    Usando um baralho \emph{infinito}, você retira \(10\) cartas e registra as cartas retiradas.
+    Usando um baralho \emph{infinito}, você retira $10$ cartas e registra as cartas retiradas.
   \item
-    Usando um baralho \emph{infinito}, você repete a seguinte sequência de ações \(10\) vezes: retirar uma carta do baralho, registrar a carta retirada e repor a carta no baralho.
+    Usando um baralho \emph{infinito}, você repete a seguinte sequência de ações $10$ vezes: retirar uma carta do baralho, registrar a carta retirada e repor a carta no baralho.
   \end{enumerate}
 \item
   Qual a graça dos quadrinhos na Figura \ref{fig:xkcd-cor}, que também \href{https://youtu.be/6Q_XSoLCIpc?t=1385}{aparecem no vídeo}?
@@ -500,17 +513,17 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \item
   Por que não faz sentido calcular a média dos CEPs de um grupo de pessoas?
 \item
-  Uma temperatura de \(-40\) graus Celsius é igual a uma temperatura de \(-40\) graus Fahrenheit?
+  Uma temperatura de $-40$ graus Celsius é igual a uma temperatura de $-40$ graus Fahrenheit?
 \item
   Uma temperatura de zero graus Celsius é igual a uma temperatura de zero graus Fahrenheit?
 \item
-  Uma variação de temperatura de \(1\) grau Celsius é igual a uma variação de temperatura de \(1\) grau Fahrenheit?
+  Uma variação de temperatura de $1$ grau Celsius é igual a uma variação de temperatura de $1$ grau Fahrenheit?
 \item
   Um saldo bancário de zero reais é igual a um saldo bancário de zero dólares?
 \item
-  Um produto de \(1\) milhão de reais custa o mesmo que um produto de \(1\) milhão de dólares?
+  Um produto de $1$ milhão de reais custa o mesmo que um produto de $1$ milhão de dólares?
 \item
-  Meses representados por números de \(1\) a \(12\) são dados de que nível?
+  Meses representados por números de $1$ a $12$ são dados de que nível?
 \end{enumerate}
 
 \hypertarget{rintro}{%
@@ -690,7 +703,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   Observe o eixo horizontal. Os valores não aumentam linearmente, mas sim exponencialmente: cada passo à direita equivale a \emph{dobrar} o valor do PIB. O eixo horizontal segue uma {\hl{escala logarítmica}}.
 \item
-  Os tamanhos dos pontos formam uma escala {\hl{discreta}}, com \(4\) valores possíveis (veja a legenda no canto inferior direito do gráfico).
+  Os tamanhos dos pontos formam uma escala {\hl{discreta}}, com $4$ valores possíveis (veja a legenda no canto inferior direito do gráfico).
 \item
   As cores também formam uma escala discreta.
 \end{itemize}
@@ -714,7 +727,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
   \begin{itemize}
   \item
-    Este gráfico usa {\hl{coordenadas cartesianas}}, com eixos \(x\) e \(y\).
+    Este gráfico usa {\hl{coordenadas cartesianas}}, com eixos $x$ e $y$.
   \item
     Existem gráficos que usam um sistema de {\hl{coordenadas polares}}.
   \end{itemize}
@@ -1391,9 +1404,9 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   Que horror.
 \item
-  A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de \(5\) horas por noite.
+  A única coisa que percebemos aqui é que os mamíferos muito pesados dormem menos de $5$ horas por noite.
 \item
-  Estes animais muito pesados estão estragando a escala do eixo \(x\).
+  Estes animais muito pesados estão estragando a escala do eixo $x$.
 \item
   Que animais são estes?
 
@@ -1465,7 +1478,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
 \begin{itemize}
 \item
-  Vamos restringir o gráfico a animais com no máximo \(5\)kg.
+  Vamos restringir o gráfico a animais com no máximo $5$kg.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1573,13 +1586,39 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ brainwt))}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ brainwt)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{()}
 \DocumentationTok{\#\# Warning: Removed 27 rows containing missing values (geom\_point).}
 \end{Highlighting}
 \end{Shaded}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-1} \end{center}
+\item
+  A mensagem de aviso (\emph{warning}) diz que há $27$ valores faltantes (\texttt{NA}) em \texttt{bodywt} ou \texttt{brainwt}. De fato:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(bodywt)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{()}
+\DocumentationTok{\#\# \# A tibble: 1 x 1}
+\DocumentationTok{\#\#       n}
+\DocumentationTok{\#\#   \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1     0}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(brainwt)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{()}
+\DocumentationTok{\#\# \# A tibble: 1 x 1}
+\DocumentationTok{\#\#       n}
+\DocumentationTok{\#\#   \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1    27}
+\end{Highlighting}
+\end{Shaded}
 \item
   Vamos restringir aos animais mais leves e mudar a opacidade:
 
@@ -1587,8 +1626,8 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \begin{Highlighting}[]
 \NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ brainwt), }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{)}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ bodywt, }\AttributeTok{y =}\NormalTok{ brainwt)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{)}
 \DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
 \end{Highlighting}
 \end{Shaded}
@@ -1601,16 +1640,15 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \begin{Highlighting}[]
 \NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_point}\NormalTok{(}
-      \FunctionTok{aes}\NormalTok{(}
-        \AttributeTok{x =}\NormalTok{ bodywt, }
-        \AttributeTok{y =}\NormalTok{ brainwt,}
-        \AttributeTok{size =}\NormalTok{ sleep\_total,}
-        \AttributeTok{color =}\NormalTok{ vore}
-\NormalTok{      ), }
-      \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ bodywt, }
+      \AttributeTok{y =}\NormalTok{ brainwt,}
+      \AttributeTok{size =}\NormalTok{ sleep\_total,}
+      \AttributeTok{color =}\NormalTok{ vore}
 \NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{)}
 \DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
 \end{Highlighting}
 \end{Shaded}
@@ -1621,18 +1659,17 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{grafico }\OtherTok{\textless{}{-}}\NormalTok{ sono }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{filter}\NormalTok{(bodywt }\SpecialCharTok{\textless{}}\NormalTok{ limite) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{geom\_point}\NormalTok{(}
-      \FunctionTok{aes}\NormalTok{(}
-        \AttributeTok{x =}\NormalTok{ bodywt, }
-        \AttributeTok{y =}\NormalTok{ brainwt,}
-        \AttributeTok{size =}\NormalTok{ sleep\_total,}
-        \AttributeTok{color =}\NormalTok{ vore}
-\NormalTok{      ), }
-      \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}
-\NormalTok{    ) }\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ bodywt, }
+      \AttributeTok{y =}\NormalTok{ brainwt,}
+      \AttributeTok{size =}\NormalTok{ sleep\_total,}
+      \AttributeTok{color =}\NormalTok{ vore}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
     \FunctionTok{scale\_size}\NormalTok{(}
       \AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{24}\NormalTok{, }\DecValTok{4}\NormalTok{)}
 \NormalTok{    ) }\SpecialCharTok{+}
@@ -1649,11 +1686,85 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
       \AttributeTok{color =} \StringTok{\textquotesingle{}Dieta\textquotesingle{}}\NormalTok{,}
       \AttributeTok{size =} \StringTok{\textquotesingle{}Horas}\SpecialCharTok{\textbackslash{}n}\StringTok{de sono\textquotesingle{}}
 \NormalTok{    )}
+
+\NormalTok{grafico}
 \DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
 \end{Highlighting}
 \end{Shaded}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-4-1} \end{center}
+\item
+  Vamos mudar as cores usadas para a dieta, usando uma escala diferente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grafico2 }\OtherTok{\textless{}{-}}\NormalTok{ grafico }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}
+    \AttributeTok{palette =} \StringTok{\textquotesingle{}RdBu\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{na.value =} \StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{type =}\NormalTok{ scale\_color\_brewer}
+\NormalTok{  )}
+
+\NormalTok{grafico2}
+\DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-21-1} \end{center}
+\item
+  Observe como usamos o gráfico já salvo na variável \texttt{grafico} e simplesmente acrescentamos a nova escala. Este tipo de ``montagem'' de gráficos \texttt{ggplot2} é bem conveniente, para evitar repetição de código.
+\item
+  Um último ajuste na aparência: os pontos na legenda ``Dieta'' estão pequenos demais. Quase não identificamos as cores deles.
+
+  Vamos usar a função \texttt{guides} para modificar (\emph{override}) a estética \texttt{color} --- {\hl{apenas na legenda, não nos pontos mostrados no gráfico, cujos tamanhos representam o número de horas de sono}} --- tornando o tamanho maior. \href{https://ggplot2-book.org/scale-colour.html\#guide_legend}{Leia mais sobre \texttt{override.aes}neste \emph{link} (em inglês)}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grafico3 }\OtherTok{\textless{}{-}}\NormalTok{ grafico2 }\SpecialCharTok{+}
+  \FunctionTok{guides}\NormalTok{(}\AttributeTok{color =} \FunctionTok{guide\_legend}\NormalTok{(}\AttributeTok{override.aes =} \FunctionTok{list}\NormalTok{(}\AttributeTok{size =} \DecValTok{10}\NormalTok{)))}
+
+\NormalTok{grafico3}
+\DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-22-1} \end{center}
+\item
+  Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:
+
+  \begin{itemize}
+  \item
+    De fato, existe uma correlação entre peso cerebral e peso corporal: quanto maior o peso corporal, maior o peso cerebral. Nada surprenndente.
+  \item
+    \protect\hypertarget{grafico4}{}{} Podemos fazer o \texttt{ggplot2} traçar uma reta de regressão com a geometria \texttt{geom\_smooth}. Vamos falar mais sobre correlação \protect\hyperlink{correlacao}{em um capítulo futuro}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{grafico4 }\OtherTok{\textless{}{-}}\NormalTok{ grafico3 }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}\AttributeTok{group =} \DecValTok{1}\NormalTok{), }
+    \AttributeTok{show.legend =} \ConstantTok{FALSE}\NormalTok{,}
+    \AttributeTok{method =} \StringTok{\textquotesingle{}lm\textquotesingle{}}\NormalTok{, }
+    \AttributeTok{se =} \ConstantTok{FALSE}
+\NormalTok{  )}
+
+\NormalTok{grafico4}
+\DocumentationTok{\#\# \textasciigrave{}geom\_smooth()\textasciigrave{} using formula \textquotesingle{}y \textasciitilde{} x\textquotesingle{}}
+\DocumentationTok{\#\# Warning: Removed 18 rows containing non{-}finite values (stat\_smooth).}
+\DocumentationTok{\#\# Warning: Removed 18 rows containing missing values (geom\_point).}
+\end{Highlighting}
+\end{Shaded}
+
+    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-23-1} \end{center}
+  \item
+    Todos os carnívoros têm peso corporal maior que $1$kg e peso cerebral maior ou igual a $10$g.
+  \item
+    Só um carnívoro dorme $8$ horas ou menos. Qual?
+  \item
+    Todos os insetívoros --- com exceção de um (qual?) --- são muito leves e dormem muito.
+  \item
+    Todos os onívoros têm menos de $2$kg de peso corporal e $20$g ou menos de peso cerebral.
+  \end{itemize}
 \end{itemize}
 
 \hypertarget{vuxeddeo-2-2}{%
@@ -1701,7 +1812,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 \item
-  Vamos decidir que cada classe vai ter \(2\) horas. A função \texttt{cut} substitui os valores do vetor pelos nomes das classes:
+  Vamos decidir que cada classe vai ter $2$ horas. A função \texttt{cut} substitui os valores do vetor pelos nomes das classes:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1751,7 +1862,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   Na verdade, o \texttt{ggplot2} já faz esses cálculos para nós.
 \item
-  O \emph{default} é criar \(30\) classes (\emph{bins}):
+  O \emph{default} é criar $30$ classes (\emph{bins}):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1764,18 +1875,42 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-sono1-1} \end{center}
 \item
-  Vamos mudar isto passando um vetor de limites das classes (\emph{breaks}):
+  Vamos mudar isto passando um vetor de limites das classes (\emph{breaks}). Vamos acrescentar rótulos também:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
     \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
-    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{title =} \StringTok{\textquotesingle{}Horas de sono de diversos mamíferos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}horas de sono\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}\NormalTok{,}
+      \AttributeTok{caption =} \StringTok{\textquotesingle{}Fonte: dataset \textasciigrave{}msleep\textasciigrave{}\textquotesingle{}}
+\NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-sono2-1} \end{center}
+\item
+  Nossas impressões:
+
+  \begin{itemize}
+  \item
+    A classe que mais tem elementos é a de $8$ a $10$ horas.
+  \item
+    A distribuição é mais ou menos simétrica.
+  \item
+    A distribuição tem forma aproximada de sino: há poucos mamíferos com valores extremos de horas de sono; a maioria está próxima do valor médio:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(sono}\SpecialCharTok{$}\NormalTok{sleep\_total)}
+\DocumentationTok{\#\# [1] 10,43373}
+\end{Highlighting}
+\end{Shaded}
+  \end{itemize}
 \end{itemize}
 
 \hypertarget{poluxedgono-de-frequuxeancia}{%
@@ -1816,7 +1951,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
 \begin{itemize}
 \item
-  A ogiva é um gráfico que mostra a {\hl{frequência acumulada}}: para cada valor \(v\) da variável no eixo \(x\), a proporção de indivíduos com valor menor ou igual a \(v\).
+  A ogiva é um gráfico que mostra a {\hl{frequência acumulada}}: para cada valor $v$ da variável no eixo $x$, a proporção de indivíduos com valor menor ou igual a $v$.
 \item
   A geometria \texttt{geom\_step} gera o gráfico de uma {\hl{função degrau}}.
 \item
@@ -1839,11 +1974,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
   \begin{itemize}
   \item
-    Cerca de \(20\%\) dos mamíferos têm menos de \(6\) horas de sono.
+    Cerca de $20\%$ dos mamíferos têm menos de $6$ horas de sono.
   \item
-    Cerca de metade dos mamíferos têm menos de \(10\) horas de sono.
+    Cerca de metade dos mamíferos têm menos de $10$ horas de sono.
   \item
-    Cerca de \(10\%\) dos mamíferos têm mais de \(16\) horas de sono.
+    Cerca de $10\%$ dos mamíferos têm mais de $16$ horas de sono.
   \end{itemize}
 \end{itemize}
 
@@ -1852,7 +1987,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
 \begin{itemize}
 \item
-  No início dos anos \(1900\), quando estatísticas eram feitas à mão, Arthur Bowley criou os {\hl{diagramas de ramos e folhas}}.
+  No início dos anos $1900$, quando estatísticas eram feitas à mão, Arthur Bowley criou os {\hl{diagramas de ramos e folhas}}.
 \item
   Um diagrama de ramos e folhas é, basicamente, uma listagem de todos os valores de uma variável, agrupados de maneira que todos os valores de uma classe (i.e., de uma linha) têm os algarismos iniciais dentro de um intervalo.
 \item
@@ -1878,18 +2013,18 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 \item
-  A primeira linha representa um indivíduo com \(0{,}9\) horas de sono.
+  A primeira linha representa um indivíduo com $0{,}9$ horas de sono.
 \item
-  A penúltima linha representa \(3\) valores:
+  A penúltima linha representa $3$ valores:
 
   \begin{itemize}
   \tightlist
   \item
-    \(16{,}6\)
+    $16{,}6$
   \item
-    \(17{,}0\)
+    $17{,}0$
   \item
-    \(17{,}4\)
+    $17{,}4$
   \end{itemize}
 \end{itemize}
 
@@ -1901,8 +2036,29 @@ Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.
 
 \end{rmdimportant}
 
-\hypertarget{mamuxedferos-e-sono}{%
-\subsection{Mamíferos e sono}\label{mamuxedferos-e-sono}}
+\hypertarget{peso-cerebral-e-peso-corporal}{%
+\subsection{Peso cerebral e peso corporal}\label{peso-cerebral-e-peso-corporal}}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Observe os \protect\hyperlink{grafico4}{comandos que geraram o gráfico \texttt{grafico4}}.
+\item
+  O que acontece se você retirar \texttt{aes(group\ =\ 1)} da chamada a \texttt{geom\_smooth}? Explique.
+\item
+  O que acontece se você mudar \texttt{show.legend\ =\ FALSE} para \texttt{show.legend\ =\ TRUE} na chamada a \texttt{geom\_smooth}? Explique.
+\item
+  O que acontece se você mudar \texttt{se\ =\ FALSE} para \texttt{se\ =\ TRUE} na chamada a \texttt{geom\_smooth}? Explique.
+\item
+  Acrescente ao gráfico a camada \texttt{facet\_wrap(\textasciitilde{}vore)}. O que acontece?
+\item
+  Examine o \emph{data frame} \texttt{sono} e identifique o único insetívoro com mais de $4$kg.
+\item
+  Instale o pacote \texttt{gg\_repel} e acrescente ao gráfico \texttt{grafico4} (não facetado) a geometria \texttt{geom\_label\_repel} (consulte a ajuda) para rotular o mamífero insetívoro identificado no item anterior com o seu nome, {\hl{sem cobrir outros pontos do gráfico}}. Cuidado para não alterar a legenda que já existe.
+\end{enumerate}
+
+\hypertarget{peso-cerebral-e-horas-de-sono}{%
+\subsection{Peso cerebral e horas de sono}\label{peso-cerebral-e-horas-de-sono}}
 
 \begin{rmdbox}
 
@@ -1927,7 +2083,7 @@ Use o \emph{data frame} \texttt{sono} definido como
 \item
   Construa um histograma da variável \texttt{brainwt}. Escolha o número de classes que você achar melhor. O que acontece com os valores \texttt{NA}?
 \item
-  \href{http://sillasgonzaga.com/material/curso_visualizacao/ggplot2-parte-ii.html\#customizando-escalas}{Descubra que função da forma \texttt{scale\_x\_...} usar} para fazer com que o eixo \(x\) tenha uma escala logarítmica. Gere um novo histograma.
+  \href{http://sillasgonzaga.com/material/curso_visualizacao/ggplot2-parte-ii.html\#customizando-escalas}{Descubra que função da forma \texttt{scale\_x\_...} usar} para fazer com que o eixo $x$ tenha uma escala logarítmica. Gere um novo histograma.
 \item
   Qual dos dois histogramas é melhor para responder a pergunta ``\emph{Qual a faixa de peso cerebral que tem mais animais?}'' de forma satisfatória?
 \item
@@ -1997,30 +2153,30 @@ Vamos usar apenas algumas das variáveis, com nomes em português.
 
   \begin{itemize}
   \item
-    \texttt{logprejuizo}: \emph{logaritmo} do prejuízo (na base \(10\))
+    \texttt{logprejuizo}: \emph{logaritmo} do prejuízo (na base $10$)
   \item
-    \texttt{logmortes}: \emph{logaritmo} do número de mortes (na base \(10\))
+    \texttt{logmortes}: \emph{logaritmo} do número de mortes (na base $10$)
   \end{itemize}
 
   Agora, gere histogramas destas duas novas variáveis.
 \item
-  O que significa o valor do logaritmo do prejuízo na base \(10\)?
+  O que significa o valor do logaritmo do prejuízo na base $10$?
 \item
-  O que significa o valor do logaritmo do número de mortes na base \(10\)?
+  O que significa o valor do logaritmo do número de mortes na base $10$?
 \item
   Por que o histograma do logaritmo do número de mortes vem com uma mensagem de aviso?
 \item
   Por que isto não acontece com o logaritmo do prejuízo?
 \item
-  Faça um gráfico de dispersão com \texttt{pressao} no eixo \(y\) e \texttt{velocidade} no eixo \(x\).
+  Faça um gráfico de dispersão com \texttt{pressao} no eixo $y$ e \texttt{velocidade} no eixo $x$.
 \item
   Usando \texttt{geom\_smooth} (\href{https://cdr.ibpad.com.br/ggplot2.html\#objetos-geom\%C3\%A9tricos-e-tipos-de-gr\%C3\%A1ficos}{leia a respeito}), sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \item
-  Faça um gráfico de dispersão com \texttt{logmortes} no eixo \(y\) e \texttt{pressao} no eixo \(x\).
+  Faça um gráfico de dispersão com \texttt{logmortes} no eixo $y$ e \texttt{pressao} no eixo $x$.
 \item
   Usando \texttt{geom\_smooth} (\href{https://cdr.ibpad.com.br/ggplot2.html\#objetos-geom\%C3\%A9tricos-e-tipos-de-gr\%C3\%A1ficos}{leia a respeito}), sobreponha uma reta de regressão ao gráfico, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \item
-  Faça um gráfico de dispersão com \texttt{logmortes} no eixo \(y\) e \texttt{pressao} no eixo \(x\), com pontos coloridos de acordo com o gênero do nome do furacão.
+  Faça um gráfico de dispersão com \texttt{logmortes} no eixo $y$ e \texttt{pressao} no eixo $x$, com pontos coloridos de acordo com o gênero do nome do furacão.
 \item
   Usando \texttt{geom\_smooth} (\href{https://cdr.ibpad.com.br/ggplot2.html\#objetos-geom\%C3\%A9tricos-e-tipos-de-gr\%C3\%A1ficos}{leia a respeito}), sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método \texttt{lm} e sem o erro padrão (i.e., com \texttt{se\ =\ FALSE}). O que você observa? Discuta.
 \end{enumerate}
@@ -2046,20 +2202,43 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \begin{center} \url{https://youtu.be/TjgLDeIQHIc} \end{center}
 
 \hypertarget{boxplots}{%
-\section{Boxplots}\label{boxplots}}
+\section{\texorpdfstring{\emph{Boxplots}}{Boxplots}}\label{boxplots}}
 
-\hypertarget{dataset}{%
-\subsection{Dataset}\label{dataset}}
+\hypertarget{conjunto-de-dados-1}{%
+\subsection{Conjunto de dados}\label{conjunto-de-dados-1}}
+
+\begin{itemize}
+\item
+  Vamos continuar a trabalhar com os dados sobre as horas de sono de alguns mamíferos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{sono }\OtherTok{\textless{}{-}}\NormalTok{ msleep }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{select}\NormalTok{(name, vore, order, sleep\_total)}
+
+\NormalTok{sono}
+\DocumentationTok{\#\# \# A tibble: 83 x 4}
+\DocumentationTok{\#\#   name                       vore  order        sleep\_total}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                      \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Cheetah                    carni Carnivora           12.1}
+\DocumentationTok{\#\# 2 Owl monkey                 omni  Primates            17  }
+\DocumentationTok{\#\# 3 Mountain beaver            herbi Rodentia            14.4}
+\DocumentationTok{\#\# 4 Greater short{-}tailed shrew omni  Soricomorpha        14.9}
+\DocumentationTok{\#\# 5 Cow                        herbi Artiodactyla         4  }
+\DocumentationTok{\#\# 6 Three{-}toed sloth           herbi Pilosa              14.4}
+\DocumentationTok{\#\# \# ... with 77 more rows}
 \end{Highlighting}
 \end{Shaded}
+\end{itemize}
 
 \hypertarget{mediana-e-quartis}{%
 \subsection{Mediana e quartis}\label{mediana-e-quartis}}
+
+\begin{itemize}
+\item
+  Para entender \emph{boxplots}, precisamos antes entender algumas medidas.
+\item
+  Se tomarmos as quantidades de horas de sono de todos os animais do conjunto de dados e {\hl{classificarmos estas quantidades em ordem crescente}}, vamos ter:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2077,6 +2256,8 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \DocumentationTok{\#\# [79] 18,0 18,1 19,4 19,7 19,9}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Quantos valores são?
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2084,13 +2265,17 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \DocumentationTok{\#\# [1] 83}
 \end{Highlighting}
 \end{Shaded}
+\item
+  O valor que está {\hl{bem no meio desta fila}} --- i.e., na posição $42$ --- é a {\hl{mediana}}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{horas[}\FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{]}
+\NormalTok{horas[}\FunctionTok{ceiling}\NormalTok{(}\FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)]}
 \DocumentationTok{\#\# [1] 10,1}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Em R:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2099,26 +2284,10 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{horas[}
-  \FunctionTok{c}\NormalTok{(}
-    \FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{4}\NormalTok{,}
-    \FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{,}
-    \DecValTok{3} \SpecialCharTok{*} \FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{4}
-\NormalTok{  )}
-\NormalTok{]}
-\DocumentationTok{\#\# [1]  7,0 10,1 13,7}
-\end{Highlighting}
-\end{Shaded}
+  \begin{rmdcaution}
+  Mediana e média são coisas muito diferentes.
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{horas }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{quantile}\NormalTok{(}\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{75}\NormalTok{))}
-\DocumentationTok{\#\#   25\%   50\%   75\% }
-\DocumentationTok{\#\#  7,85 10,10 13,75}
-\end{Highlighting}
-\end{Shaded}
+  Por acaso, neste exemplo, a média das horas é próxima da mediana:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2127,6 +2296,41 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 
+  Isto costuma acontecer quando a distribuição dos dados é aproximadamente simétrica.
+
+  \end{rmdcaution}
+\item
+  Os {\hl{quartis}} são os valores que estão nas posições $\frac14$, $\frac12$ e $\frac34$ da fila. São o {\hl{primeiro, segundo e terceiro quartis}}.
+\item
+  {\hl{Sim, a mediana é o segundo quartil.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas[}
+  \FunctionTok{c}\NormalTok{(}
+    \FunctionTok{ceiling}\NormalTok{(}\FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{4}\NormalTok{),}
+    \FunctionTok{ceiling}\NormalTok{(}\FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{2}\NormalTok{),}
+    \FunctionTok{ceiling}\NormalTok{(}\DecValTok{3} \SpecialCharTok{*} \FunctionTok{length}\NormalTok{(horas) }\SpecialCharTok{/} \DecValTok{4}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{]}
+\DocumentationTok{\#\# [1]  7,7 10,1 13,8}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Em R, a {\hl{função \texttt{quantile}}} generaliza esta idéia: dado um número $q$ entre $0$ e $1$, {\hl{o quantil (com ``N'') $q$ é o elemento que está na posição que corresponde à fração $q$ da fila ordenada.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{quantile}\NormalTok{(}\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{5}\NormalTok{, .}\DecValTok{75}\NormalTok{))}
+\DocumentationTok{\#\#   25\%   50\%   75\% }
+\DocumentationTok{\#\#  7,85 10,10 13,75}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Na verdade, o algoritmo para calcular o quantil $q$ \href{https://pt.wikipedia.org/wiki/Quantil\#Quantis_de_uma_amostra}{é um pouco mais complexo}; por isso, existem diferenças entre os valores que calculamos ``à mão'', acima, e os valores retornados por \texttt{quantile}.
+\item
+  Em R, a {\hl{função \texttt{summary}}} mostra o {\hl{mínimo}}, os {\hl{quartis (com ``R'')}}, a {\hl{média}}, e o {\hl{máximo}} de um vetor:
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{summary}\NormalTok{(horas)}
@@ -2134,6 +2338,66 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \DocumentationTok{\#\#    1,90    7,85   10,10   10,43   13,75   19,90}
 \end{Highlighting}
 \end{Shaded}
+\end{itemize}
+
+\hypertarget{muxe9dia-times-mediana}{%
+\subsection{\texorpdfstring{Média $\times$ mediana}{Média  mediana}}\label{muxe9dia-times-mediana}}
+
+\begin{itemize}
+\item
+  Vamos ver um exemplo simples para entender a diferença entre a média e a mediana.
+\item
+  Imagine o seguinte vetor com as receitas mensais de algumas pessoas (em milhares de reais:)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{receitas }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{3.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Eis a mediana e a média deste vetor:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(receitas)[}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Median\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Mean\textquotesingle{}}\NormalTok{)]}
+\DocumentationTok{\#\#   Median     Mean }
+\DocumentationTok{\#\# 2,000000 2,071429}
+\end{Highlighting}
+\end{Shaded}
+\item
+  A mediana e a média são bem próximas.
+\item
+  Imagine, agora, que adicionamos ao vetor um sujeito com receita mensal de $100$ mil reais:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{receitas }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{3.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Eis a nova mediana e a nova média:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(receitas)[}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Median\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Mean\textquotesingle{}}\NormalTok{)]}
+\DocumentationTok{\#\#  Median    Mean }
+\DocumentationTok{\#\#  2,0000 14,3125}
+\end{Highlighting}
+\end{Shaded}
+\item
+  O sujeito com a receita de $2$ mil reais continua no meio da fila, mas a média (que é a soma de todas as receitas, dividida pelo número de indivíduos) ficou muito diferente.
+\item
+  A receita do novo sujeito é um {\hl{valor discrepante}}, ou, em inglês, um {\hl{\emph{outlier}}}.
+\end{itemize}
+
+\begin{rmdimportant}
+\textbf{Conclusão:}
+
+A {\hl{mediana é robusta}}, pouco afetada por \emph{outliers}.
+
+A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
+
+\end{rmdimportant}
 
 \hypertarget{gerando-boxplots}{%
 \subsection{Gerando boxplots}\label{gerando-boxplots}}
@@ -2148,18 +2412,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-32-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_step}\NormalTok{(}\AttributeTok{stat =} \StringTok{\textquotesingle{}ecdf\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{ylab}\NormalTok{(}\ConstantTok{NULL}\NormalTok{)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-33-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-44-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2170,7 +2423,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-34-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-45-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2188,7 +2441,10 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ vore, }\AttributeTok{y =}\NormalTok{ sleep\_total)) }\SpecialCharTok{+}
     \FunctionTok{geom\_boxplot}\NormalTok{(}\AttributeTok{fill =} \StringTok{\textquotesingle{}gray\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
     \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{breaks =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{(}
+      \AttributeTok{color =} \StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }
+      \AttributeTok{alpha =}\NormalTok{ .}\DecValTok{3}
+\NormalTok{    ) }\SpecialCharTok{+}
     \FunctionTok{stat\_summary}\NormalTok{(}
       \AttributeTok{fun =}\NormalTok{ mean, }
       \AttributeTok{geom =} \StringTok{\textquotesingle{}point\textquotesingle{}}\NormalTok{, }
@@ -2196,47 +2452,17 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
       \AttributeTok{shape =} \StringTok{\textquotesingle{}cross\textquotesingle{}}\NormalTok{, }
       \AttributeTok{size =} \DecValTok{5}\NormalTok{,}
       \AttributeTok{stroke =} \DecValTok{1}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{title =} \StringTok{\textquotesingle{}Sono total de diversos mamíferos, por dieta\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{subtitle =} \StringTok{\textquotesingle{}(o X vermelho representa a média)\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}dieta\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \StringTok{\textquotesingle{}sono total}\SpecialCharTok{\textbackslash{}n}\StringTok{(em horas)\textquotesingle{}}
 \NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-36-1} \end{center}
-
-\hypertarget{muxe9dia-times-mediana}{%
-\subsection{\texorpdfstring{Média \(\times\) mediana}{Média \textbackslash times mediana}}\label{muxe9dia-times-mediana}}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{receita }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
-  \AttributeTok{valor =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\FloatTok{3.5}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{10000}\NormalTok{)}
-\NormalTok{)}
-
-\NormalTok{receita}
-\DocumentationTok{\#\# \# A tibble: 8 x 1}
-\DocumentationTok{\#\#   valor}
-\DocumentationTok{\#\#   \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1   1  }
-\DocumentationTok{\#\# 2   2  }
-\DocumentationTok{\#\# 3   2  }
-\DocumentationTok{\#\# 4   3.5}
-\DocumentationTok{\#\# 5   1  }
-\DocumentationTok{\#\# 6   4  }
-\DocumentationTok{\#\# \# ... with 2 more rows}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\FunctionTok{summary}\NormalTok{(receita)}
-\DocumentationTok{\#\#      valor          }
-\DocumentationTok{\#\#  Min.   :    1,000  }
-\DocumentationTok{\#\#  1st Qu.:    1,000  }
-\DocumentationTok{\#\#  Median :    2,000  }
-\DocumentationTok{\#\#  Mean   : 1251,812  }
-\DocumentationTok{\#\#  3rd Qu.:    3,625  }
-\DocumentationTok{\#\#  Max.   :10000,000}
-\end{Highlighting}
-\end{Shaded}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-47-1} \end{center}
 
 \hypertarget{vuxeddeo-2-3}{%
 \section{Vídeo 2}\label{vuxeddeo-2-3}}
@@ -2246,8 +2472,8 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \hypertarget{gruxe1ficos-de-barras-e-de-colunas}{%
 \section{Gráficos de barras e de colunas}\label{gruxe1ficos-de-barras-e-de-colunas}}
 
-\hypertarget{dataset-1}{%
-\subsection{Dataset}\label{dataset-1}}
+\hypertarget{dataset}{%
+\subsection{Dataset}\label{dataset}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2464,7 +2690,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-45-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-54-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2474,7 +2700,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-46-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-55-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2484,7 +2710,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-47-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-56-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2495,7 +2721,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-48-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-57-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2507,7 +2733,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-49-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-58-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2518,7 +2744,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-50-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-59-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2529,7 +2755,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-51-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-60-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2540,7 +2766,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-52-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-61-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2557,7 +2783,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-53-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-62-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2575,7 +2801,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-63-1} \end{center}
 
 \hypertarget{dataframe-juxe1-contendo-os-totais}{%
 \subsection{\texorpdfstring{\emph{Dataframe} já contendo os totais}{Dataframe já contendo os totais}}\label{dataframe-juxe1-contendo-os-totais}}
@@ -2607,13 +2833,13 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-65-1} \end{center}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
 \section{Gráficos de linha e séries temporais}\label{gruxe1ficos-de-linha-e-suxe9ries-temporais}}
 
-\hypertarget{dataset-2}{%
-\subsection{Dataset}\label{dataset-2}}
+\hypertarget{dataset-1}{%
+\subsection{Dataset}\label{dataset-1}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2681,7 +2907,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-60-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-69-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2705,7 +2931,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-61-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2717,7 +2943,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-62-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2733,5 +2959,8 @@ Sexo\\
 Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2} \protect\hyperlink{refrec}{nas referências recomendadas}.
 
 \end{rmdtip}
+
+\hypertarget{medidas}{%
+\chapter{Medidas}\label{medidas}}
 
 \end{document}
