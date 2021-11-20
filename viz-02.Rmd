@@ -34,7 +34,7 @@ embed_yt('TjgLDeIQHIc')
 
 ### Mediana e quartis
 
-* Para entender *boxplots*, precisamos antes entender algumas medidas.
+* Para entender *boxplots*, precisamos, antes, entender algumas medidas.
 
 * Se tomarmos as quantidades de horas de sono de todos os animais do conjunto de dados e [classificarmos estas quantidades em ordem crescente]{.hl}, vamos ter:
 
@@ -78,9 +78,7 @@ embed_yt('TjgLDeIQHIc')
 
   :::
 
-* Os [quartis]{.hl} são os valores que estão nas posições $\frac14$, $\frac12$ e $\frac34$ da fila. São o [primeiro, segundo e terceiro quartis]{.hl}.
-
-* [Sim, a mediana é o segundo quartil.]{.hl}
+* Os [quartis]{.hl} são os valores que estão nas posições $\frac14$, $\frac12$ e $\frac34$ da fila. São o [primeiro, segundo e terceiro quartis]{.hl}, respectivamente.
 
   ```{r}
   horas[
@@ -92,13 +90,17 @@ embed_yt('TjgLDeIQHIc')
   ]
   ```
 
+* [Sim, a mediana é o segundo quartil.]{.hl}
+
 * Em R, a [função `quantile`]{.hl} generaliza esta idéia: dado um número $q$ entre $0$ e $1$, [o quantil (com "N") $q$ é o elemento que está na posição que corresponde à fração $q$ da fila ordenada.]{.hl}
 
   ```{r}
   horas %>% quantile(c(.25, .5, .75))
   ```
 
-* Na verdade, o algoritmo para calcular o quantil $q$ [é um pouco mais complexo](https://pt.wikipedia.org/wiki/Quantil#Quantis_de_uma_amostra); por isso, existem diferenças entre os valores que calculamos "à mão", acima, e os valores retornados por `quantile`.
+* Na verdade, R tem $9$ algoritmos diferentes para calcular os quantis de uma amostra! Leia a ajuda da função `quantile` para conhecê-los.
+
+* As diferenças entre nossos cálculos "à mão" e os resultados retornados por `quantile` são porque, em algumas situações, `quantile` calcula uma média ponderada entre elementos vizinhos. Por isso, `quantile` pode retornar valores que nem estão no vetor.
 
 * Em R, a [função `summary`]{.hl} mostra o [mínimo]{.hl}, os [quartis (com "R")]{.hl}, a [média]{.hl}, e o [máximo]{.hl} de um vetor:
 
@@ -152,54 +154,208 @@ A [média é pouco robusta]{.hl}, muito sensível a *outliers*.
 :::
 
 
+### Intervalo interquartil (IQR) e *outliers*
+
+* Qual fração dos elementos está [entre o primeiro e o terceiro quartis?]{.hl}
+
+  ```{r}
+  length(
+    horas[between(horas, quantile(horas, .25), quantile(horas, .75))]
+  ) /
+  length(
+    horas
+  )
+  ```
+
+* [Metade]{.hl} do total de elementos está entre o primeiro e o terceiro quartis.
+
+* Este é o chamado [intervalo interquartil]{.hl} (*interquartile range*, em inglês).
+
+* No nosso vetor `horas`, os [limites do IQR]{.hl} são
+
+  ```{r}
+  quantile(horas, c(.25, .75))
+  ```
+
+* O [comprimento]{.hl} deste intervalo é calculado pela função `IQR`:
+
+  ```{r}
+  IQR(horas)
+  ```
+
+* Valores [muito abaixo do primeiro quartil]{.hl} podem ser considerados discrepantes (*outliers*), mas quão abaixo?
+
+* A resposta (puramente convencional) é [$1{,}5 \times \text{IQR}$ abaixo do primeiro quartil.]{.hl}
+
+* No nosso vetor `horas`, isto significa valores abaixo de
+
+  ```{r}
+  limite_inferior <- quantile(horas, .25) - 1.5 * IQR(horas)
+  
+  unname(limite_inferior)
+  ```
+  
+* Neste caso, não há *outliers*:
+
+  ```{r}
+  horas[horas < limite_inferior]
+  ```
+
+* Da mesma forma, valores [muito acima do terceiro quartil]{.hl} podem ser considerados discrepantes (*outliers*), mas quão acima?
+
+* De novo, a resposta (puramente convencional) é [$1{,}5 \times \text{IQR}$ acima do terceiro quartil.]{.hl}
+
+* No nosso vetor `horas`, isto significa valores acima de
+
+  ```{r}
+  limite_superior <- quantile(horas, .75) + 1.5 * IQR(horas)
+  
+  unname(limite_superior)
+  ```
+  
+* Neste caso, também não há *outliers*:
+
+  ```{r}
+  horas[horas > limite_superior]
+  ```
+
+* Outro exemplo: vamos tomar apenas os mamíferos onívoros:
+
+  ```{r}
+  onivoros <- sono %>% 
+    filter(vore == 'omni')
+  
+  onivoros
+  ```
+
+* Vamos extrair o vetor de horas de sono:
+
+  ```{r}
+  horas <- onivoros %>% 
+    pull(sleep_total)
+  
+  horas
+  ```
+
+* Vamos calcular o primeiro e terceiro quartis:
+
+  ```{r}
+  quartis <- horas %>% 
+    quantile(c(.25, .75))
+  
+  quartis
+  ```
+
+* Vamos achar o IQR:
+
+  ```{r}
+  IQR(horas)
+  ```
+
+* E os limites a partir dos quais os valores são *outliers*:
+
+  ```{r}
+  limites <- quartis + c(-1, 1) * 1.5 * IQR(horas)
+  
+  unname(limites)
+  ```
+
+* Existem *outliers* inferiores?
+
+  ```{r}
+  onivoros %>% 
+    filter(sleep_total < limites[1])
+  ```
+
+  Não.
+
+* Existem *outliers* superiores?
+
+  ```{r}
+  onivoros %>% 
+    filter(sleep_total > limites[2])
+  ```
+
+  Sim! Estes animais dormem demais em comparação com os outros onívoros. 
+
+
 ### Gerando boxplots
 
-```{r}
-sono %>% 
-  ggplot(aes(y = sleep_total)) +
-    geom_boxplot(fill = 'gray') +
-    scale_x_continuous(breaks = NULL) +
-    scale_y_continuous(breaks = seq(0, 20, 2))
-```
+* Um *boxplot* é uma representação visual dos valores que calculamos acima.
 
-```{r}
-sono %>% 
-  ggplot(aes(x = vore, y = sleep_total)) +
-    geom_boxplot(fill = 'gray') +
-    scale_y_continuous(breaks = seq(0, 20, 2))
-```
+* No `ggplot2`, a geometria `geom_boxplot` constrói *boxplots*:
 
-```{r}
-sono %>% 
-  filter(vore == 'omni') %>% 
-  pull(sleep_total) %>% 
-  IQR()
-```
+  ```{r}
+  sono %>% 
+    ggplot(aes(y = sleep_total)) +
+      geom_boxplot(fill = 'gray') +
+      scale_x_continuous(breaks = NULL) +
+      scale_y_continuous(breaks = seq(0, 20, 2))
+  ```
 
-```{r}
-sono %>% 
-  ggplot(aes(x = vore, y = sleep_total)) +
-    geom_boxplot(fill = 'gray') +
-    scale_y_continuous(breaks = seq(0, 20, 2)) +
-    geom_point(
-      color = 'blue', 
-      alpha = .3
-    ) +
-    stat_summary(
-      fun = mean, 
-      geom = 'point', 
-      color = 'red', 
-      shape = 'cross', 
-      size = 5,
-      stroke = 1
-    ) +
-    labs(
-      title = 'Sono total de diversos mamíferos, por dieta',
-      subtitle = '(o X vermelho representa a média)',
-      x = 'dieta',
-      y = 'sono total\n(em horas)'
-    )
-```
+* A [caixa]{.hl} vai do valor do [primeiro quartil]{.hl} (embaixo) até o [terceiro quartil]{.hl} (em cima).
+
+* A [linha horizontal dentro da caixa]{.hl} representa o valor da [mediana]{.hl}.
+
+* As [linhas verticais]{.hl} acima e abaixo da caixa (pitorescamente chamadas de "bigodes") vão até o [limite inferior]{.hl} (primeiro quartil ${}- 1{,}5 \times \text{IQR}$) e até o [limite superior]{.hl} (terceiro quartil ${}+ 1{,}5 \times \text{IQR}$).
+
+* Neste *boxplot*, não há *outliers*.
+
+* Podemos usar a posição $x$ para desenhar vários *boxplots*, um para cada dieta:
+
+  ```{r}
+  sono %>% 
+    ggplot(aes(x = vore, y = sleep_total)) +
+      geom_boxplot(fill = 'gray') +
+      scale_y_continuous(breaks = seq(0, 20, 2))
+  ```
+
+* No *boxplot* de onívoros, [os *outliers* aparecem como pontos isolados,]{.hl} acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).
+
+* *Boxplots* lado a lado são úteis para compararmos grupos diferentes de dados.
+
+* Veja como, com exceção dos insetívoros, as medianas dos grupos são parecidas.
+
+* Veja como carnívoros, insetívoros e herbívoros apresentam maior variação, enquanto onívoros e animais sem dieta registrada apresentam menor variação.
+
+* Vamos combinar, em um só gráfico
+
+  * Os pontos representando os animais,
+  
+  * Os *boxplots*,
+  
+  * As médias (que podem estar próximas ou distantes das medianas).
+
+  ```{r}
+  sono %>% 
+    ggplot(aes(x = vore, y = sleep_total)) +
+      geom_boxplot(fill = 'gray') +
+      scale_y_continuous(breaks = seq(0, 20, 2)) +
+      geom_point(
+        color = 'blue', 
+        alpha = .3
+      ) +
+      stat_summary(
+        fun = mean, 
+        geom = 'point', 
+        color = 'red', 
+        shape = 'cross', 
+        size = 5,
+        stroke = 1
+      ) +
+      labs(
+        title = 'Sono total de diversos mamíferos, por dieta',
+        subtitle = '(o X vermelho representa a média)',
+        x = 'dieta',
+        y = 'sono total\n(em horas)'
+      )
+  ```
+
+* [Quando a caixa é longa,]{.hl} o IQR é grande, e [os valores estão muito espalhados;]{.hl} é o caso dos herbívoros e insetívoros.
+
+* [Quando a caixa é curta,]{.hl} o IQR é pequeno, e [os valores estão pouco espalhados]{.hl}; é o caso dos onívoros. Como o IQR é pequeno, os $4$ mamíferos com mais de $14$ horas de sono são *outliers*.
+
+* Observe, ainda, como os *outliers* "puxam" a média dos onívoros para cima.
 
 
 ## Vídeo 2

@@ -322,7 +322,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 19/11/2021)}
+\date{(versão de 20/11/2021)}
 
 \begin{document}
 \maketitle
@@ -2236,7 +2236,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
 \begin{itemize}
 \item
-  Para entender \emph{boxplots}, precisamos antes entender algumas medidas.
+  Para entender \emph{boxplots}, precisamos, antes, entender algumas medidas.
 \item
   Se tomarmos as quantidades de horas de sono de todos os animais do conjunto de dados e {\hl{classificarmos estas quantidades em ordem crescente}}, vamos ter:
 
@@ -2300,9 +2300,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
   \end{rmdcaution}
 \item
-  Os {\hl{quartis}} são os valores que estão nas posições $\frac14$, $\frac12$ e $\frac34$ da fila. São o {\hl{primeiro, segundo e terceiro quartis}}.
-\item
-  {\hl{Sim, a mediana é o segundo quartil.}}
+  Os {\hl{quartis}} são os valores que estão nas posições $\frac14$, $\frac12$ e $\frac34$ da fila. São o {\hl{primeiro, segundo e terceiro quartis}}, respectivamente.
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2317,6 +2315,8 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 \item
+  {\hl{Sim, a mediana é o segundo quartil.}}
+\item
   Em R, a {\hl{função \texttt{quantile}}} generaliza esta idéia: dado um número $q$ entre $0$ e $1$, {\hl{o quantil (com ``N'') $q$ é o elemento que está na posição que corresponde à fração $q$ da fila ordenada.}}
 
 \begin{Shaded}
@@ -2327,7 +2327,9 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 \item
-  Na verdade, o algoritmo para calcular o quantil $q$ \href{https://pt.wikipedia.org/wiki/Quantil\#Quantis_de_uma_amostra}{é um pouco mais complexo}; por isso, existem diferenças entre os valores que calculamos ``à mão'', acima, e os valores retornados por \texttt{quantile}.
+  Na verdade, R tem $9$ algoritmos diferentes para calcular os quantis de uma amostra! Leia a ajuda da função \texttt{quantile} para conhecê-los.
+\item
+  As diferenças entre nossos cálculos ``à mão'' e os resultados retornados por \texttt{quantile} são porque, em algumas situações, \texttt{quantile} calcula uma média ponderada entre elementos vizinhos. Por isso, \texttt{quantile} pode retornar valores que nem estão no vetor.
 \item
   Em R, a {\hl{função \texttt{summary}}} mostra o {\hl{mínimo}}, os {\hl{quartis (com ``R'')}}, a {\hl{média}}, e o {\hl{máximo}} de um vetor:
 
@@ -2399,8 +2401,204 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 
 \end{rmdimportant}
 
+\hypertarget{intervalo-interquartil-iqr-e-outliers}{%
+\subsection{\texorpdfstring{Intervalo interquartil (IQR) e \emph{outliers}}{Intervalo interquartil (IQR) e outliers}}\label{intervalo-interquartil-iqr-e-outliers}}
+
+\begin{itemize}
+\item
+  Qual fração dos elementos está {\hl{entre o primeiro e o terceiro quartis?}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(}
+\NormalTok{  horas[}\FunctionTok{between}\NormalTok{(horas, }\FunctionTok{quantile}\NormalTok{(horas, .}\DecValTok{25}\NormalTok{), }\FunctionTok{quantile}\NormalTok{(horas, .}\DecValTok{75}\NormalTok{))]}
+\NormalTok{) }\SpecialCharTok{/}
+\FunctionTok{length}\NormalTok{(}
+\NormalTok{  horas}
+\NormalTok{)}
+\DocumentationTok{\#\# [1] 0,4939759}
+\end{Highlighting}
+\end{Shaded}
+\item
+  {\hl{Metade}} do total de elementos está entre o primeiro e o terceiro quartis.
+\item
+  Este é o chamado {\hl{intervalo interquartil}} (\emph{interquartile range}, em inglês).
+\item
+  No nosso vetor \texttt{horas}, os {\hl{limites do IQR}} são
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{quantile}\NormalTok{(horas, }\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{75}\NormalTok{))}
+\DocumentationTok{\#\#   25\%   75\% }
+\DocumentationTok{\#\#  7,85 13,75}
+\end{Highlighting}
+\end{Shaded}
+\item
+  O {\hl{comprimento}} deste intervalo é calculado pela função \texttt{IQR}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{IQR}\NormalTok{(horas)}
+\DocumentationTok{\#\# [1] 5,9}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Valores {\hl{muito abaixo do primeiro quartil}} podem ser considerados discrepantes (\emph{outliers}), mas quão abaixo?
+\item
+  A resposta (puramente convencional) é {\hl{$1{,}5 \times \text{IQR}$ abaixo do primeiro quartil.}}
+\item
+  No nosso vetor \texttt{horas}, isto significa valores abaixo de
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{limite\_inferior }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(horas, .}\DecValTok{25}\NormalTok{) }\SpecialCharTok{{-}} \FloatTok{1.5} \SpecialCharTok{*} \FunctionTok{IQR}\NormalTok{(horas)}
+
+\FunctionTok{unname}\NormalTok{(limite\_inferior)}
+\DocumentationTok{\#\# [1] {-}1}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Neste caso, não há \emph{outliers}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas[horas }\SpecialCharTok{\textless{}}\NormalTok{ limite\_inferior]}
+\DocumentationTok{\#\# numeric(0)}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Da mesma forma, valores {\hl{muito acima do terceiro quartil}} podem ser considerados discrepantes (\emph{outliers}), mas quão acima?
+\item
+  De novo, a resposta (puramente convencional) é {\hl{$1{,}5 \times \text{IQR}$ acima do terceiro quartil.}}
+\item
+  No nosso vetor \texttt{horas}, isto significa valores acima de
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{limite\_superior }\OtherTok{\textless{}{-}} \FunctionTok{quantile}\NormalTok{(horas, .}\DecValTok{75}\NormalTok{) }\SpecialCharTok{+} \FloatTok{1.5} \SpecialCharTok{*} \FunctionTok{IQR}\NormalTok{(horas)}
+
+\FunctionTok{unname}\NormalTok{(limite\_superior)}
+\DocumentationTok{\#\# [1] 22,6}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Neste caso, também não há \emph{outliers}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas[horas }\SpecialCharTok{\textgreater{}}\NormalTok{ limite\_superior]}
+\DocumentationTok{\#\# numeric(0)}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Outro exemplo: vamos tomar apenas os mamíferos onívoros:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{onivoros }\OtherTok{\textless{}{-}}\NormalTok{ sono }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(vore }\SpecialCharTok{==} \StringTok{\textquotesingle{}omni\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{onivoros}
+\DocumentationTok{\#\# \# A tibble: 20 x 4}
+\DocumentationTok{\#\#   name                       vore  order        sleep\_total}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                      \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Owl monkey                 omni  Primates            17  }
+\DocumentationTok{\#\# 2 Greater short{-}tailed shrew omni  Soricomorpha        14.9}
+\DocumentationTok{\#\# 3 Grivet                     omni  Primates            10  }
+\DocumentationTok{\#\# 4 Star{-}nosed mole            omni  Soricomorpha        10.3}
+\DocumentationTok{\#\# 5 African giant pouched rat  omni  Rodentia             8.3}
+\DocumentationTok{\#\# 6 Lesser short{-}tailed shrew  omni  Soricomorpha         9.1}
+\DocumentationTok{\#\# \# ... with 14 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Vamos extrair o vetor de horas de sono:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{horas }\OtherTok{\textless{}{-}}\NormalTok{ onivoros }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(sleep\_total)}
+
+\NormalTok{horas}
+\DocumentationTok{\#\#  [1] 17,0 14,9 10,0 10,3  8,3  9,1 18,0 10,1 10,9  9,8  8,0 10,1  9,7}
+\DocumentationTok{\#\# [14]  9,4 11,0  8,7  9,6  9,1 15,6  8,9}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Vamos calcular o primeiro e terceiro quartis:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{quartis }\OtherTok{\textless{}{-}}\NormalTok{ horas }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{quantile}\NormalTok{(}\FunctionTok{c}\NormalTok{(.}\DecValTok{25}\NormalTok{, .}\DecValTok{75}\NormalTok{))}
+
+\NormalTok{quartis}
+\DocumentationTok{\#\#    25\%    75\% }
+\DocumentationTok{\#\#  9,100 10,925}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Vamos achar o IQR:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{IQR}\NormalTok{(horas)}
+\DocumentationTok{\#\# [1] 1,825}
+\end{Highlighting}
+\end{Shaded}
+\item
+  E os limites a partir dos quais os valores são \emph{outliers}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{limites }\OtherTok{\textless{}{-}}\NormalTok{ quartis }\SpecialCharTok{+} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{) }\SpecialCharTok{*} \FloatTok{1.5} \SpecialCharTok{*} \FunctionTok{IQR}\NormalTok{(horas)}
+
+\FunctionTok{unname}\NormalTok{(limites)}
+\DocumentationTok{\#\# [1]  6,3625 13,6625}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Existem \emph{outliers} inferiores?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{onivoros }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(sleep\_total }\SpecialCharTok{\textless{}}\NormalTok{ limites[}\DecValTok{1}\NormalTok{])}
+\DocumentationTok{\#\# \# A tibble: 0 x 4}
+\DocumentationTok{\#\# \# ... with 4 variables: name \textless{}chr\textgreater{}, vore \textless{}chr\textgreater{}, order \textless{}chr\textgreater{},}
+\DocumentationTok{\#\# \#   sleep\_total \textless{}dbl\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+
+  Não.
+\item
+  Existem \emph{outliers} superiores?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{onivoros }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(sleep\_total }\SpecialCharTok{\textgreater{}}\NormalTok{ limites[}\DecValTok{2}\NormalTok{])}
+\DocumentationTok{\#\# \# A tibble: 4 x 4}
+\DocumentationTok{\#\#   name                       vore  order           sleep\_total}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                      \textless{}chr\textgreater{} \textless{}chr\textgreater{}                 \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Owl monkey                 omni  Primates               17  }
+\DocumentationTok{\#\# 2 Greater short{-}tailed shrew omni  Soricomorpha           14.9}
+\DocumentationTok{\#\# 3 North American Opossum     omni  Didelphimorphia        18  }
+\DocumentationTok{\#\# 4 Tenrec                     omni  Afrosoricida           15.6}
+\end{Highlighting}
+\end{Shaded}
+
+  Sim! Estes animais dormem demais em comparação com os outros onívoros.
+\end{itemize}
+
 \hypertarget{gerando-boxplots}{%
 \subsection{Gerando boxplots}\label{gerando-boxplots}}
+
+\begin{itemize}
+\item
+  Um \emph{boxplot} é uma representação visual dos valores que calculamos acima.
+\item
+  No \texttt{ggplot2}, a geometria \texttt{geom\_boxplot} constrói \emph{boxplots}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2412,7 +2610,17 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-44-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-58-1} \end{center}
+\item
+  A {\hl{caixa}} vai do valor do {\hl{primeiro quartil}} (embaixo) até o {\hl{terceiro quartil}} (em cima).
+\item
+  A {\hl{linha horizontal dentro da caixa}} representa o valor da {\hl{mediana}}.
+\item
+  As {\hl{linhas verticais}} acima e abaixo da caixa (pitorescamente chamadas de ``bigodes'') vão até o {\hl{limite inferior}} (primeiro quartil ${}- 1{,}5 \times \text{IQR}$) e até o {\hl{limite superior}} (terceiro quartil ${}+ 1{,}5 \times \text{IQR}$).
+\item
+  Neste \emph{boxplot}, não há \emph{outliers}.
+\item
+  Podemos usar a posição $x$ para desenhar vários \emph{boxplots}, um para cada dieta:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2423,17 +2631,26 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-45-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-59-1} \end{center}
+\item
+  No \emph{boxplot} de onívoros, {\hl{os \emph{outliers} aparecem como pontos isolados,}} acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).
+\item
+  \emph{Boxplots} lado a lado são úteis para compararmos grupos diferentes de dados.
+\item
+  Veja como, com exceção dos insetívoros, as medianas dos grupos são parecidas.
+\item
+  Veja como carnívoros, insetívoros e herbívoros apresentam maior variação, enquanto onívoros e animais sem dieta registrada apresentam menor variação.
+\item
+  Vamos combinar, em um só gráfico
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{sono }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{filter}\NormalTok{(vore }\SpecialCharTok{==} \StringTok{\textquotesingle{}omni\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{pull}\NormalTok{(sleep\_total) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{IQR}\NormalTok{()}
-\DocumentationTok{\#\# [1] 1,825}
-\end{Highlighting}
-\end{Shaded}
+  \begin{itemize}
+  \item
+    Os pontos representando os animais,
+  \item
+    Os \emph{boxplots},
+  \item
+    As médias (que podem estar próximas ou distantes das medianas).
+  \end{itemize}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2462,7 +2679,14 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-47-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-60-1} \end{center}
+\item
+  {\hl{Quando a caixa é longa,}} o IQR é grande, e {\hl{os valores estão muito espalhados;}} é o caso dos herbívoros e insetívoros.
+\item
+  {\hl{Quando a caixa é curta,}} o IQR é pequeno, e {\hl{os valores estão pouco espalhados}}; é o caso dos onívoros. Como o IQR é pequeno, os $4$ mamíferos com mais de $14$ horas de sono são \emph{outliers}.
+\item
+  Observe, ainda, como os \emph{outliers} ``puxam'' a média dos onívoros para cima.
+\end{itemize}
 
 \hypertarget{vuxeddeo-2-3}{%
 \section{Vídeo 2}\label{vuxeddeo-2-3}}
@@ -2690,7 +2914,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-54-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-67-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2700,7 +2924,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-55-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-68-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2710,7 +2934,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-56-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-69-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2721,7 +2945,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-57-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2733,7 +2957,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-58-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2744,7 +2968,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-59-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-72-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2755,7 +2979,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-60-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-73-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2766,7 +2990,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-61-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-74-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2783,7 +3007,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-62-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2801,7 +3025,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-63-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
 
 \hypertarget{dataframe-juxe1-contendo-os-totais}{%
 \subsection{\texorpdfstring{\emph{Dataframe} já contendo os totais}{Dataframe já contendo os totais}}\label{dataframe-juxe1-contendo-os-totais}}
@@ -2833,7 +3057,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-65-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-78-1} \end{center}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
 \section{Gráficos de linha e séries temporais}\label{gruxe1ficos-de-linha-e-suxe9ries-temporais}}
@@ -2907,7 +3131,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-69-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-82-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2931,7 +3155,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-83-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2943,7 +3167,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-84-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
