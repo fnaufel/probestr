@@ -432,10 +432,14 @@
 <h2>
 <span class="header-section-number">4.4</span> Gráficos de barras e de colunas<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-barras-e-de-colunas"><i class="fas fa-link"></i></a>
 </h2>
-<div id="dataset" class="section level3" number="4.4.1">
+<div id="conjunto-de-dados-2" class="section level3" number="4.4.1">
 <h3>
-<span class="header-section-number">4.4.1</span> Dataset<a class="anchor" aria-label="anchor" href="#dataset"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.4.1</span> Conjunto de dados<a class="anchor" aria-label="anchor" href="#conjunto-de-dados-2"><i class="fas fa-link"></i></a>
 </h3>
+<ul>
+<li><p>O R tem um <em>array</em> de <span class="math inline">\(3\)</span> dimensões com dados sobre as cores dos cabelos e dos olhos de <span class="math inline">\(592\)</span> alunos e alunas de uma universidade americana em <span class="math inline">\(1974\)</span>.</p></li>
+<li>
+<p>Se pedirmos para o R exibir os dados, veremos duas matrizes, uma para cada sexo:</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">HairEyeColor</span>
 <span class="co">## , , Sex = Male</span>
@@ -455,13 +459,27 @@
 <span class="co">##   Brown    66   34    29    14</span>
 <span class="co">##   Red      16    7     7     7</span>
 <span class="co">##   Blond     4   64     5     8</span></code></pre></div>
+</li>
+<li><p>Vamos transformar este <em>array</em> em um <em>data frame</em>.</p></li>
+<li>
+<p>O <em>array</em> contém apenas os totais de cada classe. Vamos usar a função <code>uncount</code> para gerar uma linha para cada aluno:</p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">uncount</span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span>
+
+<span class="va">df_orig</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Hair"],"name":[1],"type":["fct"],"align":["left"]},{"label":["Eye"],"name":[2],"type":["fct"],"align":["left"]},{"label":["Sex"],"name":[3],"type":["fct"],"align":["left"]}],"data":[{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Black","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Brown","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Red","2":"Brown","3":"Male"},{"1":"Blond","2":"Brown","3":"Male"},{"1":"Blond","2":"Brown","3":"Male"},{"1":"Blond","2":"Brown","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Black","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Brown","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Red","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Blond","2":"Blue","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Black","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Brown","2":"Hazel","3":"Male"},{"1":"Red","2":"Hazel","3":"Male"},{"1":"Red","2":"Hazel","3":"Male"},{"1":"Red","2":"Hazel","3":"Male"},{"1":"Red","2":"Hazel","3":"Male"},{"1":"Red","2":"Hazel","3":"Male"},{"1":"Red","2":"Hazel","3":"Male"},{"1":"Red","2":"Hazel","3":"Male"},{"1":"Blond","2":"Hazel","3":"Male"},{"1":"Blond","2":"Hazel","3":"Male"},{"1":"Blond","2":"Hazel","3":"Male"},{"1":"Blond","2":"Hazel","3":"Male"},{"1":"Blond","2":"Hazel","3":"Male"},{"1":"Black","2":"Green","3":"Male"},{"1":"Black","2":"Green","3":"Male"},{"1":"Black","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Brown","2":"Green","3":"Male"},{"1":"Red","2":"Green","3":"Male"},{"1":"Red","2":"Green","3":"Male"},{"1":"Red","2":"Green","3":"Male"},{"1":"Red","2":"Green","3":"Male"},{"1":"Red","2":"Green","3":"Male"},{"1":"Red","2":"Green","3":"Male"},{"1":"Red","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Blond","2":"Green","3":"Male"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Black","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Brown","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Red","2":"Brown","3":"Female"},{"1":"Blond","2":"Brown","3":"Female"},{"1":"Blond","2":"Brown","3":"Female"},{"1":"Blond","2":"Brown","3":"Female"},{"1":"Blond","2":"Brown","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Black","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Brown","2":"Blue","3":"Female"},{"1":"Red","2":"Blue","3":"Female"},{"1":"Red","2":"Blue","3":"Female"},{"1":"Red","2":"Blue","3":"Female"},{"1":"Red","2":"Blue","3":"Female"},{"1":"Red","2":"Blue","3":"Female"},{"1":"Red","2":"Blue","3":"Female"},{"1":"Red","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Blond","2":"Blue","3":"Female"},{"1":"Black","2":"Hazel","3":"Female"},{"1":"Black","2":"Hazel","3":"Female"},{"1":"Black","2":"Hazel","3":"Female"},{"1":"Black","2":"Hazel","3":"Female"},{"1":"Black","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Brown","2":"Hazel","3":"Female"},{"1":"Red","2":"Hazel","3":"Female"},{"1":"Red","2":"Hazel","3":"Female"},{"1":"Red","2":"Hazel","3":"Female"},{"1":"Red","2":"Hazel","3":"Female"},{"1":"Red","2":"Hazel","3":"Female"},{"1":"Red","2":"Hazel","3":"Female"},{"1":"Red","2":"Hazel","3":"Female"},{"1":"Blond","2":"Hazel","3":"Female"},{"1":"Blond","2":"Hazel","3":"Female"},{"1":"Blond","2":"Hazel","3":"Female"},{"1":"Blond","2":"Hazel","3":"Female"},{"1":"Blond","2":"Hazel","3":"Female"},{"1":"Black","2":"Green","3":"Female"},{"1":"Black","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Brown","2":"Green","3":"Female"},{"1":"Red","2":"Green","3":"Female"},{"1":"Red","2":"Green","3":"Female"},{"1":"Red","2":"Green","3":"Female"},{"1":"Red","2":"Green","3":"Female"},{"1":"Red","2":"Green","3":"Female"},{"1":"Red","2":"Green","3":"Female"},{"1":"Red","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"},{"1":"Blond","2":"Green","3":"Female"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</li>
+<li>
+<p>Vamos ver o sumário:</p>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_orig</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-table"><table style="width:100%;" class="table table-sm">
+<table style="width:100%;" class="table table-sm">
 <colgroup>
 <col width="11%">
 <col width="26%">
@@ -519,36 +537,42 @@
 (0,0%)</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</li>
+<li>
+<p>Usando vetores com elementos nomeados, podemos traduzir o conteúdo do <em>data frame</em> para português:</p>
 <div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cabelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
-  <span class="st">'Brown'</span> <span class="op">=</span> <span class="st">'Castanhos'</span>,
-  <span class="st">'Blond'</span> <span class="op">=</span> <span class="st">'Louros'</span>,
-  <span class="st">'Black'</span> <span class="op">=</span> <span class="st">'Pretos'</span>,
-  <span class="st">'Red'</span> <span class="op">=</span> <span class="st">'Ruivos'</span>
+  <span class="st">'Brown'</span> <span class="op">=</span> <span class="st">'castanhos'</span>,
+  <span class="st">'Blond'</span> <span class="op">=</span> <span class="st">'louros'</span>,
+  <span class="st">'Black'</span> <span class="op">=</span> <span class="st">'pretos'</span>,
+  <span class="st">'Red'</span> <span class="op">=</span> <span class="st">'ruivos'</span>
 <span class="op">)</span>
 
 <span class="va">olhos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
-  <span class="st">'Brown'</span> <span class="op">=</span> <span class="st">'Castanhos'</span>,
-  <span class="st">'Blue'</span> <span class="op">=</span> <span class="st">'Azuis'</span>,
-  <span class="st">'Hazel'</span> <span class="op">=</span> <span class="st">'Avelã'</span>,
-  <span class="st">'Green'</span> <span class="op">=</span> <span class="st">'Verdes'</span>
+  <span class="st">'Brown'</span> <span class="op">=</span> <span class="st">'castanhos'</span>,
+  <span class="st">'Blue'</span> <span class="op">=</span> <span class="st">'azuis'</span>,
+  <span class="st">'Hazel'</span> <span class="op">=</span> <span class="st">'avelã'</span>,
+  <span class="st">'Green'</span> <span class="op">=</span> <span class="st">'verdes'</span>
 <span class="op">)</span>
 
 <span class="va">sexo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
-  <span class="st">'Male'</span> <span class="op">=</span> <span class="st">'Homem'</span>,
-  <span class="st">'Female'</span> <span class="op">=</span> <span class="st">'Mulher'</span>
+  <span class="st">'Male'</span> <span class="op">=</span> <span class="st">'homem'</span>,
+  <span class="st">'Female'</span> <span class="op">=</span> <span class="st">'mulher'</span>
 <span class="op">)</span>
 
 <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df_orig</span> <span class="op">%&gt;%</span> 
   <span class="fu">transmute</span><span class="op">(</span>
-    Cabelos <span class="op">=</span> <span class="va">cabelo</span><span class="op">[</span><span class="va">Hair</span><span class="op">]</span>,
-    Olhos <span class="op">=</span> <span class="va">olhos</span><span class="op">[</span><span class="va">Eye</span><span class="op">]</span>,
-    Sexo <span class="op">=</span> <span class="va">sexo</span><span class="op">[</span><span class="va">Sex</span><span class="op">]</span>
+    cabelos <span class="op">=</span> <span class="va">cabelo</span><span class="op">[</span><span class="va">Hair</span><span class="op">]</span>,
+    olhos <span class="op">=</span> <span class="va">olhos</span><span class="op">[</span><span class="va">Eye</span><span class="op">]</span>,
+    sexo <span class="op">=</span> <span class="va">sexo</span><span class="op">[</span><span class="va">Sex</span><span class="op">]</span>
   <span class="op">)</span></code></pre></div>
+</li>
+<li>
+<p>O novo sumário:</p>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-table"><table class="table table-sm">
+<table class="table table-sm">
 <colgroup>
 <col width="14%">
 <col width="25%">
@@ -565,12 +589,12 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Cabelos<br>
+<td>cabelos<br>
 [character]</td>
-<td>1. Castanhos<br>
-2. Louros<br>
-3. Pretos<br>
-4. Ruivos</td>
+<td>1. castanhos<br>
+2. louros<br>
+3. pretos<br>
+4. ruivos</td>
 <td>108 (18,2%)<br>
 286 (48,3%)<br>
 71 (12,0%)<br>
@@ -580,12 +604,12 @@
 (0,0%)</td>
 </tr>
 <tr class="even">
-<td>Olhos<br>
+<td>olhos<br>
 [character]</td>
-<td>1. Avelã<br>
-2. Azuis<br>
-3. Castanhos<br>
-4. Verdes</td>
+<td>1. avelã<br>
+2. azuis<br>
+3. castanhos<br>
+4. verdes</td>
 <td>93 (15,7%)<br>
 215 (36,3%)<br>
 220 (37,2%)<br>
@@ -595,10 +619,10 @@
 (0,0%)</td>
 </tr>
 <tr class="odd">
-<td>Sexo<br>
+<td>sexo<br>
 [character]</td>
-<td>1. Homem<br>
-2. Mulher</td>
+<td>1. homem<br>
+2. mulher</td>
 <td>279 (47,1%)<br>
 313 (52,9%)</td>
 <td><img src="dfimg/ds0025.png"></td>
@@ -606,109 +630,238 @@
 (0,0%)</td>
 </tr>
 </tbody>
-</table></div>
+</table>
+</li>
+<li><p>Um <span class="hl">gráfico de barras</span> contém uma barra para cada valor de uma <span class="hl">variável categórica.</span></p></li>
+<li>
+<p>Usamos <code>geom_bar</code> para gerar um gráfico de barras de cores de cabelo:</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Cabelos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cabelos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-67-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="rmdimportant">
+<p><strong>Gráfico de barras <span class="math inline">\(\times\)</span> histograma:</strong></p>
+<ul>
+<li><p><span class="hl">Os dois tipos de gráficos mostram a frequência</span> (quantidade de elementos) <span class="hl">no eixo vertical</span>.</p></li>
+<li>
+<p>No <span class="hl">gráfico de barras</span>:</p>
+<ul>
+<li><p>A variável é <span class="hl">categórica</span> (nominal).</p></li>
+<li><p><span class="hl">Cada barra</span> corresponde a <span class="hl">um valor</span> da variável.</p></li>
+<li><p><span class="hl">As barras não se tocam</span>, enfatizando este fato.</p></li>
+</ul>
+</li>
+<li>
+<p>No <span class="hl">histograma</span> (<a href="viz.html#histograma1">veja o exemplo</a>):</p>
+<ul>
+<li><p>A variável é <span class="hl">quantitativa</span> (intervalar ou racional).</p></li>
+<li><p><span class="hl">Cada barra</span> corresponde a <span class="hl">uma classe de valores</span> da variável.</p></li>
+<li><p><span class="hl">As barras se tocam</span>, para enfatizar que as classes são contíguas.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</li>
+<li><p>Um gráfico de barras é mais legível quando as barras são mostradas em ordem crescente ou decrescente.</p></li>
+<li><p>Embora os valores da variável <code>cabelos</code> sejam <em>strings</em>, podemos aplicar a eles funções que manipulam fatores.</p></li>
+<li><p>A função <code>fct_infreq</code>, do pacote <code>forcats</code>, ordena os valores em <span class="hl">ordem decrescente de frequência</span>.</p></li>
+<li>
+<p>A função <code>fct_rev</code>, também do pacote <code>forcats</code>, inverte a ordenação.</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-68-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>A posição <span class="math inline">\(x\)</span> e a altura de cada barra são estéticas: <span class="hl">a posição <span class="math inline">\(x\)</span> representa a cor dos cabelos</span>, e <span class="hl">a altura representa a frequência daquela cor</span>.</p></li>
+<li>
+<p>Vamos acrescentar mais uma estética: <span class="hl">a cor de preenchimento vai representar o sexo</span>.</p>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-69-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (<code>scale_fill_discrete</code>):</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-70-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Podemos fazer um gráfico de barras horizontais com <code>coord_flip</code>. Isto geralmente é útil quando os rótulos das barras são longos:</p>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-71-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?</p></li>
+<li><p>Se posicionarmos as barras lado a lado, fica mais fácil responder.</p></li>
+<li>
+<p>Usamos o argumento <code>position = 'dodge'</code> de <code>geom_bar</code>. “<em>Dodge</em>” significa “esquivar-se”, em inglês.</p>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-72-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:</p>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>
+      type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span>
+    <span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-73-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Ou, com barras lado a lado:</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>
+      type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span>
+    <span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Perguntas que este gráfico sugere:</p>
+<ol style="list-style-type: decimal">
+<li><p>Há mais pessoas louras de olhos castanhos do que louras de olhos azuis. O esperado não seria mais pessoas louras de olhos azuis? Pessoas louras de olhos castanhos pintaram os cabelos?</p></li>
+<li><p>Há muito mais ruivos de olhos azuis do que ruivos de olhos verdes. Não deveria ser o contrário? Também são pessoas que pintaram os cabelos de ruivo? Ou houve erro no registro das cores dos olhos?</p></li>
+</ol>
+</li>
+<li>
+<p>Para incluir o sexo, podemos <span class="hl">facetar</span> o gráfico. Geramos dois subgráficos lado a lado:</p>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Cabelos</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">Olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sexo</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">sexo</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
       title <span class="op">=</span> <span class="st">'Cores de cabelos e olhos por sexo'</span>,
       y <span class="op">=</span> <span class="cn">NULL</span>,
-      x <span class="op">=</span> <span class="st">'Cabelos'</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>
     <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Se a quantidade grande de pessoas louras de olhos castanhos (em comparação com pessoas louras de olhos azuis) for por causa da pintura de cabelos, então o gráfico acima mostra que as mulheres pintam os cabelos de louro com mais frequência do que os homens.</p></li>
+<li>
+<p>Quando facetamos por cor de cabelos, também podemos observar as mesmas diferenças entre homens e mulheres:</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sexo</span>, fill <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">Olhos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">olhos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Cabelos</span>, labeller <span class="op">=</span> <span class="va">label_both</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">cabelos</span>, labeller <span class="op">=</span> <span class="va">label_both</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'brown'</span>, <span class="st">'blue'</span>, <span class="st">'#908050'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="cn">NULL</span>,
       y <span class="op">=</span> <span class="cn">NULL</span>,
-      fill <span class="op">=</span> <span class="st">'Olhos'</span>,
+      fill <span class="op">=</span> <span class="st">'olhos'</span>,
       title <span class="op">=</span> <span class="st">'Cor dos olhos e sexo por cor dos cabelos'</span>
     <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
 </div>
-<div id="dataframe-já-contendo-os-totais" class="section level3" number="4.4.2">
+<div id="data-frame-já-contendo-os-totais" class="section level3" number="4.4.2">
 <h3>
-<span class="header-section-number">4.4.2</span> <em>Dataframe</em> já contendo os totais<a class="anchor" aria-label="anchor" href="#dataframe-j%C3%A1-contendo-os-totais"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.4.2</span> <em>Data frame</em> já contendo os totais<a class="anchor" aria-label="anchor" href="#data-frame-j%C3%A1-contendo-os-totais"><i class="fas fa-link"></i></a>
 </h3>
+<ul>
+<li><p>Você percebeu que <code>geom_bar</code> analisa o <em>data frame</em> e calcula as frequências necessárias para construir o gráfico.</p></li>
+<li><p>Em algumas situações, <span class="hl">o <em>data frame</em> já contém as frequências</span> (em vez de conter uma linha por indivíduo).</p></li>
+<li>
+<p>Vamos usar <code>count</code> para criar um <em>data frame</em> assim:</p>
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_tot</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu">count</span><span class="op">(</span><span class="va">Sexo</span>, <span class="va">Cabelos</span>, <span class="va">Olhos</span><span class="op">)</span>
+  <span class="fu">count</span><span class="op">(</span><span class="va">sexo</span>, <span class="va">cabelos</span>, <span class="va">olhos</span><span class="op">)</span>
 
 <span class="va">df_tot</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Sexo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Cabelos"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Olhos"],"name":[3],"type":["chr"],"align":["left"]},{"label":["n"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"Homem","2":"Castanhos","3":"Avelã","4":"10"},{"1":"Homem","2":"Castanhos","3":"Azuis","4":"11"},{"1":"Homem","2":"Castanhos","3":"Castanhos","4":"32"},{"1":"Homem","2":"Castanhos","3":"Verdes","4":"3"},{"1":"Homem","2":"Louros","3":"Avelã","4":"25"},{"1":"Homem","2":"Louros","3":"Azuis","4":"50"},{"1":"Homem","2":"Louros","3":"Castanhos","4":"53"},{"1":"Homem","2":"Louros","3":"Verdes","4":"15"},{"1":"Homem","2":"Pretos","3":"Avelã","4":"7"},{"1":"Homem","2":"Pretos","3":"Azuis","4":"10"},{"1":"Homem","2":"Pretos","3":"Castanhos","4":"10"},{"1":"Homem","2":"Pretos","3":"Verdes","4":"7"},{"1":"Homem","2":"Ruivos","3":"Avelã","4":"5"},{"1":"Homem","2":"Ruivos","3":"Azuis","4":"30"},{"1":"Homem","2":"Ruivos","3":"Castanhos","4":"3"},{"1":"Homem","2":"Ruivos","3":"Verdes","4":"8"},{"1":"Mulher","2":"Castanhos","3":"Avelã","4":"5"},{"1":"Mulher","2":"Castanhos","3":"Azuis","4":"9"},{"1":"Mulher","2":"Castanhos","3":"Castanhos","4":"36"},{"1":"Mulher","2":"Castanhos","3":"Verdes","4":"2"},{"1":"Mulher","2":"Louros","3":"Avelã","4":"29"},{"1":"Mulher","2":"Louros","3":"Azuis","4":"34"},{"1":"Mulher","2":"Louros","3":"Castanhos","4":"66"},{"1":"Mulher","2":"Louros","3":"Verdes","4":"14"},{"1":"Mulher","2":"Pretos","3":"Avelã","4":"7"},{"1":"Mulher","2":"Pretos","3":"Azuis","4":"7"},{"1":"Mulher","2":"Pretos","3":"Castanhos","4":"16"},{"1":"Mulher","2":"Pretos","3":"Verdes","4":"7"},{"1":"Mulher","2":"Ruivos","3":"Avelã","4":"5"},{"1":"Mulher","2":"Ruivos","3":"Azuis","4":"64"},{"1":"Mulher","2":"Ruivos","3":"Castanhos","4":"4"},{"1":"Mulher","2":"Ruivos","3":"Verdes","4":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["sexo"],"name":[1],"type":["chr"],"align":["left"]},{"label":["cabelos"],"name":[2],"type":["chr"],"align":["left"]},{"label":["olhos"],"name":[3],"type":["chr"],"align":["left"]},{"label":["n"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"homem","2":"castanhos","3":"avelã","4":"10"},{"1":"homem","2":"castanhos","3":"azuis","4":"11"},{"1":"homem","2":"castanhos","3":"castanhos","4":"32"},{"1":"homem","2":"castanhos","3":"verdes","4":"3"},{"1":"homem","2":"louros","3":"avelã","4":"25"},{"1":"homem","2":"louros","3":"azuis","4":"50"},{"1":"homem","2":"louros","3":"castanhos","4":"53"},{"1":"homem","2":"louros","3":"verdes","4":"15"},{"1":"homem","2":"pretos","3":"avelã","4":"7"},{"1":"homem","2":"pretos","3":"azuis","4":"10"},{"1":"homem","2":"pretos","3":"castanhos","4":"10"},{"1":"homem","2":"pretos","3":"verdes","4":"7"},{"1":"homem","2":"ruivos","3":"avelã","4":"5"},{"1":"homem","2":"ruivos","3":"azuis","4":"30"},{"1":"homem","2":"ruivos","3":"castanhos","4":"3"},{"1":"homem","2":"ruivos","3":"verdes","4":"8"},{"1":"mulher","2":"castanhos","3":"avelã","4":"5"},{"1":"mulher","2":"castanhos","3":"azuis","4":"9"},{"1":"mulher","2":"castanhos","3":"castanhos","4":"36"},{"1":"mulher","2":"castanhos","3":"verdes","4":"2"},{"1":"mulher","2":"louros","3":"avelã","4":"29"},{"1":"mulher","2":"louros","3":"azuis","4":"34"},{"1":"mulher","2":"louros","3":"castanhos","4":"66"},{"1":"mulher","2":"louros","3":"verdes","4":"14"},{"1":"mulher","2":"pretos","3":"avelã","4":"7"},{"1":"mulher","2":"pretos","3":"azuis","4":"7"},{"1":"mulher","2":"pretos","3":"castanhos","4":"16"},{"1":"mulher","2":"pretos","3":"verdes","4":"7"},{"1":"mulher","2":"ruivos","3":"avelã","4":"5"},{"1":"mulher","2":"ruivos","3":"azuis","4":"64"},{"1":"mulher","2":"ruivos","3":"castanhos","4":"4"},{"1":"mulher","2":"ruivos","3":"verdes","4":"8"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+</li>
+<li><p>Para <span class="math inline">\(4\)</span> cores de cabelo, <span class="math inline">\(4\)</span> cores de olhos, e <span class="math inline">\(2\)</span> sexos, são <span class="math inline">\(32\)</span> combinações possíveis.</p></li>
+<li>
+<p>Com este <em>data frame</em>, podemos gerar todos os gráficos anteriores usando <span class="hl"><code>geom_col</code> no lugar de <code>geom_bar</code></span>. Por exemplo:</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_tot</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Cabelos</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cabelos</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-78-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Com <code>geom_col</code>, <span class="hl">precisamos passar a estética <span class="math inline">\(y\)</span></span> (no nosso exemplo, a variável <code>n</code>, que contém as frequências).</p></li>
+<li>
+<p>Para ordenar as barras, usamos a função <code>fct_reorder</code>, que ordena os níveis de um fator (<code>cabelos</code>) de acordo com o resultado de uma função (<code>sum</code>) aplicada sobre os valores de outra variável (<code>n</code>):</p>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df_tot</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">cabelos</span>, <span class="va">n</span>, <span class="va">sum</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
 </div>
 </div>
 <div id="gráficos-de-linha-e-séries-temporais" class="section level2" number="4.5">
 <h2>
 <span class="header-section-number">4.5</span> Gráficos de linha e séries temporais<a class="anchor" aria-label="anchor" href="#gr%C3%A1ficos-de-linha-e-s%C3%A9ries-temporais"><i class="fas fa-link"></i></a>
 </h2>
-<div id="dataset-1" class="section level3" number="4.5.1">
+<div id="dataset" class="section level3" number="4.5.1">
 <h3>
-<span class="header-section-number">4.5.1</span> Dataset<a class="anchor" aria-label="anchor" href="#dataset-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.5.1</span> Dataset<a class="anchor" aria-label="anchor" href="#dataset"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">WorldPhones</span>
 <span class="co">##      N.Amer Europe Asia S.Amer Oceania Africa Mid.Amer</span>
 <span class="co">## 1951  45939  21574 2876   1815    1646     89      555</span>
@@ -718,7 +871,7 @@
 <span class="co">## 1959  71799  37598 6856   3000    2868   1769      911</span>
 <span class="co">## 1960  76036  40341 8220   3145    3054   1905     1008</span>
 <span class="co">## 1961  79831  43173 9053   3338    3224   2005     1076</span></code></pre></div>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones</span> <span class="op">&lt;-</span> <span class="va">WorldPhones</span> <span class="op">%&gt;%</span> 
   <span class="fu">as_tibble</span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">'Ano'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>Ano <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Ano</span><span class="op">)</span><span class="op">)</span>
@@ -729,7 +882,7 @@
 {"columns":[{"label":["Ano"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["N.Amer"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Europe"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Asia"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["S.Amer"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Oceania"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["Africa"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["Mid.Amer"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"1951","2":"45939","3":"21574","4":"2876","5":"1815","6":"1646","7":"89","8":"555"},{"1":"1956","2":"60423","3":"29990","4":"4708","5":"2568","6":"2366","7":"1411","8":"733"},{"1":"1957","2":"64721","3":"32510","4":"5230","5":"2695","6":"2526","7":"1546","8":"773"},{"1":"1958","2":"68484","3":"35218","4":"6662","5":"2845","6":"2691","7":"1663","8":"836"},{"1":"1959","2":"71799","3":"37598","4":"6856","5":"3000","6":"2868","7":"1769","8":"911"},{"1":"1960","2":"76036","3":"40341","4":"8220","5":"3145","6":"3054","7":"1905","8":"1008"},{"1":"1961","2":"79831","3":"43173","4":"9053","5":"3338","6":"3224","7":"2005","8":"1076"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">&lt;-</span> <span class="va">fones</span> <span class="op">%&gt;%</span> 
   <span class="fu">pivot_longer</span><span class="op">(</span>
     cols <span class="op">=</span> <span class="op">-</span><span class="va">Ano</span>,
@@ -743,13 +896,13 @@
 {"columns":[{"label":["Ano"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Região"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1951","2":"N.Amer","3":"45939"},{"1":"1951","2":"Europe","3":"21574"},{"1":"1951","2":"Asia","3":"2876"},{"1":"1951","2":"S.Amer","3":"1815"},{"1":"1951","2":"Oceania","3":"1646"},{"1":"1951","2":"Africa","3":"89"},{"1":"1951","2":"Mid.Amer","3":"555"},{"1":"1956","2":"N.Amer","3":"60423"},{"1":"1956","2":"Europe","3":"29990"},{"1":"1956","2":"Asia","3":"4708"},{"1":"1956","2":"S.Amer","3":"2568"},{"1":"1956","2":"Oceania","3":"2366"},{"1":"1956","2":"Africa","3":"1411"},{"1":"1956","2":"Mid.Amer","3":"733"},{"1":"1957","2":"N.Amer","3":"64721"},{"1":"1957","2":"Europe","3":"32510"},{"1":"1957","2":"Asia","3":"5230"},{"1":"1957","2":"S.Amer","3":"2695"},{"1":"1957","2":"Oceania","3":"2526"},{"1":"1957","2":"Africa","3":"1546"},{"1":"1957","2":"Mid.Amer","3":"773"},{"1":"1958","2":"N.Amer","3":"68484"},{"1":"1958","2":"Europe","3":"35218"},{"1":"1958","2":"Asia","3":"6662"},{"1":"1958","2":"S.Amer","3":"2845"},{"1":"1958","2":"Oceania","3":"2691"},{"1":"1958","2":"Africa","3":"1663"},{"1":"1958","2":"Mid.Amer","3":"836"},{"1":"1959","2":"N.Amer","3":"71799"},{"1":"1959","2":"Europe","3":"37598"},{"1":"1959","2":"Asia","3":"6856"},{"1":"1959","2":"S.Amer","3":"3000"},{"1":"1959","2":"Oceania","3":"2868"},{"1":"1959","2":"Africa","3":"1769"},{"1":"1959","2":"Mid.Amer","3":"911"},{"1":"1960","2":"N.Amer","3":"76036"},{"1":"1960","2":"Europe","3":"40341"},{"1":"1960","2":"Asia","3":"8220"},{"1":"1960","2":"S.Amer","3":"3145"},{"1":"1960","2":"Oceania","3":"3054"},{"1":"1960","2":"Africa","3":"1905"},{"1":"1960","2":"Mid.Amer","3":"1008"},{"1":"1961","2":"N.Amer","3":"79831"},{"1":"1961","2":"Europe","3":"43173"},{"1":"1961","2":"Asia","3":"9053"},{"1":"1961","2":"S.Amer","3":"3338"},{"1":"1961","2":"Oceania","3":"3224"},{"1":"1961","2":"Africa","3":"2005"},{"1":"1961","2":"Mid.Amer","3":"1076"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ano</span>, y <span class="op">=</span> <span class="va">n</span>, group <span class="op">=</span> <span class="va">Região</span>, color <span class="op">=</span> <span class="va">Região</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1951</span><span class="op">:</span><span class="fl">1961</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-83-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
@@ -767,15 +920,15 @@
       x <span class="op">=</span> <span class="cn">NULL</span>,
       title <span class="op">=</span> <span class="st">'Quantidade de aparelhos de telefone por ano, por região'</span>
     <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-83-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-84-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Região</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'S.Amer'</span>, <span class="st">'Oceania'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ano</span>, y <span class="op">=</span> <span class="va">n</span>, group <span class="op">=</span> <span class="va">Região</span>, color <span class="op">=</span> <span class="va">Região</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1951</span><span class="op">:</span><span class="fl">1961</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-84-1.png" width="100%" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-85-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tsibble.tidyverts.org">tsibble</a></span><span class="op">)</span>
 <span class="op">?</span><span class="va">`tsibble-package`</span></code></pre></div>
 </div>
@@ -810,12 +963,12 @@
 <li><a class="nav-link" href="#v%C3%ADdeo-2-3"><span class="header-section-number">4.3</span> Vídeo 2</a></li>
 <li>
 <a class="nav-link" href="#gr%C3%A1ficos-de-barras-e-de-colunas"><span class="header-section-number">4.4</span> Gráficos de barras e de colunas</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#dataset"><span class="header-section-number">4.4.1</span> Dataset</a></li>
-<li><a class="nav-link" href="#dataframe-j%C3%A1-contendo-os-totais"><span class="header-section-number">4.4.2</span> Dataframe já contendo os totais</a></li>
+<li><a class="nav-link" href="#conjunto-de-dados-2"><span class="header-section-number">4.4.1</span> Conjunto de dados</a></li>
+<li><a class="nav-link" href="#data-frame-j%C3%A1-contendo-os-totais"><span class="header-section-number">4.4.2</span> Data frame já contendo os totais</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#gr%C3%A1ficos-de-linha-e-s%C3%A9ries-temporais"><span class="header-section-number">4.5</span> Gráficos de linha e séries temporais</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#dataset-1"><span class="header-section-number">4.5.1</span> Dataset</a></li></ul>
+<a class="nav-link" href="#gr%C3%A1ficos-de-linha-e-s%C3%A9ries-temporais"><span class="header-section-number">4.5</span> Gráficos de linha e séries temporais</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#dataset"><span class="header-section-number">4.5.1</span> Dataset</a></li></ul>
 </li>
 <li><a class="nav-link" href="#refer%C3%AAncias-sobre-visualiza%C3%A7%C3%A3o-e-r"><span class="header-section-number">4.6</span> Referências sobre visualização e R</a></li>
 </ul>
@@ -835,7 +988,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 20/11/2021)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2021)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

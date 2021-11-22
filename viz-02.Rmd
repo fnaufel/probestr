@@ -367,150 +367,293 @@ embed_yt('QqnOvgBXJ-s')
 
 ## Gráficos de barras e de colunas
 
-### Dataset
+### Conjunto de dados
 
-```{r}
-HairEyeColor
-```
+* O R tem um *array* de $3$ dimensões com dados sobre as cores dos cabelos e dos olhos de $592$ alunos e alunas de uma universidade americana em $1974$.
 
-```{r}
-df_orig <- as.data.frame(HairEyeColor) %>% 
-  uncount(Freq) %>% 
-  as_tibble()
-```
+* Se pedirmos para o R exibir os dados, veremos duas matrizes, uma para cada sexo:
 
-```{r results='asis', message=FALSE}
-df_orig %>% dfSummary() %>% print()
-```
+  ```{r}
+  HairEyeColor
+  ```
 
-```{r}
-cabelo <- c(
-  'Brown' = 'Castanhos',
-  'Blond' = 'Louros',
-  'Black' = 'Pretos',
-  'Red' = 'Ruivos'
-)
+* Vamos transformar este *array* em um *data frame*.
 
-olhos <- c(
-  'Brown' = 'Castanhos',
-  'Blue' = 'Azuis',
-  'Hazel' = 'Avelã',
-  'Green' = 'Verdes'
-)
+* O *array* contém apenas os totais de cada classe. Vamos usar a função `uncount` para gerar uma linha para cada aluno:
 
-sexo <- c(
-  'Male' = 'Homem',
-  'Female' = 'Mulher'
-)
+  ```{r}
+  df_orig <- as.data.frame(HairEyeColor) %>% 
+    uncount(Freq) %>% 
+    as_tibble()
+    
+  df_orig
+  ```
 
-df <- df_orig %>% 
-  transmute(
-    Cabelos = cabelo[Hair],
-    Olhos = olhos[Eye],
-    Sexo = sexo[Sex]
+* Vamos ver o sumário:
+  
+  ```{r results='asis', message=FALSE}
+  df_orig %>% dfSummary() %>% print()
+  ```
+
+* Usando vetores com elementos nomeados, podemos traduzir o conteúdo do *data frame* para português:
+
+  ```{r}
+  cabelo <- c(
+    'Brown' = 'castanhos',
+    'Blond' = 'louros',
+    'Black' = 'pretos',
+    'Red' = 'ruivos'
   )
-
-```
-
-```{r results='asis', message=FALSE}
-df %>% dfSummary() %>% print()
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = Cabelos)) +
-    geom_bar()
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_rev(fct_infreq(Cabelos)))) +
-    geom_bar()
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
-    geom_bar()
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
-    geom_bar() +
-    scale_fill_discrete(type = c('blue', 'red'))
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
-    geom_bar() +
-    scale_fill_discrete(type = c('blue', 'red')) +
-    coord_flip()
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_infreq(Cabelos), fill = Sexo)) +
-    geom_bar(position = 'dodge') +
-    scale_fill_discrete(type = c('blue', 'red'))
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_infreq(Cabelos), fill = Olhos)) +
-    geom_bar() +
-    scale_fill_discrete(type = c('#908050', 'blue', 'brown', 'green'))
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_infreq(Cabelos), fill = Olhos)) +
-    geom_bar(position = 'dodge') +
-    scale_fill_discrete(type = c('#908050', 'blue', 'brown', 'green'))
-```
-
-```{r}
-df %>% 
-  ggplot(aes(x = fct_infreq(Cabelos), fill = Olhos)) +
-    geom_bar(position = 'dodge') +
-    scale_fill_discrete(type = c('#908050', 'blue', 'brown', 'green')) +
-    facet_wrap(~Sexo) +
-    labs(
-      title = 'Cores de cabelos e olhos por sexo',
-      y = NULL,
-      x = 'Cabelos'
+  
+  olhos <- c(
+    'Brown' = 'castanhos',
+    'Blue' = 'azuis',
+    'Hazel' = 'avelã',
+    'Green' = 'verdes'
+  )
+  
+  sexo <- c(
+    'Male' = 'homem',
+    'Female' = 'mulher'
+  )
+  
+  df <- df_orig %>% 
+    transmute(
+      cabelos = cabelo[Hair],
+      olhos = olhos[Eye],
+      sexo = sexo[Sex]
     )
-```
+  ```
 
-```{r}
-df %>% 
-  ggplot(aes(x = Sexo, fill = fct_infreq(Olhos))) +
-    geom_bar(position = 'dodge') +
-    facet_wrap(~Cabelos, labeller = label_both) +
-    scale_fill_discrete(type = c('brown', 'blue', '#908050', 'green')) +
-    labs(
-      x = NULL,
-      y = NULL,
-      fill = 'Olhos',
-      title = 'Cor dos olhos e sexo por cor dos cabelos'
-    )
-```
+* O novo sumário:
 
-### *Dataframe* já contendo os totais
+  ```{r results='asis', message=FALSE}
+  df %>% dfSummary() %>% print()
+  ```
 
-```{r}
-df_tot <- df %>% 
-  count(Sexo, Cabelos, Olhos)
+* Um [gráfico de barras]{.hl} contém uma barra para cada valor de uma [variável categórica.]{.hl}
 
-df_tot
-```
+* Usamos `geom_bar` para gerar um gráfico de barras de cores de cabelo:
 
-```{r}
-df_tot %>% 
-  ggplot(aes(x = Cabelos, y = n)) +
-    geom_col()
-```
+  ```{r}
+  df %>% 
+    ggplot(aes(x = cabelos)) +
+      geom_bar() +
+      labs(y = NULL)
+  ```
+
+  ::: {.rmdimportant latex=1}
+  
+  **Gráfico de barras $\times$ histograma:**
+  
+  * [Os dois tipos de gráficos mostram a frequência]{.hl} (quantidade de elementos) [no eixo vertical]{.hl}.
+  
+  * No [gráfico de barras]{.hl}:
+  
+    * A variável é [categórica]{.hl} (nominal).
+    
+    * [Cada barra]{.hl} corresponde a [um valor]{.hl} da variável. 
+    
+    * [As barras não se tocam]{.hl}, enfatizando este fato.
+    
+  * No [histograma]{.hl} ([veja o exemplo](#histograma1)):
+  
+    * A variável é [quantitativa]{.hl} (intervalar ou racional).
+    
+    * [Cada barra]{.hl} corresponde a [uma classe de valores]{.hl} da variável.
+    
+    * [As barras se tocam]{.hl}, para enfatizar que as classes são contíguas.
+  
+  :::
+
+* Um gráfico de barras é mais legível quando as barras são mostradas em ordem crescente ou decrescente.
+
+* Embora os valores da variável `cabelos` sejam *strings*, podemos aplicar a eles funções que manipulam fatores.
+
+* A função `fct_infreq`, do pacote `forcats`, ordena os valores em [ordem decrescente de frequência]{.hl}.
+
+* A função `fct_rev`, também do pacote `forcats`, inverte a ordenação.
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)))) +
+      geom_bar() +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      )
+  ```
+
+* A posição $x$ e a altura de cada barra são estéticas: [a posição $x$ representa a cor dos cabelos]{.hl}, e [a altura representa a frequência daquela cor]{.hl}.
+
+* Vamos acrescentar mais uma estética: [a cor de preenchimento vai representar o sexo]{.hl}.
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)), fill = sexo)) +
+      geom_bar() +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      )
+  ```
+
+* Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (`scale_fill_discrete`):
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)), fill = sexo)) +
+      geom_bar() +
+      scale_fill_discrete(type = c('blue', 'red')) +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      )
+  ```
+
+* Podemos fazer um gráfico de barras horizontais com `coord_flip`. Isto geralmente é útil quando os rótulos das barras são longos:
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)), fill = sexo)) +
+      geom_bar() +
+      scale_fill_discrete(type = c('blue', 'red')) +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      ) +
+      coord_flip()
+  ```
+
+* Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?
+
+* Se posicionarmos as barras lado a lado, fica mais fácil responder.
+
+* Usamos o argumento `position = 'dodge'` de `geom_bar`. "*Dodge*" significa "esquivar-se", em inglês.
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)), fill = sexo)) +
+      geom_bar(position = 'dodge') +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      ) +
+      scale_fill_discrete(type = c('blue', 'red'))
+  ```
+
+* Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)), fill = olhos)) +
+      geom_bar() +
+      scale_fill_discrete(
+        type = c('#908050', 'blue', 'brown', 'green')
+      ) +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      )
+  ```
+
+* Ou, com barras lado a lado:
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)), fill = olhos)) +
+      geom_bar(position = 'dodge') +
+      scale_fill_discrete(
+        type = c('#908050', 'blue', 'brown', 'green')
+      ) +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      )
+  ```
+
+* Perguntas que este gráfico sugere:
+
+  1. Há mais pessoas louras de olhos castanhos do que louras de olhos azuis. O esperado não seria mais pessoas louras de olhos azuis? Pessoas louras de olhos castanhos pintaram os cabelos?
+  
+  1. Há muito mais ruivos de olhos azuis do que ruivos de olhos verdes. Não deveria ser o contrário? Também são pessoas que pintaram os cabelos de ruivo? Ou houve erro no registro das cores dos olhos? 
+  
+* Para incluir o sexo, podemos [facetar]{.hl} o gráfico. Geramos dois subgráficos lado a lado:
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = fct_rev(fct_infreq(cabelos)), fill = olhos)) +
+      geom_bar(position = 'dodge') +
+      scale_fill_discrete(type = c('#908050', 'blue', 'brown', 'green')) +
+      facet_wrap(~sexo) +
+      labs(
+        title = 'Cores de cabelos e olhos por sexo',
+        y = NULL,
+        x = 'cabelos'
+      )
+  ```
+
+* Se a quantidade grande de pessoas louras de olhos castanhos (em comparação com pessoas louras de olhos azuis) for por causa da pintura de cabelos, então o gráfico acima mostra que as mulheres pintam os cabelos de louro com mais frequência do que os homens.
+
+* Quando facetamos por cor de cabelos, também podemos observar as mesmas diferenças entre homens e mulheres:
+
+  ```{r}
+  df %>% 
+    ggplot(aes(x = sexo, fill = fct_infreq(olhos))) +
+      geom_bar(position = 'dodge') +
+      facet_wrap(~cabelos, labeller = label_both) +
+      scale_fill_discrete(type = c('brown', 'blue', '#908050', 'green')) +
+      labs(
+        x = NULL,
+        y = NULL,
+        fill = 'olhos',
+        title = 'Cor dos olhos e sexo por cor dos cabelos'
+      )
+  ```
+
+
+### *Data frame* já contendo os totais
+
+* Você percebeu que `geom_bar` analisa o *data frame* e calcula as frequências necessárias para construir o gráfico.
+
+* Em algumas situações, [o *data frame* já contém as frequências]{.hl} (em vez de conter uma linha por indivíduo).
+
+* Vamos usar `count` para criar um *data frame* assim:
+
+  ```{r}
+  df_tot <- df %>% 
+    count(sexo, cabelos, olhos)
+  
+  df_tot
+  ```
+
+* Para $4$ cores de cabelo, $4$ cores de olhos, e $2$ sexos, são $32$ combinações possíveis.
+
+* Com este *data frame*, podemos gerar todos os gráficos anteriores usando [`geom_col` no lugar de `geom_bar`]{.hl}. Por exemplo:
+
+  ```{r}
+  df_tot %>% 
+    ggplot(aes(x = cabelos, y = n)) +
+      geom_col() +
+      labs(
+        y = NULL
+      )
+  ```
+
+* Com `geom_col`, [precisamos passar a estética $y$]{.hl} (no nosso exemplo, a variável `n`, que contém as frequências).
+
+* Para ordenar as barras, usamos a função `fct_reorder`, que ordena os níveis de um fator (`cabelos`) de acordo com o resultado de uma função (`sum`) aplicada sobre os valores de outra variável (`n`):
+
+  ```{r}
+  df_tot %>% 
+    ggplot(aes(x = fct_reorder(cabelos, n, sum), y = n)) +
+      geom_col() +
+      labs(
+        x = 'cabelos',
+        y = NULL
+      )
+  ```
+
 
 ## Gráficos de linha e séries temporais
 

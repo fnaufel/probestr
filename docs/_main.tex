@@ -322,7 +322,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 20/11/2021)}
+\date{(versão de 22/11/2021)}
 
 \begin{document}
 \maketitle
@@ -1875,7 +1875,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/hist-sono1-1} \end{center}
 \item
-  Vamos mudar isto passando um vetor de limites das classes (\emph{breaks}). Vamos acrescentar rótulos também:
+  \protect\hypertarget{histograma1}{}{} Vamos mudar isto passando um vetor de limites das classes (\emph{breaks}). Vamos acrescentar rótulos também:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2696,8 +2696,14 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \hypertarget{gruxe1ficos-de-barras-e-de-colunas}{%
 \section{Gráficos de barras e de colunas}\label{gruxe1ficos-de-barras-e-de-colunas}}
 
-\hypertarget{dataset}{%
-\subsection{Dataset}\label{dataset}}
+\hypertarget{conjunto-de-dados-2}{%
+\subsection{Conjunto de dados}\label{conjunto-de-dados-2}}
+
+\begin{itemize}
+\item
+  O R tem um \emph{array} de $3$ dimensões com dados sobre as cores dos cabelos e dos olhos de $592$ alunos e alunas de uma universidade americana em $1974$.
+\item
+  Se pedirmos para o R exibir os dados, veremos duas matrizes, uma para cada sexo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2721,14 +2727,32 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \DocumentationTok{\#\#   Blond     4   64     5     8}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Vamos transformar este \emph{array} em um \emph{data frame}.
+\item
+  O \emph{array} contém apenas os totais de cada classe. Vamos usar a função \texttt{uncount} para gerar uma linha para cada aluno:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df\_orig }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(HairEyeColor) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{uncount}\NormalTok{(Freq) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{as\_tibble}\NormalTok{()}
+
+\NormalTok{df\_orig}
+\DocumentationTok{\#\# \# A tibble: 592 x 3}
+\DocumentationTok{\#\#   Hair  Eye   Sex  }
+\DocumentationTok{\#\#   \textless{}fct\textgreater{} \textless{}fct\textgreater{} \textless{}fct\textgreater{}}
+\DocumentationTok{\#\# 1 Black Brown Male }
+\DocumentationTok{\#\# 2 Black Brown Male }
+\DocumentationTok{\#\# 3 Black Brown Male }
+\DocumentationTok{\#\# 4 Black Brown Male }
+\DocumentationTok{\#\# 5 Black Brown Male }
+\DocumentationTok{\#\# 6 Black Brown Male }
+\DocumentationTok{\#\# \# ... with 586 more rows}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Vamos ver o sumário:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2736,102 +2760,106 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3472}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3194}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}@{}}
-\toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Variável
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Estatísticas / Valores
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Freqs (\% de Válidos)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Faltante
-\end{minipage} \\
-\midrule
-\endhead
-\begin{minipage}[t]{\linewidth}\raggedright
-Hair\\
-{[}factor{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Black\\
-2. Brown\\
-3. Red\\
-4. Blond\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-108 (18,2\%)\\
-286 (48,3\%)\\
-71 (12,0\%)\\
-127 (21,5\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-Eye\\
-{[}factor{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Brown\\
-2. Blue\\
-3. Hazel\\
-4. Green\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-220 (37,2\%)\\
-215 (36,3\%)\\
-93 (15,7\%)\\
-64 (10,8\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-Sex\\
-{[}factor{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Male\\
-2. Female\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-279 (47,1\%)\\
-313 (52,9\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\bottomrule
-\end{longtable}
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3472}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3194}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}@{}}
+  \toprule
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Variável
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Estatísticas / Valores
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Freqs (\% de Válidos)
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Faltante
+  \end{minipage} \\
+  \midrule
+  \endhead
+  \begin{minipage}[t]{\linewidth}\raggedright
+  Hair\\
+  {[}factor{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. Black\\
+  2. Brown\\
+  3. Red\\
+  4. Blond\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  108 (18,2\%)\\
+  286 (48,3\%)\\
+  71 (12,0\%)\\
+  127 (21,5\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  Eye\\
+  {[}factor{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. Brown\\
+  2. Blue\\
+  3. Hazel\\
+  4. Green\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  220 (37,2\%)\\
+  215 (36,3\%)\\
+  93 (15,7\%)\\
+  64 (10,8\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  Sex\\
+  {[}factor{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. Male\\
+  2. Female\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  279 (47,1\%)\\
+  313 (52,9\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \bottomrule
+  \end{longtable}
+\item
+  Usando vetores com elementos nomeados, podemos traduzir o conteúdo do \emph{data frame} para português:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{cabelo }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
-  \StringTok{\textquotesingle{}Brown\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Castanhos\textquotesingle{}}\NormalTok{,}
-  \StringTok{\textquotesingle{}Blond\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Louros\textquotesingle{}}\NormalTok{,}
-  \StringTok{\textquotesingle{}Black\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Pretos\textquotesingle{}}\NormalTok{,}
-  \StringTok{\textquotesingle{}Red\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Ruivos\textquotesingle{}}
+  \StringTok{\textquotesingle{}Brown\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}castanhos\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Blond\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}louros\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Black\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}pretos\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Red\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}ruivos\textquotesingle{}}
 \NormalTok{)}
 
 \NormalTok{olhos }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
-  \StringTok{\textquotesingle{}Brown\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Castanhos\textquotesingle{}}\NormalTok{,}
-  \StringTok{\textquotesingle{}Blue\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Azuis\textquotesingle{}}\NormalTok{,}
-  \StringTok{\textquotesingle{}Hazel\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Avelã\textquotesingle{}}\NormalTok{,}
-  \StringTok{\textquotesingle{}Green\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Verdes\textquotesingle{}}
+  \StringTok{\textquotesingle{}Brown\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}castanhos\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Blue\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}azuis\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Hazel\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}avelã\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Green\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}verdes\textquotesingle{}}
 \NormalTok{)}
 
 \NormalTok{sexo }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
-  \StringTok{\textquotesingle{}Male\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Homem\textquotesingle{}}\NormalTok{,}
-  \StringTok{\textquotesingle{}Female\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}Mulher\textquotesingle{}}
+  \StringTok{\textquotesingle{}Male\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}homem\textquotesingle{}}\NormalTok{,}
+  \StringTok{\textquotesingle{}Female\textquotesingle{}} \OtherTok{=} \StringTok{\textquotesingle{}mulher\textquotesingle{}}
 \NormalTok{)}
 
 \NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ df\_orig }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{transmute}\NormalTok{(}
-    \AttributeTok{Cabelos =}\NormalTok{ cabelo[Hair],}
-    \AttributeTok{Olhos =}\NormalTok{ olhos[Eye],}
-    \AttributeTok{Sexo =}\NormalTok{ sexo[Sex]}
+    \AttributeTok{cabelos =}\NormalTok{ cabelo[Hair],}
+    \AttributeTok{olhos =}\NormalTok{ olhos[Eye],}
+    \AttributeTok{sexo =}\NormalTok{ sexo[Sex]}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
+\item
+  O novo sumário:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2839,231 +2867,378 @@ Sex\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{longtable}[]{@{}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1918}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3425}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3151}}
-  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1507}}@{}}
-\toprule
-\begin{minipage}[b]{\linewidth}\raggedright
-Variável
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Estatísticas / Valores
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Freqs (\% de Válidos)
-\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-Faltante
-\end{minipage} \\
-\midrule
-\endhead
-\begin{minipage}[t]{\linewidth}\raggedright
-Cabelos\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Castanhos\\
-2. Louros\\
-3. Pretos\\
-4. Ruivos\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-108 (18,2\%)\\
-286 (48,3\%)\\
-71 (12,0\%)\\
-127 (21,5\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-Olhos\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Avelã\\
-2. Azuis\\
-3. Castanhos\\
-4. Verdes\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-93 (15,7\%)\\
-215 (36,3\%)\\
-220 (37,2\%)\\
-64 (10,8\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\begin{minipage}[t]{\linewidth}\raggedright
-Sexo\\
-{[}character{]}\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-1. Homem\\
-2. Mulher\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-279 (47,1\%)\\
-313 (52,9\%)\strut
-\end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-0\\
-(0,0\%)\strut
-\end{minipage} \\
-\bottomrule
-\end{longtable}
+  \begin{longtable}[]{@{}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1918}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3425}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3151}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1507}}@{}}
+  \toprule
+  \begin{minipage}[b]{\linewidth}\raggedright
+  Variável
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Estatísticas / Valores
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Freqs (\% de Válidos)
+  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+  Faltante
+  \end{minipage} \\
+  \midrule
+  \endhead
+  \begin{minipage}[t]{\linewidth}\raggedright
+  cabelos\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. castanhos\\
+  2. louros\\
+  3. pretos\\
+  4. ruivos\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  108 (18,2\%)\\
+  286 (48,3\%)\\
+  71 (12,0\%)\\
+  127 (21,5\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  olhos\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. avelã\\
+  2. azuis\\
+  3. castanhos\\
+  4. verdes\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  93 (15,7\%)\\
+  215 (36,3\%)\\
+  220 (37,2\%)\\
+  64 (10,8\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \begin{minipage}[t]{\linewidth}\raggedright
+  sexo\\
+  {[}character{]}\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  1. homem\\
+  2. mulher\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  279 (47,1\%)\\
+  313 (52,9\%)\strut
+  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
+  0\\
+  (0,0\%)\strut
+  \end{minipage} \\
+  \bottomrule
+  \end{longtable}
+\item
+  Um {\hl{gráfico de barras}} contém uma barra para cada valor de uma {\hl{variável categórica.}}
+\item
+  Usamos \texttt{geom\_bar} para gerar um gráfico de barras de cores de cabelo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Cabelos)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-67-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(Cabelos)))) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-68-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-69-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ cabelos)) }\SpecialCharTok{+}
     \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{))}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-67-1} \end{center}
+
+  \begin{rmdimportant}
+
+  \textbf{Gráfico de barras $\times$ histograma:}
+
+  \begin{itemize}
+  \item
+    {\hl{Os dois tipos de gráficos mostram a frequência}} (quantidade de elementos) {\hl{no eixo vertical}}.
+  \item
+    No {\hl{gráfico de barras}}:
+
+    \begin{itemize}
+    \item
+      A variável é {\hl{categórica}} (nominal).
+    \item
+      {\hl{Cada barra}} corresponde a {\hl{um valor}} da variável.
+    \item
+      {\hl{As barras não se tocam}}, enfatizando este fato.
+    \end{itemize}
+  \item
+    No {\hl{histograma}} (\protect\hyperlink{histograma1}{veja o exemplo}):
+
+    \begin{itemize}
+    \item
+      A variável é {\hl{quantitativa}} (intervalar ou racional).
+    \item
+      {\hl{Cada barra}} corresponde a {\hl{uma classe de valores}} da variável.
+    \item
+      {\hl{As barras se tocam}}, para enfatizar que as classes são contíguas.
+    \end{itemize}
+  \end{itemize}
+
+  \end{rmdimportant}
+\item
+  Um gráfico de barras é mais legível quando as barras são mostradas em ordem crescente ou decrescente.
+\item
+  Embora os valores da variável \texttt{cabelos} sejam \emph{strings}, podemos aplicar a eles funções que manipulam fatores.
+\item
+  A função \texttt{fct\_infreq}, do pacote \texttt{forcats}, ordena os valores em {\hl{ordem decrescente de frequência}}.
+\item
+  A função \texttt{fct\_rev}, também do pacote \texttt{forcats}, inverte a ordenação.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)))) }\SpecialCharTok{+}
     \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
-    \FunctionTok{coord\_flip}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Sexo)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-72-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Olhos)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-73-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Olhos)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{))}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-74-1} \end{center}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_infreq}\NormalTok{(Cabelos), }\AttributeTok{fill =}\NormalTok{ Olhos)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
-    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Sexo) }\SpecialCharTok{+}
     \FunctionTok{labs}\NormalTok{(}
-      \AttributeTok{title =} \StringTok{\textquotesingle{}Cores de cabelos e olhos por sexo\textquotesingle{}}\NormalTok{,}
-      \AttributeTok{y =} \ConstantTok{NULL}\NormalTok{,}
-      \AttributeTok{x =} \StringTok{\textquotesingle{}Cabelos\textquotesingle{}}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
 \NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-68-1} \end{center}
+\item
+  A posição $x$ e a altura de cada barra são estéticas: {\hl{a posição $x$ representa a cor dos cabelos}}, e {\hl{a altura representa a frequência daquela cor}}.
+\item
+  Vamos acrescentar mais uma estética: {\hl{a cor de preenchimento vai representar o sexo}}.
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Sexo, }\AttributeTok{fill =} \FunctionTok{fct\_infreq}\NormalTok{(Olhos))) }\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)), }\AttributeTok{fill =}\NormalTok{ sexo)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-69-1} \end{center}
+\item
+  Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (\texttt{scale\_fill\_discrete}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)), }\AttributeTok{fill =}\NormalTok{ sexo)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
+\item
+  Podemos fazer um gráfico de barras horizontais com \texttt{coord\_flip}. Isto geralmente é útil quando os rótulos das barras são longos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)), }\AttributeTok{fill =}\NormalTok{ sexo)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{coord\_flip}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
+\item
+  Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?
+\item
+  Se posicionarmos as barras lado a lado, fica mais fácil responder.
+\item
+  Usamos o argumento \texttt{position\ =\ \textquotesingle{}dodge\textquotesingle{}} de \texttt{geom\_bar}. ``\emph{Dodge}'' significa ``esquivar-se'', em inglês.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)), }\AttributeTok{fill =}\NormalTok{ sexo)) }\SpecialCharTok{+}
     \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
-    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Cabelos, }\AttributeTok{labeller =}\NormalTok{ label\_both) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-72-1} \end{center}
+\item
+  Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)), }\AttributeTok{fill =}\NormalTok{ olhos)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}
+      \AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-73-1} \end{center}
+\item
+  Ou, com barras lado a lado:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)), }\AttributeTok{fill =}\NormalTok{ olhos)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}
+      \AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)}
+\NormalTok{    ) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-74-1} \end{center}
+\item
+  Perguntas que este gráfico sugere:
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \item
+    Há mais pessoas louras de olhos castanhos do que louras de olhos azuis. O esperado não seria mais pessoas louras de olhos azuis? Pessoas louras de olhos castanhos pintaram os cabelos?
+  \item
+    Há muito mais ruivos de olhos azuis do que ruivos de olhos verdes. Não deveria ser o contrário? Também são pessoas que pintaram os cabelos de ruivo? Ou houve erro no registro das cores dos olhos?
+  \end{enumerate}
+\item
+  Para incluir o sexo, podemos {\hl{facetar}} o gráfico. Geramos dois subgráficos lado a lado:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_infreq}\NormalTok{(cabelos)), }\AttributeTok{fill =}\NormalTok{ olhos)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{sexo) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{title =} \StringTok{\textquotesingle{}Cores de cabelos e olhos por sexo\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}\NormalTok{,}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
+\item
+  Se a quantidade grande de pessoas louras de olhos castanhos (em comparação com pessoas louras de olhos azuis) for por causa da pintura de cabelos, então o gráfico acima mostra que as mulheres pintam os cabelos de louro com mais frequência do que os homens.
+\item
+  Quando facetamos por cor de cabelos, também podemos observar as mesmas diferenças entre homens e mulheres:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ sexo, }\AttributeTok{fill =} \FunctionTok{fct\_infreq}\NormalTok{(olhos))) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{position =} \StringTok{\textquotesingle{}dodge\textquotesingle{}}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{cabelos, }\AttributeTok{labeller =}\NormalTok{ label\_both) }\SpecialCharTok{+}
     \FunctionTok{scale\_fill\_discrete}\NormalTok{(}\AttributeTok{type =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}brown\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}blue\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\#908050\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}green\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{+}
     \FunctionTok{labs}\NormalTok{(}
       \AttributeTok{x =} \ConstantTok{NULL}\NormalTok{,}
       \AttributeTok{y =} \ConstantTok{NULL}\NormalTok{,}
-      \AttributeTok{fill =} \StringTok{\textquotesingle{}Olhos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{fill =} \StringTok{\textquotesingle{}olhos\textquotesingle{}}\NormalTok{,}
       \AttributeTok{title =} \StringTok{\textquotesingle{}Cor dos olhos e sexo por cor dos cabelos\textquotesingle{}}
 \NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
+\end{itemize}
 
-\hypertarget{dataframe-juxe1-contendo-os-totais}{%
-\subsection{\texorpdfstring{\emph{Dataframe} já contendo os totais}{Dataframe já contendo os totais}}\label{dataframe-juxe1-contendo-os-totais}}
+\hypertarget{data-frame-juxe1-contendo-os-totais}{%
+\subsection{\texorpdfstring{\emph{Data frame} já contendo os totais}{Data frame já contendo os totais}}\label{data-frame-juxe1-contendo-os-totais}}
+
+\begin{itemize}
+\item
+  Você percebeu que \texttt{geom\_bar} analisa o \emph{data frame} e calcula as frequências necessárias para construir o gráfico.
+\item
+  Em algumas situações, {\hl{o \emph{data frame} já contém as frequências}} (em vez de conter uma linha por indivíduo).
+\item
+  Vamos usar \texttt{count} para criar um \emph{data frame} assim:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df\_tot }\OtherTok{\textless{}{-}}\NormalTok{ df }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{count}\NormalTok{(Sexo, Cabelos, Olhos)}
+  \FunctionTok{count}\NormalTok{(sexo, cabelos, olhos)}
 
 \NormalTok{df\_tot}
 \DocumentationTok{\#\# \# A tibble: 32 x 4}
-\DocumentationTok{\#\#   Sexo  Cabelos   Olhos         n}
+\DocumentationTok{\#\#   sexo  cabelos   olhos         n}
 \DocumentationTok{\#\#   \textless{}chr\textgreater{} \textless{}chr\textgreater{}     \textless{}chr\textgreater{}     \textless{}int\textgreater{}}
-\DocumentationTok{\#\# 1 Homem Castanhos Avelã        10}
-\DocumentationTok{\#\# 2 Homem Castanhos Azuis        11}
-\DocumentationTok{\#\# 3 Homem Castanhos Castanhos    32}
-\DocumentationTok{\#\# 4 Homem Castanhos Verdes        3}
-\DocumentationTok{\#\# 5 Homem Louros    Avelã        25}
-\DocumentationTok{\#\# 6 Homem Louros    Azuis        50}
+\DocumentationTok{\#\# 1 homem castanhos avelã        10}
+\DocumentationTok{\#\# 2 homem castanhos azuis        11}
+\DocumentationTok{\#\# 3 homem castanhos castanhos    32}
+\DocumentationTok{\#\# 4 homem castanhos verdes        3}
+\DocumentationTok{\#\# 5 homem louros    avelã        25}
+\DocumentationTok{\#\# 6 homem louros    azuis        50}
 \DocumentationTok{\#\# \# ... with 26 more rows}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Para $4$ cores de cabelo, $4$ cores de olhos, e $2$ sexos, são $32$ combinações possíveis.
+\item
+  Com este \emph{data frame}, podemos gerar todos os gráficos anteriores usando {\hl{\texttt{geom\_col} no lugar de \texttt{geom\_bar}}}. Por exemplo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{df\_tot }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Cabelos, }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
-    \FunctionTok{geom\_col}\NormalTok{()}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ cabelos, }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    )}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-78-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-78-1} \end{center}
+\item
+  Com \texttt{geom\_col}, {\hl{precisamos passar a estética $y$}} (no nosso exemplo, a variável \texttt{n}, que contém as frequências).
+\item
+  Para ordenar as barras, usamos a função \texttt{fct\_reorder}, que ordena os níveis de um fator (\texttt{cabelos}) de acordo com o resultado de uma função (\texttt{sum}) aplicada sobre os valores de outra variável (\texttt{n}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df\_tot }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{fct\_reorder}\NormalTok{(cabelos, n, sum), }\AttributeTok{y =}\NormalTok{ n)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_col}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}
+      \AttributeTok{x =} \StringTok{\textquotesingle{}cabelos\textquotesingle{}}\NormalTok{,}
+      \AttributeTok{y =} \ConstantTok{NULL}
+\NormalTok{    )}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-79-1} \end{center}
+\end{itemize}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
 \section{Gráficos de linha e séries temporais}\label{gruxe1ficos-de-linha-e-suxe9ries-temporais}}
 
-\hypertarget{dataset-1}{%
-\subsection{Dataset}\label{dataset-1}}
+\hypertarget{dataset}{%
+\subsection{Dataset}\label{dataset}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3131,7 +3306,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-82-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-83-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3155,7 +3330,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-83-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-84-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3167,7 +3342,7 @@ Sexo\\
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-84-1} \end{center}
+\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-85-1} \end{center}
 
 \begin{Shaded}
 \begin{Highlighting}[]

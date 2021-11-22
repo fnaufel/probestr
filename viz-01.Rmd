@@ -551,7 +551,7 @@ embed_yt('c-LoZ9e8xWc')
       geom_histogram()
   ```
 
-* Vamos mudar isto passando um vetor de limites das classes (*breaks*). Vamos acrescentar rótulos também:
+* []{#histograma1} Vamos mudar isto passando um vetor de limites das classes (*breaks*). Vamos acrescentar rótulos também: 
 
   ```{r hist-sono2}
   sono %>% 
