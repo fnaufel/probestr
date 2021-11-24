@@ -649,6 +649,88 @@ embed_yt('c-LoZ9e8xWc')
   * $17{,}4$
   
 
+## Personalização do tema
+
+* O `ggplot2` tem um tema *default*, chamado `theme_gray`, que gera [o *scatterplot* de um exemplo anterior](#grafico4) deste capítulo do seguinte modo:
+
+  ```{r echo=FALSE, message=FALSE, warning=FALSE}
+  grafico4 +
+    theme_gray()
+  ```
+
+* Para este material, escolhi o tema `theme_linedraw`, que usa linhas pretas sobre fundo branco:
+
+  ```{r echo=FALSE, message=FALSE, warning=FALSE}
+  grafico4 +
+    theme_linedraw()
+  ```
+
+* Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:
+
+  * Mudei o tamanho do texto dos rótulos.
+  
+  * Fiz o rótulo do eixo $y$ aparecer na horizontal; embora isto ocupe um pouco mais de espaço, evita que o leitor tenha que girar a cabeça para ler o rótulo.
+  
+  * Eliminei as linhas dos eixos, para o gráfico ficar mais leve.
+  
+  * Eliminei a moldura da área de dados, para o gráfico ficar mais leve.
+  
+  * Eliminei a grade secundária, para o gráfico ficar mais leve.
+  
+* O resultado é
+  
+  ```{r echo=FALSE, message=FALSE, warning=FALSE}
+  grafico4
+  ```
+
+* Os meus comandos para alterar o tema são
+
+  ```{r eval=FALSE}
+  # Tamanho do texto depende do formato de saída (html ou pdf):
+  plot_text_size = ifelse(is_html_output(), 12, 13)
+    
+  # Tema mais leve:
+  theme_set(
+    theme_linedraw() +
+      theme(
+        # Tamanho do texto
+        text = element_text(size = plot_text_size),
+        # Eixo y
+        axis.title.y.left = element_text(
+          # Nunca girar o rótulo do eixo y
+          angle = 0,
+          # Separar o rótulo do eixo um pouco
+          margin = margin(r = 20),
+          # Posicionar verticalmente no meio
+          vjust = .5
+        ),
+        # Eixo y secundário (à direita), quando presente
+        axis.title.y.right = element_text(
+          # Nunca girar o rótulo do eixo y
+          angle = 0,
+          # Separar o rótulo do eixo um pouco
+          margin = margin(l = 20),
+          # Posicionar verticalmente no meio
+          vjust = .5
+        ),
+        # Não colocar marcas no eixo y secundário
+        axis.ticks.y.right = element_blank(),
+        # Separar o eixo x do rótulo um pouco mais
+        axis.title.x.bottom = element_text(
+          margin = margin(t = 20)
+        ),
+        # Eliminar linhas dos eixos
+        axis.line = element_blank(),
+        # Eliminar a moldura da área de dados
+        panel.border = element_blank(),
+        # Eliminar a grade secundária
+        panel.grid.minor = element_blank()
+      )
+  )
+  
+  ```
+
+
 ## Exercícios
 
 ::: {.rmdimportant latex=1}
