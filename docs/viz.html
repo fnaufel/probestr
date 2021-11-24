@@ -1227,16 +1227,90 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 </ul>
 </div>
-<div id="exercícios-3" class="section level2" number="3.9">
+<div id="personalização-do-tema" class="section level2" number="3.9">
 <h2>
-<span class="header-section-number">3.9</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.9</span> Personalização do tema<a class="anchor" aria-label="anchor" href="#personaliza%C3%A7%C3%A3o-do-tema"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<p>O <code>ggplot2</code> tem um tema <em>default</em>, chamado <code>theme_gray</code>, que gera <a href="viz.html#grafico4">o <em>scatterplot</em> de um exemplo anterior</a> deste capítulo do seguinte modo:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Para este material, escolhi o tema <code>theme_linedraw</code>, que usa linhas pretas sobre fundo branco:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:</p>
+<ul>
+<li><p>Mudei o tamanho do texto dos rótulos.</p></li>
+<li><p>Fiz o rótulo do eixo <span class="math inline">\(y\)</span> aparecer na horizontal; embora isto ocupe um pouco mais de espaço, evita que o leitor tenha que girar a cabeça para ler o rótulo.</p></li>
+<li><p>Eliminei as linhas dos eixos, para o gráfico ficar mais leve.</p></li>
+<li><p>Eliminei a moldura da área de dados, para o gráfico ficar mais leve.</p></li>
+<li><p>Eliminei a grade secundária, para o gráfico ficar mais leve.</p></li>
+</ul>
+</li>
+<li>
+<p>O resultado é</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Os meus comandos para alterar o tema são</p>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Tamanho do texto depende do formato de saída (html ou pdf):</span>
+<span class="va">plot_text_size</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu">is_html_output</span><span class="op">(</span><span class="op">)</span>, <span class="fl">12</span>, <span class="fl">13</span><span class="op">)</span>
+
+<span class="co"># Tema mais leve:</span>
+<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_linedraw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+      <span class="co"># Tamanho do texto</span>
+      text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="va">plot_text_size</span><span class="op">)</span>,
+      <span class="co"># Eixo y</span>
+      axis.title.y.left <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>
+        <span class="co"># Nunca girar o rótulo do eixo y</span>
+        angle <span class="op">=</span> <span class="fl">0</span>,
+        <span class="co"># Separar o rótulo do eixo um pouco</span>
+        margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span>r <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,
+        <span class="co"># Posicionar verticalmente no meio</span>
+        vjust <span class="op">=</span> <span class="fl">.5</span>
+      <span class="op">)</span>,
+      <span class="co"># Eixo y secundário (à direita), quando presente</span>
+      axis.title.y.right <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>
+        <span class="co"># Nunca girar o rótulo do eixo y</span>
+        angle <span class="op">=</span> <span class="fl">0</span>,
+        <span class="co"># Separar o rótulo do eixo um pouco</span>
+        margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span>l <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>,
+        <span class="co"># Posicionar verticalmente no meio</span>
+        vjust <span class="op">=</span> <span class="fl">.5</span>
+      <span class="op">)</span>,
+      <span class="co"># Não colocar marcas no eixo y secundário</span>
+      axis.ticks.y.right <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+      <span class="co"># Separar o eixo x do rótulo um pouco mais</span>
+      axis.title.x.bottom <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>
+        margin <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
+      <span class="op">)</span>,
+      <span class="co"># Eliminar linhas dos eixos</span>
+      axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+      <span class="co"># Eliminar a moldura da área de dados</span>
+      panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
+      <span class="co"># Eliminar a grade secundária</span>
+      panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+</li>
+</ul>
+</div>
+<div id="exercícios-3" class="section level2" number="3.10">
+<h2>
+<span class="header-section-number">3.10</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-3"><i class="fas fa-link"></i></a>
 </h2>
 <div class="rmdimportant">
 <p>Não se esqueça de incluir títulos nos gráficos e rótulos nos eixos.</p>
 </div>
-<div id="peso-cerebral-e-peso-corporal" class="section level3" number="3.9.1">
+<div id="peso-cerebral-e-peso-corporal" class="section level3" number="3.10.1">
 <h3>
-<span class="header-section-number">3.9.1</span> Peso cerebral e peso corporal<a class="anchor" aria-label="anchor" href="#peso-cerebral-e-peso-corporal"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.10.1</span> Peso cerebral e peso corporal<a class="anchor" aria-label="anchor" href="#peso-cerebral-e-peso-corporal"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Observe os <a href="viz.html#grafico4">comandos que geraram o gráfico <code>grafico4</code></a>.</p></li>
@@ -1248,13 +1322,13 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Instale o pacote <code>gg_repel</code> e acrescente ao gráfico <code>grafico4</code> (não facetado) a geometria <code>geom_label_repel</code> (consulte a ajuda) para rotular o mamífero insetívoro identificado no item anterior com o seu nome, <span class="hl">sem cobrir outros pontos do gráfico</span>. Cuidado para não alterar a legenda que já existe.</p></li>
 </ol>
 </div>
-<div id="peso-cerebral-e-horas-de-sono" class="section level3" number="3.9.2">
+<div id="peso-cerebral-e-horas-de-sono" class="section level3" number="3.10.2">
 <h3>
-<span class="header-section-number">3.9.2</span> Peso cerebral e horas de sono<a class="anchor" aria-label="anchor" href="#peso-cerebral-e-horas-de-sono"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.10.2</span> Peso cerebral e horas de sono<a class="anchor" aria-label="anchor" href="#peso-cerebral-e-horas-de-sono"><i class="fas fa-link"></i></a>
 </h3>
 <div class="rmdbox">
 <p>Use o <em>data frame</em> <code>sono</code> definido como</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
 <span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">%&gt;%</span> 
@@ -1271,18 +1345,18 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
 </div>
-<div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.9.3">
+<div id="igualdade-de-gênero-entre-furacões" class="section level3" number="3.10.3">
 <h3>
-<span class="header-section-number">3.9.3</span> Igualdade de gênero entre furacões?<a class="anchor" aria-label="anchor" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.10.3</span> Igualdade de gênero entre furacões?<a class="anchor" aria-label="anchor" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><i class="fas fa-link"></i></a>
 </h3>
 <p><a href="https://www.pnas.org/content/111/24/8782">Este artigo</a> tenta achar uma relação entre o gênero do nome de um furacão e a quantidade de vítimas fatais provocadas por ele.</p>
 <div class="rmdbox">
 <p>Os dados estão no pacote <code>DAAG</code>, que deve ser instalado:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va">DAAG</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"DAAG"</span><span class="op">)</span></code></pre></div>
 <p>Vamos usar apenas algumas das variáveis, com nomes em português.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">hurricNamed</span> <span class="op">%&gt;%</span> 
   <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">transmute</span><span class="op">(</span>
@@ -1372,11 +1446,12 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 <li><a class="nav-link" href="#ogiva"><span class="header-section-number">3.7</span> Ogiva</a></li>
 <li><a class="nav-link" href="#ramos-e-folhas"><span class="header-section-number">3.8</span> Ramos e folhas</a></li>
+<li><a class="nav-link" href="#personaliza%C3%A7%C3%A3o-do-tema"><span class="header-section-number">3.9</span> Personalização do tema</a></li>
 <li>
-<a class="nav-link" href="#exerc%C3%ADcios-3"><span class="header-section-number">3.9</span> Exercícios</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#peso-cerebral-e-peso-corporal"><span class="header-section-number">3.9.1</span> Peso cerebral e peso corporal</a></li>
-<li><a class="nav-link" href="#peso-cerebral-e-horas-de-sono"><span class="header-section-number">3.9.2</span> Peso cerebral e horas de sono</a></li>
-<li><a class="nav-link" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><span class="header-section-number">3.9.3</span> Igualdade de gênero entre furacões?</a></li>
+<a class="nav-link" href="#exerc%C3%ADcios-3"><span class="header-section-number">3.10</span> Exercícios</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#peso-cerebral-e-peso-corporal"><span class="header-section-number">3.10.1</span> Peso cerebral e peso corporal</a></li>
+<li><a class="nav-link" href="#peso-cerebral-e-horas-de-sono"><span class="header-section-number">3.10.2</span> Peso cerebral e horas de sono</a></li>
+<li><a class="nav-link" href="#igualdade-de-g%C3%AAnero-entre-furac%C3%B5es"><span class="header-section-number">3.10.3</span> Igualdade de gênero entre furacões?</a></li>
 </ul>
 </li>
 </ul>
@@ -1396,7 +1471,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2021)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 24/11/2021)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

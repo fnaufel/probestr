@@ -4,6 +4,11 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
+/* Fix margin in paged data frames */
+.pagedtable-wrapper {
+  margin-bottom: 20px;
+}
+
 /* Fix font in tables */
 table.lightable-paper tbody {
   font-family: 'JetBrains Mono', monospace; !important;

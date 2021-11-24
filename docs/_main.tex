@@ -274,6 +274,7 @@
 % For highlighting using \hl{}
 \usepackage{soul}
 
+
 % Code chunks and output
 \usepackage[framemethod=pgf]{mdframed}
 \renewenvironment{Shaded}{
@@ -322,7 +323,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 22/11/2021)}
+\date{(versão de 24/11/2021)}
 
 \begin{document}
 \maketitle
@@ -2028,6 +2029,87 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   \end{itemize}
 \end{itemize}
 
+\hypertarget{personalizauxe7uxe3o-do-tema}{%
+\section{Personalização do tema}\label{personalizauxe7uxe3o-do-tema}}
+
+\begin{itemize}
+\item
+  O \texttt{ggplot2} tem um tema \emph{default}, chamado \texttt{theme\_gray}, que gera \protect\hyperlink{grafico4}{o \emph{scatterplot} de um exemplo anterior} deste capítulo do seguinte modo:
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-26-1} \end{center}
+\item
+  Para este material, escolhi o tema \texttt{theme\_linedraw}, que usa linhas pretas sobre fundo branco:
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-27-1} \end{center}
+\item
+  Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:
+
+  \begin{itemize}
+  \item
+    Mudei o tamanho do texto dos rótulos.
+  \item
+    Fiz o rótulo do eixo $y$ aparecer na horizontal; embora isto ocupe um pouco mais de espaço, evita que o leitor tenha que girar a cabeça para ler o rótulo.
+  \item
+    Eliminei as linhas dos eixos, para o gráfico ficar mais leve.
+  \item
+    Eliminei a moldura da área de dados, para o gráfico ficar mais leve.
+  \item
+    Eliminei a grade secundária, para o gráfico ficar mais leve.
+  \end{itemize}
+\item
+  O resultado é
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-28-1} \end{center}
+\item
+  Os meus comandos para alterar o tema são
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Tamanho do texto depende do formato de saída (html ou pdf):}
+\NormalTok{plot\_text\_size }\OtherTok{=} \FunctionTok{ifelse}\NormalTok{(}\FunctionTok{is\_html\_output}\NormalTok{(), }\DecValTok{12}\NormalTok{, }\DecValTok{13}\NormalTok{)}
+
+\CommentTok{\# Tema mais leve:}
+\FunctionTok{theme\_set}\NormalTok{(}
+  \FunctionTok{theme\_linedraw}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}
+      \CommentTok{\# Tamanho do texto}
+      \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =}\NormalTok{ plot\_text\_size),}
+      \CommentTok{\# Eixo y}
+      \AttributeTok{axis.title.y.left =} \FunctionTok{element\_text}\NormalTok{(}
+        \CommentTok{\# Nunca girar o rótulo do eixo y}
+        \AttributeTok{angle =} \DecValTok{0}\NormalTok{,}
+        \CommentTok{\# Separar o rótulo do eixo um pouco}
+        \AttributeTok{margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{r =} \DecValTok{20}\NormalTok{),}
+        \CommentTok{\# Posicionar verticalmente no meio}
+        \AttributeTok{vjust =}\NormalTok{ .}\DecValTok{5}
+\NormalTok{      ),}
+      \CommentTok{\# Eixo y secundário (à direita), quando presente}
+      \AttributeTok{axis.title.y.right =} \FunctionTok{element\_text}\NormalTok{(}
+        \CommentTok{\# Nunca girar o rótulo do eixo y}
+        \AttributeTok{angle =} \DecValTok{0}\NormalTok{,}
+        \CommentTok{\# Separar o rótulo do eixo um pouco}
+        \AttributeTok{margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{l =} \DecValTok{20}\NormalTok{),}
+        \CommentTok{\# Posicionar verticalmente no meio}
+        \AttributeTok{vjust =}\NormalTok{ .}\DecValTok{5}
+\NormalTok{      ),}
+      \CommentTok{\# Não colocar marcas no eixo y secundário}
+      \AttributeTok{axis.ticks.y.right =} \FunctionTok{element\_blank}\NormalTok{(),}
+      \CommentTok{\# Separar o eixo x do rótulo um pouco mais}
+      \AttributeTok{axis.title.x.bottom =} \FunctionTok{element\_text}\NormalTok{(}
+        \AttributeTok{margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{t =} \DecValTok{20}\NormalTok{)}
+\NormalTok{      ),}
+      \CommentTok{\# Eliminar linhas dos eixos}
+      \AttributeTok{axis.line =} \FunctionTok{element\_blank}\NormalTok{(),}
+      \CommentTok{\# Eliminar a moldura da área de dados}
+      \AttributeTok{panel.border =} \FunctionTok{element\_blank}\NormalTok{(),}
+      \CommentTok{\# Eliminar a grade secundária}
+      \AttributeTok{panel.grid.minor =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{    )}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
 \hypertarget{exercuxedcios-3}{%
 \section{Exercícios}\label{exercuxedcios-3}}
 
@@ -2596,9 +2678,9 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 
 \begin{itemize}
 \item
-  Um \emph{boxplot} é uma representação visual dos valores que calculamos acima.
+  {\hl{Um \emph{boxplot} é uma representação visual dos valores que calculamos acima.}}
 \item
-  No \texttt{ggplot2}, a geometria \texttt{geom\_boxplot} constrói \emph{boxplots}:
+  No \texttt{ggplot2}, {\hl{a geometria \texttt{geom\_boxplot} constrói \emph{boxplots}:}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2610,7 +2692,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-58-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-62-1} \end{center}
 \item
   A {\hl{caixa}} vai do valor do {\hl{primeiro quartil}} (embaixo) até o {\hl{terceiro quartil}} (em cima).
 \item
@@ -2631,7 +2713,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-59-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-63-1} \end{center}
 \item
   No \emph{boxplot} de onívoros, {\hl{os \emph{outliers} aparecem como pontos isolados,}} acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).
 \item
@@ -2679,7 +2761,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-60-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-64-1} \end{center}
 \item
   {\hl{Quando a caixa é longa,}} o IQR é grande, e {\hl{os valores estão muito espalhados;}} é o caso dos herbívoros e insetívoros.
 \item
@@ -2703,7 +2785,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   O R tem um \emph{array} de $3$ dimensões com dados sobre as cores dos cabelos e dos olhos de $592$ alunos e alunas de uma universidade americana em $1974$.
 \item
-  Se pedirmos para o R exibir os dados, veremos duas matrizes, uma para cada sexo:
+  Se pedirmos para o R exibir os dados, veremos {\hl{duas matrizes}}, uma para cada sexo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2752,80 +2834,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 \item
-  Vamos ver o sumário:
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{df\_orig }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{dfSummary}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{print}\NormalTok{()}
-\end{Highlighting}
-\end{Shaded}
-
-  \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3472}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3194}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1528}}@{}}
-  \toprule
-  \begin{minipage}[b]{\linewidth}\raggedright
-  Variável
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Estatísticas / Valores
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Freqs (\% de Válidos)
-  \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Faltante
-  \end{minipage} \\
-  \midrule
-  \endhead
-  \begin{minipage}[t]{\linewidth}\raggedright
-  Hair\\
-  {[}factor{]}\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  1. Black\\
-  2. Brown\\
-  3. Red\\
-  4. Blond\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  108 (18,2\%)\\
-  286 (48,3\%)\\
-  71 (12,0\%)\\
-  127 (21,5\%)\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  0\\
-  (0,0\%)\strut
-  \end{minipage} \\
-  \begin{minipage}[t]{\linewidth}\raggedright
-  Eye\\
-  {[}factor{]}\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  1. Brown\\
-  2. Blue\\
-  3. Hazel\\
-  4. Green\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  220 (37,2\%)\\
-  215 (36,3\%)\\
-  93 (15,7\%)\\
-  64 (10,8\%)\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  0\\
-  (0,0\%)\strut
-  \end{minipage} \\
-  \begin{minipage}[t]{\linewidth}\raggedright
-  Sex\\
-  {[}factor{]}\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  1. Male\\
-  2. Female\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  279 (47,1\%)\\
-  313 (52,9\%)\strut
-  \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  0\\
-  (0,0\%)\strut
-  \end{minipage} \\
-  \bottomrule
-  \end{longtable}
+  O \texttt{ggplot2} e os outros pacotes do \texttt{tidyverse} foram projetados para trabalhar com \emph{data frames} neste formato, {\hl{com uma observação (um indivíduo, um elemento) por linha.}} É o chamado {\hl{formato \emph{tidy}.}}
 \item
   Usando vetores com elementos nomeados, podemos traduzir o conteúdo do \emph{data frame} para português:
 
@@ -2859,7 +2868,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 \item
-  O novo sumário:
+  Um sumário:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2933,10 +2942,16 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
   \end{minipage} \\
   \bottomrule
   \end{longtable}
+\end{itemize}
+
+\hypertarget{gerando-gruxe1ficos-de-barras}{%
+\subsection{Gerando gráficos de barras}\label{gerando-gruxe1ficos-de-barras}}
+
+\begin{itemize}
 \item
   Um {\hl{gráfico de barras}} contém uma barra para cada valor de uma {\hl{variável categórica.}}
 \item
-  Usamos \texttt{geom\_bar} para gerar um gráfico de barras de cores de cabelo:
+  {\hl{Usamos \texttt{geom\_bar} para gerar um gráfico de barras}} de cores de cabelo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2947,7 +2962,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-67-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
 
   \begin{rmdimportant}
 
@@ -2965,7 +2980,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
     \item
       {\hl{Cada barra}} corresponde a {\hl{um valor}} da variável.
     \item
-      {\hl{As barras não se tocam}}, enfatizando este fato.
+      {\hl{As barras não se tocam}}, enfatizando o fato de que a variável é categórica.
     \end{itemize}
   \item
     No {\hl{histograma}} (\protect\hyperlink{histograma1}{veja o exemplo}):
@@ -2986,9 +3001,9 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   Embora os valores da variável \texttt{cabelos} sejam \emph{strings}, podemos aplicar a eles funções que manipulam fatores.
 \item
-  A função \texttt{fct\_infreq}, do pacote \texttt{forcats}, ordena os valores em {\hl{ordem decrescente de frequência}}.
+  A {\hl{função \texttt{fct\_infreq}}}, do pacote \texttt{forcats}, ordena os valores em {\hl{ordem decrescente de frequência}}.
 \item
-  A função \texttt{fct\_rev}, também do pacote \texttt{forcats}, inverte a ordenação.
+  A {\hl{função \texttt{fct\_rev}}}, também do pacote \texttt{forcats}, {\hl{inverte a ordenação.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3002,7 +3017,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-68-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
 \item
   A posição $x$ e a altura de cada barra são estéticas: {\hl{a posição $x$ representa a cor dos cabelos}}, e {\hl{a altura representa a frequência daquela cor}}.
 \item
@@ -3020,7 +3035,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-69-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-72-1} \end{center}
 \item
   Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (\texttt{scale\_fill\_discrete}):
 
@@ -3037,9 +3052,9 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-73-1} \end{center}
 \item
-  Podemos fazer um gráfico de barras horizontais com \texttt{coord\_flip}. Isto geralmente é útil quando os rótulos das barras são longos:
+  {\hl{Podemos fazer um gráfico de barras horizontais com \texttt{coord\_flip}.}} Isto geralmente é útil quando os rótulos das barras são longos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3055,7 +3070,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-74-1} \end{center}
 \item
   Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?
 \item
@@ -3076,7 +3091,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-72-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
 \item
   Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:
 
@@ -3095,7 +3110,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-73-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
 \item
   Ou, com barras lado a lado:
 
@@ -3114,9 +3129,9 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-74-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-77-1} \end{center}
 \item
-  Perguntas que este gráfico sugere:
+  Observações e perguntas:
 
   \begin{enumerate}
   \def\labelenumi{\arabic{enumi}.}
@@ -3126,7 +3141,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
     Há muito mais ruivos de olhos azuis do que ruivos de olhos verdes. Não deveria ser o contrário? Também são pessoas que pintaram os cabelos de ruivo? Ou houve erro no registro das cores dos olhos?
   \end{enumerate}
 \item
-  Para incluir o sexo, podemos {\hl{facetar}} o gráfico. Geramos dois subgráficos lado a lado:
+  Para incluir o sexo, podemos {\hl{facetar}} o gráfico. Usando \texttt{facet\_wrap}\footnote{O nome da variável segundo a qual facetar deve aparecer depois de um \texttt{\textasciitilde{}}.}, geramos dois subgráficos lado a lado:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3143,7 +3158,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-78-1} \end{center}
 \item
   Se a quantidade grande de pessoas louras de olhos castanhos (em comparação com pessoas louras de olhos azuis) for por causa da pintura de cabelos, então o gráfico acima mostra que as mulheres pintam os cabelos de louro com mais frequência do que os homens.
 \item
@@ -3165,7 +3180,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-79-1} \end{center}
 \end{itemize}
 
 \hypertarget{data-frame-juxe1-contendo-os-totais}{%
@@ -3173,7 +3188,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 
 \begin{itemize}
 \item
-  Você percebeu que \texttt{geom\_bar} analisa o \emph{data frame} e calcula as frequências necessárias para construir o gráfico.
+  Você percebeu que {\hl{\texttt{geom\_bar} analisa o \emph{data frame} e calcula as frequências}} necessárias para construir o gráfico.
 \item
   Em algumas situações, {\hl{o \emph{data frame} já contém as frequências}} (em vez de conter uma linha por indivíduo).
 \item
@@ -3213,7 +3228,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-78-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-81-1} \end{center}
 \item
   Com \texttt{geom\_col}, {\hl{precisamos passar a estética $y$}} (no nosso exemplo, a variável \texttt{n}, que contém as frequências).
 \item
@@ -3231,14 +3246,18 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-79-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-82-1} \end{center}
 \end{itemize}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
 \section{Gráficos de linha e séries temporais}\label{gruxe1ficos-de-linha-e-suxe9ries-temporais}}
 
-\hypertarget{dataset}{%
-\subsection{Dataset}\label{dataset}}
+\hypertarget{conjunto-de-dados-3}{%
+\subsection{Conjunto de dados}\label{conjunto-de-dados-3}}
+
+\begin{itemize}
+\item
+  O R tem uma matriz com as quantidades de telefones em várias regiões do mundo ao longo de vários anos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3253,6 +3272,12 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \DocumentationTok{\#\# 1961  79831  43173 9053   3338    3224   2005     1076}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Os números representam milhares.
+\item
+  {\hl{Os números dos anos são os nomes das linhas da matriz.}}
+\item
+  Vamos transformar esta matriz em uma \emph{tibble}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3273,6 +3298,19 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \DocumentationTok{\#\# \# ... with 1 more row}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Esta \emph{tibble} {\hl{não está no formato \emph{tidy}}}. Queremos que cada linha corresponda a uma observação, contendo
+
+  \begin{itemize}
+  \item
+    Ano,
+  \item
+    Região,
+  \item
+    Quantidade de telefones.
+  \end{itemize}
+\item
+  Usamos a função \texttt{pivot\_longer} para mudar o formato da \emph{tibble}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3296,17 +3334,29 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \DocumentationTok{\#\# \# ... with 43 more rows}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Confira: antes, tínhamos $7$ anos, com $7$ quantidades por ano, uma quantidade por região. Eram $49$ quantidades. Agora temos uma \emph{tibble} de $49$ linhas.
+\end{itemize}
+
+\hypertarget{gerando-gruxe1ficos-de-linha}{%
+\subsection{Gerando gráficos de linha}\label{gerando-gruxe1ficos-de-linha}}
+
+\begin{itemize}
+\item
+  {\hl{A geometria \texttt{geom\_line} gera gráficos de linha.}} Perceba como geramos uma linha por região:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{fones\_long }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Ano, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{group =}\NormalTok{ Região, }\AttributeTok{color =}\NormalTok{ Região)) }\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Ano, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{color =}\NormalTok{ Região)) }\SpecialCharTok{+}
     \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
     \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{1951}\SpecialCharTok{:}\DecValTok{1961}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-83-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-86-1} \end{center}
+\item
+  Embora a legenda associe uma cor a cada região, {\hl{a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade}}:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3315,8 +3365,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
       \FunctionTok{aes}\NormalTok{(}
         \AttributeTok{x =}\NormalTok{ Ano, }
         \AttributeTok{y =}\NormalTok{ n, }
-        \AttributeTok{group =}\NormalTok{ Região, }
-        \AttributeTok{color =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_reorder}\NormalTok{(Região, n))}
+        \AttributeTok{color =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_reorder}\NormalTok{(Região, n, max))}
 \NormalTok{      )}
 \NormalTok{  ) }\SpecialCharTok{+}
     \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
@@ -3330,19 +3379,36 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-84-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-87-1} \end{center}
+\item
+  Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{fones\_long }\SpecialCharTok{\%\textgreater{}\%}
   \FunctionTok{filter}\NormalTok{(Região }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}S.Amer\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Oceania\textquotesingle{}}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
-  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Ano, }\AttributeTok{y =}\NormalTok{ n, }\AttributeTok{group =}\NormalTok{ Região, }\AttributeTok{color =}\NormalTok{ Região)) }\SpecialCharTok{+}
+  \FunctionTok{ggplot}\NormalTok{(}
+    \FunctionTok{aes}\NormalTok{(}
+      \AttributeTok{x =}\NormalTok{ Ano, }
+      \AttributeTok{y =}\NormalTok{ n, }
+      \AttributeTok{color =} \FunctionTok{fct\_rev}\NormalTok{(}\FunctionTok{fct\_reorder}\NormalTok{(Região, n, max))}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{+}
     \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
-    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{1951}\SpecialCharTok{:}\DecValTok{1961}\NormalTok{)}
+    \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{breaks =} \DecValTok{1951}\SpecialCharTok{:}\DecValTok{1961}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{color =} \StringTok{\textquotesingle{}Região\textquotesingle{}}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-85-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-88-1} \end{center}
+\item
+  Estamos tratando estes dados como simples números, mas, na verdade, {\hl{este conjunto de dados é uma série temporal (\emph{time series})}}.
+\item
+  R tem todo um conjunto de funções para tratar séries temporais, calcular tendências, achar padrões cíclicos, fazer estimativas, e gerar gráficos específicos, entre outras coisas.
+\item
+  Mas não vamos falar mais sobre séries temporais aqui.
+\item
+  O {\hl{pacote \texttt{tsibble}}} oferece maneiras de trabalhar com séries temporais de maneira \emph{tidy}. Você pode ler a documentação do pacote entrando
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3350,6 +3416,12 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \NormalTok{?}\StringTok{\textasciigrave{}}\AttributeTok{tsibble{-}package}\StringTok{\textasciigrave{}}
 \end{Highlighting}
 \end{Shaded}
+\end{itemize}
+
+\hypertarget{exercuxedcios-4}{%
+\section{Exercícios}\label{exercuxedcios-4}}
+
+Em breve.
 
 \hypertarget{referuxeancias-sobre-visualizauxe7uxe3o-e-r}{%
 \section{Referências sobre visualização e R}\label{referuxeancias-sobre-visualizauxe7uxe3o-e-r}}

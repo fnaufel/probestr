@@ -281,9 +281,9 @@ A [média é pouco robusta]{.hl}, muito sensível a *outliers*.
 
 ### Gerando boxplots
 
-* Um *boxplot* é uma representação visual dos valores que calculamos acima.
+* [Um *boxplot* é uma representação visual dos valores que calculamos acima.]{.hl}
 
-* No `ggplot2`, a geometria `geom_boxplot` constrói *boxplots*:
+* No `ggplot2`, [a geometria `geom_boxplot` constrói *boxplots*:]{.hl}
 
   ```{r}
   sono %>% 
@@ -371,7 +371,7 @@ embed_yt('QqnOvgBXJ-s')
 
 * O R tem um *array* de $3$ dimensões com dados sobre as cores dos cabelos e dos olhos de $592$ alunos e alunas de uma universidade americana em $1974$.
 
-* Se pedirmos para o R exibir os dados, veremos duas matrizes, uma para cada sexo:
+* Se pedirmos para o R exibir os dados, veremos [duas matrizes]{.hl}, uma para cada sexo:
 
   ```{r}
   HairEyeColor
@@ -389,11 +389,7 @@ embed_yt('QqnOvgBXJ-s')
   df_orig
   ```
 
-* Vamos ver o sumário:
-  
-  ```{r results='asis', message=FALSE}
-  df_orig %>% dfSummary() %>% print()
-  ```
+* O `ggplot2` e os outros pacotes do `tidyverse` foram projetados para trabalhar com *data frames* neste formato, [com uma observação (um indivíduo, um elemento) por linha.]{.hl} É o chamado [formato *tidy*.]{.hl}
 
 * Usando vetores com elementos nomeados, podemos traduzir o conteúdo do *data frame* para português:
 
@@ -425,15 +421,18 @@ embed_yt('QqnOvgBXJ-s')
     )
   ```
 
-* O novo sumário:
+* Um sumário:
 
   ```{r results='asis', message=FALSE}
   df %>% dfSummary() %>% print()
   ```
 
+
+### Gerando gráficos de barras
+
 * Um [gráfico de barras]{.hl} contém uma barra para cada valor de uma [variável categórica.]{.hl}
 
-* Usamos `geom_bar` para gerar um gráfico de barras de cores de cabelo:
+* [Usamos `geom_bar` para gerar um gráfico de barras]{.hl} de cores de cabelo:
 
   ```{r}
   df %>% 
@@ -454,7 +453,7 @@ embed_yt('QqnOvgBXJ-s')
     
     * [Cada barra]{.hl} corresponde a [um valor]{.hl} da variável. 
     
-    * [As barras não se tocam]{.hl}, enfatizando este fato.
+    * [As barras não se tocam]{.hl}, enfatizando o fato de que a variável é categórica.
     
   * No [histograma]{.hl} ([veja o exemplo](#histograma1)):
   
@@ -470,9 +469,9 @@ embed_yt('QqnOvgBXJ-s')
 
 * Embora os valores da variável `cabelos` sejam *strings*, podemos aplicar a eles funções que manipulam fatores.
 
-* A função `fct_infreq`, do pacote `forcats`, ordena os valores em [ordem decrescente de frequência]{.hl}.
+* A [função `fct_infreq`]{.hl}, do pacote `forcats`, ordena os valores em [ordem decrescente de frequência]{.hl}.
 
-* A função `fct_rev`, também do pacote `forcats`, inverte a ordenação.
+* A [função `fct_rev`]{.hl}, também do pacote `forcats`, [inverte a ordenação.]{.hl}
 
   ```{r}
   df %>% 
@@ -511,7 +510,7 @@ embed_yt('QqnOvgBXJ-s')
       )
   ```
 
-* Podemos fazer um gráfico de barras horizontais com `coord_flip`. Isto geralmente é útil quando os rótulos das barras são longos:
+* [Podemos fazer um gráfico de barras horizontais com `coord_flip`.]{.hl} Isto geralmente é útil quando os rótulos das barras são longos:
 
   ```{r}
   df %>% 
@@ -572,13 +571,13 @@ embed_yt('QqnOvgBXJ-s')
       )
   ```
 
-* Perguntas que este gráfico sugere:
+* Observações e perguntas:
 
   1. Há mais pessoas louras de olhos castanhos do que louras de olhos azuis. O esperado não seria mais pessoas louras de olhos azuis? Pessoas louras de olhos castanhos pintaram os cabelos?
   
   1. Há muito mais ruivos de olhos azuis do que ruivos de olhos verdes. Não deveria ser o contrário? Também são pessoas que pintaram os cabelos de ruivo? Ou houve erro no registro das cores dos olhos? 
   
-* Para incluir o sexo, podemos [facetar]{.hl} o gráfico. Geramos dois subgráficos lado a lado:
+* Para incluir o sexo, podemos [facetar]{.hl} o gráfico. Usando `facet_wrap`^[O nome da variável segundo a qual facetar deve aparecer depois de um `~`.], geramos dois subgráficos lado a lado:
 
   ```{r}
   df %>% 
@@ -614,7 +613,7 @@ embed_yt('QqnOvgBXJ-s')
 
 ### *Data frame* já contendo os totais
 
-* Você percebeu que `geom_bar` analisa o *data frame* e calcula as frequências necessárias para construir o gráfico.
+* Você percebeu que [`geom_bar` analisa o *data frame* e calcula as frequências]{.hl} necessárias para construir o gráfico.
 
 * Em algumas situações, [o *data frame* já contém as frequências]{.hl} (em vez de conter uma linha por indivíduo).
 
@@ -657,70 +656,119 @@ embed_yt('QqnOvgBXJ-s')
 
 ## Gráficos de linha e séries temporais
 
-### Dataset
+### Conjunto de dados
 
-```{r}
-WorldPhones
-```
+* O R tem uma matriz com as quantidades de telefones em várias regiões do mundo ao longo de vários anos:
 
-```{r}
-fones <- WorldPhones %>% 
-  as_tibble(rownames = 'Ano') %>% 
-  mutate(Ano = as.numeric(Ano))
+  ```{r}
+  WorldPhones
+  ```
 
-fones
-```
+* Os números representam milhares.
 
-```{r}
-fones_long <- fones %>% 
-  pivot_longer(
-    cols = -Ano,
-    names_to = 'Região',
-    values_to = 'n'
-  )
+* [Os números dos anos são os nomes das linhas da matriz.]{.hl}
 
-fones_long
-```
+* Vamos transformar esta matriz em uma *tibble*:
 
-```{r}
-fones_long %>% 
-  ggplot(aes(x = Ano, y = n, group = Região, color = Região)) +
-    geom_line() +
-    scale_x_continuous(breaks = 1951:1961)
-```
+  ```{r}
+  fones <- WorldPhones %>% 
+    as_tibble(rownames = 'Ano') %>% 
+    mutate(Ano = as.numeric(Ano))
+  
+  fones
+  ```
 
-```{r}
-fones_long %>% 
-  ggplot(
+* Esta *tibble* [não está no formato *tidy*]{.hl}. Queremos que cada linha corresponda a uma observação, contendo
+
+  * Ano,
+  
+  * Região,
+  
+  * Quantidade de telefones.
+  
+* Usamos a função `pivot_longer` para mudar o formato da *tibble*:
+
+  ```{r}
+  fones_long <- fones %>% 
+    pivot_longer(
+      cols = -Ano,
+      names_to = 'Região',
+      values_to = 'n'
+    )
+  
+  fones_long
+  ```
+
+* Confira: antes, tínhamos $7$ anos, com $7$ quantidades por ano, uma quantidade por região. Eram $49$ quantidades. Agora temos uma *tibble* de $49$ linhas.
+
+
+### Gerando gráficos de linha
+
+* [A geometria `geom_line` gera gráficos de linha.]{.hl} Perceba como geramos uma linha por região:
+
+  ```{r}
+  fones_long %>% 
+    ggplot(aes(x = Ano, y = n, color = Região)) +
+      geom_line() +
+      scale_x_continuous(breaks = 1951:1961)
+  ```
+
+* Embora a legenda associe uma cor a cada região, [a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade]{.hl}:
+
+  ```{r}
+  fones_long %>% 
+    ggplot(
+        aes(
+          x = Ano, 
+          y = n, 
+          color = fct_rev(fct_reorder(Região, n, max))
+        )
+    ) +
+      geom_line() +
+      scale_x_continuous(breaks = 1951:1961) +
+      labs(
+        color = 'Região',
+        y = '',
+        x = NULL,
+        title = 'Quantidade de aparelhos de telefone por ano, por região'
+      )
+  ```
+
+* Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:
+
+  ```{r}
+  fones_long %>%
+    filter(Região %in% c('S.Amer', 'Oceania')) %>% 
+    ggplot(
       aes(
         x = Ano, 
         y = n, 
-        group = Região, 
-        color = fct_rev(fct_reorder(Região, n))
+        color = fct_rev(fct_reorder(Região, n, max))
       )
-  ) +
-    geom_line() +
-    scale_x_continuous(breaks = 1951:1961) +
-    labs(
-      color = 'Região',
-      y = '',
-      x = NULL,
-      title = 'Quantidade de aparelhos de telefone por ano, por região'
-    )
-```
+    ) +
+      geom_line() +
+      scale_x_continuous(breaks = 1951:1961) +
+      labs(y = NULL, color = 'Região')
+  ```
 
-```{r}
-fones_long %>%
-  filter(Região %in% c('S.Amer', 'Oceania')) %>% 
-  ggplot(aes(x = Ano, y = n, group = Região, color = Região)) +
-    geom_line() +
-    scale_x_continuous(breaks = 1951:1961)
-```
+* Estamos tratando estes dados como simples números, mas, na verdade, [este conjunto de dados é uma série temporal (*time series*)]{.hl}.
 
-```{r eval=FALSE}
-library(tsibble)
-?`tsibble-package`
-```
+* R tem todo um conjunto de funções para tratar séries temporais, calcular tendências, achar padrões cíclicos, fazer estimativas, e gerar gráficos específicos, entre outras coisas.
+
+* Mas não vamos falar mais sobre séries temporais aqui.
+
+* O [pacote `tsibble`]{.hl} oferece maneiras de trabalhar com séries temporais de maneira *tidy*. Você pode ler a documentação do pacote entrando
+
+  ```{r eval=FALSE}
+  library(tsibble)
+  ?`tsibble-package`
+  ```
+
+
+## Exercícios
+
+Em breve.
+
 
 ## Referências sobre visualização e R
 
