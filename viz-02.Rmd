@@ -301,7 +301,7 @@ A [média é pouco robusta]{.hl}, muito sensível a *outliers*.
 
 * Neste *boxplot*, não há *outliers*.
 
-* Podemos usar a posição $x$ para desenhar vários *boxplots*, um para cada dieta:
+* []{#onivoros} Podemos usar a posição $x$ para desenhar vários *boxplots*, um para cada dieta:
 
   ```{r}
   sono %>% 
@@ -767,8 +767,17 @@ embed_yt('QqnOvgBXJ-s')
 
 ## Exercícios
 
-Em breve.
+### O bigode dos onívoros
 
+* Examine o *data frame* `sono` para descobrir o que houve com o bigode superior do *boxplot* dos onívoros [neste gráfico](#onivoros).
+
+
+### Usando `geom_col`
+
+* Use `geom_col` para reproduzir, a partir do *data frame* `df_tot`, todos os gráficos que foram gerados com `geom_bar` na seção [Gerando gráficos de barras](#gerando-gr%C3%A1ficos-de-barras).
+
+
+### 
 
 ## Referências sobre visualização e R
 
@@ -777,3 +786,5 @@ Em breve.
 Busque mais informações sobre os pacotes `tidyverse` e `ggplot2` [nas referências recomendadas](#refrec).
 
 :::
+
+

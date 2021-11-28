@@ -152,27 +152,31 @@
 \usepackage{soul}
 
 
-% Code chunks and output
-\usepackage[framemethod=pgf]{mdframed}
-\renewenvironment{Shaded}{
-  \begin{mdframed}[%
-    roundcorner=2pt,%
-    innerleftmargin=5pt,%
-    innerrightmargin=5pt,%
-    topline=true,%
-    leftline=true,%
-    rightline=true,%
-    bottomline=true,%
-    linewidth=0.5pt,%
-    linecolor=black!20,%
-    backgroundcolor=black!2,%
-    skipabove=2ex,%
-    skipbelow=2.5ex%
-  ]%
+\makeatletter
+\@ifundefined{Shaded}{}{
+  % Code chunks and output
+  \usepackage[framemethod=pgf]{mdframed}
+  \renewenvironment{Shaded}{
+    \begin{mdframed}[%
+      roundcorner=2pt,%
+      innerleftmargin=5pt,%
+      innerrightmargin=5pt,%
+      topline=true,%
+      leftline=true,%
+      rightline=true,%
+      bottomline=true,%
+      linewidth=0.5pt,%
+      linecolor=black!20,%
+      backgroundcolor=black!2,%
+      skipabove=2ex,%
+      skipbelow=2.5ex%
+    ]%
+  }
+  {
+    \end{mdframed}
+  }
 }
-{
-  \end{mdframed}
-}
+\makeatother
 
 % End of preamble for bookdowntemplate01
 

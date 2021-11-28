@@ -371,7 +371,7 @@
 <li><p>As <span class="hl">linhas verticais</span> acima e abaixo da caixa (pitorescamente chamadas de “bigodes”) vão até o <span class="hl">limite inferior</span> (primeiro quartil <span class="math inline">\({}- 1{,}5 \times \text{IQR}\)</span>) e até o <span class="hl">limite superior</span> (terceiro quartil <span class="math inline">\({}+ 1{,}5 \times \text{IQR}\)</span>).</p></li>
 <li><p>Neste <em>boxplot</em>, não há <em>outliers</em>.</p></li>
 <li>
-<p>Podemos usar a posição <span class="math inline">\(x\)</span> para desenhar vários <em>boxplots</em>, um para cada dieta:</p>
+<p><span id="onivoros"></span> Podemos usar a posição <span class="math inline">\(x\)</span> para desenhar vários <em>boxplots</em>, um para cada dieta:</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">vore</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -902,7 +902,7 @@
 <p>Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:</p>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Região</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'S.Amer'</span>, <span class="st">'Oceania'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Região</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'S.Amer'</span>, <span class="st">'Oceania'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="va">Ano</span>, 
@@ -931,7 +931,27 @@
 <h2>
 <span class="header-section-number">4.6</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-4"><i class="fas fa-link"></i></a>
 </h2>
-<p>Em breve.</p>
+<div id="o-bigode-dos-onívoros" class="section level3" number="4.6.1">
+<h3>
+<span class="header-section-number">4.6.1</span> O bigode dos onívoros<a class="anchor" aria-label="anchor" href="#o-bigode-dos-on%C3%ADvoros"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Examine o <em>data frame</em> <code>sono</code> para descobrir o que houve com o bigode superior do <em>boxplot</em> dos onívoros <a href="viz2.html#onivoros">neste gráfico</a>.</li>
+</ul>
+</div>
+<div id="usando-geom_col" class="section level3" number="4.6.2">
+<h3>
+<span class="header-section-number">4.6.2</span> Usando <code>geom_col</code><a class="anchor" aria-label="anchor" href="#usando-geom_col"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>Use <code>geom_col</code> para reproduzir, a partir do <em>data frame</em> <code>df_tot</code>, todos os gráficos que foram gerados com <code>geom_bar</code> na seção <a href="#gerando-gr%C3%A1ficos-de-barras">Gerando gráficos de barras</a>.</li>
+</ul>
+</div>
+<div id="section" class="section level3" number="4.6.3">
+<h3>
+<span class="header-section-number">4.6.3</span> <a class="anchor" aria-label="anchor" href="#section"><i class="fas fa-link"></i></a>
+</h3>
+</div>
 </div>
 <div id="referências-sobre-visualização-e-r" class="section level2" number="4.7">
 <h2>
@@ -974,7 +994,13 @@
 <li><a class="nav-link" href="#gerando-gr%C3%A1ficos-de-linha"><span class="header-section-number">4.5.2</span> Gerando gráficos de linha</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#exerc%C3%ADcios-4"><span class="header-section-number">4.6</span> Exercícios</a></li>
+<li>
+<a class="nav-link" href="#exerc%C3%ADcios-4"><span class="header-section-number">4.6</span> Exercícios</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#o-bigode-dos-on%C3%ADvoros"><span class="header-section-number">4.6.1</span> O bigode dos onívoros</a></li>
+<li><a class="nav-link" href="#usando-geom_col"><span class="header-section-number">4.6.2</span> Usando geom_col</a></li>
+<li><a class="nav-link" href="#section"><span class="header-section-number">4.6.3</span></a></li>
+</ul>
+</li>
 <li><a class="nav-link" href="#refer%C3%AAncias-sobre-visualiza%C3%A7%C3%A3o-e-r"><span class="header-section-number">4.7</span> Referências sobre visualização e R</a></li>
 </ul>
 
@@ -993,7 +1019,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 24/11/2021)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 28/11/2021)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

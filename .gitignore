@@ -6,3 +6,4 @@ auto
 /_main.Rmd
 *.aux
 /_main.toc
+/docs/_main.toc

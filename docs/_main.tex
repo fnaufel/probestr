@@ -275,27 +275,31 @@
 \usepackage{soul}
 
 
-% Code chunks and output
-\usepackage[framemethod=pgf]{mdframed}
-\renewenvironment{Shaded}{
-  \begin{mdframed}[%
-    roundcorner=2pt,%
-    innerleftmargin=5pt,%
-    innerrightmargin=5pt,%
-    topline=true,%
-    leftline=true,%
-    rightline=true,%
-    bottomline=true,%
-    linewidth=0.5pt,%
-    linecolor=black!20,%
-    backgroundcolor=black!2,%
-    skipabove=2ex,%
-    skipbelow=2.5ex%
-  ]%
+\makeatletter
+\@ifundefined{Shaded}{}{
+  % Code chunks and output
+  \usepackage[framemethod=pgf]{mdframed}
+  \renewenvironment{Shaded}{
+    \begin{mdframed}[%
+      roundcorner=2pt,%
+      innerleftmargin=5pt,%
+      innerrightmargin=5pt,%
+      topline=true,%
+      leftline=true,%
+      rightline=true,%
+      bottomline=true,%
+      linewidth=0.5pt,%
+      linecolor=black!20,%
+      backgroundcolor=black!2,%
+      skipabove=2ex,%
+      skipbelow=2.5ex%
+    ]%
+  }
+  {
+    \end{mdframed}
+  }
 }
-{
-  \end{mdframed}
-}
+\makeatother
 
 % End of preamble for bookdowntemplate01
 
@@ -323,7 +327,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 24/11/2021)}
+\date{(versão de 28/11/2021)}
 
 \begin{document}
 \maketitle
@@ -1956,7 +1960,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   A geometria \texttt{geom\_step} gera o gráfico de uma {\hl{função degrau}}.
 \item
-  Cada geometria está ligada a uma {\hl{\texttt{stat}}}, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria {\hl{a função \texttt{ecdf} (\emph{empirical cumulative distribution function}), do pacote \texttt{stats}, que calcula as frequências acumuladas.}}
+  Cada geometria está ligada a uma {\hl{{\mbox{\texttt{stat}}}}}, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria {\hl{a função {\mbox{\texttt{ecdf}}} (\emph{empirical cumulative distribution function}), do pacote {\mbox{\texttt{stats}}}, que calcula as frequências acumuladas.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2399,7 +2403,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   {\hl{Sim, a mediana é o segundo quartil.}}
 \item
-  Em R, a {\hl{função \texttt{quantile}}} generaliza esta idéia: dado um número $q$ entre $0$ e $1$, {\hl{o quantil (com ``N'') $q$ é o elemento que está na posição que corresponde à fração $q$ da fila ordenada.}}
+  Em R, a {\hl{função {\mbox{\texttt{quantile}}}}} generaliza esta idéia: dado um número $q$ entre $0$ e $1$, {\hl{o quantil (com ``N'') $q$ é o elemento que está na posição que corresponde à fração $q$ da fila ordenada.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2413,7 +2417,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   As diferenças entre nossos cálculos ``à mão'' e os resultados retornados por \texttt{quantile} são porque, em algumas situações, \texttt{quantile} calcula uma média ponderada entre elementos vizinhos. Por isso, \texttt{quantile} pode retornar valores que nem estão no vetor.
 \item
-  Em R, a {\hl{função \texttt{summary}}} mostra o {\hl{mínimo}}, os {\hl{quartis (com ``R'')}}, a {\hl{média}}, e o {\hl{máximo}} de um vetor:
+  Em R, a {\hl{função {\mbox{\texttt{summary}}}}} mostra o {\hl{mínimo}}, os {\hl{quartis (com ``R'')}}, a {\hl{média}}, e o {\hl{máximo}} de um vetor:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2680,7 +2684,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   {\hl{Um \emph{boxplot} é uma representação visual dos valores que calculamos acima.}}
 \item
-  No \texttt{ggplot2}, {\hl{a geometria \texttt{geom\_boxplot} constrói \emph{boxplots}:}}
+  No \texttt{ggplot2}, {\hl{a geometria {\mbox{\texttt{geom\_boxplot}}} constrói \emph{boxplots}:}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2702,7 +2706,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   Neste \emph{boxplot}, não há \emph{outliers}.
 \item
-  Podemos usar a posição $x$ para desenhar vários \emph{boxplots}, um para cada dieta:
+  \protect\hypertarget{onivoros}{}{} Podemos usar a posição $x$ para desenhar vários \emph{boxplots}, um para cada dieta:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -2951,7 +2955,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   Um {\hl{gráfico de barras}} contém uma barra para cada valor de uma {\hl{variável categórica.}}
 \item
-  {\hl{Usamos \texttt{geom\_bar} para gerar um gráfico de barras}} de cores de cabelo:
+  {\hl{Usamos {\mbox{\texttt{geom\_bar}}} para gerar um gráfico de barras}} de cores de cabelo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3001,9 +3005,9 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   Embora os valores da variável \texttt{cabelos} sejam \emph{strings}, podemos aplicar a eles funções que manipulam fatores.
 \item
-  A {\hl{função \texttt{fct\_infreq}}}, do pacote \texttt{forcats}, ordena os valores em {\hl{ordem decrescente de frequência}}.
+  A {\hl{função {\mbox{\texttt{fct\_infreq}}}}}, do pacote \texttt{forcats}, ordena os valores em {\hl{ordem decrescente de frequência}}.
 \item
-  A {\hl{função \texttt{fct\_rev}}}, também do pacote \texttt{forcats}, {\hl{inverte a ordenação.}}
+  A {\hl{função {\mbox{\texttt{fct\_rev}}}}}, também do pacote \texttt{forcats}, {\hl{inverte a ordenação.}}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3054,7 +3058,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-73-1} \end{center}
 \item
-  {\hl{Podemos fazer um gráfico de barras horizontais com \texttt{coord\_flip}.}} Isto geralmente é útil quando os rótulos das barras são longos:
+  {\hl{Podemos fazer um gráfico de barras horizontais com {\mbox{\texttt{coord\_flip}}}.}} Isto geralmente é útil quando os rótulos das barras são longos:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3188,7 +3192,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 
 \begin{itemize}
 \item
-  Você percebeu que {\hl{\texttt{geom\_bar} analisa o \emph{data frame} e calcula as frequências}} necessárias para construir o gráfico.
+  Você percebeu que {\hl{{\mbox{\texttt{geom\_bar}}} analisa o \emph{data frame} e calcula as frequências}} necessárias para construir o gráfico.
 \item
   Em algumas situações, {\hl{o \emph{data frame} já contém as frequências}} (em vez de conter uma linha por indivíduo).
 \item
@@ -3215,7 +3219,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   Para $4$ cores de cabelo, $4$ cores de olhos, e $2$ sexos, são $32$ combinações possíveis.
 \item
-  Com este \emph{data frame}, podemos gerar todos os gráficos anteriores usando {\hl{\texttt{geom\_col} no lugar de \texttt{geom\_bar}}}. Por exemplo:
+  Com este \emph{data frame}, podemos gerar todos os gráficos anteriores usando {\hl{{\mbox{\texttt{geom\_col}}} no lugar de {\mbox{\texttt{geom\_bar}}}}}. Por exemplo:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3343,7 +3347,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 
 \begin{itemize}
 \item
-  {\hl{A geometria \texttt{geom\_line} gera gráficos de linha.}} Perceba como geramos uma linha por região:
+  {\hl{A geometria {\mbox{\texttt{geom\_line}}} gera gráficos de linha.}} Perceba como geramos uma linha por região:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3408,7 +3412,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \item
   Mas não vamos falar mais sobre séries temporais aqui.
 \item
-  O {\hl{pacote \texttt{tsibble}}} oferece maneiras de trabalhar com séries temporais de maneira \emph{tidy}. Você pode ler a documentação do pacote entrando
+  O {\hl{pacote {\mbox{\texttt{tsibble}}}}} oferece maneiras de trabalhar com séries temporais de maneira \emph{tidy}. Você pode ler a documentação do pacote entrando
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3421,7 +3425,26 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \hypertarget{exercuxedcios-4}{%
 \section{Exercícios}\label{exercuxedcios-4}}
 
-Em breve.
+\hypertarget{o-bigode-dos-onuxedvoros}{%
+\subsection{O bigode dos onívoros}\label{o-bigode-dos-onuxedvoros}}
+
+\begin{itemize}
+\tightlist
+\item
+  Examine o \emph{data frame} \texttt{sono} para descobrir o que houve com o bigode superior do \emph{boxplot} dos onívoros \protect\hyperlink{onivoros}{neste gráfico}.
+\end{itemize}
+
+\hypertarget{usando-geom_col}{%
+\subsection{\texorpdfstring{Usando \texttt{geom\_col}}{Usando geom\_col}}\label{usando-geom_col}}
+
+\begin{itemize}
+\tightlist
+\item
+  Use \texttt{geom\_col} para reproduzir, a partir do \emph{data frame} \texttt{df\_tot}, todos os gráficos que foram gerados com \texttt{geom\_bar} na seção \protect\hyperlink{gerando-grux5cux25C3ux5cux25A1ficos-de-barras}{Gerando gráficos de barras}.
+\end{itemize}
+
+\hypertarget{section}{%
+\subsection{}\label{section}}
 
 \hypertarget{referuxeancias-sobre-visualizauxe7uxe3o-e-r}{%
 \section{Referências sobre visualização e R}\label{referuxeancias-sobre-visualizauxe7uxe3o-e-r}}
