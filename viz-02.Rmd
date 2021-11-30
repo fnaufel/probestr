@@ -577,7 +577,7 @@ embed_yt('QqnOvgBXJ-s')
   
   1. Há muito mais ruivos de olhos azuis do que ruivos de olhos verdes. Não deveria ser o contrário? Também são pessoas que pintaram os cabelos de ruivo? Ou houve erro no registro das cores dos olhos? 
   
-* Para incluir o sexo, podemos [facetar]{.hl} o gráfico. Usando `facet_wrap`^[O nome da variável segundo a qual facetar deve aparecer depois de um `~`.], geramos dois subgráficos lado a lado:
+* Para incluir o sexo, podemos [facetar]{.hl} o gráfico. Usando `facet_wrap`[^til], geramos dois subgráficos lado a lado:
 
   ```{r}
   df %>% 
@@ -591,6 +591,8 @@ embed_yt('QqnOvgBXJ-s')
         x = 'cabelos'
       )
   ```
+
+[^til]: O nome da variável segundo a qual facetar deve aparecer depois de um `~`.
 
 * Se a quantidade grande de pessoas louras de olhos castanhos (em comparação com pessoas louras de olhos azuis) for por causa da pintura de cabelos, então o gráfico acima mostra que as mulheres pintam os cabelos de louro com mais frequência do que os homens.
 

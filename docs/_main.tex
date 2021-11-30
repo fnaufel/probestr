@@ -323,11 +323,11 @@
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
 \usepackage[]{natbib}
-\bibliographystyle{apalike}
+\bibliographystyle{plainnat}
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 28/11/2021)}
+\date{(versão de 30/11/2021)}
 
 \begin{document}
 \maketitle
@@ -614,6 +614,1154 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \end{Highlighting}
 \end{Shaded}
 \end{enumerate}
+
+\hypertarget{introduuxe7uxe3o-ao-tidyverse}{%
+\chapter{\texorpdfstring{Introdução ao \texttt{tidyverse}}{Introdução ao tidyverse}}\label{introduuxe7uxe3o-ao-tidyverse}}
+
+\begin{rmdtip}
+Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \protect\hyperlink{refrec}{nas referências recomendadas}.
+
+\end{rmdtip}
+
+\hypertarget{criando-uma-tibble}{%
+\section{\texorpdfstring{Criando uma \emph{tibble}}{Criando uma tibble}}\label{criando-uma-tibble}}
+
+\begin{itemize}
+\item
+  Cada coluna é um vetor:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cores }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{pessoa =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}João\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Maria\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Pedro\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Ana\textquotesingle{}}\NormalTok{),}
+  \StringTok{\textquotesingle{}cor favorita\textquotesingle{}} \OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}azul\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rosa\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}preto\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}branco\textquotesingle{}}\NormalTok{)}
+\NormalTok{)}
+
+\NormalTok{cores}
+\DocumentationTok{\#\# \# A tibble: 4 x 2}
+\DocumentationTok{\#\#   pessoa \textasciigrave{}cor favorita\textasciigrave{}}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}chr\textgreater{}         }
+\DocumentationTok{\#\# 1 João   azul          }
+\DocumentationTok{\#\# 2 Maria  rosa          }
+\DocumentationTok{\#\# 3 Pedro  preto         }
+\DocumentationTok{\#\# 4 Ana    branco}
+\end{Highlighting}
+\end{Shaded}
+\item
+  A função \texttt{tribble} permite a entrada de forma mais natural. {\hl{Lembre-se de usar {\mbox{\texttt{\textasciitilde{}}}} antes dos nomes das colunas.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cores }\OtherTok{\textless{}{-}} \FunctionTok{tribble}\NormalTok{(}
+  \SpecialCharTok{\textasciitilde{}}\NormalTok{pessoa, }\SpecialCharTok{\textasciitilde{}}\StringTok{\textquotesingle{}cor favorita\textquotesingle{}}\NormalTok{,}
+   \StringTok{"João"}\NormalTok{,          }\StringTok{"azul"}\NormalTok{,}
+  \StringTok{"Maria"}\NormalTok{,          }\StringTok{"rosa"}\NormalTok{,}
+  \StringTok{"Pedro"}\NormalTok{,         }\StringTok{"preto"}\NormalTok{,}
+    \StringTok{"Ana"}\NormalTok{,        }\StringTok{"branco"}
+\NormalTok{)}
+
+\NormalTok{cores}
+\DocumentationTok{\#\# \# A tibble: 4 x 2}
+\DocumentationTok{\#\#   pessoa \textasciigrave{}cor favorita\textasciigrave{}}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}chr\textgreater{}         }
+\DocumentationTok{\#\# 1 João   azul          }
+\DocumentationTok{\#\# 2 Maria  rosa          }
+\DocumentationTok{\#\# 3 Pedro  preto         }
+\DocumentationTok{\#\# 4 Ana    branco}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Se uma coluna não puder ser armazenada em um vetor, a coluna será uma lista:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cores }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+  \AttributeTok{pessoa =} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}João\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Maria\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Pedro\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Ana\textquotesingle{}}\NormalTok{),}
+  \StringTok{\textquotesingle{}cor favorita\textquotesingle{}} \OtherTok{=} \FunctionTok{list}\NormalTok{(}
+    \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}azul\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}roxo\textquotesingle{}}\NormalTok{),}
+    \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}rosa\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}magenta\textquotesingle{}}\NormalTok{),}
+    \ConstantTok{NA}\NormalTok{,}
+    \StringTok{\textquotesingle{}branco\textquotesingle{}}
+\NormalTok{  )}
+\NormalTok{)}
+
+\NormalTok{cores}
+\DocumentationTok{\#\# \# A tibble: 4 x 2}
+\DocumentationTok{\#\#   pessoa \textasciigrave{}cor favorita\textasciigrave{}}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}list\textgreater{}        }
+\DocumentationTok{\#\# 1 João   \textless{}chr [2]\textgreater{}     }
+\DocumentationTok{\#\# 2 Maria  \textless{}chr [2]\textgreater{}     }
+\DocumentationTok{\#\# 3 Pedro  \textless{}lgl [1]\textgreater{}     }
+\DocumentationTok{\#\# 4 Ana    \textless{}chr [1]\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Use \texttt{View()} para examinar interativamente o conteúdo de uma coluna-lista:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cores }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{View}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{operador-de-pipe}{%
+\section{\texorpdfstring{Operador de \emph{pipe} (\texttt{\%\textgreater{}\%})}{Operador de pipe (\%\textgreater\%)}}\label{operador-de-pipe}}
+
+\begin{itemize}
+\tightlist
+\item
+  O \texttt{tidyverse} inclui o pacote \texttt{magrittr}\footnote{Por que o nome do pacote e o nome do operador (\emph{pipe}) formam um trocadilho?}, que contém este operador.
+\end{itemize}
+
+\begin{itemize}
+\item
+  A idéia é facilitar a leitura de {\hl{composições de comandos}}. O código
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{h}\NormalTok{(}\FunctionTok{g}\NormalTok{(}\FunctionTok{f}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+  pode ser escrito como
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{f}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{g}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{h}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Esta segunda versão é mais fiel à ordem em que as operações acontecem.
+\item
+  Na verdade, R tem um operador de {\hl{atribuição para a direita}}, mas poucas pessoas recomendam usá-lo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{f}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{g}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{h}\NormalTok{() }\OtherTok{{-}\textgreater{}}\NormalTok{ y}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Se \texttt{f}, \texttt{g} e \texttt{h} forem funções de um argumento só, os parênteses podem ser omitidos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ f }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ g }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ h}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Se a função \texttt{f} tiver outros argumentos, escreva-os normalmente na chamada a \texttt{f}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{mean}\NormalTok{(}\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\item
+  O \emph{pipe} \texttt{EXP\ \%\textgreater{}\%\ f(...)} sempre insere o resultado da expressão \texttt{EXP} do lado esquerdo como o {\hl{primeiro argumento da função {\mbox{\texttt{f}}}}}.
+\item
+  Se você precisar que o resultado da expressão \texttt{EXP} seja inserido em outra posição na lista de argumentos de \texttt{f}, use um ponto ``\texttt{.}'' para isso:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{consultar}\NormalTok{(df, .)}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{formato-tidy}{%
+\section{\texorpdfstring{Formato \emph{tidy}}{Formato tidy}}\label{formato-tidy}}
+
+\begin{itemize}
+\item
+  Nossa última versão da \emph{tibble} \texttt{cores} é um pouco mais complexa do que deveria ser:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cores}
+\DocumentationTok{\#\# \# A tibble: 4 x 2}
+\DocumentationTok{\#\#   pessoa \textasciigrave{}cor favorita\textasciigrave{}}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}list\textgreater{}        }
+\DocumentationTok{\#\# 1 João   \textless{}chr [2]\textgreater{}     }
+\DocumentationTok{\#\# 2 Maria  \textless{}chr [2]\textgreater{}     }
+\DocumentationTok{\#\# 3 Pedro  \textless{}lgl [1]\textgreater{}     }
+\DocumentationTok{\#\# 4 Ana    \textless{}chr [1]\textgreater{}}
+\end{Highlighting}
+\end{Shaded}
+\item
+  O formato \emph{tidy} exige que
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \item
+    {\hl{Cada linha}} da \emph{tibble} corresponda a uma {\hl{observação}} sobre um indivíduo,
+  \item
+    {\hl{Cada coluna}} corresponda a {\hl{uma variável observada}}, e
+  \item
+    {\hl{Cada célula}} contenha {\hl{um valor}} da variável.
+  \end{enumerate}
+\item
+  Na \emph{tibble} \texttt{cores}, a primeira e a segunda exigências são satisfeitas, mas a terceira não, pois algumas células contém valores múltiplos.
+\item
+  A \emph{tibble} não está no formato \emph{tidy}.
+\item
+  Podemos ``extrair'' estes vetores ``aninhados'' usando o comando \texttt{unnest}, do pacote \texttt{tidyr}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cores }\OtherTok{\textless{}{-}}\NormalTok{ cores }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{cor favorita}\StringTok{\textasciigrave{}}\NormalTok{)}
+
+\NormalTok{cores}
+\DocumentationTok{\#\# \# A tibble: 6 x 2}
+\DocumentationTok{\#\#   pessoa \textasciigrave{}cor favorita\textasciigrave{}}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  \textless{}chr\textgreater{}         }
+\DocumentationTok{\#\# 1 João   azul          }
+\DocumentationTok{\#\# 2 João   roxo          }
+\DocumentationTok{\#\# 3 Maria  rosa          }
+\DocumentationTok{\#\# 4 Maria  magenta       }
+\DocumentationTok{\#\# 5 Pedro  \textless{}NA\textgreater{}          }
+\DocumentationTok{\#\# 6 Ana    branco}
+\end{Highlighting}
+\end{Shaded}
+\item
+  A maioria das funções do \texttt{tidyverse} exige que as \emph{tibbles} estejam neste formato \emph{tidy}.
+\item
+  Um exemplo mais complexo é o \emph{dataset} \texttt{billboard}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{billboard }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{glimpse}\NormalTok{()}
+\DocumentationTok{\#\# Rows: 317}
+\DocumentationTok{\#\# Columns: 79}
+\DocumentationTok{\#\# $ artist       \textless{}chr\textgreater{} "2 Pac", "2Ge+her", "3 Doors Down", "3 Doors Dow\textasciitilde{}}
+\DocumentationTok{\#\# $ track        \textless{}chr\textgreater{} "Baby Don\textquotesingle{}t Cry (Keep...", "The Hardest Part Of \textasciitilde{}}
+\DocumentationTok{\#\# $ date.entered \textless{}date\textgreater{} 2000{-}02{-}26, 2000{-}09{-}02, 2000{-}04{-}08, 2000{-}10{-}21,\textasciitilde{}}
+\DocumentationTok{\#\# $ wk1          \textless{}dbl\textgreater{} 87, 91, 81, 76, 57, 51, 97, 84, 59, 76, 84, 57, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk2          \textless{}dbl\textgreater{} 82, 87, 70, 76, 34, 39, 97, 62, 53, 76, 84, 47, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk3          \textless{}dbl\textgreater{} 72, 92, 68, 72, 25, 34, 96, 51, 38, 74, 75, 45, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk4          \textless{}dbl\textgreater{} 77, NA, 67, 69, 17, 26, 95, 41, 28, 69, 73, 29, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk5          \textless{}dbl\textgreater{} 87, NA, 66, 67, 17, 26, 100, 38, 21, 68, 73, 23,\textasciitilde{}}
+\DocumentationTok{\#\# $ wk6          \textless{}dbl\textgreater{} 94, NA, 57, 65, 31, 19, NA, 35, 18, 67, 69, 18, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk7          \textless{}dbl\textgreater{} 99, NA, 54, 55, 36, 2, NA, 35, 16, 61, 68, 11, 2\textasciitilde{}}
+\DocumentationTok{\#\# $ wk8          \textless{}dbl\textgreater{} NA, NA, 53, 59, 49, 2, NA, 38, 14, 58, 65, 9, 17\textasciitilde{}}
+\DocumentationTok{\#\# $ wk9          \textless{}dbl\textgreater{} NA, NA, 51, 62, 53, 3, NA, 38, 12, 57, 73, 9, 17\textasciitilde{}}
+\DocumentationTok{\#\# $ wk10         \textless{}dbl\textgreater{} NA, NA, 51, 61, 57, 6, NA, 36, 10, 59, 83, 11, 1\textasciitilde{}}
+\DocumentationTok{\#\# $ wk11         \textless{}dbl\textgreater{} NA, NA, 51, 61, 64, 7, NA, 37, 9, 66, 92, 1, 17,\textasciitilde{}}
+\DocumentationTok{\#\# $ wk12         \textless{}dbl\textgreater{} NA, NA, 51, 59, 70, 22, NA, 37, 8, 68, NA, 1, 3,\textasciitilde{}}
+\DocumentationTok{\#\# $ wk13         \textless{}dbl\textgreater{} NA, NA, 47, 61, 75, 29, NA, 38, 6, 61, NA, 1, 3,\textasciitilde{}}
+\DocumentationTok{\#\# $ wk14         \textless{}dbl\textgreater{} NA, NA, 44, 66, 76, 36, NA, 49, 1, 67, NA, 1, 7,\textasciitilde{}}
+\DocumentationTok{\#\# $ wk15         \textless{}dbl\textgreater{} NA, NA, 38, 72, 78, 47, NA, 61, 2, 59, NA, 4, 10\textasciitilde{}}
+\DocumentationTok{\#\# $ wk16         \textless{}dbl\textgreater{} NA, NA, 28, 76, 85, 67, NA, 63, 2, 63, NA, 8, 17\textasciitilde{}}
+\DocumentationTok{\#\# $ wk17         \textless{}dbl\textgreater{} NA, NA, 22, 75, 92, 66, NA, 62, 2, 67, NA, 12, 2\textasciitilde{}}
+\DocumentationTok{\#\# $ wk18         \textless{}dbl\textgreater{} NA, NA, 18, 67, 96, 84, NA, 67, 2, 71, NA, 22, 2\textasciitilde{}}
+\DocumentationTok{\#\# $ wk19         \textless{}dbl\textgreater{} NA, NA, 18, 73, NA, 93, NA, 83, 3, 79, NA, 23, 2\textasciitilde{}}
+\DocumentationTok{\#\# $ wk20         \textless{}dbl\textgreater{} NA, NA, 14, 70, NA, 94, NA, 86, 4, 89, NA, 43, 4\textasciitilde{}}
+\DocumentationTok{\#\# $ wk21         \textless{}dbl\textgreater{} NA, NA, 12, NA, NA, NA, NA, NA, 5, NA, NA, 44, 4\textasciitilde{}}
+\DocumentationTok{\#\# $ wk22         \textless{}dbl\textgreater{} NA, NA, 7, NA, NA, NA, NA, NA, 5, NA, NA, NA, 50\textasciitilde{}}
+\DocumentationTok{\#\# $ wk23         \textless{}dbl\textgreater{} NA, NA, 6, NA, NA, NA, NA, NA, 6, NA, NA, NA, NA\textasciitilde{}}
+\DocumentationTok{\#\# $ wk24         \textless{}dbl\textgreater{} NA, NA, 6, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA\textasciitilde{}}
+\DocumentationTok{\#\# $ wk25         \textless{}dbl\textgreater{} NA, NA, 6, NA, NA, NA, NA, NA, 13, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk26         \textless{}dbl\textgreater{} NA, NA, 5, NA, NA, NA, NA, NA, 14, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk27         \textless{}dbl\textgreater{} NA, NA, 5, NA, NA, NA, NA, NA, 16, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk28         \textless{}dbl\textgreater{} NA, NA, 4, NA, NA, NA, NA, NA, 23, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk29         \textless{}dbl\textgreater{} NA, NA, 4, NA, NA, NA, NA, NA, 22, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk30         \textless{}dbl\textgreater{} NA, NA, 4, NA, NA, NA, NA, NA, 33, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk31         \textless{}dbl\textgreater{} NA, NA, 4, NA, NA, NA, NA, NA, 36, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk32         \textless{}dbl\textgreater{} NA, NA, 3, NA, NA, NA, NA, NA, 43, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk33         \textless{}dbl\textgreater{} NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk34         \textless{}dbl\textgreater{} NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk35         \textless{}dbl\textgreater{} NA, NA, 4, NA, NA, NA, NA, NA, NA, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk36         \textless{}dbl\textgreater{} NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk37         \textless{}dbl\textgreater{} NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk38         \textless{}dbl\textgreater{} NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk39         \textless{}dbl\textgreater{} NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, N\textasciitilde{}}
+\DocumentationTok{\#\# $ wk40         \textless{}dbl\textgreater{} NA, NA, 15, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk41         \textless{}dbl\textgreater{} NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk42         \textless{}dbl\textgreater{} NA, NA, 13, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk43         \textless{}dbl\textgreater{} NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk44         \textless{}dbl\textgreater{} NA, NA, 16, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk45         \textless{}dbl\textgreater{} NA, NA, 17, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk46         \textless{}dbl\textgreater{} NA, NA, 21, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk47         \textless{}dbl\textgreater{} NA, NA, 22, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk48         \textless{}dbl\textgreater{} NA, NA, 24, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk49         \textless{}dbl\textgreater{} NA, NA, 28, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk50         \textless{}dbl\textgreater{} NA, NA, 33, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk51         \textless{}dbl\textgreater{} NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk52         \textless{}dbl\textgreater{} NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk53         \textless{}dbl\textgreater{} NA, NA, 49, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk54         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk55         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk56         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk57         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk58         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk59         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk60         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk61         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk62         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk63         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk64         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk65         \textless{}dbl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk66         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk67         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk68         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk69         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk70         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk71         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk72         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk73         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk74         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk75         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\DocumentationTok{\#\# $ wk76         \textless{}lgl\textgreater{} NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, \textasciitilde{}}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Vamos renomear as colunas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb }\OtherTok{\textless{}{-}}\NormalTok{ billboard }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{artista =}\NormalTok{ artist,}
+    \AttributeTok{musica =}\NormalTok{ track,}
+    \AttributeTok{entrou =}\NormalTok{ date.entered}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{()}
+\DocumentationTok{\#\# \# A tibble: 6 x 79}
+\DocumentationTok{\#\#   artista  musica  entrou       wk1   wk2   wk3   wk4   wk5   wk6   wk7}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}    \textless{}chr\textgreater{}   \textless{}date\textgreater{}     \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2 Pac    Baby D\textasciitilde{} 2000{-}02{-}26    87    82    72    77    87    94    99}
+\DocumentationTok{\#\# 2 2Ge+her  The Ha\textasciitilde{} 2000{-}09{-}02    91    87    92    NA    NA    NA    NA}
+\DocumentationTok{\#\# 3 3 Doors\textasciitilde{} Krypto\textasciitilde{} 2000{-}04{-}08    81    70    68    67    66    57    54}
+\DocumentationTok{\#\# 4 3 Doors\textasciitilde{} Loser   2000{-}10{-}21    76    76    72    69    67    65    55}
+\DocumentationTok{\#\# 5 504 Boyz Wobble\textasciitilde{} 2000{-}04{-}15    57    34    25    17    17    31    36}
+\DocumentationTok{\#\# 6 98\^{}0     Give M\textasciitilde{} 2000{-}08{-}19    51    39    34    26    26    19     2}
+\DocumentationTok{\#\# \# ... with 69 more variables: wk8 \textless{}dbl\textgreater{}, wk9 \textless{}dbl\textgreater{}, wk10 \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   wk11 \textless{}dbl\textgreater{}, wk12 \textless{}dbl\textgreater{}, wk13 \textless{}dbl\textgreater{}, wk14 \textless{}dbl\textgreater{}, wk15 \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   wk16 \textless{}dbl\textgreater{}, wk17 \textless{}dbl\textgreater{}, wk18 \textless{}dbl\textgreater{}, wk19 \textless{}dbl\textgreater{}, wk20 \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   wk21 \textless{}dbl\textgreater{}, wk22 \textless{}dbl\textgreater{}, wk23 \textless{}dbl\textgreater{}, wk24 \textless{}dbl\textgreater{}, wk25 \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   wk26 \textless{}dbl\textgreater{}, wk27 \textless{}dbl\textgreater{}, wk28 \textless{}dbl\textgreater{}, wk29 \textless{}dbl\textgreater{}, wk30 \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   wk31 \textless{}dbl\textgreater{}, wk32 \textless{}dbl\textgreater{}, wk33 \textless{}dbl\textgreater{}, wk34 \textless{}dbl\textgreater{}, wk35 \textless{}dbl\textgreater{},}
+\DocumentationTok{\#\# \#   wk36 \textless{}dbl\textgreater{}, wk37 \textless{}dbl\textgreater{}, wk38 \textless{}dbl\textgreater{}, wk39 \textless{}dbl\textgreater{}, wk40 \textless{}dbl\textgreater{}, ...}
+\end{Highlighting}
+\end{Shaded}
+\item
+  {\hl{O que é uma observação}} neste conjunto de dados?
+
+  Uma música que esteve no \emph{top} $100$ da \emph{Billboard} durante o ano \emph{2000}.
+\item
+  {\hl{Quais são as variáveis}} que qualificam cada observação?
+
+  \begin{itemize}
+  \item
+    O artista,
+  \item
+    O título da música,
+  \item
+    A colocação da música no \emph{top} $100$ da \emph{Billboard} em cada uma das $76$ semanas depois que ela entrou na lista.
+  \end{itemize}
+\item
+  Este último item é complexo, e o criador da \emph{tibble} decidiu criar uma coluna por semana.
+\item
+  {\hl{Uma decisão ruim, pois existe informação embutida nos nomes das colunas.}} A coluna \texttt{wk68} corresponde à posição da música na semana $68$ após ela entrar na lista.
+\item
+  Isto {\hl{nunca}} deve acontecer. {\hl{A informação deve sempre estar nas células.}}
+\item
+  Vamos simplificar as coisas criando duas colunas:
+
+  \begin{itemize}
+  \item
+    \texttt{semana}, com o número da semana; perceba que esta informação vem dos nomes das colunas,
+  \item
+    \texttt{pos}, com a posição da música naquela semana.
+  \end{itemize}
+\item
+  A \emph{tibble}, que antes era larga, vai ser mais estreita e mais longa.
+\item
+  A função \texttt{pivot\_longer}, do pacote \texttt{tidyr}, vai fazer o trabalho --- inclusive extraindo os números das semanas dos nomes das colunas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\OtherTok{\textless{}{-}}\NormalTok{ bb }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pivot\_longer}\NormalTok{(}
+\NormalTok{    wk1}\SpecialCharTok{:}\NormalTok{wk76,}
+    \AttributeTok{names\_to =} \StringTok{\textquotesingle{}semana\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{names\_prefix =} \StringTok{\textquotesingle{}wk\textquotesingle{}}\NormalTok{,}
+    \AttributeTok{names\_transform =} \FunctionTok{list}\NormalTok{(}
+      \AttributeTok{semana =}\NormalTok{ as.integer}
+\NormalTok{    ),}
+    \AttributeTok{values\_to =} \StringTok{\textquotesingle{}pos\textquotesingle{}}
+\NormalTok{  )}
+
+\NormalTok{bb\_tidy}
+\DocumentationTok{\#\# \# A tibble: 24.092 x 5}
+\DocumentationTok{\#\#   artista musica                  entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}   \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      1    87}
+\DocumentationTok{\#\# 2 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      2    82}
+\DocumentationTok{\#\# 3 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      3    72}
+\DocumentationTok{\#\# 4 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      4    77}
+\DocumentationTok{\#\# 5 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      5    87}
+\DocumentationTok{\#\# 6 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      6    94}
+\DocumentationTok{\#\# \# ... with 24.086 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Existem linhas onde \texttt{pos} tem o valor \texttt{NA}. São resultado da organização original dos dados. No novo formato, não servem mais. Vamos eliminá-las.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\OtherTok{\textless{}{-}}\NormalTok{ bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(pos))}
+
+\NormalTok{bb\_tidy}
+\DocumentationTok{\#\# \# A tibble: 5.307 x 5}
+\DocumentationTok{\#\#   artista musica                  entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}   \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      1    87}
+\DocumentationTok{\#\# 2 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      2    82}
+\DocumentationTok{\#\# 3 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      3    72}
+\DocumentationTok{\#\# 4 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      4    77}
+\DocumentationTok{\#\# 5 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      5    87}
+\DocumentationTok{\#\# 6 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      6    94}
+\DocumentationTok{\#\# \# ... with 5.301 more rows}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{manipulando-os-dados}{%
+\section{Manipulando os dados}\label{manipulando-os-dados}}
+
+\hypertarget{criando-novas-colunas-mutate-transmute}{%
+\subsection{\texorpdfstring{Criando novas colunas: \texttt{mutate}, \texttt{transmute}}{Criando novas colunas: mutate, transmute}}\label{criando-novas-colunas-mutate-transmute}}
+
+\begin{itemize}
+\item
+  O \emph{data frame} \texttt{cars} tem dados (de $1920$!) sobre as distâncias de frenagem (em pés) de um carro viajando a diversas velocidades (em milhas por hora):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cars}
+\DocumentationTok{\#\# \# A tibble: 50 x 2}
+\DocumentationTok{\#\#   speed  dist}
+\DocumentationTok{\#\#   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1     4     2}
+\DocumentationTok{\#\# 2     4    10}
+\DocumentationTok{\#\# 3     7     4}
+\DocumentationTok{\#\# 4     7    22}
+\DocumentationTok{\#\# 5     8    16}
+\DocumentationTok{\#\# 6     9    10}
+\DocumentationTok{\#\# \# ... with 44 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Vamos criar colunas novas com os valores convertidos para km/h e metros; além disso, uma coluna com a taxa de frenagem:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cars }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{velocidade =}\NormalTok{ speed }\SpecialCharTok{*} \FloatTok{1.6}\NormalTok{,}
+    \AttributeTok{distancia =}\NormalTok{ dist }\SpecialCharTok{*}\NormalTok{ .}\DecValTok{33}\NormalTok{,}
+    \AttributeTok{taxa =}\NormalTok{ velocidade }\SpecialCharTok{/}\NormalTok{ distancia}
+\NormalTok{  )}
+\DocumentationTok{\#\# \# A tibble: 50 x 5}
+\DocumentationTok{\#\#   speed  dist velocidade distancia  taxa}
+\DocumentationTok{\#\#   \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}      \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1     4     2        6.4      0.66  9.70}
+\DocumentationTok{\#\# 2     4    10        6.4      3.3   1.94}
+\DocumentationTok{\#\# 3     7     4       11.2      1.32  8.48}
+\DocumentationTok{\#\# 4     7    22       11.2      7.26  1.54}
+\DocumentationTok{\#\# 5     8    16       12.8      5.28  2.42}
+\DocumentationTok{\#\# 6     9    10       14.4      3.3   4.36}
+\DocumentationTok{\#\# \# ... with 44 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Perceba que as colunas antigas continuam lá. Se quiser manter apenas as colunas novas, use \texttt{transmute}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cars }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{transmute}\NormalTok{(}
+    \AttributeTok{velocidade =}\NormalTok{ speed }\SpecialCharTok{*} \FloatTok{1.6}\NormalTok{,}
+    \AttributeTok{distancia =}\NormalTok{ dist }\SpecialCharTok{*}\NormalTok{ .}\DecValTok{33}\NormalTok{,}
+    \AttributeTok{taxa =}\NormalTok{ velocidade }\SpecialCharTok{/}\NormalTok{ distancia}
+\NormalTok{  )}
+\DocumentationTok{\#\# \# A tibble: 50 x 3}
+\DocumentationTok{\#\#   velocidade distancia  taxa}
+\DocumentationTok{\#\#        \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1        6.4      0.66  9.70}
+\DocumentationTok{\#\# 2        6.4      3.3   1.94}
+\DocumentationTok{\#\# 3       11.2      1.32  8.48}
+\DocumentationTok{\#\# 4       11.2      7.26  1.54}
+\DocumentationTok{\#\# 5       12.8      5.28  2.42}
+\DocumentationTok{\#\# 6       14.4      3.3   4.36}
+\DocumentationTok{\#\# \# ... with 44 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Ou use o argumento \texttt{.keep} de \texttt{mutate} para escolher com mais precisão. Veja a ajuda de \texttt{mutate}.
+\end{itemize}
+
+\hypertarget{selecionando-colunas-select-distinct-pull}{%
+\subsection{\texorpdfstring{Selecionando colunas: \texttt{select}, \texttt{distinct}, \texttt{pull}}{Selecionando colunas: select, distinct, pull}}\label{selecionando-colunas-select-distinct-pull}}
+
+\begin{itemize}
+\item
+  Vamos voltar à nossa \emph{tibble} dos \emph{top} $100$ da \emph{Billboard}.
+\item
+  Para ver só a coluna de artistas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(artista)}
+\DocumentationTok{\#\# \# A tibble: 5.307 x 1}
+\DocumentationTok{\#\#   artista}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}  }
+\DocumentationTok{\#\# 1 2 Pac  }
+\DocumentationTok{\#\# 2 2 Pac  }
+\DocumentationTok{\#\# 3 2 Pac  }
+\DocumentationTok{\#\# 4 2 Pac  }
+\DocumentationTok{\#\# 5 2 Pac  }
+\DocumentationTok{\#\# 6 2 Pac  }
+\DocumentationTok{\#\# \# ... with 5.301 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Para eliminar as repetições:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(artista) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{()}
+\DocumentationTok{\#\# \# A tibble: 228 x 1}
+\DocumentationTok{\#\#   artista     }
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}       }
+\DocumentationTok{\#\# 1 2 Pac       }
+\DocumentationTok{\#\# 2 2Ge+her     }
+\DocumentationTok{\#\# 3 3 Doors Down}
+\DocumentationTok{\#\# 4 504 Boyz    }
+\DocumentationTok{\#\# 5 98\^{}0        }
+\DocumentationTok{\#\# 6 A*Teens     }
+\DocumentationTok{\#\# \# ... with 222 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Artistas e músicas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(artista, musica) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{()}
+\DocumentationTok{\#\# \# A tibble: 317 x 2}
+\DocumentationTok{\#\#   artista      musica                 }
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}        \textless{}chr\textgreater{}                  }
+\DocumentationTok{\#\# 1 2 Pac        Baby Don\textquotesingle{}t Cry (Keep...}
+\DocumentationTok{\#\# 2 2Ge+her      The Hardest Part Of ...}
+\DocumentationTok{\#\# 3 3 Doors Down Kryptonite             }
+\DocumentationTok{\#\# 4 3 Doors Down Loser                  }
+\DocumentationTok{\#\# 5 504 Boyz     Wobble Wobble          }
+\DocumentationTok{\#\# 6 98\^{}0         Give Me Just One Nig...}
+\DocumentationTok{\#\# \# ... with 311 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Para especificar colunas a não mostrar:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{entrou)}
+\DocumentationTok{\#\# \# A tibble: 5.307 x 4}
+\DocumentationTok{\#\#   artista musica                  semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}   \textless{}chr\textgreater{}                    \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2 Pac   Baby Don\textquotesingle{}t Cry (Keep...      1    87}
+\DocumentationTok{\#\# 2 2 Pac   Baby Don\textquotesingle{}t Cry (Keep...      2    82}
+\DocumentationTok{\#\# 3 2 Pac   Baby Don\textquotesingle{}t Cry (Keep...      3    72}
+\DocumentationTok{\#\# 4 2 Pac   Baby Don\textquotesingle{}t Cry (Keep...      4    77}
+\DocumentationTok{\#\# 5 2 Pac   Baby Don\textquotesingle{}t Cry (Keep...      5    87}
+\DocumentationTok{\#\# 6 2 Pac   Baby Don\textquotesingle{}t Cry (Keep...      6    94}
+\DocumentationTok{\#\# \# ... with 5.301 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Para extrair uma coluna na forma de vetor (\texttt{unique} é uma função do R base, aplicável a vetores):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{pull}\NormalTok{(artista) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unique}\NormalTok{()}
+\DocumentationTok{\#\#   [1] "2 Pac"                          "2Ge+her"                       }
+\DocumentationTok{\#\#   [3] "3 Doors Down"                   "504 Boyz"                      }
+\DocumentationTok{\#\#   [5] "98\^{}0"                           "A*Teens"                       }
+\DocumentationTok{\#\#   [7] "Aaliyah"                        "Adams, Yolanda"                }
+\DocumentationTok{\#\#   [9] "Adkins, Trace"                  "Aguilera, Christina"           }
+\DocumentationTok{\#\#  [11] "Alice Deejay"                   "Allan, Gary"                   }
+\DocumentationTok{\#\#  [13] "Amber"                          "Anastacia"                     }
+\DocumentationTok{\#\#  [15] "Anthony, Marc"                  "Avant"                         }
+\DocumentationTok{\#\#  [17] "BBMak"                          "Backstreet Boys, The"          }
+\DocumentationTok{\#\#  [19] "Badu, Erkyah"                   "Baha Men"                      }
+\DocumentationTok{\#\#  [21] "Barenaked Ladies"               "Beenie Man"                    }
+\DocumentationTok{\#\#  [23] "Before Dark"                    "Bega, Lou"                     }
+\DocumentationTok{\#\#  [25] "Big Punisher"                   "Black Rob"                     }
+\DocumentationTok{\#\#  [27] "Black, Clint"                   "Blaque"                        }
+\DocumentationTok{\#\#  [29] "Blige, Mary J."                 "Blink{-}182"                     }
+\DocumentationTok{\#\#  [31] "Bloodhound Gang"                "Bon Jovi"                      }
+\DocumentationTok{\#\#  [33] "Braxton, Toni"                  "Brock, Chad"                   }
+\DocumentationTok{\#\#  [35] "Brooks \& Dunn"                  "Brooks, Garth"                 }
+\DocumentationTok{\#\#  [37] "Byrd, Tracy"                    "Cagle, Chris"                  }
+\DocumentationTok{\#\#  [39] "Cam\textquotesingle{}ron"                        "Carey, Mariah"                 }
+\DocumentationTok{\#\#  [41] "Carter, Aaron"                  "Carter, Torrey"                }
+\DocumentationTok{\#\#  [43] "Changing Faces"                 "Chesney, Kenny"                }
+\DocumentationTok{\#\#  [45] "Clark Family Experience"        "Clark, Terri"                  }
+\DocumentationTok{\#\#  [47] "Common"                         "Counting Crows"                }
+\DocumentationTok{\#\#  [49] "Creed"                          "Cyrus, Billy Ray"              }
+\DocumentationTok{\#\#  [51] "D\textquotesingle{}Angelo"                       "DMX"                           }
+\DocumentationTok{\#\#  [53] "Da Brat"                        "Davidson, Clay"                }
+\DocumentationTok{\#\#  [55] "De La Soul"                     "Destiny\textquotesingle{}s Child"               }
+\DocumentationTok{\#\#  [57] "Diffie, Joe"                    "Dion, Celine"                  }
+\DocumentationTok{\#\#  [59] "Dixie Chicks, The"              "Dr. Dre"                       }
+\DocumentationTok{\#\#  [61] "Drama"                          "Dream"                         }
+\DocumentationTok{\#\#  [63] "Eastsidaz, The"                 "Eiffel 65"                     }
+\DocumentationTok{\#\#  [65] "Elliott, Missy \textbackslash{}"Misdemeanor\textbackslash{}"" "Eminem"                        }
+\DocumentationTok{\#\#  [67] "En Vogue"                       "Estefan, Gloria"               }
+\DocumentationTok{\#\#  [69] "Evans, Sara"                    "Eve"                           }
+\DocumentationTok{\#\#  [71] "Everclear"                      "Fabian, Lara"                  }
+\DocumentationTok{\#\#  [73] "Fatboy Slim"                    "Filter"                        }
+\DocumentationTok{\#\#  [75] "Foo Fighters"                   "Fragma"                        }
+\DocumentationTok{\#\#  [77] "Funkmaster Flex"                "Ghostface Killah"              }
+\DocumentationTok{\#\#  [79] "Gill, Vince"                    "Gilman, Billy"                 }
+\DocumentationTok{\#\#  [81] "Ginuwine"                       "Goo Goo Dolls"                 }
+\DocumentationTok{\#\#  [83] "Gray, Macy"                     "Griggs, Andy"                  }
+\DocumentationTok{\#\#  [85] "Guy"                            "Hanson"                        }
+\DocumentationTok{\#\#  [87] "Hart, Beth"                     "Heatherly, Eric"               }
+\DocumentationTok{\#\#  [89] "Henley, Don"                    "Herndon, Ty"                   }
+\DocumentationTok{\#\#  [91] "Hill, Faith"                    "Hoku"                          }
+\DocumentationTok{\#\#  [93] "Hollister, Dave"                "Hot Boys"                      }
+\DocumentationTok{\#\#  [95] "Houston, Whitney"               "IMx"                           }
+\DocumentationTok{\#\#  [97] "Ice Cube"                       "Ideal"                         }
+\DocumentationTok{\#\#  [99] "Iglesias, Enrique"              "J{-}Shin"                        }
+\DocumentationTok{\#\# [101] "Ja Rule"                        "Jackson, Alan"                 }
+\DocumentationTok{\#\# [103] "Jagged Edge"                    "Janet"                         }
+\DocumentationTok{\#\# [105] "Jay{-}Z"                          "Jean, Wyclef"                  }
+\DocumentationTok{\#\# [107] "Joe"                            "John, Elton"                   }
+\DocumentationTok{\#\# [109] "Jones, Donell"                  "Jordan, Montell"               }
+\DocumentationTok{\#\# [111] "Juvenile"                       "Kandi"                         }
+\DocumentationTok{\#\# [113] "Keith, Toby"                    "Kelis"                         }
+\DocumentationTok{\#\# [115] "Kenny G"                        "Kid Rock"                      }
+\DocumentationTok{\#\# [117] "Kravitz, Lenny"                 "Kumbia Kings"                  }
+\DocumentationTok{\#\# [119] "LFO"                            "LL Cool J"                     }
+\DocumentationTok{\#\# [121] "Larrieux, Amel"                 "Lawrence, Tracy"               }
+\DocumentationTok{\#\# [123] "Levert, Gerald"                 "Lil Bow Wow"                   }
+\DocumentationTok{\#\# [125] "Lil Wayne"                      "Lil\textquotesingle{} Kim"                      }
+\DocumentationTok{\#\# [127] "Lil\textquotesingle{} Mo"                        "Lil\textquotesingle{} Zane"                     }
+\DocumentationTok{\#\# [129] "Limp Bizkit"                    "Lonestar"                      }
+\DocumentationTok{\#\# [131] "Lopez, Jennifer"                "Loveless, Patty"               }
+\DocumentationTok{\#\# [133] "Lox"                            "Lucy Pearl"                    }
+\DocumentationTok{\#\# [135] "Ludacris"                       "M2M"                           }
+\DocumentationTok{\#\# [137] "Madison Avenue"                 "Madonna"                       }
+\DocumentationTok{\#\# [139] "Martin, Ricky"                  "Mary Mary"                     }
+\DocumentationTok{\#\# [141] "Master P"                       "McBride, Martina"              }
+\DocumentationTok{\#\# [143] "McEntire, Reba"                 "McGraw, Tim"                   }
+\DocumentationTok{\#\# [145] "McKnight, Brian"                "Messina, Jo Dee"               }
+\DocumentationTok{\#\# [147] "Metallica"                      "Montgomery Gentry"             }
+\DocumentationTok{\#\# [149] "Montgomery, John Michael"       "Moore, Chante"                 }
+\DocumentationTok{\#\# [151] "Moore, Mandy"                   "Mumba, Samantha"               }
+\DocumentationTok{\#\# [153] "Musiq"                          "Mya"                           }
+\DocumentationTok{\#\# [155] "Mystikal"                       "N\textquotesingle{}Sync"                        }
+\DocumentationTok{\#\# [157] "Nas"                            "Nelly"                         }
+\DocumentationTok{\#\# [159] "Next"                           "Nine Days"                     }
+\DocumentationTok{\#\# [161] "No Doubt"                       "Nu Flavor"                     }
+\DocumentationTok{\#\# [163] "Offspring, The"                 "Paisley, Brad"                 }
+\DocumentationTok{\#\# [165] "Papa Roach"                     "Pearl Jam"                     }
+\DocumentationTok{\#\# [167] "Pink"                           "Price, Kelly"                  }
+\DocumentationTok{\#\# [169] "Profyle"                        "Puff Daddy"                    }
+\DocumentationTok{\#\# [171] "Q{-}Tip"                          "R.E.M."                        }
+\DocumentationTok{\#\# [173] "Rascal Flatts"                  "Raye, Collin"                  }
+\DocumentationTok{\#\# [175] "Red Hot Chili Peppers"          "Rimes, LeAnn"                  }
+\DocumentationTok{\#\# [177] "Rogers, Kenny"                  "Ruff Endz"                     }
+\DocumentationTok{\#\# [179] "Sammie"                         "Santana"                       }
+\DocumentationTok{\#\# [181] "Savage Garden"                  "SheDaisy"                      }
+\DocumentationTok{\#\# [183] "Sheist, Shade"                  "Shyne"                         }
+\DocumentationTok{\#\# [185] "Simpson, Jessica"               "Sisqo"                         }
+\DocumentationTok{\#\# [187] "Sister Hazel"                   "Smash Mouth"                   }
+\DocumentationTok{\#\# [189] "Smith, Will"                    "Son By Four"                   }
+\DocumentationTok{\#\# [191] "Sonique"                        "SoulDecision"                  }
+\DocumentationTok{\#\# [193] "Spears, Britney"                "Spencer, Tracie"               }
+\DocumentationTok{\#\# [195] "Splender"                       "Sting"                         }
+\DocumentationTok{\#\# [197] "Stone Temple Pilots"            "Stone, Angie"                  }
+\DocumentationTok{\#\# [199] "Strait, George"                 "Sugar Ray"                     }
+\DocumentationTok{\#\# [201] "TLC"                            "Tamar"                         }
+\DocumentationTok{\#\# [203] "Tamia"                          "Third Eye Blind"               }
+\DocumentationTok{\#\# [205] "Thomas, Carl"                   "Tippin, Aaron"                 }
+\DocumentationTok{\#\# [207] "Train"                          "Trick Daddy"                   }
+\DocumentationTok{\#\# [209] "Trina"                          "Tritt, Travis"                 }
+\DocumentationTok{\#\# [211] "Tuesday"                        "Urban, Keith"                  }
+\DocumentationTok{\#\# [213] "Usher"                          "Vassar, Phil"                  }
+\DocumentationTok{\#\# [215] "Vertical Horizon"               "Vitamin C"                     }
+\DocumentationTok{\#\# [217] "Walker, Clay"                   "Wallflowers, The"              }
+\DocumentationTok{\#\# [219] "Westlife"                       "Williams, Robbie"              }
+\DocumentationTok{\#\# [221] "Wills, Mark"                    "Worley, Darryl"                }
+\DocumentationTok{\#\# [223] "Wright, Chely"                  "Yankee Grey"                   }
+\DocumentationTok{\#\# [225] "Yearwood, Trisha"               "Ying Yang Twins"               }
+\DocumentationTok{\#\# [227] "Zombie Nation"                  "matchbox twenty"}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{filtrando-linhas-filter-slice}{%
+\subsection{\texorpdfstring{Filtrando linhas: \texttt{filter}, \texttt{slice}}{Filtrando linhas: filter, slice}}\label{filtrando-linhas-filter-slice}}
+
+\begin{itemize}
+\item
+  Apenas as músicas da Britney Spears:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(artista }\SpecialCharTok{==} \StringTok{\textquotesingle{}Spears, Britney\textquotesingle{}}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 51 x 5}
+\DocumentationTok{\#\#   artista         musica                  entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}           \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Spears, Britney From The Bottom Of M... 2000{-}01{-}29      1    76}
+\DocumentationTok{\#\# 2 Spears, Britney From The Bottom Of M... 2000{-}01{-}29      2    59}
+\DocumentationTok{\#\# 3 Spears, Britney From The Bottom Of M... 2000{-}01{-}29      3    52}
+\DocumentationTok{\#\# 4 Spears, Britney From The Bottom Of M... 2000{-}01{-}29      4    52}
+\DocumentationTok{\#\# 5 Spears, Britney From The Bottom Of M... 2000{-}01{-}29      5    14}
+\DocumentationTok{\#\# 6 Spears, Britney From The Bottom Of M... 2000{-}01{-}29      6    14}
+\DocumentationTok{\#\# \# ... with 45 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Apenas músicas que chegaram à posição $1$:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(pos }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{pos)}
+\DocumentationTok{\#\# \# A tibble: 55 x 4}
+\DocumentationTok{\#\#   artista             musica                  entrou     semana}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Aaliyah             Try Again               2000{-}03{-}18     14}
+\DocumentationTok{\#\# 2 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     11}
+\DocumentationTok{\#\# 3 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     12}
+\DocumentationTok{\#\# 4 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     13}
+\DocumentationTok{\#\# 5 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     14}
+\DocumentationTok{\#\# 6 Aguilera, Christina What A Girl Wants       1999{-}11{-}27      8}
+\DocumentationTok{\#\# \# ... with 49 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Apenas músicas que chegaram à posição $1$ em menos de $10$ semanas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(pos }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, semana }\SpecialCharTok{\textless{}} \DecValTok{10}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{(artista, musica)}
+\DocumentationTok{\#\# \# A tibble: 5 x 2}
+\DocumentationTok{\#\#   artista             musica                 }
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}chr\textgreater{}                  }
+\DocumentationTok{\#\# 1 Aguilera, Christina What A Girl Wants      }
+\DocumentationTok{\#\# 2 Destiny\textquotesingle{}s Child     Independent Women Pa...}
+\DocumentationTok{\#\# 3 Madonna             Music                  }
+\DocumentationTok{\#\# 4 Santana             Maria, Maria           }
+\DocumentationTok{\#\# 5 Sisqo               Incomplete}
+\end{Highlighting}
+\end{Shaded}
+\item
+  As funções da família \texttt{slice} filtram linhas de diversas maneiras.
+\item
+  De acordo com seus índices (números de linha):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1000}\NormalTok{, }\DecValTok{5000}\NormalTok{))}
+\DocumentationTok{\#\# \# A tibble: 3 x 5}
+\DocumentationTok{\#\#   artista                 musica                entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                   \textless{}chr\textgreater{}                 \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2 Pac                   Baby Don\textquotesingle{}t Cry (Keep\textasciitilde{} 2000{-}02{-}26      1    87}
+\DocumentationTok{\#\# 2 Clark Family Experience Meanwhile Back At Th\textasciitilde{} 2000{-}11{-}18      3    81}
+\DocumentationTok{\#\# 3 Vassar, Phil            Carlene               2000{-}03{-}04      3    64}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice\_head}\NormalTok{(}\AttributeTok{n =} \DecValTok{4}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 4 x 5}
+\DocumentationTok{\#\#   artista musica                  entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}   \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      1    87}
+\DocumentationTok{\#\# 2 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      2    82}
+\DocumentationTok{\#\# 3 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      3    72}
+\DocumentationTok{\#\# 4 2 Pac   Baby Don\textquotesingle{}t Cry (Keep... 2000{-}02{-}26      4    77}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice\_tail}\NormalTok{(}\AttributeTok{n =} \DecValTok{4}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 4 x 5}
+\DocumentationTok{\#\#   artista         musica entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}           \textless{}chr\textgreater{}  \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 matchbox twenty Bent   2000{-}04{-}29     36    37}
+\DocumentationTok{\#\# 2 matchbox twenty Bent   2000{-}04{-}29     37    38}
+\DocumentationTok{\#\# 3 matchbox twenty Bent   2000{-}04{-}29     38    38}
+\DocumentationTok{\#\# 4 matchbox twenty Bent   2000{-}04{-}29     39    48}
+\end{Highlighting}
+\end{Shaded}
+\item
+  De acordo com a ordenação de uma coluna ou de uma função das colunas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice\_min}\NormalTok{(pos)}
+\DocumentationTok{\#\# \# A tibble: 55 x 5}
+\DocumentationTok{\#\#   artista             musica                  entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Aaliyah             Try Again               2000{-}03{-}18     14     1}
+\DocumentationTok{\#\# 2 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     11     1}
+\DocumentationTok{\#\# 3 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     12     1}
+\DocumentationTok{\#\# 4 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     13     1}
+\DocumentationTok{\#\# 5 Aguilera, Christina Come On Over Baby (A... 2000{-}08{-}05     14     1}
+\DocumentationTok{\#\# 6 Aguilera, Christina What A Girl Wants       1999{-}11{-}27      8     1}
+\DocumentationTok{\#\# \# ... with 49 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice\_max}\NormalTok{(semana)}
+\DocumentationTok{\#\# \# A tibble: 1 x 5}
+\DocumentationTok{\#\#   artista musica entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}   \textless{}chr\textgreater{}  \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Creed   Higher 1999{-}09{-}11     65    49}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Aleatoriamente, criando uma amostra:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 5 x 5}
+\DocumentationTok{\#\#   artista              musica                  entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 matchbox twenty      Bent                    2000{-}04{-}29     25    12}
+\DocumentationTok{\#\# 2 Hill, Faith          Let\textquotesingle{}s Make Love         2000{-}08{-}12      8    60}
+\DocumentationTok{\#\# 3 Backstreet Boys, The Show Me The Meaning ... 2000{-}01{-}01      9    12}
+\DocumentationTok{\#\# 4 Joe                  Treat Her Like A Lad... 2000{-}08{-}05     12    84}
+\DocumentationTok{\#\# 5 Dixie Chicks, The    Cowboy Take Me Away     1999{-}11{-}27     20    59}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Veja a ajuda de \texttt{slice} para saber mais sobre estas funções. Por exemplo:
+
+  \begin{itemize}
+  \item
+    \texttt{slice\_min} e \texttt{slice\_max} podem considerar ou não empates.
+  \item
+    Você pode especificar uma proporção de linhas (usando \texttt{prop}) em vez da quantidade de linhas (\texttt{n}).
+  \item
+    Você pode fazer amostragem com reposição, ou com probabilidades diferentes para cada linha.
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{ordenando-linhas-arrange}{%
+\subsection{\texorpdfstring{Ordenando linhas: \texttt{arrange}}{Ordenando linhas: arrange}}\label{ordenando-linhas-arrange}}
+
+\begin{itemize}
+\item
+  Por título, sem repetições:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(musica) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(musica)}
+\DocumentationTok{\#\# \# A tibble: 316 x 1}
+\DocumentationTok{\#\#   musica                 }
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                  }
+\DocumentationTok{\#\# 1 (Hot S**t) Country G...}
+\DocumentationTok{\#\# 2 3 Little Words         }
+\DocumentationTok{\#\# 3 911                    }
+\DocumentationTok{\#\# 4 A Country Boy Can Su...}
+\DocumentationTok{\#\# 5 A Little Gasoline      }
+\DocumentationTok{\#\# 6 A Puro Dolor (Purest...}
+\DocumentationTok{\#\# \# ... with 310 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Por título, sem repetições, em ordem inversa:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(musica) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{distinct}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(musica))}
+\DocumentationTok{\#\# \# A tibble: 316 x 1}
+\DocumentationTok{\#\#   musica                 }
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                  }
+\DocumentationTok{\#\# 1 Your Everything        }
+\DocumentationTok{\#\# 2 You\textquotesingle{}re A God           }
+\DocumentationTok{\#\# 3 You\textquotesingle{}ll Always Be Lov...}
+\DocumentationTok{\#\# 4 You Won\textquotesingle{}t Be Lonely ...}
+\DocumentationTok{\#\# 5 You Should\textquotesingle{}ve Told M...}
+\DocumentationTok{\#\# 6 You Sang To Me         }
+\DocumentationTok{\#\# \# ... with 310 more rows}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{contando-linhas-count}{%
+\subsection{\texorpdfstring{Contando linhas: \texttt{count}}{Contando linhas: count}}\label{contando-linhas-count}}
+
+\begin{itemize}
+\item
+  Quantas semanas cada artista ficou nos \emph{top} $100$? Duas músicas na mesma semana contam como duas semanas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(artista, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 228 x 2}
+\DocumentationTok{\#\#   artista             n}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}           \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Creed             104}
+\DocumentationTok{\#\# 2 Lonestar           95}
+\DocumentationTok{\#\# 3 Destiny\textquotesingle{}s Child    92}
+\DocumentationTok{\#\# 4 N\textquotesingle{}Sync             74}
+\DocumentationTok{\#\# 5 Sisqo              74}
+\DocumentationTok{\#\# 6 3 Doors Down       73}
+\DocumentationTok{\#\# \# ... with 222 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Quantas semanas cada música ficou nos \emph{top} $100$?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(musica, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 316 x 2}
+\DocumentationTok{\#\#   musica                  n}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Higher                 57}
+\DocumentationTok{\#\# 2 Amazed                 55}
+\DocumentationTok{\#\# 3 Breathe                53}
+\DocumentationTok{\#\# 4 Kryptonite             53}
+\DocumentationTok{\#\# 5 With Arms Wide Open    47}
+\DocumentationTok{\#\# 6 I Wanna Know           44}
+\DocumentationTok{\#\# \# ... with 310 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Se houve músicas com o mesmo nome, mas de artistas diferentes, {\hl{o código acima está errado}}. O certo é
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(musica, artista, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 317 x 3}
+\DocumentationTok{\#\#   musica              artista          n}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}chr\textgreater{}        \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Higher              Creed           57}
+\DocumentationTok{\#\# 2 Amazed              Lonestar        55}
+\DocumentationTok{\#\# 3 Breathe             Hill, Faith     53}
+\DocumentationTok{\#\# 4 Kryptonite          3 Doors Down    53}
+\DocumentationTok{\#\# 5 With Arms Wide Open Creed           47}
+\DocumentationTok{\#\# 6 I Wanna Know        Joe             44}
+\DocumentationTok{\#\# \# ... with 311 more rows}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{agrupando-linhas-group_by-e-summarize}{%
+\subsection{\texorpdfstring{Agrupando linhas: \texttt{group\_by} e \texttt{summarize}}{Agrupando linhas: group\_by e summarize}}\label{agrupando-linhas-group_by-e-summarize}}
+
+\begin{itemize}
+\item
+  Qual foi a melhor posição que cada artista alcançou?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(artista) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{melhor =} \FunctionTok{min}\NormalTok{(pos)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(melhor)}
+\DocumentationTok{\#\# \# A tibble: 228 x 2}
+\DocumentationTok{\#\#   artista             melhor}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Aaliyah                  1}
+\DocumentationTok{\#\# 2 Aguilera, Christina      1}
+\DocumentationTok{\#\# 3 Carey, Mariah            1}
+\DocumentationTok{\#\# 4 Creed                    1}
+\DocumentationTok{\#\# 5 Destiny\textquotesingle{}s Child          1}
+\DocumentationTok{\#\# 6 Iglesias, Enrique        1}
+\DocumentationTok{\#\# \# ... with 222 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Qual foi a melhor posição que cada música alcançou?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(artista, musica) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{melhor =} \FunctionTok{min}\NormalTok{(pos)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(melhor)}
+\DocumentationTok{\#\# \textasciigrave{}summarise()\textasciigrave{} has grouped output by \textquotesingle{}artista\textquotesingle{}. You can override using the \textasciigrave{}.groups\textasciigrave{} argument.}
+\DocumentationTok{\#\# \# A tibble: 317 x 3}
+\DocumentationTok{\#\#   artista             musica                  melhor}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}chr\textgreater{}                    \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Aaliyah             Try Again                    1}
+\DocumentationTok{\#\# 2 Aguilera, Christina Come On Over Baby (A...      1}
+\DocumentationTok{\#\# 3 Aguilera, Christina What A Girl Wants            1}
+\DocumentationTok{\#\# 4 Carey, Mariah       Thank God I Found Yo...      1}
+\DocumentationTok{\#\# 5 Creed               With Arms Wide Open          1}
+\DocumentationTok{\#\# 6 Destiny\textquotesingle{}s Child     Independent Women Pa...      1}
+\DocumentationTok{\#\# \# ... with 311 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Quando usamos \texttt{summarize}, o agrupamento mais interno é desfeito. Isto significa que o resultado acima ainda está agrupado por \texttt{artista}.
+\item
+  Quantas semanas cada artista ficou na posição $1$?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(pos }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(artista) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{semanas =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(semanas))}
+\DocumentationTok{\#\# \# A tibble: 15 x 2}
+\DocumentationTok{\#\#   artista             semanas}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                 \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Destiny\textquotesingle{}s Child          14}
+\DocumentationTok{\#\# 2 Santana                  10}
+\DocumentationTok{\#\# 3 Aguilera, Christina       6}
+\DocumentationTok{\#\# 4 Madonna                   4}
+\DocumentationTok{\#\# 5 Savage Garden             4}
+\DocumentationTok{\#\# 6 Iglesias, Enrique         3}
+\DocumentationTok{\#\# \# ... with 9 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Perceba que \texttt{count}, que vimos mais acima, faz agrupamentos do mesmo modo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(pos }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{count}\NormalTok{(artista, }\AttributeTok{sort =} \ConstantTok{TRUE}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 15 x 2}
+\DocumentationTok{\#\#   artista                 n}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Destiny\textquotesingle{}s Child        14}
+\DocumentationTok{\#\# 2 Santana                10}
+\DocumentationTok{\#\# 3 Aguilera, Christina     6}
+\DocumentationTok{\#\# 4 Madonna                 4}
+\DocumentationTok{\#\# 5 Savage Garden           4}
+\DocumentationTok{\#\# 6 Iglesias, Enrique       3}
+\DocumentationTok{\#\# \# ... with 9 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Uma pergunta diferente: quais são os artistas cujas músicas apareceram nos \emph{top} $100$ mais tempo depois do lançamento da música?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(artista) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{semanas =} \FunctionTok{max}\NormalTok{(semana)) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(semanas))}
+\DocumentationTok{\#\# \# A tibble: 228 x 2}
+\DocumentationTok{\#\#   artista          semanas}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}              \textless{}int\textgreater{}}
+\DocumentationTok{\#\# 1 Creed                 65}
+\DocumentationTok{\#\# 2 Lonestar              64}
+\DocumentationTok{\#\# 3 3 Doors Down          53}
+\DocumentationTok{\#\# 4 Hill, Faith           53}
+\DocumentationTok{\#\# 5 Joe                   44}
+\DocumentationTok{\#\# 6 Vertical Horizon      41}
+\DocumentationTok{\#\# \# ... with 222 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com \texttt{NA}; logo, {\hl{a média é sobre a quantidade de semanas em que a música esteve na lista}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{media1 }\OtherTok{\textless{}{-}}\NormalTok{ bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(artista, musica) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{media =} \FunctionTok{mean}\NormalTok{(pos), }\AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(media)}
+
+\NormalTok{media1}
+\DocumentationTok{\#\# \# A tibble: 317 x 3}
+\DocumentationTok{\#\#   artista                          musica                  media}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                            \textless{}chr\textgreater{}                   \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 "Santana"                        Maria, Maria             10.5}
+\DocumentationTok{\#\# 2 "Madonna"                        Music                    13.5}
+\DocumentationTok{\#\# 3 "N\textquotesingle{}Sync"                         Bye Bye Bye              14.3}
+\DocumentationTok{\#\# 4 "Elliott, Missy \textbackslash{}"Misdemeanor\textbackslash{}"" Hot Boyz                 14.3}
+\DocumentationTok{\#\# 5 "Destiny\textquotesingle{}s Child"                Independent Women Pa...  14.8}
+\DocumentationTok{\#\# 6 "Iglesias, Enrique"              Be With You              15.8}
+\DocumentationTok{\#\# \# ... with 311 more rows}
+\end{Highlighting}
+\end{Shaded}
+\item
+  E se quisermos a média sobre o número de semanas desde a entrada da música até a última semana em que a música apareceu na lista?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{media2 }\OtherTok{\textless{}{-}}\NormalTok{ bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(artista, musica) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{media =} \FunctionTok{sum}\NormalTok{(pos)}\SpecialCharTok{/}\FunctionTok{max}\NormalTok{(semana), }\AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(media)}
+
+\NormalTok{media2}
+\DocumentationTok{\#\# \# A tibble: 317 x 3}
+\DocumentationTok{\#\#   artista                          musica                  media}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}                            \textless{}chr\textgreater{}                   \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 "Santana"                        Maria, Maria             10.5}
+\DocumentationTok{\#\# 2 "Madonna"                        Music                    13.5}
+\DocumentationTok{\#\# 3 "N\textquotesingle{}Sync"                         Bye Bye Bye              14.3}
+\DocumentationTok{\#\# 4 "Elliott, Missy \textbackslash{}"Misdemeanor\textbackslash{}"" Hot Boyz                 14.3}
+\DocumentationTok{\#\# 5 "Destiny\textquotesingle{}s Child"                Independent Women Pa...  14.8}
+\DocumentationTok{\#\# 6 "Iglesias, Enrique"              Be With You              15.8}
+\DocumentationTok{\#\# \# ... with 311 more rows}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{identical}\NormalTok{(media1, media2)}
+\DocumentationTok{\#\# [1] FALSE}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
 
 \hypertarget{viz}{%
 \chapter{Visualização com ggplot2}\label{viz}}
@@ -1715,7 +2863,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-21-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-69-1} \end{center}
 \item
   Observe como usamos o gráfico já salvo na variável \texttt{grafico} e simplesmente acrescentamos a nova escala. Este tipo de ``montagem'' de gráficos \texttt{ggplot2} é bem conveniente, para evitar repetição de código.
 \item
@@ -1733,7 +2881,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-22-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
 \item
   Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:
 
@@ -1760,7 +2908,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Highlighting}
 \end{Shaded}
 
-    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-23-1} \end{center}
+    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
   \item
     Todos os carnívoros têm peso corporal maior que $1$kg e peso cerebral maior ou igual a $10$g.
   \item
@@ -2040,11 +3188,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O \texttt{ggplot2} tem um tema \emph{default}, chamado \texttt{theme\_gray}, que gera \protect\hyperlink{grafico4}{o \emph{scatterplot} de um exemplo anterior} deste capítulo do seguinte modo:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-26-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-74-1} \end{center}
 \item
   Para este material, escolhi o tema \texttt{theme\_linedraw}, que usa linhas pretas sobre fundo branco:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-27-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
 \item
   Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:
 
@@ -2063,7 +3211,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O resultado é
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-28-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
 \item
   Os meus comandos para alterar o tema são
 
@@ -2696,7 +3844,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-62-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-110-1} \end{center}
 \item
   A {\hl{caixa}} vai do valor do {\hl{primeiro quartil}} (embaixo) até o {\hl{terceiro quartil}} (em cima).
 \item
@@ -2717,7 +3865,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-63-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-111-1} \end{center}
 \item
   No \emph{boxplot} de onívoros, {\hl{os \emph{outliers} aparecem como pontos isolados,}} acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).
 \item
@@ -2765,7 +3913,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-64-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-112-1} \end{center}
 \item
   {\hl{Quando a caixa é longa,}} o IQR é grande, e {\hl{os valores estão muito espalhados;}} é o caso dos herbívoros e insetívoros.
 \item
@@ -2966,7 +4114,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-70-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-118-1} \end{center}
 
   \begin{rmdimportant}
 
@@ -3021,7 +4169,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-71-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-119-1} \end{center}
 \item
   A posição $x$ e a altura de cada barra são estéticas: {\hl{a posição $x$ representa a cor dos cabelos}}, e {\hl{a altura representa a frequência daquela cor}}.
 \item
@@ -3039,7 +4187,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-72-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-120-1} \end{center}
 \item
   Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (\texttt{scale\_fill\_discrete}):
 
@@ -3056,7 +4204,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-73-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-121-1} \end{center}
 \item
   {\hl{Podemos fazer um gráfico de barras horizontais com {\mbox{\texttt{coord\_flip}}}.}} Isto geralmente é útil quando os rótulos das barras são longos:
 
@@ -3074,7 +4222,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-74-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-122-1} \end{center}
 \item
   Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?
 \item
@@ -3095,7 +4243,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-123-1} \end{center}
 \item
   Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:
 
@@ -3114,7 +4262,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-124-1} \end{center}
 \item
   Ou, com barras lado a lado:
 
@@ -3133,7 +4281,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-77-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-125-1} \end{center}
 \item
   Observações e perguntas:
 
@@ -3162,7 +4310,10 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-78-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-126-1} \end{center}
+\end{itemize}
+
+\begin{itemize}
 \item
   Se a quantidade grande de pessoas louras de olhos castanhos (em comparação com pessoas louras de olhos azuis) for por causa da pintura de cabelos, então o gráfico acima mostra que as mulheres pintam os cabelos de louro com mais frequência do que os homens.
 \item
@@ -3184,7 +4335,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-79-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-127-1} \end{center}
 \end{itemize}
 
 \hypertarget{data-frame-juxe1-contendo-os-totais}{%
@@ -3232,7 +4383,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-81-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-129-1} \end{center}
 \item
   Com \texttt{geom\_col}, {\hl{precisamos passar a estética $y$}} (no nosso exemplo, a variável \texttt{n}, que contém as frequências).
 \item
@@ -3250,7 +4401,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-82-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-130-1} \end{center}
 \end{itemize}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
@@ -3358,7 +4509,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-86-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-134-1} \end{center}
 \item
   Embora a legenda associe uma cor a cada região, {\hl{a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade}}:
 
@@ -3383,7 +4534,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-87-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-135-1} \end{center}
 \item
   Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:
 
@@ -3404,7 +4555,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-88-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-136-1} \end{center}
 \item
   Estamos tratando estes dados como simples números, mas, na verdade, {\hl{este conjunto de dados é uma série temporal (\emph{time series})}}.
 \item

@@ -1,0 +1,484 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Introdução ao `tidyverse`
+
+::: {.rmdtip latex=1}
+
+Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas referências recomendadas](#refrec).
+
+:::
+
+
+## Criando uma *tibble*
+
+* Cada coluna é um vetor:
+
+  ```{r}
+  cores <- tibble(
+    pessoa = c('João', 'Maria', 'Pedro', 'Ana'),
+    'cor favorita' = c('azul', 'rosa', 'preto', 'branco')
+  )
+  
+  cores
+  ```
+
+* A função `tribble` permite a entrada de forma mais natural. [Lembre-se de usar `~` antes dos nomes das colunas.]{.hl}
+
+  ```{r}
+  cores <- tribble(
+    ~pessoa, ~'cor favorita',
+     "João",          "azul",
+    "Maria",          "rosa",
+    "Pedro",         "preto",
+      "Ana",        "branco"
+  )
+  
+  cores
+  ```
+
+* Se uma coluna não puder ser armazenada em um vetor, a coluna será uma lista:
+
+  ```{r}
+  cores <- tibble(
+    pessoa = c('João', 'Maria', 'Pedro', 'Ana'),
+    'cor favorita' = list(
+      c('azul', 'roxo'),
+      c('rosa', 'magenta'),
+      NA,
+      'branco'
+    )
+  )
+  
+  cores
+  ```
+
+* Use `View()` para examinar interativamente o conteúdo de uma coluna-lista:
+
+  ```{r eval=FALSE}
+  cores %>% View()
+  ```
+
+## Operador de *pipe* (`%>%`)
+
+* O `tidyverse` inclui o pacote `magrittr`[^trocadilho], que contém este operador.
+
+[^trocadilho]: Por que o nome do pacote e o nome do operador (*pipe*) formam um trocadilho?
+
+* A idéia é facilitar a leitura de [composições de comandos]{.hl}. O código
+
+  ```{r eval=FALSE}
+  y <- h(g(f(x)))
+  ```
+
+  pode ser escrito como
+  
+  ```{r eval=FALSE}
+  y <- x %>% f() %>% g() %>% h()
+  ```
+
+* Esta segunda versão é mais fiel à ordem em que as operações acontecem.
+
+* Na verdade, R tem um operador de [atribuição para a direita]{.hl}, mas poucas pessoas recomendam usá-lo:
+
+  ```{r eval=FALSE}
+  x %>% f() %>% g() %>% h() -> y
+  ```
+
+* Se `f`, `g` e `h` forem funções de um argumento só, os parênteses podem ser omitidos:
+
+  ```{r eval=FALSE}
+  y <- x %>% f %>% g %>% h
+  ```
+
+* Se a função `f` tiver outros argumentos, escreva-os normalmente na chamada a `f`:
+
+  ```{r eval=FALSE}
+  y <- x %>% mean(na.rm = TRUE)
+  ```
+
+* O *pipe* `EXP %>% f(...)` sempre insere o resultado da expressão `EXP` do lado esquerdo como o [primeiro argumento da função `f`]{.hl}.
+
+* Se você precisar que o resultado da expressão `EXP` seja inserido em outra posição na lista de argumentos de `f`, use um ponto "`.`" para isso:
+
+  ```{r eval=FALSE}
+  x %>% consultar(df, .)
+  ```
+
+## Formato *tidy*
+
+* Nossa última versão da *tibble* `cores` é um pouco mais complexa do que deveria ser:
+
+  ```{r}
+  cores
+  ```
+
+* O formato *tidy* exige que 
+
+  1. [Cada linha]{.hl} da *tibble* corresponda a uma [observação]{.hl} sobre um indivíduo,
+  
+  1. [Cada coluna]{.hl} corresponda a [uma variável observada]{.hl}, e
+  
+  1. [Cada célula]{.hl} contenha [um valor]{.hl} da variável.
+  
+* Na *tibble* `cores`, a primeira e a segunda exigências são satisfeitas, mas a terceira não, pois algumas células contém valores múltiplos.
+
+* A *tibble* não está no formato *tidy*.
+
+* Podemos "extrair" estes vetores "aninhados" usando o comando `unnest`, do pacote `tidyr`:
+
+  ```{r}
+  cores <- cores %>% 
+    unnest(`cor favorita`)
+  
+  cores
+  ```
+
+* A maioria das funções do `tidyverse` exige que as *tibbles* estejam neste formato *tidy*.
+
+* Um exemplo mais complexo é o *dataset* `billboard`:
+
+  ```{r}
+  billboard %>% glimpse()
+  ```
+
+* Vamos renomear as colunas:
+
+  ```{r}
+  bb <- billboard %>% 
+    rename(
+      artista = artist,
+      musica = track,
+      entrou = date.entered
+    )
+  ```
+
+  ```{r}
+  bb %>% head()
+  ```
+
+* [O que é uma observação]{.hl} neste conjunto de dados?
+
+  Uma música que esteve no *top* $100$ da *Billboard* durante o ano *2000*.
+  
+* [Quais são as variáveis]{.hl} que qualificam cada observação?
+
+  * O artista,
+  
+  * O título da música,
+  
+  * A colocação da música no *top* $100$ da *Billboard* em cada uma das $76$ semanas depois que ela entrou na lista.
+  
+* Este último item é complexo, e o criador da *tibble* decidiu criar uma coluna por semana.
+
+* [Uma decisão ruim, pois existe informação embutida nos nomes das colunas.]{.hl} A coluna `wk68` corresponde à posição da música na semana $68$ após ela entrar na lista.
+
+* Isto [nunca]{.hl} deve acontecer. [A informação deve sempre estar nas células.]{.hl}
+
+* Vamos simplificar as coisas criando duas colunas:
+
+  * `semana`, com o número da semana; perceba que esta informação vem dos nomes das colunas,
+  
+  * `pos`, com a posição da música naquela semana. 
+  
+* A *tibble*, que antes era larga, vai ser mais estreita e mais longa.
+
+* A função `pivot_longer`, do pacote `tidyr`, vai fazer o trabalho --- inclusive extraindo os números das semanas dos nomes das colunas:
+
+  ```{r}
+  bb_tidy <- bb %>% 
+    pivot_longer(
+      wk1:wk76,
+      names_to = 'semana',
+      names_prefix = 'wk',
+      names_transform = list(
+        semana = as.integer
+      ),
+      values_to = 'pos'
+    )
+  
+  bb_tidy
+  ```
+
+* Existem linhas onde `pos` tem o valor `NA`. São resultado da organização original dos dados. No novo formato, não servem mais. Vamos eliminá-las.
+
+  ```{r}
+  bb_tidy <- bb_tidy %>% 
+    filter(!is.na(pos))
+  
+  bb_tidy
+  ```
+  
+
+## Manipulando os dados
+
+### Criando novas colunas: `mutate`, `transmute`
+
+* O *data frame* `cars` tem dados (de $1920$!) sobre as distâncias de frenagem (em pés) de um carro viajando a diversas velocidades (em milhas por hora):
+
+  ```{r}
+  cars
+  ```
+
+* Vamos criar colunas novas com os valores convertidos para km/h e metros; além disso, uma coluna com a taxa de frenagem:
+
+  ```{r}
+  cars %>% 
+    mutate(
+      velocidade = speed * 1.6,
+      distancia = dist * .33,
+      taxa = velocidade / distancia
+    )
+  ```
+
+* Perceba que as colunas antigas continuam lá. Se quiser manter apenas as colunas novas, use `transmute`:
+
+  ```{r}
+  cars %>% 
+    transmute(
+      velocidade = speed * 1.6,
+      distancia = dist * .33,
+      taxa = velocidade / distancia
+    )
+  ```
+
+* Ou use o argumento `.keep` de `mutate` para escolher com mais precisão. Veja a ajuda de `mutate`.
+
+
+### Selecionando colunas: `select`, `distinct`, `pull`
+
+* Vamos voltar à nossa *tibble* dos *top* $100$ da *Billboard*.
+
+* Para ver só a coluna de artistas:
+
+  ```{r}
+  bb_tidy %>% 
+    select(artista)
+  ```
+
+* Para eliminar as repetições:
+
+  ```{r}
+  bb_tidy %>% 
+    select(artista) %>% 
+    distinct()
+  ```
+
+* Artistas e músicas:
+
+  ```{r}
+  bb_tidy %>% 
+    select(artista, musica) %>% 
+    distinct()
+  ```
+
+* Para especificar colunas a não mostrar:
+
+  ```{r}
+  bb_tidy %>% 
+    select(-entrou)
+  ```
+
+* Para extrair uma coluna na forma de vetor (`unique` é uma função do R base, aplicável a vetores):
+
+  ```{r}
+  bb_tidy %>% 
+    pull(artista) %>% 
+    unique()
+  ```
+
+
+### Filtrando linhas: `filter`, `slice`
+
+* Apenas as músicas da Britney Spears:
+
+  ```{r}
+  bb_tidy %>% 
+    filter(artista == 'Spears, Britney')
+  ```
+
+* Apenas músicas que chegaram à posição $1$:
+
+  ```{r}
+  bb_tidy %>% 
+    filter(pos == 1) %>% 
+    select(-pos)
+  ```
+
+* Apenas músicas que chegaram à posição $1$ em menos de $10$ semanas:
+
+  ```{r}
+  bb_tidy %>% 
+    filter(pos == 1, semana < 10) %>% 
+    distinct(artista, musica)
+  ```
+
+* As funções da família `slice` filtram linhas de diversas maneiras.
+
+* De acordo com seus índices (números de linha):
+
+  ```{r}
+  bb_tidy %>% 
+    slice(c(1, 1000, 5000))
+  ```
+
+  ```{r}
+  bb_tidy %>% 
+    slice_head(n = 4)
+  ```
+
+  ```{r}
+  bb_tidy %>% 
+    slice_tail(n = 4)
+  ```
+
+* De acordo com a ordenação de uma coluna ou de uma função das colunas:
+  
+  ```{r}
+  bb_tidy %>% 
+    slice_min(pos)
+  ```
+
+  ```{r}
+  bb_tidy %>% 
+    slice_max(semana)
+  ```
+
+* Aleatoriamente, criando uma amostra:
+  
+  ```{r}
+  bb_tidy %>% 
+    slice_sample(n = 5)
+  ```
+  
+* Veja a ajuda de `slice` para saber mais sobre estas funções. Por exemplo: 
+
+  * `slice_min` e `slice_max` podem considerar ou não empates.
+  
+  * Você pode especificar uma proporção de linhas (usando `prop`) em vez da quantidade de linhas (`n`).
+  
+  * Você pode fazer amostragem com reposição, ou com probabilidades diferentes para cada linha.
+
+
+### Ordenando linhas: `arrange`
+
+* Por título, sem repetições:
+
+  ```{r}
+  bb_tidy %>% 
+    select(musica) %>% 
+    distinct() %>% 
+    arrange(musica)
+  ```
+
+* Por título, sem repetições, em ordem inversa:
+
+  ```{r}
+  bb_tidy %>% 
+    select(musica) %>% 
+    distinct() %>% 
+    arrange(desc(musica))
+  ```
+
+
+### Contando linhas: `count`
+
+* Quantas semanas cada artista ficou nos *top* $100$? Duas músicas na mesma semana contam como duas semanas.
+
+  ```{r}
+  bb_tidy %>% 
+    count(artista, sort = TRUE)
+  ```
+
+* Quantas semanas cada música ficou nos *top* $100$?
+
+  ```{r}
+  bb_tidy %>% 
+    count(musica, sort = TRUE)
+  ```
+
+* Se houve músicas com o mesmo nome, mas de artistas diferentes, [o código acima está errado]{.hl}. O certo é
+
+  ```{r}
+  bb_tidy %>% 
+    count(musica, artista, sort = TRUE)
+  ```
+
+
+### Agrupando linhas: `group_by` e `summarize`
+
+* Qual foi a melhor posição que cada artista alcançou?
+
+  ```{r}
+  bb_tidy %>% 
+    group_by(artista) %>% 
+    summarize(melhor = min(pos)) %>% 
+    arrange(melhor)
+  ```
+
+* Qual foi a melhor posição que cada música alcançou?
+
+  ```{r}
+  bb_tidy %>% 
+    group_by(artista, musica) %>% 
+    summarize(melhor = min(pos)) %>% 
+    arrange(melhor)
+  ```
+
+* Quando usamos `summarize`, o agrupamento mais interno é desfeito. Isto significa que o resultado acima ainda está agrupado por `artista`.
+
+* Quantas semanas cada artista ficou na posição $1$?
+
+  ```{r}
+  bb_tidy %>% 
+    filter(pos == 1) %>% 
+    group_by(artista) %>%
+    summarize(semanas = n()) %>% 
+    arrange(desc(semanas))
+  ```
+
+* Perceba que `count`, que vimos mais acima, faz agrupamentos do mesmo modo:
+
+  ```{r}
+  bb_tidy %>% 
+    filter(pos == 1) %>% 
+    count(artista, sort = TRUE)
+  ```
+
+* Uma pergunta diferente: quais são os artistas cujas músicas apareceram nos *top* $100$ mais tempo depois do lançamento da música?
+
+  ```{r}
+  bb_tidy %>% 
+    group_by(artista) %>% 
+    summarize(semanas = max(semana)) %>% 
+    arrange(desc(semanas))
+  ```
+
+
+* Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com `NA`; logo, [a média é sobre a quantidade de semanas em que a música esteve na lista]{.hl}.
+
+  ```{r}
+  media1 <- bb_tidy %>% 
+    group_by(artista, musica) %>% 
+    summarize(media = mean(pos), .groups = 'drop') %>% 
+    arrange(media)
+  
+  media1
+  ```
+
+* E se quisermos a média sobre o número de semanas desde a entrada da música até a última semana em que a música apareceu na lista?
+
+  ```{r}
+  media2 <- bb_tidy %>% 
+    group_by(artista, musica) %>% 
+    summarize(media = sum(pos)/max(semana), .groups = 'drop') %>% 
+    arrange(media)
+  
+  media2
+  ```
+
+  ```{r}
+  identical(media1, media2)
+  ```
+
