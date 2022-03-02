@@ -1,6 +1,6 @@
 new_session: no
 delete_merged_file: true
-before_chapter_script: "_common.R"
+before_chapter_script: 'before_chapter.R'
 output_dir: "docs"
 
 language:

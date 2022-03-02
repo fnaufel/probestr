@@ -106,8 +106,6 @@
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-% Make links footnotes instead of hotlinks:
-\DeclareRobustCommand{\href}[2]{#2\footnote{\url{#1}}}
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
@@ -121,6 +119,11 @@
 % get rid of language-specific shorthands (see #6817):
 \let\LanguageShortHands\languageshorthands
 \def\languageshorthands#1{}
+
+% A command to save the path to the resources of bd.format (fnaufel)
+\newcommand{\dir}{/ssd/R/x86_64-pc-linux-gnu-library/4.1/fnaufelRmd/rmarkdown/resources}
+
+
 
 \hypersetup{
   colorlinks,
@@ -192,7 +195,7 @@
 \newenvironment{rmdcaution}
 {
   \begin{mycaution}
-    \includegraphics{images/caution.png}
+    \includegraphics[width=.8cm]{\dir/images/caution.png}
     \tcblower
   }
   {
@@ -210,7 +213,7 @@
 \newenvironment{rmdimportant}
 {
   \begin{myimportant}
-    \includegraphics{images/important.png}
+    \includegraphics[width=.8cm]{\dir/images/important.png}
     \tcblower
   }
   {
@@ -228,7 +231,7 @@
 \newenvironment{rmdwarning}
 {
   \begin{mywarning}
-    \includegraphics{images/warning.png}
+    \includegraphics[width=.8cm]{\dir/images/warning.png}
     \tcblower
   }
   {
@@ -246,7 +249,7 @@
 \newenvironment{rmdnote}
 {
   \begin{mynote}
-    \includegraphics{images/note.png}
+    \includegraphics[width=.8cm]{\dir/images/note.png}
     \tcblower
   }
   {
@@ -264,7 +267,7 @@
 \newenvironment{rmdtip}
 {
   \begin{mytip}
-    \includegraphics{images/tip.png}
+    \includegraphics[width=.8cm]{\dir/images/tip.png}
     \tcblower
   }
   {
@@ -322,12 +325,10 @@
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
-\usepackage[]{natbib}
-\bibliographystyle{plainnat}
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 30/11/2021)}
+\date{(versão de 02/03/2022)}
 
 \begin{document}
 \maketitle
@@ -933,14 +934,14 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 \begin{Highlighting}[]
 \NormalTok{bb }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{head}\NormalTok{()}
 \DocumentationTok{\#\# \# A tibble: 6 x 79}
-\DocumentationTok{\#\#   artista  musica  entrou       wk1   wk2   wk3   wk4   wk5   wk6   wk7}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}    \textless{}chr\textgreater{}   \textless{}date\textgreater{}     \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 2 Pac    Baby D\textasciitilde{} 2000{-}02{-}26    87    82    72    77    87    94    99}
-\DocumentationTok{\#\# 2 2Ge+her  The Ha\textasciitilde{} 2000{-}09{-}02    91    87    92    NA    NA    NA    NA}
-\DocumentationTok{\#\# 3 3 Doors\textasciitilde{} Krypto\textasciitilde{} 2000{-}04{-}08    81    70    68    67    66    57    54}
-\DocumentationTok{\#\# 4 3 Doors\textasciitilde{} Loser   2000{-}10{-}21    76    76    72    69    67    65    55}
-\DocumentationTok{\#\# 5 504 Boyz Wobble\textasciitilde{} 2000{-}04{-}15    57    34    25    17    17    31    36}
-\DocumentationTok{\#\# 6 98\^{}0     Give M\textasciitilde{} 2000{-}08{-}19    51    39    34    26    26    19     2}
+\DocumentationTok{\#\#   artista   musica entrou       wk1   wk2   wk3   wk4   wk5   wk6   wk7}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}     \textless{}chr\textgreater{}  \textless{}date\textgreater{}     \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 2 Pac     Baby \textasciitilde{} 2000{-}02{-}26    87    82    72    77    87    94    99}
+\DocumentationTok{\#\# 2 2Ge+her   The H\textasciitilde{} 2000{-}09{-}02    91    87    92    NA    NA    NA    NA}
+\DocumentationTok{\#\# 3 3 Doors \textasciitilde{} Krypt\textasciitilde{} 2000{-}04{-}08    81    70    68    67    66    57    54}
+\DocumentationTok{\#\# 4 3 Doors \textasciitilde{} Loser  2000{-}10{-}21    76    76    72    69    67    65    55}
+\DocumentationTok{\#\# 5 504 Boyz  Wobbl\textasciitilde{} 2000{-}04{-}15    57    34    25    17    17    31    36}
+\DocumentationTok{\#\# 6 98\^{}0      Give \textasciitilde{} 2000{-}08{-}19    51    39    34    26    26    19     2}
 \DocumentationTok{\#\# \# ... with 69 more variables: wk8 \textless{}dbl\textgreater{}, wk9 \textless{}dbl\textgreater{}, wk10 \textless{}dbl\textgreater{},}
 \DocumentationTok{\#\# \#   wk11 \textless{}dbl\textgreater{}, wk12 \textless{}dbl\textgreater{}, wk13 \textless{}dbl\textgreater{}, wk14 \textless{}dbl\textgreater{}, wk15 \textless{}dbl\textgreater{},}
 \DocumentationTok{\#\# \#   wk16 \textless{}dbl\textgreater{}, wk17 \textless{}dbl\textgreater{}, wk18 \textless{}dbl\textgreater{}, wk19 \textless{}dbl\textgreater{}, wk20 \textless{}dbl\textgreater{},}
@@ -1463,13 +1464,13 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 \NormalTok{bb\_tidy }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{slice\_sample}\NormalTok{(}\AttributeTok{n =} \DecValTok{5}\NormalTok{)}
 \DocumentationTok{\#\# \# A tibble: 5 x 5}
-\DocumentationTok{\#\#   artista              musica                  entrou     semana   pos}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}                \textless{}chr\textgreater{}                   \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 matchbox twenty      Bent                    2000{-}04{-}29     25    12}
-\DocumentationTok{\#\# 2 Hill, Faith          Let\textquotesingle{}s Make Love         2000{-}08{-}12      8    60}
-\DocumentationTok{\#\# 3 Backstreet Boys, The Show Me The Meaning ... 2000{-}01{-}01      9    12}
-\DocumentationTok{\#\# 4 Joe                  Treat Her Like A Lad... 2000{-}08{-}05     12    84}
-\DocumentationTok{\#\# 5 Dixie Chicks, The    Cowboy Take Me Away     1999{-}11{-}27     20    59}
+\DocumentationTok{\#\#   artista       musica           entrou     semana   pos}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}         \textless{}chr\textgreater{}            \textless{}date\textgreater{}      \textless{}int\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Sisqo         Incomplete       2000{-}06{-}24      7     2}
+\DocumentationTok{\#\# 2 3 Doors Down  Kryptonite       2000{-}04{-}08     23     6}
+\DocumentationTok{\#\# 3 Lonestar      Amazed           1999{-}06{-}05     64    50}
+\DocumentationTok{\#\# 4 Jones, Donell Where I Wanna Be 2000{-}04{-}22      9    38}
+\DocumentationTok{\#\# 5 Dream         He Loves U Not   2000{-}09{-}30      5    47}
 \end{Highlighting}
 \end{Shaded}
 \item
@@ -1630,7 +1631,8 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   \FunctionTok{group\_by}\NormalTok{(artista, musica) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{summarize}\NormalTok{(}\AttributeTok{melhor =} \FunctionTok{min}\NormalTok{(pos)) }\SpecialCharTok{\%\textgreater{}\%} 
   \FunctionTok{arrange}\NormalTok{(melhor)}
-\DocumentationTok{\#\# \textasciigrave{}summarise()\textasciigrave{} has grouped output by \textquotesingle{}artista\textquotesingle{}. You can override using the \textasciigrave{}.groups\textasciigrave{} argument.}
+\DocumentationTok{\#\# \textasciigrave{}summarise()\textasciigrave{} has grouped output by \textquotesingle{}artista\textquotesingle{}. You can override using the}
+\DocumentationTok{\#\# \textasciigrave{}.groups\textasciigrave{} argument.}
 \DocumentationTok{\#\# \# A tibble: 317 x 3}
 \DocumentationTok{\#\#   artista             musica                  melhor}
 \DocumentationTok{\#\#   \textless{}chr\textgreater{}               \textless{}chr\textgreater{}                    \textless{}dbl\textgreater{}}
@@ -1933,14 +1935,14 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \NormalTok{df }\OtherTok{\textless{}{-}}\NormalTok{ msleep}
 \NormalTok{df}
 \DocumentationTok{\#\# \# A tibble: 83 x 11}
-\DocumentationTok{\#\#   name         genus   vore  order   conservation sleep\_total sleep\_rem}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}        \textless{}chr\textgreater{}   \textless{}chr\textgreater{} \textless{}chr\textgreater{}   \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 Cheetah      Acinon\textasciitilde{} carni Carniv\textasciitilde{} lc                  12.1      NA  }
-\DocumentationTok{\#\# 2 Owl monkey   Aotus   omni  Primat\textasciitilde{} \textless{}NA\textgreater{}                17         1.8}
-\DocumentationTok{\#\# 3 Mountain be\textasciitilde{} Aplodo\textasciitilde{} herbi Rodent\textasciitilde{} nt                  14.4       2.4}
-\DocumentationTok{\#\# 4 Greater sho\textasciitilde{} Blarina omni  Sorico\textasciitilde{} lc                  14.9       2.3}
-\DocumentationTok{\#\# 5 Cow          Bos     herbi Artiod\textasciitilde{} domesticated         4         0.7}
-\DocumentationTok{\#\# 6 Three{-}toed \textasciitilde{} Bradyp\textasciitilde{} herbi Pilosa  \textless{}NA\textgreater{}                14.4       2.2}
+\DocumentationTok{\#\#   name             genus vore  order conservation sleep\_total sleep\_rem}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}            \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Cheetah          Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA  }
+\DocumentationTok{\#\# 2 Owl monkey       Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8}
+\DocumentationTok{\#\# 3 Mountain beaver  Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4}
+\DocumentationTok{\#\# 4 Greater short{-}t\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3}
+\DocumentationTok{\#\# 5 Cow              Bos   herbi Arti\textasciitilde{} domesticated         4         0.7}
+\DocumentationTok{\#\# 6 Three{-}toed sloth Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2}
 \DocumentationTok{\#\# \# ... with 77 more rows, and 4 more variables: sleep\_cycle \textless{}dbl\textgreater{},}
 \DocumentationTok{\#\# \#   awake \textless{}dbl\textgreater{}, brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
 \end{Highlighting}
@@ -1993,14 +1995,14 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(df)}
 \DocumentationTok{\#\# \# A tibble: 6 x 11}
-\DocumentationTok{\#\#   name         genus   vore  order   conservation sleep\_total sleep\_rem}
-\DocumentationTok{\#\#   \textless{}chr\textgreater{}        \textless{}chr\textgreater{}   \textless{}chr\textgreater{} \textless{}chr\textgreater{}   \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}}
-\DocumentationTok{\#\# 1 Cheetah      Acinon\textasciitilde{} carni Carniv\textasciitilde{} lc                  12.1      NA  }
-\DocumentationTok{\#\# 2 Owl monkey   Aotus   omni  Primat\textasciitilde{} \textless{}NA\textgreater{}                17         1.8}
-\DocumentationTok{\#\# 3 Mountain be\textasciitilde{} Aplodo\textasciitilde{} herbi Rodent\textasciitilde{} nt                  14.4       2.4}
-\DocumentationTok{\#\# 4 Greater sho\textasciitilde{} Blarina omni  Sorico\textasciitilde{} lc                  14.9       2.3}
-\DocumentationTok{\#\# 5 Cow          Bos     herbi Artiod\textasciitilde{} domesticated         4         0.7}
-\DocumentationTok{\#\# 6 Three{-}toed \textasciitilde{} Bradyp\textasciitilde{} herbi Pilosa  \textless{}NA\textgreater{}                14.4       2.2}
+\DocumentationTok{\#\#   name             genus vore  order conservation sleep\_total sleep\_rem}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}            \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{} \textless{}chr\textgreater{}              \textless{}dbl\textgreater{}     \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 Cheetah          Acin\textasciitilde{} carni Carn\textasciitilde{} lc                  12.1      NA  }
+\DocumentationTok{\#\# 2 Owl monkey       Aotus omni  Prim\textasciitilde{} \textless{}NA\textgreater{}                17         1.8}
+\DocumentationTok{\#\# 3 Mountain beaver  Aplo\textasciitilde{} herbi Rode\textasciitilde{} nt                  14.4       2.4}
+\DocumentationTok{\#\# 4 Greater short{-}t\textasciitilde{} Blar\textasciitilde{} omni  Sori\textasciitilde{} lc                  14.9       2.3}
+\DocumentationTok{\#\# 5 Cow              Bos   herbi Arti\textasciitilde{} domesticated         4         0.7}
+\DocumentationTok{\#\# 6 Three{-}toed sloth Brad\textasciitilde{} herbi Pilo\textasciitilde{} \textless{}NA\textgreater{}                14.4       2.2}
 \DocumentationTok{\#\# \# ... with 4 more variables: sleep\_cycle \textless{}dbl\textgreater{}, awake \textless{}dbl\textgreater{},}
 \DocumentationTok{\#\# \#   brainwt \textless{}dbl\textgreater{}, bodywt \textless{}dbl\textgreater{}}
 \end{Highlighting}

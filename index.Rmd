@@ -1,6 +1,8 @@
 --- 
 # See https://github.com/fnaufel/bookdowntemplate01 for more information.
 
+knit: "bookdown::render_book"
+
 title: "Probabilidade e Estatística com R"
 description: "Probabilidade e Estatística com R"
 author: "Fernando Náufel"

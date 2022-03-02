@@ -16,12 +16,7 @@
 
 /* Fix font in tables */
 table.lightable-paper tbody {
-  font-family: 'JetBrains Mono', monospace; !important;
-}
-
-/* Fix bottom margin in output blocks */
-div.sourceCode + pre {
-  margin-bottom: 40px;
+  font-family: 'JetBrains Mono', monospace !important;
 }
 
 /* Make summarytools table use monospace font */
@@ -35,17 +30,14 @@ div.sourceCode + pre {
   margin-bottom: 2em;
 }
 
-/* Links in main text (not navigation) */
-main a {
-  text-decoration: underline;
-}
-
 /* I don't like the frame around images */
 .inline-figure {
   border: none;
 }
 
 /* Blocks with shadow borders */
+
+/*
 .shadow {
   -moz-box-shadow:    3px 3px 3px 5px #bbb;
   -webkit-box-shadow: 3px 3px 3px 5px #bbb;
@@ -54,59 +46,67 @@ main a {
   margin-bottom: 20px !important;
 }
 
+*/
+
 /* Several kinds of boxes */
 
 .rmdbox {
   margin: 1rem calc(-2px - 0.5em);
-  padding: 1em 1em 3ex 1em;
+  padding: 1rem;
   border: 2px solid #ccc;
-  background: #fcfcfc;
   border-radius: 10px;
+  background: #fcfcfc;
 }
 
-.rmdbox > *:last-child, .rmdnote > *:last-child, .rmdcaution > *:last-child, .rmdimportant > *:last-child, .rmdtip > *:last-child, .rmdwarning > *:last-child {
+.rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
+  padding: 1rem 1rem 1rem 5rem;
+  min-height: 80px;
+  border-radius: 10px;
+  background-color: #fcfcfc;
+  background-position: 1rem 50%;
+  background-repeat: no-repeat;
+}
+
+.rmdbox > *:last-child {
   margin-bottom: 0;
 }
 
+.rmdbox > *:last-child,
+.rmdnote > *:last-child,
+.rmdcaution > *:last-child,
+.rmdimportant > *:last-child,
+.rmdtip > *:last-child,
+.rmdwarning > *:last-child {
+  padding-bottom: 0;
+}
+
 @media (max-width: 767.98px) {
-  .rmdbox, .rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
+  .rmdbox {
     margin: 1rem -1rem;
     border-width: 4px;
   }
 }
 
-.rmdcaution, .rmdimportant, .rmdnote, .rmdtip, .rmdwarning {
-  margin: 1rem calc(-2px - 0.5em);
-  border: 2px solid #ccc;
-  padding: 1em 1em 3ex 6em;
-  background: #fcfcfc 25px calc(10% + 10px) no-repeat;
-  border-radius: 10px;
-}
-
 .rmdcaution {
   background-image: url("images/caution.png");
-  border-color: #dc3545;
 }
 
 .rmdimportant {
   background-image: url("images/important.png");
-  border-color: #28a745;
 }
 
 .rmdnote {
   background-image: url("images/note.png");
-  border-color: #637238;
 }
 
 .rmdtip {
   background-image: url("images/tip.png");
-  border-color: #17a2b8;
 }
 
 .rmdwarning {
   background-image: url("images/warning.png");
-  border-color: #ffc107;
 }
+
 
 /* Section headers */
 
@@ -195,55 +195,16 @@ h3 > .header-section-number {
 }
 
 
-/* Source code */
-
-/* 
-
-+ bs4book has code with negative side margins! Make them smaller
-
-+ Also, add border and rounded corners
-
-*/
-pre.sourceCode {
-  margin: 0 -.5rem 1rem -.5rem;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
+/* highlight */
+.hl,
+.hl code{
+  background-color: yellow;
 }
 
-
-/* Misc */
-
-/*
-p.caption {
-  color: #777;
-  margin-top: 10px;
+.framed {
+  border: solid 2px #f1f1f1;
 }
 
-p code {
-  white-space: inherit;
-}
-
-pre {
-  word-break: normal;
-  word-wrap: normal;
-}
-
-pre code {
-  white-space: inherit;
-}
-
-blockquote > p:last-child {
-  text-align: right;
-}
-
-blockquote > p:first-child {
-  text-align: inherit;
-}
-
-.book .book-body .page-wrapper .page-inner section.normal strong {
-  font-weight: 600;
-}
-*/
 
 /* Utilities */
 
@@ -271,6 +232,10 @@ blockquote > p:first-child {
   width: 67%;
 }
 
+.ninety-pct-width{
+  width: 90%;
+}
+
 .float-right{
   float: right;
 }
@@ -281,20 +246,14 @@ blockquote > p:first-child {
 
 .center{
   display: block;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .vspace{
   height: 2em;
 }
 
-/* highlight */
-.hl,
-.hl code{
-  background-color: yellow;
+.text-center{
+  text-align: center;
 }
-
-.framed {
-  border: solid 2px #f1f1f1;
-}
-

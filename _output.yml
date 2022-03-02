@@ -1,47 +1,15 @@
-bookdown::bs4_book:
-  url: 'https\://fnaufel.github.io/site'
-  github-repo: fnaufel/probestcomR
-  site: bookdown::bookdown_site
-  includes:
-    in_header: ['preamble.html']
-  theme:
-    primary: "#086a6a"
-    base_font:
-      google:
-        family: Lexend
-        wght: 400
-    heading_font:
-      google:
-        family: Roboto
-    code_font:
-      google:
-        family: JetBrains Mono
-  repo: https://github.com/fnaufel/probestr
-  css: styles.css
-  df_print: paged
-  template: bs4_book_ptbr.html
-  fig_width: 7
-  fig_height: 5
-  fig_retina: 2
-  fig_caption: TRUE
-  dev: 'png'
-  mathjax: 'default'
-  extra_dependencies: NULL
-  keep_md: FALSE
-  pandoc_args: NULL
+# To install these output formats, run
+#   install.packages("devtools")
+#   devtools::install_github("fnaufel/fnaufelRmd")
 
-bookdown::pdf_book:
-  includes:
-    in_header: "tex/00-preambulo.tex"
-  latex_engine: xelatex
-  citation_package: natbib
-  df_print: tibble
-  keep_tex: yes
-  pandoc_args: [
-    -V, 
-    links-as-notes, 
-    --variable=subparagraph,
-    --filter=./filters/dollar.py3,
-    --filter=./filters/hl.py3
-  ]
-  md_extensions: +fenced_divs+bracketed_spans
+fnaufelRmd::bs4_book:
+  url: 'https://fnaufel.github.io/probestr/'
+  github-repo: fnaufel/probestr
+  repo: https://github.com/fnaufel/probestr
+  # If not using Portuguese, change lang: 'pt-br' in your .Rmd file
+  # and uncomment this next line:
+  #
+  # template: 'default'
+
+fnaufelRmd::pdf_book:
+  []
