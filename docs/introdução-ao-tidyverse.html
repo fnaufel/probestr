@@ -7,7 +7,7 @@
 <title>Capítulo 3 Introdução ao tidyverse | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="Busque mais informações sobre os pacotes que compõem o tidyverse nas referências recomendadas.  3.1 Criando uma tibble  Cada coluna é um vetor: cores &lt;- tibble(  pessoa = c('João', 'Maria',...">
-<meta name="generator" content="bookdown 0.24.7 with bs4_book()">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Capítulo 3 Introdução ao tidyverse | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Capítulo 3 Introdução ao tidyverse | Probabilidade e Estatística com R">
 <meta name="twitter:description" content="Busque mais informações sobre os pacotes que compõem o tidyverse nas referências recomendadas.  3.1 Criando uma tibble  Cada coluna é um vetor: cores &lt;- tibble(  pessoa = c('João', 'Maria',...">
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.14/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Lexend-0.4.0/font.css" rel="stylesheet">
 <link href="libs/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
@@ -212,101 +212,107 @@
 </li>
 <li><p>A maioria das funções do <code>tidyverse</code> exige que as <em>tibbles</em> estejam neste formato <em>tidy</em>.</p></li>
 <li>
-<p>Um exemplo mais complexo é o <em>dataset</em> <code>billboard</code>:</p>
+<p>Um exemplo mais complexo é o <em>dataset</em> <code>billboard</code>, com as seguintes colunas para cada música que estava no <em>top 100</em> da Billboard no ano de <span class="math inline">\(2000\)</span>::</p>
+<ul>
+<li><p>Nome do artista ou banda;</p></li>
+<li><p>Nome da música;</p></li>
+<li><p>Data em que a música entrou no <em>top 100</em> da Billboard;</p></li>
+<li><p>Para cada uma das <span class="math inline">\(76\)</span> semanas seguintes, a posição da música no <em>top 100</em>.</p></li>
+</ul>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">glimpse</span><span class="op">(</span><span class="op">)</span>
-<span class="co">## Rows: 317</span>
-<span class="co">## Columns: 79</span>
-<span class="co">## $ artist       &lt;chr&gt; "2 Pac", "2Ge+her", "3 Doors Down", "3 Doors Down", "504 Boyz"…</span>
-<span class="co">## $ track        &lt;chr&gt; "Baby Don't Cry (Keep...", "The Hardest Part Of ...", "Krypton…</span>
-<span class="co">## $ date.entered &lt;date&gt; 2000-02-26, 2000-09-02, 2000-04-08, 2000-10-21, 2000-04-15, 2…</span>
-<span class="co">## $ wk1          &lt;dbl&gt; 87, 91, 81, 76, 57, 51, 97, 84, 59, 76, 84, 57, 50, 71, 79, 80…</span>
-<span class="co">## $ wk2          &lt;dbl&gt; 82, 87, 70, 76, 34, 39, 97, 62, 53, 76, 84, 47, 39, 51, 65, 78…</span>
-<span class="co">## $ wk3          &lt;dbl&gt; 72, 92, 68, 72, 25, 34, 96, 51, 38, 74, 75, 45, 30, 28, 53, 76…</span>
-<span class="co">## $ wk4          &lt;dbl&gt; 77, NA, 67, 69, 17, 26, 95, 41, 28, 69, 73, 29, 28, 18, 48, 77…</span>
-<span class="co">## $ wk5          &lt;dbl&gt; 87, NA, 66, 67, 17, 26, 100, 38, 21, 68, 73, 23, 21, 13, 45, 9…</span>
-<span class="co">## $ wk6          &lt;dbl&gt; 94, NA, 57, 65, 31, 19, NA, 35, 18, 67, 69, 18, 19, 13, 36, NA…</span>
-<span class="co">## $ wk7          &lt;dbl&gt; 99, NA, 54, 55, 36, 2, NA, 35, 16, 61, 68, 11, 20, 11, 34, NA,…</span>
-<span class="co">## $ wk8          &lt;dbl&gt; NA, NA, 53, 59, 49, 2, NA, 38, 14, 58, 65, 9, 17, 1, 29, NA, 9…</span>
-<span class="co">## $ wk9          &lt;dbl&gt; NA, NA, 51, 62, 53, 3, NA, 38, 12, 57, 73, 9, 17, 1, 27, NA, N…</span>
-<span class="co">## $ wk10         &lt;dbl&gt; NA, NA, 51, 61, 57, 6, NA, 36, 10, 59, 83, 11, 17, 2, 30, NA, …</span>
-<span class="co">## $ wk11         &lt;dbl&gt; NA, NA, 51, 61, 64, 7, NA, 37, 9, 66, 92, 1, 17, 2, 36, NA, 99…</span>
-<span class="co">## $ wk12         &lt;dbl&gt; NA, NA, 51, 59, 70, 22, NA, 37, 8, 68, NA, 1, 3, 3, 37, NA, NA…</span>
-<span class="co">## $ wk13         &lt;dbl&gt; NA, NA, 47, 61, 75, 29, NA, 38, 6, 61, NA, 1, 3, 3, 39, NA, 96…</span>
-<span class="co">## $ wk14         &lt;dbl&gt; NA, NA, 44, 66, 76, 36, NA, 49, 1, 67, NA, 1, 7, 4, 49, NA, 96…</span>
-<span class="co">## $ wk15         &lt;dbl&gt; NA, NA, 38, 72, 78, 47, NA, 61, 2, 59, NA, 4, 10, 12, 57, NA, …</span>
-<span class="co">## $ wk16         &lt;dbl&gt; NA, NA, 28, 76, 85, 67, NA, 63, 2, 63, NA, 8, 17, 11, 63, NA, …</span>
-<span class="co">## $ wk17         &lt;dbl&gt; NA, NA, 22, 75, 92, 66, NA, 62, 2, 67, NA, 12, 25, 13, 65, NA,…</span>
-<span class="co">## $ wk18         &lt;dbl&gt; NA, NA, 18, 67, 96, 84, NA, 67, 2, 71, NA, 22, 29, 15, 68, NA,…</span>
-<span class="co">## $ wk19         &lt;dbl&gt; NA, NA, 18, 73, NA, 93, NA, 83, 3, 79, NA, 23, 29, 18, 79, NA,…</span>
-<span class="co">## $ wk20         &lt;dbl&gt; NA, NA, 14, 70, NA, 94, NA, 86, 4, 89, NA, 43, 40, 20, 86, NA,…</span>
-<span class="co">## $ wk21         &lt;dbl&gt; NA, NA, 12, NA, NA, NA, NA, NA, 5, NA, NA, 44, 43, 30, NA, NA,…</span>
-<span class="co">## $ wk22         &lt;dbl&gt; NA, NA, 7, NA, NA, NA, NA, NA, 5, NA, NA, NA, 50, 40, NA, NA, …</span>
-<span class="co">## $ wk23         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 6, NA, NA, NA, NA, 39, NA, NA, …</span>
-<span class="co">## $ wk24         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, 44, NA, NA, …</span>
-<span class="co">## $ wk25         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 13, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk26         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 14, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk27         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 16, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk28         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 23, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk29         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 22, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk30         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 33, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk31         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 36, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk32         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, 43, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk33         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk34         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk35         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk36         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk37         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk38         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk39         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…</span>
-<span class="co">## $ wk40         &lt;dbl&gt; NA, NA, 15, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk41         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk42         &lt;dbl&gt; NA, NA, 13, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk43         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk44         &lt;dbl&gt; NA, NA, 16, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk45         &lt;dbl&gt; NA, NA, 17, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk46         &lt;dbl&gt; NA, NA, 21, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk47         &lt;dbl&gt; NA, NA, 22, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk48         &lt;dbl&gt; NA, NA, 24, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk49         &lt;dbl&gt; NA, NA, 28, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk50         &lt;dbl&gt; NA, NA, 33, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk51         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk52         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk53         &lt;dbl&gt; NA, NA, 49, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk54         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk55         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk56         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk57         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk58         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk59         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk60         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk61         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk62         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk63         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk64         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk65         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk66         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk67         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk68         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk69         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk70         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk71         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk72         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk73         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk74         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk75         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span>
-<span class="co">## $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></code></pre></div>
+<code class="sourceCode R"><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">glimpse</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## Rows: 317
+## Columns: 79
+## $ artist       &lt;chr&gt; "2 Pac", "2Ge+her", "3 Doors Down", "3 Doors Down", "504 Boyz"…
+## $ track        &lt;chr&gt; "Baby Don't Cry (Keep...", "The Hardest Part Of ...", "Krypton…
+## $ date.entered &lt;date&gt; 2000-02-26, 2000-09-02, 2000-04-08, 2000-10-21, 2000-04-15, 2…
+## $ wk1          &lt;dbl&gt; 87, 91, 81, 76, 57, 51, 97, 84, 59, 76, 84, 57, 50, 71, 79, 80…
+## $ wk2          &lt;dbl&gt; 82, 87, 70, 76, 34, 39, 97, 62, 53, 76, 84, 47, 39, 51, 65, 78…
+## $ wk3          &lt;dbl&gt; 72, 92, 68, 72, 25, 34, 96, 51, 38, 74, 75, 45, 30, 28, 53, 76…
+## $ wk4          &lt;dbl&gt; 77, NA, 67, 69, 17, 26, 95, 41, 28, 69, 73, 29, 28, 18, 48, 77…
+## $ wk5          &lt;dbl&gt; 87, NA, 66, 67, 17, 26, 100, 38, 21, 68, 73, 23, 21, 13, 45, 9…
+## $ wk6          &lt;dbl&gt; 94, NA, 57, 65, 31, 19, NA, 35, 18, 67, 69, 18, 19, 13, 36, NA…
+## $ wk7          &lt;dbl&gt; 99, NA, 54, 55, 36, 2, NA, 35, 16, 61, 68, 11, 20, 11, 34, NA,…
+## $ wk8          &lt;dbl&gt; NA, NA, 53, 59, 49, 2, NA, 38, 14, 58, 65, 9, 17, 1, 29, NA, 9…
+## $ wk9          &lt;dbl&gt; NA, NA, 51, 62, 53, 3, NA, 38, 12, 57, 73, 9, 17, 1, 27, NA, N…
+## $ wk10         &lt;dbl&gt; NA, NA, 51, 61, 57, 6, NA, 36, 10, 59, 83, 11, 17, 2, 30, NA, …
+## $ wk11         &lt;dbl&gt; NA, NA, 51, 61, 64, 7, NA, 37, 9, 66, 92, 1, 17, 2, 36, NA, 99…
+## $ wk12         &lt;dbl&gt; NA, NA, 51, 59, 70, 22, NA, 37, 8, 68, NA, 1, 3, 3, 37, NA, NA…
+## $ wk13         &lt;dbl&gt; NA, NA, 47, 61, 75, 29, NA, 38, 6, 61, NA, 1, 3, 3, 39, NA, 96…
+## $ wk14         &lt;dbl&gt; NA, NA, 44, 66, 76, 36, NA, 49, 1, 67, NA, 1, 7, 4, 49, NA, 96…
+## $ wk15         &lt;dbl&gt; NA, NA, 38, 72, 78, 47, NA, 61, 2, 59, NA, 4, 10, 12, 57, NA, …
+## $ wk16         &lt;dbl&gt; NA, NA, 28, 76, 85, 67, NA, 63, 2, 63, NA, 8, 17, 11, 63, NA, …
+## $ wk17         &lt;dbl&gt; NA, NA, 22, 75, 92, 66, NA, 62, 2, 67, NA, 12, 25, 13, 65, NA,…
+## $ wk18         &lt;dbl&gt; NA, NA, 18, 67, 96, 84, NA, 67, 2, 71, NA, 22, 29, 15, 68, NA,…
+## $ wk19         &lt;dbl&gt; NA, NA, 18, 73, NA, 93, NA, 83, 3, 79, NA, 23, 29, 18, 79, NA,…
+## $ wk20         &lt;dbl&gt; NA, NA, 14, 70, NA, 94, NA, 86, 4, 89, NA, 43, 40, 20, 86, NA,…
+## $ wk21         &lt;dbl&gt; NA, NA, 12, NA, NA, NA, NA, NA, 5, NA, NA, 44, 43, 30, NA, NA,…
+## $ wk22         &lt;dbl&gt; NA, NA, 7, NA, NA, NA, NA, NA, 5, NA, NA, NA, 50, 40, NA, NA, …
+## $ wk23         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 6, NA, NA, NA, NA, 39, NA, NA, …
+## $ wk24         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 9, NA, NA, NA, NA, 44, NA, NA, …
+## $ wk25         &lt;dbl&gt; NA, NA, 6, NA, NA, NA, NA, NA, 13, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk26         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 14, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk27         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, 16, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk28         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 23, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk29         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 22, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk30         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 33, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk31         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, 36, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk32         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, 43, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk33         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk34         &lt;dbl&gt; NA, NA, 3, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk35         &lt;dbl&gt; NA, NA, 4, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk36         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk37         &lt;dbl&gt; NA, NA, 5, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk38         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk39         &lt;dbl&gt; NA, NA, 9, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+## $ wk40         &lt;dbl&gt; NA, NA, 15, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk41         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk42         &lt;dbl&gt; NA, NA, 13, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk43         &lt;dbl&gt; NA, NA, 14, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk44         &lt;dbl&gt; NA, NA, 16, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk45         &lt;dbl&gt; NA, NA, 17, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk46         &lt;dbl&gt; NA, NA, 21, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk47         &lt;dbl&gt; NA, NA, 22, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk48         &lt;dbl&gt; NA, NA, 24, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk49         &lt;dbl&gt; NA, NA, 28, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk50         &lt;dbl&gt; NA, NA, 33, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk51         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk52         &lt;dbl&gt; NA, NA, 42, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk53         &lt;dbl&gt; NA, NA, 49, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk54         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk55         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk56         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk57         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk58         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk59         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk60         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk61         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk62         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk63         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk64         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk65         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk66         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk67         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk68         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk69         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk70         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk71         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk72         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk73         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk74         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk75         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…
+## $ wk76         &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
 </li>
 <li>
 <p>Vamos renomear as colunas:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">billboard</span> <span class="op">%&gt;%</span> 
   <span class="fu">rename</span><span class="op">(</span>
     artista <span class="op">=</span> <span class="va">artist</span>,
     musica <span class="op">=</span> <span class="va">track</span>,
     entrou <span class="op">=</span> <span class="va">date.entered</span>
   <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -339,7 +345,7 @@
 <li><p>A <em>tibble</em>, que antes era larga, vai ser mais estreita e mais longa.</p></li>
 <li>
 <p>A função <code>pivot_longer</code>, do pacote <code>tidyr</code>, vai fazer o trabalho — inclusive extraindo os números das semanas dos nomes das colunas:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">&lt;-</span> <span class="va">bb</span> <span class="op">%&gt;%</span> 
   <span class="fu">pivot_longer</span><span class="op">(</span>
     <span class="va">wk1</span><span class="op">:</span><span class="va">wk76</span>,
@@ -360,7 +366,7 @@
 </li>
 <li>
 <p>Existem linhas onde <code>pos</code> tem o valor <code>NA</code>. São resultado da organização original dos dados. No novo formato, não servem mais. Vamos eliminá-las.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">&lt;-</span> <span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span>
 
@@ -384,7 +390,7 @@
 <ul>
 <li>
 <p>O <em>data frame</em> <code>cars</code> tem dados (de <span class="math inline">\(1920\)</span>!) sobre as distâncias de frenagem (em pés) de um carro viajando a diversas velocidades (em milhas por hora):</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -394,7 +400,7 @@
 </li>
 <li>
 <p>Vamos criar colunas novas com os valores convertidos para km/h e metros; além disso, uma coluna com a taxa de frenagem:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>
     velocidade <span class="op">=</span> <span class="va">speed</span> <span class="op">*</span> <span class="fl">1.6</span>,
@@ -409,7 +415,7 @@
 </li>
 <li>
 <p>Perceba que as colunas antigas continuam lá. Se quiser manter apenas as colunas novas, use <code>transmute</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span> <span class="op">%&gt;%</span> 
   <span class="fu">transmute</span><span class="op">(</span>
     velocidade <span class="op">=</span> <span class="va">speed</span> <span class="op">*</span> <span class="fl">1.6</span>,
@@ -433,7 +439,7 @@
 <li><p>Vamos voltar à nossa <em>tibble</em> dos <em>top</em> <span class="math inline">\(100\)</span> da <em>Billboard</em>.</p></li>
 <li>
 <p>Para ver só a coluna de artistas:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">artista</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -444,7 +450,7 @@
 </li>
 <li>
 <p>Para eliminar as repetições:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -456,7 +462,7 @@
 </li>
 <li>
 <p>Artistas e músicas:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -468,7 +474,7 @@
 </li>
 <li>
 <p>Para especificar colunas a não mostrar:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">entrou</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -479,124 +485,124 @@
 </li>
 <li>
 <p>Para extrair uma coluna na forma de vetor (<code>unique</code> é uma função do R base, aplicável a vetores):</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">pull</span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">##   [1] "2 Pac"                          "2Ge+her"                       </span>
-<span class="co">##   [3] "3 Doors Down"                   "504 Boyz"                      </span>
-<span class="co">##   [5] "98^0"                           "A*Teens"                       </span>
-<span class="co">##   [7] "Aaliyah"                        "Adams, Yolanda"                </span>
-<span class="co">##   [9] "Adkins, Trace"                  "Aguilera, Christina"           </span>
-<span class="co">##  [11] "Alice Deejay"                   "Allan, Gary"                   </span>
-<span class="co">##  [13] "Amber"                          "Anastacia"                     </span>
-<span class="co">##  [15] "Anthony, Marc"                  "Avant"                         </span>
-<span class="co">##  [17] "BBMak"                          "Backstreet Boys, The"          </span>
-<span class="co">##  [19] "Badu, Erkyah"                   "Baha Men"                      </span>
-<span class="co">##  [21] "Barenaked Ladies"               "Beenie Man"                    </span>
-<span class="co">##  [23] "Before Dark"                    "Bega, Lou"                     </span>
-<span class="co">##  [25] "Big Punisher"                   "Black Rob"                     </span>
-<span class="co">##  [27] "Black, Clint"                   "Blaque"                        </span>
-<span class="co">##  [29] "Blige, Mary J."                 "Blink-182"                     </span>
-<span class="co">##  [31] "Bloodhound Gang"                "Bon Jovi"                      </span>
-<span class="co">##  [33] "Braxton, Toni"                  "Brock, Chad"                   </span>
-<span class="co">##  [35] "Brooks &amp; Dunn"                  "Brooks, Garth"                 </span>
-<span class="co">##  [37] "Byrd, Tracy"                    "Cagle, Chris"                  </span>
-<span class="co">##  [39] "Cam'ron"                        "Carey, Mariah"                 </span>
-<span class="co">##  [41] "Carter, Aaron"                  "Carter, Torrey"                </span>
-<span class="co">##  [43] "Changing Faces"                 "Chesney, Kenny"                </span>
-<span class="co">##  [45] "Clark Family Experience"        "Clark, Terri"                  </span>
-<span class="co">##  [47] "Common"                         "Counting Crows"                </span>
-<span class="co">##  [49] "Creed"                          "Cyrus, Billy Ray"              </span>
-<span class="co">##  [51] "D'Angelo"                       "DMX"                           </span>
-<span class="co">##  [53] "Da Brat"                        "Davidson, Clay"                </span>
-<span class="co">##  [55] "De La Soul"                     "Destiny's Child"               </span>
-<span class="co">##  [57] "Diffie, Joe"                    "Dion, Celine"                  </span>
-<span class="co">##  [59] "Dixie Chicks, The"              "Dr. Dre"                       </span>
-<span class="co">##  [61] "Drama"                          "Dream"                         </span>
-<span class="co">##  [63] "Eastsidaz, The"                 "Eiffel 65"                     </span>
-<span class="co">##  [65] "Elliott, Missy \"Misdemeanor\"" "Eminem"                        </span>
-<span class="co">##  [67] "En Vogue"                       "Estefan, Gloria"               </span>
-<span class="co">##  [69] "Evans, Sara"                    "Eve"                           </span>
-<span class="co">##  [71] "Everclear"                      "Fabian, Lara"                  </span>
-<span class="co">##  [73] "Fatboy Slim"                    "Filter"                        </span>
-<span class="co">##  [75] "Foo Fighters"                   "Fragma"                        </span>
-<span class="co">##  [77] "Funkmaster Flex"                "Ghostface Killah"              </span>
-<span class="co">##  [79] "Gill, Vince"                    "Gilman, Billy"                 </span>
-<span class="co">##  [81] "Ginuwine"                       "Goo Goo Dolls"                 </span>
-<span class="co">##  [83] "Gray, Macy"                     "Griggs, Andy"                  </span>
-<span class="co">##  [85] "Guy"                            "Hanson"                        </span>
-<span class="co">##  [87] "Hart, Beth"                     "Heatherly, Eric"               </span>
-<span class="co">##  [89] "Henley, Don"                    "Herndon, Ty"                   </span>
-<span class="co">##  [91] "Hill, Faith"                    "Hoku"                          </span>
-<span class="co">##  [93] "Hollister, Dave"                "Hot Boys"                      </span>
-<span class="co">##  [95] "Houston, Whitney"               "IMx"                           </span>
-<span class="co">##  [97] "Ice Cube"                       "Ideal"                         </span>
-<span class="co">##  [99] "Iglesias, Enrique"              "J-Shin"                        </span>
-<span class="co">## [101] "Ja Rule"                        "Jackson, Alan"                 </span>
-<span class="co">## [103] "Jagged Edge"                    "Janet"                         </span>
-<span class="co">## [105] "Jay-Z"                          "Jean, Wyclef"                  </span>
-<span class="co">## [107] "Joe"                            "John, Elton"                   </span>
-<span class="co">## [109] "Jones, Donell"                  "Jordan, Montell"               </span>
-<span class="co">## [111] "Juvenile"                       "Kandi"                         </span>
-<span class="co">## [113] "Keith, Toby"                    "Kelis"                         </span>
-<span class="co">## [115] "Kenny G"                        "Kid Rock"                      </span>
-<span class="co">## [117] "Kravitz, Lenny"                 "Kumbia Kings"                  </span>
-<span class="co">## [119] "LFO"                            "LL Cool J"                     </span>
-<span class="co">## [121] "Larrieux, Amel"                 "Lawrence, Tracy"               </span>
-<span class="co">## [123] "Levert, Gerald"                 "Lil Bow Wow"                   </span>
-<span class="co">## [125] "Lil Wayne"                      "Lil' Kim"                      </span>
-<span class="co">## [127] "Lil' Mo"                        "Lil' Zane"                     </span>
-<span class="co">## [129] "Limp Bizkit"                    "Lonestar"                      </span>
-<span class="co">## [131] "Lopez, Jennifer"                "Loveless, Patty"               </span>
-<span class="co">## [133] "Lox"                            "Lucy Pearl"                    </span>
-<span class="co">## [135] "Ludacris"                       "M2M"                           </span>
-<span class="co">## [137] "Madison Avenue"                 "Madonna"                       </span>
-<span class="co">## [139] "Martin, Ricky"                  "Mary Mary"                     </span>
-<span class="co">## [141] "Master P"                       "McBride, Martina"              </span>
-<span class="co">## [143] "McEntire, Reba"                 "McGraw, Tim"                   </span>
-<span class="co">## [145] "McKnight, Brian"                "Messina, Jo Dee"               </span>
-<span class="co">## [147] "Metallica"                      "Montgomery Gentry"             </span>
-<span class="co">## [149] "Montgomery, John Michael"       "Moore, Chante"                 </span>
-<span class="co">## [151] "Moore, Mandy"                   "Mumba, Samantha"               </span>
-<span class="co">## [153] "Musiq"                          "Mya"                           </span>
-<span class="co">## [155] "Mystikal"                       "N'Sync"                        </span>
-<span class="co">## [157] "Nas"                            "Nelly"                         </span>
-<span class="co">## [159] "Next"                           "Nine Days"                     </span>
-<span class="co">## [161] "No Doubt"                       "Nu Flavor"                     </span>
-<span class="co">## [163] "Offspring, The"                 "Paisley, Brad"                 </span>
-<span class="co">## [165] "Papa Roach"                     "Pearl Jam"                     </span>
-<span class="co">## [167] "Pink"                           "Price, Kelly"                  </span>
-<span class="co">## [169] "Profyle"                        "Puff Daddy"                    </span>
-<span class="co">## [171] "Q-Tip"                          "R.E.M."                        </span>
-<span class="co">## [173] "Rascal Flatts"                  "Raye, Collin"                  </span>
-<span class="co">## [175] "Red Hot Chili Peppers"          "Rimes, LeAnn"                  </span>
-<span class="co">## [177] "Rogers, Kenny"                  "Ruff Endz"                     </span>
-<span class="co">## [179] "Sammie"                         "Santana"                       </span>
-<span class="co">## [181] "Savage Garden"                  "SheDaisy"                      </span>
-<span class="co">## [183] "Sheist, Shade"                  "Shyne"                         </span>
-<span class="co">## [185] "Simpson, Jessica"               "Sisqo"                         </span>
-<span class="co">## [187] "Sister Hazel"                   "Smash Mouth"                   </span>
-<span class="co">## [189] "Smith, Will"                    "Son By Four"                   </span>
-<span class="co">## [191] "Sonique"                        "SoulDecision"                  </span>
-<span class="co">## [193] "Spears, Britney"                "Spencer, Tracie"               </span>
-<span class="co">## [195] "Splender"                       "Sting"                         </span>
-<span class="co">## [197] "Stone Temple Pilots"            "Stone, Angie"                  </span>
-<span class="co">## [199] "Strait, George"                 "Sugar Ray"                     </span>
-<span class="co">## [201] "TLC"                            "Tamar"                         </span>
-<span class="co">## [203] "Tamia"                          "Third Eye Blind"               </span>
-<span class="co">## [205] "Thomas, Carl"                   "Tippin, Aaron"                 </span>
-<span class="co">## [207] "Train"                          "Trick Daddy"                   </span>
-<span class="co">## [209] "Trina"                          "Tritt, Travis"                 </span>
-<span class="co">## [211] "Tuesday"                        "Urban, Keith"                  </span>
-<span class="co">## [213] "Usher"                          "Vassar, Phil"                  </span>
-<span class="co">## [215] "Vertical Horizon"               "Vitamin C"                     </span>
-<span class="co">## [217] "Walker, Clay"                   "Wallflowers, The"              </span>
-<span class="co">## [219] "Westlife"                       "Williams, Robbie"              </span>
-<span class="co">## [221] "Wills, Mark"                    "Worley, Darryl"                </span>
-<span class="co">## [223] "Wright, Chely"                  "Yankee Grey"                   </span>
-<span class="co">## [225] "Yearwood, Trisha"               "Ying Yang Twins"               </span>
-<span class="co">## [227] "Zombie Nation"                  "matchbox twenty"</span></code></pre></div>
+  <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>##   [1] "2 Pac"                          "2Ge+her"                       
+##   [3] "3 Doors Down"                   "504 Boyz"                      
+##   [5] "98^0"                           "A*Teens"                       
+##   [7] "Aaliyah"                        "Adams, Yolanda"                
+##   [9] "Adkins, Trace"                  "Aguilera, Christina"           
+##  [11] "Alice Deejay"                   "Allan, Gary"                   
+##  [13] "Amber"                          "Anastacia"                     
+##  [15] "Anthony, Marc"                  "Avant"                         
+##  [17] "BBMak"                          "Backstreet Boys, The"          
+##  [19] "Badu, Erkyah"                   "Baha Men"                      
+##  [21] "Barenaked Ladies"               "Beenie Man"                    
+##  [23] "Before Dark"                    "Bega, Lou"                     
+##  [25] "Big Punisher"                   "Black Rob"                     
+##  [27] "Black, Clint"                   "Blaque"                        
+##  [29] "Blige, Mary J."                 "Blink-182"                     
+##  [31] "Bloodhound Gang"                "Bon Jovi"                      
+##  [33] "Braxton, Toni"                  "Brock, Chad"                   
+##  [35] "Brooks &amp; Dunn"                  "Brooks, Garth"                 
+##  [37] "Byrd, Tracy"                    "Cagle, Chris"                  
+##  [39] "Cam'ron"                        "Carey, Mariah"                 
+##  [41] "Carter, Aaron"                  "Carter, Torrey"                
+##  [43] "Changing Faces"                 "Chesney, Kenny"                
+##  [45] "Clark Family Experience"        "Clark, Terri"                  
+##  [47] "Common"                         "Counting Crows"                
+##  [49] "Creed"                          "Cyrus, Billy Ray"              
+##  [51] "D'Angelo"                       "DMX"                           
+##  [53] "Da Brat"                        "Davidson, Clay"                
+##  [55] "De La Soul"                     "Destiny's Child"               
+##  [57] "Diffie, Joe"                    "Dion, Celine"                  
+##  [59] "Dixie Chicks, The"              "Dr. Dre"                       
+##  [61] "Drama"                          "Dream"                         
+##  [63] "Eastsidaz, The"                 "Eiffel 65"                     
+##  [65] "Elliott, Missy \"Misdemeanor\"" "Eminem"                        
+##  [67] "En Vogue"                       "Estefan, Gloria"               
+##  [69] "Evans, Sara"                    "Eve"                           
+##  [71] "Everclear"                      "Fabian, Lara"                  
+##  [73] "Fatboy Slim"                    "Filter"                        
+##  [75] "Foo Fighters"                   "Fragma"                        
+##  [77] "Funkmaster Flex"                "Ghostface Killah"              
+##  [79] "Gill, Vince"                    "Gilman, Billy"                 
+##  [81] "Ginuwine"                       "Goo Goo Dolls"                 
+##  [83] "Gray, Macy"                     "Griggs, Andy"                  
+##  [85] "Guy"                            "Hanson"                        
+##  [87] "Hart, Beth"                     "Heatherly, Eric"               
+##  [89] "Henley, Don"                    "Herndon, Ty"                   
+##  [91] "Hill, Faith"                    "Hoku"                          
+##  [93] "Hollister, Dave"                "Hot Boys"                      
+##  [95] "Houston, Whitney"               "IMx"                           
+##  [97] "Ice Cube"                       "Ideal"                         
+##  [99] "Iglesias, Enrique"              "J-Shin"                        
+## [101] "Ja Rule"                        "Jackson, Alan"                 
+## [103] "Jagged Edge"                    "Janet"                         
+## [105] "Jay-Z"                          "Jean, Wyclef"                  
+## [107] "Joe"                            "John, Elton"                   
+## [109] "Jones, Donell"                  "Jordan, Montell"               
+## [111] "Juvenile"                       "Kandi"                         
+## [113] "Keith, Toby"                    "Kelis"                         
+## [115] "Kenny G"                        "Kid Rock"                      
+## [117] "Kravitz, Lenny"                 "Kumbia Kings"                  
+## [119] "LFO"                            "LL Cool J"                     
+## [121] "Larrieux, Amel"                 "Lawrence, Tracy"               
+## [123] "Levert, Gerald"                 "Lil Bow Wow"                   
+## [125] "Lil Wayne"                      "Lil' Kim"                      
+## [127] "Lil' Mo"                        "Lil' Zane"                     
+## [129] "Limp Bizkit"                    "Lonestar"                      
+## [131] "Lopez, Jennifer"                "Loveless, Patty"               
+## [133] "Lox"                            "Lucy Pearl"                    
+## [135] "Ludacris"                       "M2M"                           
+## [137] "Madison Avenue"                 "Madonna"                       
+## [139] "Martin, Ricky"                  "Mary Mary"                     
+## [141] "Master P"                       "McBride, Martina"              
+## [143] "McEntire, Reba"                 "McGraw, Tim"                   
+## [145] "McKnight, Brian"                "Messina, Jo Dee"               
+## [147] "Metallica"                      "Montgomery Gentry"             
+## [149] "Montgomery, John Michael"       "Moore, Chante"                 
+## [151] "Moore, Mandy"                   "Mumba, Samantha"               
+## [153] "Musiq"                          "Mya"                           
+## [155] "Mystikal"                       "N'Sync"                        
+## [157] "Nas"                            "Nelly"                         
+## [159] "Next"                           "Nine Days"                     
+## [161] "No Doubt"                       "Nu Flavor"                     
+## [163] "Offspring, The"                 "Paisley, Brad"                 
+## [165] "Papa Roach"                     "Pearl Jam"                     
+## [167] "Pink"                           "Price, Kelly"                  
+## [169] "Profyle"                        "Puff Daddy"                    
+## [171] "Q-Tip"                          "R.E.M."                        
+## [173] "Rascal Flatts"                  "Raye, Collin"                  
+## [175] "Red Hot Chili Peppers"          "Rimes, LeAnn"                  
+## [177] "Rogers, Kenny"                  "Ruff Endz"                     
+## [179] "Sammie"                         "Santana"                       
+## [181] "Savage Garden"                  "SheDaisy"                      
+## [183] "Sheist, Shade"                  "Shyne"                         
+## [185] "Simpson, Jessica"               "Sisqo"                         
+## [187] "Sister Hazel"                   "Smash Mouth"                   
+## [189] "Smith, Will"                    "Son By Four"                   
+## [191] "Sonique"                        "SoulDecision"                  
+## [193] "Spears, Britney"                "Spencer, Tracie"               
+## [195] "Splender"                       "Sting"                         
+## [197] "Stone Temple Pilots"            "Stone, Angie"                  
+## [199] "Strait, George"                 "Sugar Ray"                     
+## [201] "TLC"                            "Tamar"                         
+## [203] "Tamia"                          "Third Eye Blind"               
+## [205] "Thomas, Carl"                   "Tippin, Aaron"                 
+## [207] "Train"                          "Trick Daddy"                   
+## [209] "Trina"                          "Tritt, Travis"                 
+## [211] "Tuesday"                        "Urban, Keith"                  
+## [213] "Usher"                          "Vassar, Phil"                  
+## [215] "Vertical Horizon"               "Vitamin C"                     
+## [217] "Walker, Clay"                   "Wallflowers, The"              
+## [219] "Westlife"                       "Williams, Robbie"              
+## [221] "Wills, Mark"                    "Worley, Darryl"                
+## [223] "Wright, Chely"                  "Yankee Grey"                   
+## [225] "Yearwood, Trisha"               "Ying Yang Twins"               
+## [227] "Zombie Nation"                  "matchbox twenty"</code></pre>
 </li>
 </ul>
 </div>
@@ -607,7 +613,7 @@
 <ul>
 <li>
 <p>Apenas as músicas da Britney Spears:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">artista</span> <span class="op">==</span> <span class="st">'Spears, Britney'</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -618,7 +624,7 @@
 </li>
 <li>
 <p>Apenas músicas que chegaram à posição <span class="math inline">\(1\)</span>:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">pos</span><span class="op">)</span></code></pre></div>
@@ -630,7 +636,7 @@
 </li>
 <li>
 <p>Apenas músicas que chegaram à posição <span class="math inline">\(1\)</span> em menos de <span class="math inline">\(10\)</span> semanas:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">semana</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">distinct</span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span></code></pre></div>
@@ -643,7 +649,7 @@
 <li><p>As funções da família <code>slice</code> filtram linhas de diversas maneiras.</p></li>
 <li>
 <p>De acordo com seus índices (números de linha):</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">slice</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -651,7 +657,7 @@
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"1","5":"87"},{"1":"Clark Family Experience","2":"Meanwhile Back At Th...","3":"2000-11-18","4":"3","5":"81"},{"1":"Vassar, Phil","2":"Carlene","3":"2000-03-04","4":"3","5":"64"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">slice_head</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -659,7 +665,7 @@
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"1","5":"87"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"2","5":"82"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"3","5":"72"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"4","5":"77"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">slice_tail</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -670,7 +676,7 @@
 </li>
 <li>
 <p>De acordo com a ordenação de uma coluna ou de uma função das colunas:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">slice_min</span><span class="op">(</span><span class="va">pos</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -678,7 +684,7 @@
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Aaliyah","2":"Try Again","3":"2000-03-18","4":"14","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"11","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"12","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"13","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"14","5":"1"},{"1":"Aguilera, Christina","2":"What A Girl Wants","3":"1999-11-27","4":"8","5":"1"},{"1":"Aguilera, Christina","2":"What A Girl Wants","3":"1999-11-27","4":"9","5":"1"},{"1":"Carey, Mariah","2":"Thank God I Found Yo...","3":"1999-12-11","4":"11","5":"1"},{"1":"Creed","2":"With Arms Wide Open","3":"2000-05-13","4":"27","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"9","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"10","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"11","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"12","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"13","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"14","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"15","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"16","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"17","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"18","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"19","5":"1"},{"1":"Destiny's Child","2":"Say My Name","3":"1999-12-25","4":"13","5":"1"},{"1":"Destiny's Child","2":"Say My Name","3":"1999-12-25","4":"14","5":"1"},{"1":"Destiny's Child","2":"Say My Name","3":"1999-12-25","4":"15","5":"1"},{"1":"Iglesias, Enrique","2":"Be With You","3":"2000-04-01","4":"13","5":"1"},{"1":"Iglesias, Enrique","2":"Be With You","3":"2000-04-01","4":"14","5":"1"},{"1":"Iglesias, Enrique","2":"Be With You","3":"2000-04-01","4":"15","5":"1"},{"1":"Janet","2":"Doesn't Really Matte...","3":"2000-06-17","4":"11","5":"1"},{"1":"Janet","2":"Doesn't Really Matte...","3":"2000-06-17","4":"12","5":"1"},{"1":"Janet","2":"Doesn't Really Matte...","3":"2000-06-17","4":"13","5":"1"},{"1":"Lonestar","2":"Amazed","3":"1999-06-05","4":"40","5":"1"},{"1":"Lonestar","2":"Amazed","3":"1999-06-05","4":"41","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"6","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"7","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"8","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"9","5":"1"},{"1":"N'Sync","2":"It's Gonna Be Me","3":"2000-05-06","4":"13","5":"1"},{"1":"N'Sync","2":"It's Gonna Be Me","3":"2000-05-06","4":"14","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"9","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"10","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"11","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"12","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"13","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"14","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"15","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"16","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"17","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"18","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"15","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"16","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"17","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"19","5":"1"},{"1":"Sisqo","2":"Incomplete","3":"2000-06-24","4":"8","5":"1"},{"1":"Sisqo","2":"Incomplete","3":"2000-06-24","4":"9","5":"1"},{"1":"Vertical Horizon","2":"Everything You Want","3":"2000-01-22","4":"26","5":"1"},{"1":"matchbox twenty","2":"Bent","3":"2000-04-29","4":"13","5":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">slice_max</span><span class="op">(</span><span class="va">semana</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -689,12 +695,12 @@
 </li>
 <li>
 <p>Aleatoriamente, criando uma amostra:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">slice_sample</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Diffie, Joe","2":"The Quittin' Kind","3":"2000-01-01","4":"5","5":"93"},{"1":"Martin, Ricky","2":"She Bangs","3":"2000-10-07","4":"9","5":"12"},{"1":"McBride, Martina","2":"Love's The Only Hous...","3":"2000-02-05","4":"12","5":"42"},{"1":"Price, Kelly","2":"Love Sets You Free","3":"2000-05-13","4":"2","5":"91"},{"1":"Anthony, Marc","2":"You Sang To Me","3":"2000-02-26","4":"31","5":"40"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"matchbox twenty","2":"Bent","3":"2000-04-29","4":"27","5":"19"},{"1":"Hoku","2":"Another Dumb Blonde","3":"2000-02-19","4":"6","5":"34"},{"1":"Carter, Torrey","2":"Take That","3":"2000-06-24","4":"5","5":"89"},{"1":"Mumba, Samantha","2":"Gotta Tell You","3":"2000-09-09","4":"15","5":"6"},{"1":"Tritt, Travis","2":"Best Of Intentions","3":"2000-08-19","4":"7","5":"50"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </li>
@@ -715,7 +721,7 @@
 <ul>
 <li>
 <p>Por título, sem repetições:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">musica</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -728,7 +734,7 @@
 </li>
 <li>
 <p>Por título, sem repetições, em ordem inversa:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">musica</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -748,7 +754,7 @@
 <ul>
 <li>
 <p>Quantas semanas cada artista ficou nos <em>top</em> <span class="math inline">\(100\)</span>? Duas músicas na mesma semana contam como duas semanas.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">artista</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -759,7 +765,7 @@
 </li>
 <li>
 <p>Quantas semanas cada música ficou nos <em>top</em> <span class="math inline">\(100\)</span>?</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">musica</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -770,7 +776,7 @@
 </li>
 <li>
 <p>Se houve músicas com o mesmo nome, mas de artistas diferentes, <span class="hl">o código acima está errado</span>. O certo é</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">musica</span>, <span class="va">artista</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -788,7 +794,7 @@
 <ul>
 <li>
 <p>Qual foi a melhor posição que cada artista alcançou?</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarize</span><span class="op">(</span>melhor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -801,13 +807,13 @@
 </li>
 <li>
 <p>Qual foi a melhor posição que cada música alcançou?</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarize</span><span class="op">(</span>melhor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">melhor</span><span class="op">)</span>
-<span class="co">## `summarise()` has grouped output by 'artista'. You can override using the</span>
-<span class="co">## `.groups` argument.</span></code></pre></div>
+  <span class="fu">arrange</span><span class="op">(</span><span class="va">melhor</span><span class="op">)</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by 'artista'. You can override using the
+## `.groups` argument.</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["melhor"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Aaliyah","2":"Try Again","3":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"1"},{"1":"Aguilera, Christina","2":"What A Girl Wants","3":"1"},{"1":"Carey, Mariah","2":"Thank God I Found Yo...","3":"1"},{"1":"Creed","2":"With Arms Wide Open","3":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"1"},{"1":"Destiny's Child","2":"Say My Name","3":"1"},{"1":"Iglesias, Enrique","2":"Be With You","3":"1"},{"1":"Janet","2":"Doesn't Really Matte...","3":"1"},{"1":"Lonestar","2":"Amazed","3":"1"},{"1":"Madonna","2":"Music","3":"1"},{"1":"matchbox twenty","2":"Bent","3":"1"},{"1":"N'Sync","2":"It's Gonna Be Me","3":"1"},{"1":"Santana","2":"Maria, Maria","3":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1"},{"1":"Sisqo","2":"Incomplete","3":"1"},{"1":"Vertical Horizon","2":"Everything You Want","3":"1"},{"1":"98^0","2":"Give Me Just One Nig...","3":"2"},{"1":"Anthony, Marc","2":"You Sang To Me","3":"2"},{"1":"Braxton, Toni","2":"He Wasn't Man Enough","3":"2"},{"1":"Dream","2":"He Loves U Not","3":"2"},{"1":"Hill, Faith","2":"Breathe","3":"2"},{"1":"Mya","2":"Case Of The Ex (What...","3":"2"},{"1":"3 Doors Down","2":"Kryptonite","3":"3"},{"1":"Aguilera, Christina","2":"I Turn To You","3":"3"},{"1":"Destiny's Child","2":"Jumpin' Jumpin'","3":"3"},{"1":"Sisqo","2":"Thong Song","3":"3"},{"1":"Eminem","2":"The Real Slim Shady","3":"4"},{"1":"Houston, Whitney","2":"My Love Is Your Love","3":"4"},{"1":"Joe","2":"I Wanna Know","3":"4"},{"1":"Jordan, Montell","2":"Get It On.. Tonite","3":"4"},{"1":"Mumba, Samantha","2":"Gotta Tell You","3":"4"},{"1":"N'Sync","2":"Bye Bye Bye","3":"4"},{"1":"Pink","2":"Most Girls","3":"4"},{"1":"Blaque","2":"Bring It All To Me","3":"5"},{"1":"Elliott, Missy \"Misdemeanor\"","2":"Hot Boyz","3":"5"},{"1":"Gray, Macy","2":"I Try","3":"5"},{"1":"N'Sync","2":"This I Promise You","3":"5"},{"1":"Ruff Endz","2":"No More","3":"5"},{"1":"Backstreet Boys, The","2":"Show Me The Meaning ...","3":"6"},{"1":"Badu, Erkyah","2":"Bag Lady","3":"6"},{"1":"Blink-182","2":"All The Small Things","3":"6"},{"1":"Dion, Celine","2":"That's The Way It Is","3":"6"},{"1":"Eiffel 65","2":"Blue","3":"6"},{"1":"Nine Days","2":"Absolutely (Story Of...","3":"6"},{"1":"Creed","2":"Higher","3":"7"},{"1":"Kenny G","2":"Auld Lang Syne (The ...","3":"7"},{"1":"Nelly","2":"(Hot S**t) Country G...","3":"7"},{"1":"Next","2":"Wifey","3":"7"},{"1":"Pink","2":"There U Go","3":"7"},{"1":"Sonique","2":"It Feels So Good","3":"8"},{"1":"Backstreet Boys, The","2":"Shape Of My Heart","3":"9"},{"1":"Spears, Britney","2":"Oops!.. I Did It Aga...","3":"9"},{"1":"Everclear","2":"Wonderful","3":"11"},{"1":"Ja Rule","2":"Between Me And You","3":"11"},{"1":"Jagged Edge","2":"Let's Get Married","3":"11"},{"1":"Jay-Z","2":"I Just Wanna Love U ...","3":"11"},{"1":"Rimes, LeAnn","2":"I Need You","3":"11"},{"1":"Smash Mouth","2":"Then The Morning Com...","3":"11"},{"1":"Filter","2":"Take A Picture","3":"12"},{"1":"Martin, Ricky","2":"She Bangs","3":"12"},{"1":"BBMak","2":"Back Here","3":"13"},{"1":"Mystikal","2":"Shake Ya Ass","3":"13"},{"1":"Profyle","2":"Liar","3":"14"},{"1":"Red Hot Chili Peppers","2":"Otherside","3":"14"},{"1":"Spears, Britney","2":"From The Bottom Of M...","3":"14"},{"1":"Third Eye Blind","2":"Never Let You Go","3":"14"},{"1":"Barenaked Ladies","2":"Pinch Me","3":"15"},{"1":"Jagged Edge","2":"He Can't Love U","3":"15"},{"1":"504 Boyz","2":"Wobble Wobble","3":"17"},{"1":"Sting","2":"Desert Rose","3":"17"},{"1":"Jay-Z","2":"Big Pimpin'","3":"18"},{"1":"Dixie Chicks, The","2":"Goodbye Earl","3":"19"},{"1":"Foo Fighters","2":"Learn To Fly","3":"19"},{"1":"Guy","2":"Dancin'","3":"19"},{"1":"Kid Rock","2":"Only God Knows Why","3":"19"},{"1":"Hanson","2":"This Time Around","3":"20"},{"1":"Lil Bow Wow","2":"Bounce With Me","3":"20"},{"1":"Thomas, Carl","2":"I Wish","3":"20"},{"1":"Train","2":"Meet Virginia","3":"20"},{"1":"Westlife","2":"Swear It Again","3":"20"},{"1":"Lil' Zane","2":"Callin' Me","3":"21"},{"1":"Ludacris","2":"What's Your Fantasy","3":"21"},{"1":"M2M","2":"Don't Say You Love M...","3":"21"},{"1":"Simpson, Jessica","2":"I Think I'm In Love ...","3":"21"},{"1":"Brock, Chad","2":"Yes!","3":"22"},{"1":"Martin, Ricky","2":"Shake Your Bon-Bon","3":"22"},{"1":"SoulDecision","2":"Faded","3":"22"},{"1":"Avant","2":"Separated","3":"23"},{"1":"Dr. Dre","2":"The Next Episode","3":"23"},{"1":"IMx","2":"Stay The Night","3":"23"},{"1":"Rimes, LeAnn","2":"Big Deal","3":"23"},{"1":"Spears, Britney","2":"Lucky","3":"23"},{"1":"Vertical Horizon","2":"You're A God","3":"23"},{"1":"Goo Goo Dolls","2":"Broadway","3":"24"},{"1":"Kandi","2":"Don't Think I'm Not","3":"24"},{"1":"Moore, Mandy","2":"I Wanna Be With You","3":"24"},{"1":"Sammie","2":"I Like It","3":"24"},{"1":"Savage Garden","2":"Crash And Burn","3":"24"},{"1":"D'Angelo","2":"Untitled (How Does I...","3":"25"},{"1":"Dr. Dre","2":"Forgot About Dre","3":"25"},{"1":"Messina, Jo Dee","2":"That's The Way","3":"25"},{"1":"Avant","2":"My First Love","3":"26"},{"1":"Da Brat","2":"What'Chu Like","3":"26"},{"1":"Son By Four","2":"A Puro Dolor (Purest...","3":"26"},{"1":"Alice Deejay","2":"Better Off Alone","3":"27"},{"1":"Dixie Chicks, The","2":"Cowboy Take Me Away","3":"27"},{"1":"DMX","2":"Party Up (Up In Here...","3":"27"},{"1":"Hoku","2":"Another Dumb Blonde","3":"27"},{"1":"Houston, Whitney","2":"I Learned From The B...","3":"27"},{"1":"McGraw, Tim","2":"My Next Thirty Years","3":"27"},{"1":"Tritt, Travis","2":"Best Of Intentions","3":"27"},{"1":"Carey, Mariah","2":"Crybaby","3":"28"},{"1":"Counting Crows","2":"Hanginaround","3":"28"},{"1":"Mary Mary","2":"Shackles (Praise You...","3":"28"},{"1":"Jones, Donell","2":"Where I Wanna Be","3":"29"},{"1":"Madonna","2":"American Pie","3":"29"},{"1":"McGraw, Tim","2":"My Best Friend","3":"29"},{"1":"Paisley, Brad","2":"We Danced","3":"29"},{"1":"Sugar Ray","2":"Falls Apart","3":"29"},{"1":"Backstreet Boys, The","2":"The One","3":"30"},{"1":"Lonestar","2":"What About Now","3":"30"},{"1":"Dixie Chicks, The","2":"Without You","3":"31"},{"1":"Keith, Toby","2":"How Do You Like Me N...","3":"31"},{"1":"McEntire, Reba","2":"What Do You Say","3":"31"},{"1":"Musiq","2":"Just Friends","3":"31"},{"1":"Strait, George","2":"The Best Day","3":"31"},{"1":"Braxton, Toni","2":"Just Be A Man About ...","3":"32"},{"1":"Fabian, Lara","2":"I Will Love Again","3":"32"},{"1":"Iglesias, Enrique","2":"Rhythm Divine","3":"32"},{"1":"Bon Jovi","2":"It's My Life","3":"33"},{"1":"Chesney, Kenny","2":"I Lost It","3":"34"},{"1":"Evans, Sara","2":"Born To Fly","3":"34"},{"1":"Eve","2":"Love Is Blind","3":"34"},{"1":"J-Shin","2":"One Night Stand","3":"34"},{"1":"Aaliyah","2":"I Don't Wanna","3":"35"},{"1":"Carter, Aaron","2":"Aaron's Party (Come ...","3":"35"},{"1":"Ice Cube","2":"You Can Do It","3":"35"},{"1":"Montgomery, John Michael","2":"The Little Girl","3":"35"},{"1":"Vassar, Phil","2":"Just Another Day In ...","3":"35"},{"1":"Lucy Pearl","2":"Dance Tonight","3":"36"},{"1":"Wills, Mark","2":"Back At One","3":"36"},{"1":"Griggs, Andy","2":"She's More","3":"37"},{"1":"Jackson, Alan","2":"It Must Be Love","3":"37"},{"1":"Gilman, Billy","2":"One Voice","3":"38"},{"1":"Jean, Wyclef","2":"911","3":"38"},{"1":"No Doubt","2":"Simple Kind Of Life","3":"38"},{"1":"Rascal Flatts","2":"Prayin' For Daylight","3":"38"},{"1":"Vitamin C","2":"Graduation (Friends ...","3":"38"},{"1":"Lonestar","2":"Smile","3":"39"},{"1":"Baha Men","2":"Who Let The Dogs Out","3":"40"},{"1":"Lawrence, Tracy","2":"Lessons Learned","3":"40"},{"1":"Rogers, Kenny","2":"Buy Me A Rose","3":"40"},{"1":"Sisqo","2":"Got To Get It","3":"40"},{"1":"Strait, George","2":"Go On","3":"40"},{"1":"Walker, Clay","2":"The Chain Of Love","3":"40"},{"1":"Amber","2":"Sexual","3":"42"},{"1":"McBride, Martina","2":"Love's The Only Hous...","3":"42"},{"1":"Tippin, Aaron","2":"Kiss This","3":"42"},{"1":"Black Rob","2":"Whoa!","3":"43"},{"1":"Jackson, Alan","2":"Pop A Top","3":"43"},{"1":"Raye, Collin","2":"Couldn't Last A Mome...","3":"43"},{"1":"SheDaisy","2":"I Will.. But","3":"43"},{"1":"Black, Clint","2":"Been There","3":"44"},{"1":"Common","2":"The Light","3":"44"},{"1":"Jackson, Alan","2":"www.memory","3":"45"},{"1":"Vassar, Phil","2":"Carlene","3":"45"},{"1":"Vitamin C","2":"The Itch","3":"45"},{"1":"Eastsidaz, The","2":"G'D Up","3":"47"},{"1":"Ideal","2":"Whatever","3":"47"},{"1":"Thomas, Carl","2":"Emotional","3":"47"},{"1":"Ginuwine","2":"None Of Ur Friends B...","3":"48"},{"1":"Davidson, Clay","2":"Unconditional","3":"49"},{"1":"DMX","2":"What You Want","3":"49"},{"1":"John, Elton","2":"Someday Out Of The B...","3":"49"},{"1":"Pearl Jam","2":"Nothing As It Seems","3":"49"},{"1":"Heatherly, Eric","2":"Flowers On The Wall","3":"50"},{"1":"Mya","2":"The Best Of Me","3":"50"},{"1":"Eminem","2":"Stan","3":"51"},{"1":"Lopez, Jennifer","2":"Feelin' Good","3":"51"},{"1":"McEntire, Reba","2":"I'll Be","3":"51"},{"1":"TLC","2":"Dear Lie","3":"51"},{"1":"Urban, Keith","2":"Your Everything","3":"51"},{"1":"Bloodhound Gang","2":"The Bad Touch","3":"52"},{"1":"Gill, Vince","2":"Feels Like Love","3":"52"},{"1":"Houston, Whitney","2":"Could I Have This Ki...","3":"52"},{"1":"Messina, Jo Dee","2":"Because You Love Me","3":"53"},{"1":"Williams, Robbie","2":"Angels","3":"53"},{"1":"Beenie Man","2":"Girls Dem Sugar","3":"54"},{"1":"Hill, Faith","2":"Let's Make Love","3":"54"},{"1":"Keith, Toby","2":"Country Comes To Tow...","3":"54"},{"1":"Kelis","2":"Caught Out There","3":"54"},{"1":"3 Doors Down","2":"Loser","3":"55"},{"1":"Brooks & Dunn","2":"You'll Always Be Lov...","3":"55"},{"1":"Jay-Z","2":"Anything","3":"55"},{"1":"Chesney, Kenny","2":"What I Need To Do","3":"56"},{"1":"Da Brat","2":"That's What I'm Look...","3":"56"},{"1":"Stone, Angie","2":"No More Rain (In Thi...","3":"56"},{"1":"Adams, Yolanda","2":"Open My Heart","3":"57"},{"1":"Diffie, Joe","2":"It's Always Somethin...","3":"57"},{"1":"Papa Roach","2":"Last Resort","3":"57"},{"1":"R.E.M.","2":"The Great Beyond","3":"57"},{"1":"SheDaisy","2":"This Woman Needs","3":"57"},{"1":"Shyne","2":"Bad Boyz","3":"57"},{"1":"Eminem","2":"The Way I Am","3":"58"},{"1":"Henley, Don","2":"Taking You Home","3":"58"},{"1":"McGraw, Tim","2":"Some Things Never Ch...","3":"58"},{"1":"Nas","2":"You Owe Me","3":"59"},{"1":"Puff Daddy","2":"Best Friend","3":"59"},{"1":"Sister Hazel","2":"Change Your Mind","3":"59"},{"1":"Lil' Kim","2":"No Matter What They ...","3":"60"},{"1":"McBride, Martina","2":"There You Are","3":"60"},{"1":"Usher","2":"Pop Ya Collar","3":"60"},{"1":"LFO","2":"I Don't Wanna Kiss Y...","3":"61"},{"1":"SheDaisy","2":"Deck The Halls","3":"61"},{"1":"Kumbia Kings","2":"U Don't Love Me","3":"62"},{"1":"M2M","2":"Mirror Mirror","3":"62"},{"1":"Simpson, Jessica","2":"Where You Are","3":"62"},{"1":"Splender","2":"I Think God Can Expl...","3":"62"},{"1":"Blige, Mary J.","2":"Deep Inside","3":"63"},{"1":"Joe","2":"Treat Her Like A Lad...","3":"63"},{"1":"Changing Faces","2":"That Other Woman","3":"64"},{"1":"Price, Kelly","2":"As We Lay","3":"64"},{"1":"Price, Kelly","2":"You Should've Told M...","3":"64"},{"1":"Wright, Chely","2":"It Was","3":"64"},{"1":"Adkins, Trace","2":"More","3":"65"},{"1":"Dixie Chicks, The","2":"Cold Day In July","3":"65"},{"1":"Hot Boys","2":"I Need A Hot Girl","3":"65"},{"1":"Jay-Z","2":"Do It Again (Put Ya ...","3":"65"},{"1":"Limp Bizkit","2":"Rollin'","3":"65"},{"1":"DMX","2":"What's My Name","3":"67"},{"1":"Martin, Ricky","2":"Private Emotion","3":"67"},{"1":"Blige, Mary J.","2":"Give Me You","3":"68"},{"1":"Nine Days","2":"If I Am","3":"68"},{"1":"Brooks, Garth","2":"Do What You Gotta Do","3":"69"},{"1":"Red Hot Chili Peppers","2":"Californication","3":"69"},{"1":"Third Eye Blind","2":"Deep Inside Of You","3":"69"},{"1":"Anthony, Marc","2":"My Baby You","3":"70"},{"1":"D'Angelo","2":"Left & Right","3":"70"},{"1":"Houston, Whitney","2":"Same Script, Differe...","3":"70"},{"1":"Offspring, The","2":"Original Prankster","3":"70"},{"1":"Kravitz, Lenny","2":"I Belong To You","3":"71"},{"1":"Loveless, Patty","2":"That's The Kind Of M...","3":"71"},{"1":"Q-Tip","2":"Breathe And Stop","3":"71"},{"1":"Rimes, LeAnn","2":"Can't Fight The Moon...","3":"71"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"72"},{"1":"Lil Wayne","2":"Tha Block Is Hot","3":"72"},{"1":"Drama","2":"Left, Right, Left","3":"73"},{"1":"Limp Bizkit","2":"N 2 Gether Now","3":"73"},{"1":"Lox","2":"Ryde or Die, Chick","3":"73"},{"1":"Wallflowers, The","2":"Sleepwalker","3":"73"},{"1":"Bega, Lou","2":"Tricky Tricky","3":"74"},{"1":"Metallica","2":"No Leaf Clover (Live...","3":"74"},{"1":"Walker, Clay","2":"Live, Laugh, Love","3":"74"},{"1":"Yankee Grey","2":"Another Nine Minutes","3":"74"},{"1":"Ying Yang Twins","2":"Whistle While You Tw...","3":"74"},{"1":"Big Punisher","2":"It's So Hard","3":"75"},{"1":"Brock, Chad","2":"A Country Boy Can Su...","3":"75"},{"1":"Clark, Terri","2":"A Little Gasoline","3":"75"},{"1":"Lil' Kim","2":"How Many Licks?","3":"75"},{"1":"Worley, Darryl","2":"When You Need My Lov...","3":"75"},{"1":"Allan, Gary","2":"Smoke Rings In The D...","3":"76"},{"1":"Byrd, Tracy","2":"Put Your Hand In Min...","3":"76"},{"1":"Cagle, Chris","2":"My Love Goes On And ...","3":"76"},{"1":"Fatboy Slim","2":"The Rockafeller Skan...","3":"76"},{"1":"Jay-Z","2":"Hey Papi","3":"76"},{"1":"Levert, Gerald","2":"Mr. Too Damn Good","3":"76"},{"1":"McKnight, Brian","2":"Stay Or Let It Go","3":"76"},{"1":"Metallica","2":"I Disappear","3":"76"},{"1":"Before Dark","2":"Monica","3":"77"},{"1":"Estefan, Gloria","2":"No Me Dejes De Quere...","3":"77"},{"1":"Ginuwine","2":"The Best Man I Can B...","3":"77"},{"1":"Stone Temple Pilots","2":"Sour Girl","3":"78"},{"1":"Montgomery Gentry","2":"Daddy Won't Sell The...","3":"79"},{"1":"Clark Family Experience","2":"Meanwhile Back At Th...","3":"80"},{"1":"Cyrus, Billy Ray","2":"You Won't Be Lonely ...","3":"80"},{"1":"Thomas, Carl","2":"Summer Rain","3":"80"},{"1":"Yearwood, Trisha","2":"Real Live Woman","3":"81"},{"1":"Cam'ron","2":"What Means The World...","3":"83"},{"1":"Juvenile","2":"U Understand","3":"83"},{"1":"Moore, Chante","2":"Straight Up","3":"83"},{"1":"Trick Daddy","2":"Shut Up","3":"83"},{"1":"Hollister, Dave","2":"Can't Stay","3":"84"},{"1":"LFO","2":"West Side Story","3":"84"},{"1":"Tamia","2":"Can't Go For That","3":"84"},{"1":"Paisley, Brad","2":"Me Neither","3":"85"},{"1":"Carter, Torrey","2":"Take That","3":"86"},{"1":"2Ge+her","2":"The Hardest Part Of ...","3":"87"},{"1":"Eve","2":"Got It All","3":"88"},{"1":"Limp Bizkit","2":"Re-Arranged","3":"88"},{"1":"Madison Avenue","2":"Don't Call Me Baby","3":"88"},{"1":"Spencer, Tracie","2":"Still In My Heart","3":"88"},{"1":"Levert, Gerald","2":"Baby U Are","3":"89"},{"1":"Nu Flavor","2":"3 Little Words","3":"89"},{"1":"Tamar","2":"If You Don't Wanna L...","3":"89"},{"1":"Diffie, Joe","2":"The Quittin' Kind","3":"90"},{"1":"Hart, Beth","2":"L.A. Song","3":"90"},{"1":"Funkmaster Flex","2":"Do You","3":"91"},{"1":"Price, Kelly","2":"Love Sets You Free","3":"91"},{"1":"Anastacia","2":"I'm Outta Love","3":"92"},{"1":"En Vogue","2":"Riddle","3":"92"},{"1":"Herndon, Ty","2":"No Mercy","3":"92"},{"1":"Trina","2":"Pull Over","3":"93"},{"1":"A*Teens","2":"Dancing Queen","3":"95"},{"1":"Lil' Mo","2":"Ta Da","3":"95"},{"1":"Sheist, Shade","2":"Where I Wanna Be","3":"95"},{"1":"De La Soul","2":"All Good?","3":"96"},{"1":"Larrieux, Amel","2":"Get Up","3":"97"},{"1":"Braxton, Toni","2":"Spanish Guitar","3":"98"},{"1":"Ghostface Killah","2":"Cherchez LaGhost","3":"98"},{"1":"LL Cool J","2":"Imagine That","3":"98"},{"1":"Master P","2":"Souljas","3":"98"},{"1":"Tuesday","2":"I Know","3":"98"},{"1":"Eastsidaz, The","2":"Got Beef","3":"99"},{"1":"Fragma","2":"Toca's Miracle","3":"99"},{"1":"Smith, Will","2":"Freakin' It","3":"99"},{"1":"Zombie Nation","2":"Kernkraft 400","3":"99"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -817,7 +823,7 @@
 <li><p>Quando usamos <code>summarize</code>, o agrupamento mais interno é desfeito. Isto significa que o resultado acima ainda está agrupado por <code>artista</code>.</p></li>
 <li>
 <p>Quantas semanas cada artista ficou na posição <span class="math inline">\(1\)</span>?</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -831,7 +837,7 @@
 </li>
 <li>
 <p>Perceba que <code>count</code>, que vimos mais acima, faz agrupamentos do mesmo modo:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">artista</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -843,7 +849,7 @@
 </li>
 <li>
 <p>Uma pergunta diferente: quais são os artistas cujas músicas apareceram nos <em>top</em> <span class="math inline">\(100\)</span> mais tempo depois do lançamento da música?</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarize</span><span class="op">(</span>semanas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">semana</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -856,7 +862,7 @@
 </li>
 <li>
 <p>Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com <code>NA</code>; logo, <span class="hl">a média é sobre a quantidade de semanas em que a música esteve na lista</span>.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">media1</span> <span class="op">&lt;-</span> <span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarize</span><span class="op">(</span>media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">'drop'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -871,7 +877,7 @@
 </li>
 <li>
 <p>E se quisermos a média sobre o número de semanas desde a entrada da música até a última semana em que a música apareceu na lista?</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">media2</span> <span class="op">&lt;-</span> <span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarize</span><span class="op">(</span>media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">semana</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">'drop'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -883,9 +889,9 @@
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["media"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"Santana","2":"Maria, Maria","3":"10,50000"},{"1":"Madonna","2":"Music","3":"13,45833"},{"1":"N'Sync","2":"Bye Bye Bye","3":"14,26087"},{"1":"Elliott, Missy \"Misdemeanor\"","2":"Hot Boyz","3":"14,33333"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"14,82143"},{"1":"Iglesias, Enrique","2":"Be With You","3":"15,85000"},{"1":"Aaliyah","2":"Try Again","3":"16,65625"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"17,36364"},{"1":"Houston, Whitney","2":"My Love Is Your Love","3":"17,85714"},{"1":"Pink","2":"There U Go","3":"18,62500"},{"1":"matchbox twenty","2":"Bent","3":"18,64103"},{"1":"Sisqo","2":"Thong Song","3":"19,17857"},{"1":"Aguilera, Christina","2":"What A Girl Wants","3":"19,29167"},{"1":"Janet","2":"Doesn't Really Matte...","3":"19,41667"},{"1":"N'Sync","2":"This I Promise You","3":"19,61538"},{"1":"Mya","2":"Case Of The Ex (What...","3":"19,63333"},{"1":"Ruff Endz","2":"No More","3":"19,92308"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"19,95238"},{"1":"Destiny's Child","2":"Say My Name","3":"20,87500"},{"1":"Braxton, Toni","2":"He Wasn't Man Enough","3":"21,00000"},{"1":"Joe","2":"I Wanna Know","3":"21,20455"},{"1":"Vertical Horizon","2":"Everything You Want","3":"21,43902"},{"1":"Blaque","2":"Bring It All To Me","3":"21,58621"},{"1":"Gray, Macy","2":"I Try","3":"21,66667"},{"1":"N'Sync","2":"It's Gonna Be Me","3":"21,68000"},{"1":"Pink","2":"Most Girls","3":"21,77778"},{"1":"Sonique","2":"It Feels So Good","3":"22,12500"},{"1":"Destiny's Child","2":"Jumpin' Jumpin'","3":"22,93750"},{"1":"Lonestar","2":"Amazed","3":"22,96875"},{"1":"Hill, Faith","2":"Breathe","3":"23,01887"},{"1":"Anthony, Marc","2":"You Sang To Me","3":"23,46875"},{"1":"Jay-Z","2":"I Just Wanna Love U ...","3":"23,52381"},{"1":"Anastacia","2":"I'm Outta Love","3":"23,66667"},{"1":"Backstreet Boys, The","2":"Show Me The Meaning ...","3":"23,75000"},{"1":"Aguilera, Christina","2":"I Turn To You","3":"24,13636"},{"1":"Sisqo","2":"Incomplete","3":"24,30769"},{"1":"Dion, Celine","2":"That's The Way It Is","3":"24,85714"},{"1":"Mumba, Samantha","2":"Gotta Tell You","3":"25,09091"},{"1":"Third Eye Blind","2":"Never Let You Go","3":"25,86364"},{"1":"3 Doors Down","2":"Kryptonite","3":"26,47170"},{"1":"Nine Days","2":"Absolutely (Story Of...","3":"26,48148"},{"1":"Dream","2":"He Loves U Not","3":"26,89286"},{"1":"Backstreet Boys, The","2":"Shape Of My Heart","3":"28,05000"},{"1":"Next","2":"Wifey","3":"28,19048"},{"1":"Jordan, Montell","2":"Get It On.. Tonite","3":"28,43750"},{"1":"Smash Mouth","2":"Then The Morning Com...","3":"28,76923"},{"1":"BBMak","2":"Back Here","3":"30,64516"},{"1":"Eiffel 65","2":"Blue","3":"30,70000"},{"1":"Nelly","2":"(Hot S**t) Country G...","3":"30,88235"},{"1":"Ja Rule","2":"Between Me And You","3":"31,15000"},{"1":"Everclear","2":"Wonderful","3":"31,19048"},{"1":"Jay-Z","2":"Big Pimpin'","3":"31,30000"},{"1":"Jagged Edge","2":"Let's Get Married","3":"31,37500"},{"1":"Creed","2":"Higher","3":"32,32308"},{"1":"Avant","2":"Separated","3":"32,35000"},{"1":"Badu, Erkyah","2":"Bag Lady","3":"32,35000"},{"1":"Eminem","2":"The Real Slim Shady","3":"32,84211"},{"1":"Mystikal","2":"Shake Ya Ass","3":"33,05000"},{"1":"Blink-182","2":"All The Small Things","3":"33,30435"},{"1":"Creed","2":"With Arms Wide Open","3":"33,82979"},{"1":"Barenaked Ladies","2":"Pinch Me","3":"33,95238"},{"1":"Filter","2":"Take A Picture","3":"34,15000"},{"1":"Jagged Edge","2":"He Can't Love U","3":"34,90000"},{"1":"Rimes, LeAnn","2":"I Need You","3":"35,60000"},{"1":"Spears, Britney","2":"Oops!.. I Did It Aga...","3":"36,00000"},{"1":"Red Hot Chili Peppers","2":"Otherside","3":"36,18182"},{"1":"Thomas, Carl","2":"I Wish","3":"36,40000"},{"1":"Train","2":"Meet Virginia","3":"36,92593"},{"1":"Carey, Mariah","2":"Thank God I Found Yo...","3":"37,00000"},{"1":"Vertical Horizon","2":"You're A God","3":"37,00000"},{"1":"Martin, Ricky","2":"She Bangs","3":"37,11111"},{"1":"Kandi","2":"Don't Think I'm Not","3":"37,16667"},{"1":"98^0","2":"Give Me Just One Nig...","3":"37,65000"},{"1":"Sting","2":"Desert Rose","3":"38,00000"},{"1":"Ludacris","2":"What's Your Fantasy","3":"38,86364"},{"1":"Kid Rock","2":"Only God Knows Why","3":"39,00000"},{"1":"Foo Fighters","2":"Learn To Fly","3":"39,66667"},{"1":"Rimes, LeAnn","2":"Big Deal","3":"40,80000"},{"1":"SoulDecision","2":"Faded","3":"41,58333"},{"1":"Lil Bow Wow","2":"Bounce With Me","3":"41,59091"},{"1":"DMX","2":"Party Up (Up In Here...","3":"41,76190"},{"1":"Madonna","2":"American Pie","3":"43,00000"},{"1":"Messina, Jo Dee","2":"That's The Way","3":"43,20000"},{"1":"Dr. Dre","2":"Forgot About Dre","3":"43,25000"},{"1":"Dr. Dre","2":"The Next Episode","3":"43,25000"},{"1":"Westlife","2":"Swear It Again","3":"43,35000"},{"1":"McGraw, Tim","2":"My Next Thirty Years","3":"44,20000"},{"1":"Strait, George","2":"The Best Day","3":"44,70000"},{"1":"Simpson, Jessica","2":"I Think I'm In Love ...","3":"44,87500"},{"1":"Keith, Toby","2":"How Do You Like Me N...","3":"45,45000"},{"1":"Jones, Donell","2":"Where I Wanna Be","3":"45,65000"},{"1":"Brock, Chad","2":"Yes!","3":"45,80000"},{"1":"Savage Garden","2":"Crash And Burn","3":"46,55000"},{"1":"Dixie Chicks, The","2":"Without You","3":"47,10000"},{"1":"Profyle","2":"Liar","3":"47,25000"},{"1":"Counting Crows","2":"Hanginaround","3":"47,30000"},{"1":"McGraw, Tim","2":"My Best Friend","3":"47,33333"},{"1":"D'Angelo","2":"Untitled (How Does I...","3":"47,41176"},{"1":"Tritt, Travis","2":"Best Of Intentions","3":"47,81818"},{"1":"Avant","2":"My First Love","3":"47,85000"},{"1":"Spears, Britney","2":"Lucky","3":"48,18182"},{"1":"Da Brat","2":"What'Chu Like","3":"48,40000"},{"1":"Dixie Chicks, The","2":"Cowboy Take Me Away","3":"48,45000"},{"1":"IMx","2":"Stay The Night","3":"49,10000"},{"1":"Hoku","2":"Another Dumb Blonde","3":"49,42857"},{"1":"Son By Four","2":"A Puro Dolor (Purest...","3":"49,50000"},{"1":"Lonestar","2":"What About Now","3":"49,90000"},{"1":"Guy","2":"Dancin'","3":"49,90909"},{"1":"Goo Goo Dolls","2":"Broadway","3":"50,00000"},{"1":"Dixie Chicks, The","2":"Goodbye Earl","3":"50,60000"},{"1":"Musiq","2":"Just Friends","3":"50,65000"},{"1":"Alice Deejay","2":"Better Off Alone","3":"51,25000"},{"1":"Bon Jovi","2":"It's My Life","3":"51,60000"},{"1":"Hanson","2":"This Time Around","3":"51,71429"},{"1":"Kenny G","2":"Auld Lang Syne (The ...","3":"51,80000"},{"1":"Aaliyah","2":"I Don't Wanna","3":"52,05000"},{"1":"Sammie","2":"I Like It","3":"52,85000"},{"1":"Vitamin C","2":"Graduation (Friends ...","3":"53,58333"},{"1":"Martin, Ricky","2":"Shake Your Bon-Bon","3":"53,61111"},{"1":"Montgomery, John Michael","2":"The Little Girl","3":"54,50000"},{"1":"Spears, Britney","2":"From The Bottom Of M...","3":"54,50000"},{"1":"Moore, Mandy","2":"I Wanna Be With You","3":"54,66667"},{"1":"Evans, Sara","2":"Born To Fly","3":"54,70000"},{"1":"Paisley, Brad","2":"We Danced","3":"54,90000"},{"1":"Ice Cube","2":"You Can Do It","3":"55,66667"},{"1":"Mary Mary","2":"Shackles (Praise You...","3":"55,90000"},{"1":"Houston, Whitney","2":"I Learned From The B...","3":"56,00000"},{"1":"McEntire, Reba","2":"What Do You Say","3":"56,05000"},{"1":"504 Boyz","2":"Wobble Wobble","3":"56,22222"},{"1":"Braxton, Toni","2":"Just Be A Man About ...","3":"57,15000"},{"1":"Vassar, Phil","2":"Just Another Day In ...","3":"57,15000"},{"1":"Strait, George","2":"Go On","3":"57,80952"},{"1":"Lil' Zane","2":"Callin' Me","3":"57,92308"},{"1":"Jackson, Alan","2":"It Must Be Love","3":"58,10000"},{"1":"Sugar Ray","2":"Falls Apart","3":"58,45000"},{"1":"Griggs, Andy","2":"She's More","3":"58,80000"},{"1":"Rascal Flatts","2":"Prayin' For Daylight","3":"59,00000"},{"1":"Chesney, Kenny","2":"I Lost It","3":"59,45000"},{"1":"Wills, Mark","2":"Back At One","3":"59,83333"},{"1":"Jean, Wyclef","2":"911","3":"60,00000"},{"1":"Lucy Pearl","2":"Dance Tonight","3":"60,10526"},{"1":"Backstreet Boys, The","2":"The One","3":"60,20000"},{"1":"Lonestar","2":"Smile","3":"60,30000"},{"1":"Eve","2":"Love Is Blind","3":"60,87500"},{"1":"Iglesias, Enrique","2":"Rhythm Divine","3":"61,11765"},{"1":"Raye, Collin","2":"Couldn't Last A Mome...","3":"61,80000"},{"1":"Carey, Mariah","2":"Crybaby","3":"62,00000"},{"1":"Sisqo","2":"Got To Get It","3":"62,05000"},{"1":"M2M","2":"Don't Say You Love M...","3":"62,33333"},{"1":"No Doubt","2":"Simple Kind Of Life","3":"62,38462"},{"1":"Baha Men","2":"Who Let The Dogs Out","3":"62,50000"},{"1":"Fabian, Lara","2":"I Will Love Again","3":"62,76471"},{"1":"Lopez, Jennifer","2":"Feelin' Good","3":"62,89474"},{"1":"Black Rob","2":"Whoa!","3":"62,94118"},{"1":"SheDaisy","2":"I Will.. But","3":"63,05000"},{"1":"McBride, Martina","2":"Love's The Only Hous...","3":"63,15000"},{"1":"TLC","2":"Dear Lie","3":"63,28571"},{"1":"Jackson, Alan","2":"www.memory","3":"63,40000"},{"1":"J-Shin","2":"One Night Stand","3":"63,41176"},{"1":"Walker, Clay","2":"The Chain Of Love","3":"63,50000"},{"1":"Jackson, Alan","2":"Pop A Top","3":"63,83333"},{"1":"Rogers, Kenny","2":"Buy Me A Rose","3":"63,90000"},{"1":"Gilman, Billy","2":"One Voice","3":"64,52632"},{"1":"Black, Clint","2":"Been There","3":"65,00000"},{"1":"McGraw, Tim","2":"Some Things Never Ch...","3":"65,00000"},{"1":"Papa Roach","2":"Last Resort","3":"65,25000"},{"1":"Ideal","2":"Whatever","3":"65,61111"},{"1":"Common","2":"The Light","3":"65,73684"},{"1":"Lawrence, Tracy","2":"Lessons Learned","3":"65,75000"},{"1":"Gill, Vince","2":"Feels Like Love","3":"65,85714"},{"1":"Thomas, Carl","2":"Emotional","3":"66,20000"},{"1":"Vassar, Phil","2":"Carlene","3":"66,26316"},{"1":"Carter, Aaron","2":"Aaron's Party (Come ...","3":"66,26667"},{"1":"Tippin, Aaron","2":"Kiss This","3":"66,95000"},{"1":"3 Doors Down","2":"Loser","3":"67,10000"},{"1":"R.E.M.","2":"The Great Beyond","3":"67,57143"},{"1":"Adams, Yolanda","2":"Open My Heart","3":"67,75000"},{"1":"Kelis","2":"Caught Out There","3":"67,83333"},{"1":"Messina, Jo Dee","2":"Because You Love Me","3":"67,84615"},{"1":"Eminem","2":"Stan","3":"68,06667"},{"1":"SheDaisy","2":"This Woman Needs","3":"68,22222"},{"1":"Davidson, Clay","2":"Unconditional","3":"68,55000"},{"1":"Vitamin C","2":"The Itch","3":"68,55556"},{"1":"Houston, Whitney","2":"Could I Have This Ki...","3":"68,65000"},{"1":"Chesney, Kenny","2":"What I Need To Do","3":"69,00000"},{"1":"Ginuwine","2":"None Of Ur Friends B...","3":"69,26667"},{"1":"Jay-Z","2":"Anything","3":"69,37500"},{"1":"Usher","2":"Pop Ya Collar","3":"69,42857"},{"1":"Hill, Faith","2":"Let's Make Love","3":"69,50000"},{"1":"Keith, Toby","2":"Country Comes To Tow...","3":"69,60000"},{"1":"Eminem","2":"The Way I Am","3":"69,80000"},{"1":"Amber","2":"Sexual","3":"70,54545"},{"1":"McBride, Martina","2":"There You Are","3":"70,84615"},{"1":"Lil' Kim","2":"How Many Licks?","3":"70,90909"},{"1":"Eastsidaz, The","2":"G'D Up","3":"71,14286"},{"1":"LFO","2":"I Don't Wanna Kiss Y...","3":"71,20000"},{"1":"Heatherly, Eric","2":"Flowers On The Wall","3":"71,30000"},{"1":"Mya","2":"The Best Of Me","3":"71,47059"},{"1":"McEntire, Reba","2":"I'll Be","3":"71,95000"},{"1":"Simpson, Jessica","2":"Where You Are","3":"72,00000"},{"1":"Urban, Keith","2":"Your Everything","3":"72,00000"},{"1":"Diffie, Joe","2":"It's Always Somethin...","3":"72,26667"},{"1":"Beenie Man","2":"Girls Dem Sugar","3":"72,40000"},{"1":"Bloodhound Gang","2":"The Bad Touch","3":"72,58333"},{"1":"Puff Daddy","2":"Best Friend","3":"72,80000"},{"1":"Nas","2":"You Owe Me","3":"73,25000"},{"1":"Changing Faces","2":"That Other Woman","3":"73,81818"},{"1":"Stone, Angie","2":"No More Rain (In Thi...","3":"73,82353"},{"1":"Blige, Mary J.","2":"Deep Inside","3":"74,00000"},{"1":"Splender","2":"I Think God Can Expl...","3":"74,00000"},{"1":"DMX","2":"What You Want","3":"74,60000"},{"1":"Henley, Don","2":"Taking You Home","3":"74,95000"},{"1":"John, Elton","2":"Someday Out Of The B...","3":"75,20000"},{"1":"Dixie Chicks, The","2":"Cold Day In July","3":"75,30000"},{"1":"Williams, Robbie","2":"Angels","3":"75,42105"},{"1":"Price, Kelly","2":"As We Lay","3":"75,62500"},{"1":"Da Brat","2":"That's What I'm Look...","3":"75,66667"},{"1":"Brooks, Garth","2":"Do What You Gotta Do","3":"75,83333"},{"1":"Houston, Whitney","2":"Same Script, Differe...","3":"76,11111"},{"1":"Martin, Ricky","2":"Private Emotion","3":"76,20000"},{"1":"Adkins, Trace","2":"More","3":"76,27273"},{"1":"Kumbia Kings","2":"U Don't Love Me","3":"76,50000"},{"1":"Blige, Mary J.","2":"Give Me You","3":"76,80000"},{"1":"Brooks & Dunn","2":"You'll Always Be Lov...","3":"76,84211"},{"1":"Estefan, Gloria","2":"No Me Dejes De Quere...","3":"77,00000"},{"1":"Lil' Kim","2":"No Matter What They ...","3":"77,10000"},{"1":"Herndon, Ty","2":"No Mercy","3":"77,30000"},{"1":"Wright, Chely","2":"It Was","3":"77,30000"},{"1":"Red Hot Chili Peppers","2":"Californication","3":"77,68421"},{"1":"Joe","2":"Treat Her Like A Lad...","3":"77,76471"},{"1":"Bega, Lou","2":"Tricky Tricky","3":"78,66667"},{"1":"Hot Boys","2":"I Need A Hot Girl","3":"78,84615"},{"1":"Limp Bizkit","2":"Rollin'","3":"78,94118"},{"1":"SheDaisy","2":"Deck The Halls","3":"79,00000"},{"1":"Offspring, The","2":"Original Prankster","3":"79,11111"},{"1":"Pearl Jam","2":"Nothing As It Seems","3":"79,33333"},{"1":"M2M","2":"Mirror Mirror","3":"79,66667"},{"1":"Third Eye Blind","2":"Deep Inside Of You","3":"79,83333"},{"1":"Price, Kelly","2":"You Should've Told M...","3":"80,15000"},{"1":"Q-Tip","2":"Breathe And Stop","3":"80,20000"},{"1":"Kravitz, Lenny","2":"I Belong To You","3":"80,44444"},{"1":"Allan, Gary","2":"Smoke Rings In The D...","3":"80,60000"},{"1":"Wallflowers, The","2":"Sleepwalker","3":"81,00000"},{"1":"Shyne","2":"Bad Boyz","3":"81,06667"},{"1":"D'Angelo","2":"Left & Right","3":"81,20000"},{"1":"Jay-Z","2":"Do It Again (Put Ya ...","3":"81,55556"},{"1":"DMX","2":"What's My Name","3":"82,00000"},{"1":"Anthony, Marc","2":"My Baby You","3":"82,05000"},{"1":"Nine Days","2":"If I Am","3":"82,20000"},{"1":"Sister Hazel","2":"Change Your Mind","3":"82,60000"},{"1":"Rimes, LeAnn","2":"Can't Fight The Moon...","3":"82,95000"},{"1":"Yankee Grey","2":"Another Nine Minutes","3":"83,12500"},{"1":"Yearwood, Trisha","2":"Real Live Woman","3":"84,16667"},{"1":"Loveless, Patty","2":"That's The Kind Of M...","3":"84,21429"},{"1":"Clark Family Experience","2":"Meanwhile Back At Th...","3":"84,25000"},{"1":"Byrd, Tracy","2":"Put Your Hand In Min...","3":"84,37500"},{"1":"Metallica","2":"No Leaf Clover (Live...","3":"84,40000"},{"1":"Montgomery Gentry","2":"Daddy Won't Sell The...","3":"84,50000"},{"1":"Thomas, Carl","2":"Summer Rain","3":"85,27273"},{"1":"Levert, Gerald","2":"Mr. Too Damn Good","3":"85,37500"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"85,42857"},{"1":"Big Punisher","2":"It's So Hard","3":"85,53333"},{"1":"Worley, Darryl","2":"When You Need My Lov...","3":"85,53333"},{"1":"Cagle, Chris","2":"My Love Goes On And ...","3":"86,00000"},{"1":"Fatboy Slim","2":"The Rockafeller Skan...","3":"86,08333"},{"1":"Metallica","2":"I Disappear","3":"86,10000"},{"1":"Limp Bizkit","2":"N 2 Gether Now","3":"86,27273"},{"1":"Lil Wayne","2":"Tha Block Is Hot","3":"86,36364"},{"1":"Ginuwine","2":"The Best Man I Can B...","3":"86,50000"},{"1":"Brock, Chad","2":"A Country Boy Can Su...","3":"86,66667"},{"1":"Stone Temple Pilots","2":"Sour Girl","3":"86,76923"},{"1":"Lox","2":"Ryde or Die, Chick","3":"86,85714"},{"1":"Before Dark","2":"Monica","3":"87,55556"},{"1":"Jay-Z","2":"Hey Papi","3":"87,86667"},{"1":"McKnight, Brian","2":"Stay Or Let It Go","3":"88,00000"},{"1":"Paisley, Brad","2":"Me Neither","3":"88,50000"},{"1":"Cyrus, Billy Ray","2":"You Won't Be Lonely ...","3":"88,69231"},{"1":"Ying Yang Twins","2":"Whistle While You Tw...","3":"88,85714"},{"1":"Tamia","2":"Can't Go For That","3":"89,00000"},{"1":"Drama","2":"Left, Right, Left","3":"89,38462"},{"1":"Hollister, Dave","2":"Can't Stay","3":"89,75000"},{"1":"Clark, Terri","2":"A Little Gasoline","3":"89,83333"},{"1":"2Ge+her","2":"The Hardest Part Of ...","3":"90,00000"},{"1":"Trick Daddy","2":"Shut Up","3":"90,09091"},{"1":"Walker, Clay","2":"Live, Laugh, Love","3":"90,18182"},{"1":"Eve","2":"Got It All","3":"90,20000"},{"1":"Cam'ron","2":"What Means The World...","3":"90,40000"},{"1":"Carter, Torrey","2":"Take That","3":"90,57143"},{"1":"LFO","2":"West Side Story","3":"91,00000"},{"1":"Moore, Chante","2":"Straight Up","3":"92,11111"},{"1":"Madison Avenue","2":"Don't Call Me Baby","3":"92,65000"},{"1":"Limp Bizkit","2":"Re-Arranged","3":"92,72222"},{"1":"Juvenile","2":"U Understand","3":"93,16667"},{"1":"Funkmaster Flex","2":"Do You","3":"93,57143"},{"1":"Spencer, Tracie","2":"Still In My Heart","3":"93,66667"},{"1":"Tamar","2":"If You Don't Wanna L...","3":"93,66667"},{"1":"Levert, Gerald","2":"Baby U Are","3":"93,80000"},{"1":"Nu Flavor","2":"3 Little Words","3":"94,44444"},{"1":"En Vogue","2":"Riddle","3":"95,25000"},{"1":"Price, Kelly","2":"Love Sets You Free","3":"95,25000"},{"1":"Diffie, Joe","2":"The Quittin' Kind","3":"95,83333"},{"1":"Trina","2":"Pull Over","3":"96,50000"},{"1":"A*Teens","2":"Dancing Queen","3":"97,00000"},{"1":"Hart, Beth","2":"L.A. Song","3":"97,16667"},{"1":"De La Soul","2":"All Good?","3":"97,33333"},{"1":"Sheist, Shade","2":"Where I Wanna Be","3":"97,80000"},{"1":"Braxton, Toni","2":"Spanish Guitar","3":"98,00000"},{"1":"Ghostface Killah","2":"Cherchez LaGhost","3":"98,00000"},{"1":"Larrieux, Amel","2":"Get Up","3":"98,00000"},{"1":"Master P","2":"Souljas","3":"98,00000"},{"1":"Tuesday","2":"I Know","3":"98,00000"},{"1":"Lil' Mo","2":"Ta Da","3":"98,14286"},{"1":"LL Cool J","2":"Imagine That","3":"98,50000"},{"1":"Eastsidaz, The","2":"Got Beef","3":"99,00000"},{"1":"Fragma","2":"Toca's Miracle","3":"99,00000"},{"1":"Smith, Will","2":"Freakin' It","3":"99,00000"},{"1":"Zombie Nation","2":"Kernkraft 400","3":"99,00000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">media1</span>, <span class="va">media2</span><span class="op">)</span>
-<span class="co">## [1] FALSE</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">media1</span>, <span class="va">media2</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
 </li>
 </ul>
 </div>
@@ -929,7 +935,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/03/2022)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 28/03/2022)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

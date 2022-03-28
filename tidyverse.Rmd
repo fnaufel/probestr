@@ -137,7 +137,15 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * A maioria das funções do `tidyverse` exige que as *tibbles* estejam neste formato *tidy*.
 
-* Um exemplo mais complexo é o *dataset* `billboard`:
+* Um exemplo mais complexo é o *dataset* `billboard`, com as seguintes colunas para cada música que estava no *top 100* da Billboard no ano de $2000$::
+
+  * Nome do artista ou banda;
+  
+  * Nome da música;
+  
+  * Data em que a música entrou no *top 100* da Billboard;
+  
+  * Para cada uma das $76$ semanas seguintes, a posição da música no *top 100*.
 
   ```{r}
   billboard %>% glimpse()

@@ -7,7 +7,7 @@
 <title>Capítulo 5 Visualização com ggplot2 (continuação) | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  5.1 Vídeo 1    5.2 Boxplots  5.2.1 Conjunto de dados  Vamos continuar a trabalhar com os dados sobre as...">
-<meta name="generator" content="bookdown 0.24.7 with bs4_book()">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
 <meta property="og:title" content="Capítulo 5 Visualização com ggplot2 (continuação) | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Capítulo 5 Visualização com ggplot2 (continuação) | Probabilidade e Estatística com R">
 <meta name="twitter:description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  5.1 Vídeo 1    5.2 Boxplots  5.2.1 Conjunto de dados  Vamos continuar a trabalhar com os dados sobre as...">
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.11.14/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Lexend-0.4.0/font.css" rel="stylesheet">
 <link href="libs/_JetBrains%20Mono-0.4.0/font.css" rel="stylesheet">
@@ -85,7 +85,7 @@
 <ul>
 <li>
 <p>Vamos continuar a trabalhar com os dados sobre as horas de sono de alguns mamíferos:</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">vore</span>, <span class="va">order</span>, <span class="va">sleep_total</span><span class="op">)</span>
 
@@ -98,81 +98,81 @@
 </li>
 </ul>
 </div>
-<div id="mediana-e-quartis" class="section level3" number="5.2.2">
+<div id="mediana" class="section level3" number="5.2.2">
 <h3>
-<span class="header-section-number">5.2.2</span> Mediana e quartis<a class="anchor" aria-label="anchor" href="#mediana-e-quartis"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.2</span> Mediana e quartis<a class="anchor" aria-label="anchor" href="#mediana"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li><p>Para entender <em>boxplots</em>, precisamos, antes, entender algumas medidas.</p></li>
 <li>
 <p>Se tomarmos as quantidades de horas de sono de todos os animais do conjunto de dados e <span class="hl">classificarmos estas quantidades em ordem crescente</span>, vamos ter:</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">horas</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu">pull</span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span>
 
-<span class="va">horas</span>
-<span class="co">##  [1]  1,9  2,7  2,9  3,0  3,1  3,3  3,5  3,8  3,9  4,0  4,4  5,2  5,3  5,3  5,4  5,6</span>
-<span class="co">## [17]  6,2  6,3  6,3  7,0  7,7  8,0  8,3  8,4  8,4  8,6  8,7  8,7  8,9  9,1  9,1  9,4</span>
-<span class="co">## [33]  9,4  9,5  9,6  9,7  9,8  9,8 10,0 10,1 10,1 10,1 10,3 10,3 10,4 10,6 10,9 11,0</span>
-<span class="co">## [49] 11,0 11,1 11,3 11,5 12,1 12,5 12,5 12,5 12,5 12,8 12,8 13,0 13,5 13,7 13,8 14,2</span>
-<span class="co">## [65] 14,3 14,4 14,4 14,5 14,6 14,9 14,9 15,6 15,8 15,8 15,9 16,6 17,0 17,4 18,0 18,1</span>
-<span class="co">## [81] 19,4 19,7 19,9</span></code></pre></div>
+<span class="va">horas</span></code></pre></div>
+<pre><code>##  [1]  1,9  2,7  2,9  3,0  3,1  3,3  3,5  3,8  3,9  4,0  4,4  5,2  5,3  5,3  5,4  5,6
+## [17]  6,2  6,3  6,3  7,0  7,7  8,0  8,3  8,4  8,4  8,6  8,7  8,7  8,9  9,1  9,1  9,4
+## [33]  9,4  9,5  9,6  9,7  9,8  9,8 10,0 10,1 10,1 10,1 10,3 10,3 10,4 10,6 10,9 11,0
+## [49] 11,0 11,1 11,3 11,5 12,1 12,5 12,5 12,5 12,5 12,8 12,8 13,0 13,5 13,7 13,8 14,2
+## [65] 14,3 14,4 14,4 14,5 14,6 14,9 14,9 15,6 15,8 15,8 15,9 16,6 17,0 17,4 18,0 18,1
+## [81] 19,4 19,7 19,9</code></pre>
 </li>
 <li>
 <p>Quantos valores são?</p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
-<span class="co">## [1] 83</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 83</code></pre>
 </li>
 <li>
 <p>O valor que está <span class="hl">bem no meio desta fila</span> — i.e., na posição <span class="math inline">\(42\)</span> — é a <span class="hl">mediana</span>:</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span>
-<span class="co">## [1] 10,1</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 10,1</code></pre>
 </li>
 <li>
 <p>Em R:</p>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
-<span class="co">## [1] 10,1</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 10,1</code></pre>
 <div class="rmdcaution">
 <p>Mediana e média são coisas muito diferentes.</p>
 <p>Por acaso, neste exemplo, a média das horas é próxima da mediana:</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
-<span class="co">## [1] 10,43373</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 10,43373</code></pre>
 <p>Isto costuma acontecer quando a distribuição dos dados é aproximadamente simétrica.</p>
 </div>
 </li>
 <li>
 <p>Os <span class="hl">quartis</span> são os valores que estão nas posições <span class="math inline">\(\frac14\)</span>, <span class="math inline">\(\frac12\)</span> e <span class="math inline">\(\frac34\)</span> da fila. São o <span class="hl">primeiro, segundo e terceiro quartis</span>, respectivamente.</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">horas</span><span class="op">[</span>
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">4</span><span class="op">)</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>,
     <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fl">3</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span> <span class="op">/</span> <span class="fl">4</span><span class="op">)</span>
   <span class="op">)</span>
-<span class="op">]</span>
-<span class="co">## [1]  7,7 10,1 13,8</span></code></pre></div>
+<span class="op">]</span></code></pre></div>
+<pre><code>## [1]  7,7 10,1 13,8</code></pre>
 </li>
 <li><p><span class="hl">Sim, a mediana é o segundo quartil.</span></p></li>
 <li>
 <p>Em R, a <span class="hl">função <code>quantile</code></span> generaliza esta idéia: dado um número <span class="math inline">\(q\)</span> entre <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>, <span class="hl">o quantil (com “N”) <span class="math inline">\(q\)</span> é o elemento que está na posição que corresponde à fração <span class="math inline">\(q\)</span> da fila ordenada.</span></p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">horas</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##   25%   50%   75% </span>
-<span class="co">##  7,85 10,10 13,75</span></code></pre></div>
+<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>##   25%   50%   75% 
+##  7,85 10,10 13,75</code></pre>
 </li>
 <li><p>Na verdade, R tem <span class="math inline">\(9\)</span> algoritmos diferentes para calcular os quantis de uma amostra! Leia a ajuda da função <code>quantile</code> para conhecê-los.</p></li>
 <li><p>As diferenças entre nossos cálculos “à mão” e os resultados retornados por <code>quantile</code> são porque, em algumas situações, <code>quantile</code> calcula uma média ponderada entre elementos vizinhos. Por isso, <code>quantile</code> pode retornar valores que nem estão no vetor.</p></li>
 <li>
 <p>Em R, a <span class="hl">função <code>summary</code></span> mostra o <span class="hl">mínimo</span>, os <span class="hl">quartis (com “R”)</span>, a <span class="hl">média</span>, e o <span class="hl">máximo</span> de um vetor:</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
-<span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">##    1,90    7,85   10,10   10,43   13,75   19,90</span></code></pre></div>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    1,90    7,85   10,10   10,43   13,75   19,90</code></pre>
 </li>
 </ul>
 </div>
@@ -184,28 +184,28 @@
 <li><p>Vamos ver um exemplo simples para entender a diferença entre a média e a mediana.</p></li>
 <li>
 <p>Imagine o seguinte vetor com as receitas mensais de algumas pessoas (em milhares de reais:)</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">receitas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3.5</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>Eis a mediana e a média deste vetor:</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">receitas</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Median'</span>, <span class="st">'Mean'</span><span class="op">)</span><span class="op">]</span>
-<span class="co">##   Median     Mean </span>
-<span class="co">## 2,000000 2,071429</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">receitas</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Median'</span>, <span class="st">'Mean'</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<pre><code>##   Median     Mean 
+## 2,000000 2,071429</code></pre>
 </li>
 <li><p>A mediana e a média são bem próximas.</p></li>
 <li>
 <p>Imagine, agora, que adicionamos ao vetor um sujeito com receita mensal de <span class="math inline">\(100\)</span> mil reais:</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">receitas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3.5</span>, <span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">1</span>, <span class="fl">100</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>Eis a nova mediana e a nova média:</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">receitas</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Median'</span>, <span class="st">'Mean'</span><span class="op">)</span><span class="op">]</span>
-<span class="co">##  Median    Mean </span>
-<span class="co">##  2,0000 14,3125</span></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">receitas</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Median'</span>, <span class="st">'Mean'</span><span class="op">)</span><span class="op">]</span></code></pre></div>
+<pre><code>##  Median    Mean 
+##  2,0000 14,3125</code></pre>
 </li>
 <li><p>O sujeito com a receita de <span class="math inline">\(2\)</span> mil reais continua no meio da fila, mas a média (que é a soma de todas as receitas, dividida pelo número de indivíduos) ficou muito diferente.</p></li>
 <li><p>A receita do novo sujeito é um <span class="hl">valor discrepante</span>, ou, em inglês, um <span class="hl"><em>outlier</em></span>.</p></li>
@@ -223,65 +223,65 @@
 <ul>
 <li>
 <p>Qual fração dos elementos está <span class="hl">entre o primeiro e o terceiro quartis?</span></p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span>
   <span class="va">horas</span><span class="op">[</span><span class="fu">between</span><span class="op">(</span><span class="va">horas</span>, <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
 <span class="op">)</span> <span class="op">/</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span>
   <span class="va">horas</span>
-<span class="op">)</span>
-<span class="co">## [1] 0,4939759</span></code></pre></div>
+<span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0,4939759</code></pre>
 </li>
 <li><p><span class="hl">Metade</span> do total de elementos está entre o primeiro e o terceiro quartis.</p></li>
 <li><p>Este é o chamado <span class="hl">intervalo interquartil</span> (<em>interquartile range</em>, em inglês).</p></li>
 <li>
 <p>No nosso vetor <code>horas</code>, os <span class="hl">limites do IQR</span> são</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span>
-<span class="co">##   25%   75% </span>
-<span class="co">##  7,85 13,75</span></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>##   25%   75% 
+##  7,85 13,75</code></pre>
 </li>
 <li>
 <p>O <span class="hl">comprimento</span> deste intervalo é calculado pela função <code>IQR</code>:</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
-<span class="co">## [1] 5,9</span></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 5,9</code></pre>
 </li>
 <li><p>Valores <span class="hl">muito abaixo do primeiro quartil</span> podem ser considerados discrepantes (<em>outliers</em>), mas quão abaixo?</p></li>
 <li><p>A resposta (puramente convencional) é <span class="hl"><span class="math inline">\(1{,}5 \times \text{IQR}\)</span> abaixo do primeiro quartil.</span></p></li>
 <li>
 <p>No nosso vetor <code>horas</code>, isto significa valores abaixo de</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">limite_inferior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.25</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">limite_inferior</span><span class="op">)</span>
-<span class="co">## [1] -1</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">limite_inferior</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] -1</code></pre>
 </li>
 <li>
 <p>Neste caso, não há <em>outliers</em>:</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span><span class="va">horas</span> <span class="op">&lt;</span> <span class="va">limite_inferior</span><span class="op">]</span>
-<span class="co">## numeric(0)</span></code></pre></div>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span><span class="va">horas</span> <span class="op">&lt;</span> <span class="va">limite_inferior</span><span class="op">]</span></code></pre></div>
+<pre><code>## numeric(0)</code></pre>
 </li>
 <li><p>Da mesma forma, valores <span class="hl">muito acima do terceiro quartil</span> podem ser considerados discrepantes (<em>outliers</em>), mas quão acima?</p></li>
 <li><p>De novo, a resposta (puramente convencional) é <span class="hl"><span class="math inline">\(1{,}5 \times \text{IQR}\)</span> acima do terceiro quartil.</span></p></li>
 <li>
 <p>No nosso vetor <code>horas</code>, isto significa valores acima de</p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">limite_superior</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.75</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">limite_superior</span><span class="op">)</span>
-<span class="co">## [1] 22,6</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">limite_superior</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 22,6</code></pre>
 </li>
 <li>
 <p>Neste caso, também não há <em>outliers</em>:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span><span class="va">horas</span> <span class="op">&gt;</span> <span class="va">limite_superior</span><span class="op">]</span>
-<span class="co">## numeric(0)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">horas</span><span class="op">[</span><span class="va">horas</span> <span class="op">&gt;</span> <span class="va">limite_superior</span><span class="op">]</span></code></pre></div>
+<pre><code>## numeric(0)</code></pre>
 </li>
 <li>
 <p>Outro exemplo: vamos tomar apenas os mamíferos onívoros:</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">onivoros</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">vore</span> <span class="op">==</span> <span class="st">'omni'</span><span class="op">)</span>
 
@@ -294,41 +294,41 @@
 </li>
 <li>
 <p>Vamos extrair o vetor de horas de sono:</p>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">horas</span> <span class="op">&lt;-</span> <span class="va">onivoros</span> <span class="op">%&gt;%</span> 
   <span class="fu">pull</span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span>
 
-<span class="va">horas</span>
-<span class="co">##  [1] 17,0 14,9 10,0 10,3  8,3  9,1 18,0 10,1 10,9  9,8  8,0 10,1  9,7  9,4 11,0  8,7</span>
-<span class="co">## [17]  9,6  9,1 15,6  8,9</span></code></pre></div>
+<span class="va">horas</span></code></pre></div>
+<pre><code>##  [1] 17,0 14,9 10,0 10,3  8,3  9,1 18,0 10,1 10,9  9,8  8,0 10,1  9,7  9,4 11,0  8,7
+## [17]  9,6  9,1 15,6  8,9</code></pre>
 </li>
 <li>
 <p>Vamos calcular o primeiro e terceiro quartis:</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">quartis</span> <span class="op">&lt;-</span> <span class="va">horas</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span>
 
-<span class="va">quartis</span>
-<span class="co">##    25%    75% </span>
-<span class="co">##  9,100 10,925</span></code></pre></div>
+<span class="va">quartis</span></code></pre></div>
+<pre><code>##    25%    75% 
+##  9,100 10,925</code></pre>
 </li>
 <li>
 <p>Vamos achar o IQR:</p>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
-<span class="co">## [1] 1,825</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 1,825</code></pre>
 </li>
 <li>
 <p>E os limites a partir dos quais os valores são <em>outliers</em>:</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">limites</span> <span class="op">&lt;-</span> <span class="va">quartis</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">horas</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">limites</span><span class="op">)</span>
-<span class="co">## [1]  6,3625 13,6625</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">limites</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1]  6,3625 13,6625</code></pre>
 </li>
 <li>
 <p>Existem <em>outliers</em> inferiores?</p>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">onivoros</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sleep_total</span> <span class="op">&lt;</span> <span class="va">limites</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -340,7 +340,7 @@
 </li>
 <li>
 <p>Existem <em>outliers</em> superiores?</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">onivoros</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sleep_total</span> <span class="op">&gt;</span> <span class="va">limites</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -360,7 +360,7 @@
 <li><p><span class="hl">Um <em>boxplot</em> é uma representação visual dos valores que calculamos acima.</span></p></li>
 <li>
 <p>No <code>ggplot2</code>, <span class="hl">a geometria <code>geom_boxplot</code> constrói <em>boxplots</em>:</span></p>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
@@ -374,7 +374,7 @@
 <li><p>Neste <em>boxplot</em>, não há <em>outliers</em>.</p></li>
 <li>
 <p><span id="onivoros"></span> Podemos usar a posição <span class="math inline">\(x\)</span> para desenhar vários <em>boxplots</em>, um para cada dieta:</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">vore</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
@@ -392,7 +392,7 @@
 <li><p>Os <em>boxplots</em>,</p></li>
 <li><p>As médias (que podem estar próximas ou distantes das medianas).</p></li>
 </ul>
-<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">vore</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
@@ -442,30 +442,30 @@
 <li><p>O R tem um <em>array</em> de <span class="math inline">\(3\)</span> dimensões com dados sobre as cores dos cabelos e dos olhos de <span class="math inline">\(592\)</span> alunos e alunas de uma universidade americana em <span class="math inline">\(1974\)</span>.</p></li>
 <li>
 <p>Se pedirmos para o R exibir os dados, veremos <span class="hl">duas matrizes</span>, uma para cada sexo:</p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">HairEyeColor</span>
-<span class="co">## , , Sex = Male</span>
-<span class="co">## </span>
-<span class="co">##        Eye</span>
-<span class="co">## Hair    Brown Blue Hazel Green</span>
-<span class="co">##   Black    32   11    10     3</span>
-<span class="co">##   Brown    53   50    25    15</span>
-<span class="co">##   Red      10   10     7     7</span>
-<span class="co">##   Blond     3   30     5     8</span>
-<span class="co">## </span>
-<span class="co">## , , Sex = Female</span>
-<span class="co">## </span>
-<span class="co">##        Eye</span>
-<span class="co">## Hair    Brown Blue Hazel Green</span>
-<span class="co">##   Black    36    9     5     2</span>
-<span class="co">##   Brown    66   34    29    14</span>
-<span class="co">##   Red      16    7     7     7</span>
-<span class="co">##   Blond     4   64     5     8</span></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">HairEyeColor</span></code></pre></div>
+<pre><code>## , , Sex = Male
+## 
+##        Eye
+## Hair    Brown Blue Hazel Green
+##   Black    32   11    10     3
+##   Brown    53   50    25    15
+##   Red      10   10     7     7
+##   Blond     3   30     5     8
+## 
+## , , Sex = Female
+## 
+##        Eye
+## Hair    Brown Blue Hazel Green
+##   Black    36    9     5     2
+##   Brown    66   34    29    14
+##   Red      16    7     7     7
+##   Blond     4   64     5     8</code></pre>
 </li>
 <li><p>Vamos transformar este <em>array</em> em um <em>data frame</em>.</p></li>
 <li>
 <p>O <em>array</em> contém apenas os totais de cada classe. Vamos usar a função <code>uncount</code> para gerar uma linha para cada aluno:</p>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">uncount</span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span>
@@ -480,7 +480,7 @@
 <li><p>O <code>ggplot2</code> e os outros pacotes do <code>tidyverse</code> foram projetados para trabalhar com <em>data frames</em> neste formato, <span class="hl">com uma observação (um indivíduo, um elemento) por linha.</span> É o chamado <span class="hl">formato <em>tidy</em>.</span></p></li>
 <li>
 <p>Usando vetores com elementos nomeados, podemos traduzir o conteúdo do <em>data frame</em> para português:</p>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cabelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="st">'Brown'</span> <span class="op">=</span> <span class="st">'castanhos'</span>,
   <span class="st">'Blond'</span> <span class="op">=</span> <span class="st">'louros'</span>,
@@ -509,7 +509,7 @@
 </li>
 <li>
 <p>Um sumário:</p>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table table-sm">
 <colgroup>
@@ -581,7 +581,7 @@
 <li><p>Um <span class="hl">gráfico de barras</span> contém uma barra para cada valor de uma <span class="hl">variável categórica.</span></p></li>
 <li>
 <p><span class="hl">Usamos <code>geom_bar</code> para gerar um gráfico de barras</span> de cores de cabelo:</p>
-<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cabelos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -615,7 +615,7 @@
 <li><p>A <span class="hl">função <code>fct_infreq</code></span>, do pacote <code>forcats</code>, ordena os valores em <span class="hl">ordem decrescente de frequência</span>.</p></li>
 <li>
 <p>A <span class="hl">função <code>fct_rev</code></span>, também do pacote <code>forcats</code>, <span class="hl">inverte a ordenação.</span></p>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -628,7 +628,7 @@
 <li><p>A posição <span class="math inline">\(x\)</span> e a altura de cada barra são estéticas: <span class="hl">a posição <span class="math inline">\(x\)</span> representa a cor dos cabelos</span>, e <span class="hl">a altura representa a frequência daquela cor</span>.</p></li>
 <li>
 <p>Vamos acrescentar mais uma estética: <span class="hl">a cor de preenchimento vai representar o sexo</span>.</p>
-<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -640,7 +640,7 @@
 </li>
 <li>
 <p>Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (<code>scale_fill_discrete</code>):</p>
-<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -653,7 +653,7 @@
 </li>
 <li>
 <p><span class="hl">Podemos fazer um gráfico de barras horizontais com <code>coord_flip</code>.</span> Isto geralmente é útil quando os rótulos das barras são longos:</p>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -669,7 +669,7 @@
 <li><p>Se posicionarmos as barras lado a lado, fica mais fácil responder.</p></li>
 <li>
 <p>Usamos o argumento <code>position = 'dodge'</code> de <code>geom_bar</code>. “<em>Dodge</em>” significa “esquivar-se”, em inglês.</p>
-<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
@@ -682,7 +682,7 @@
 </li>
 <li>
 <p>Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -697,7 +697,7 @@
 </li>
 <li>
 <p>Ou, com barras lado a lado:</p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
@@ -719,7 +719,7 @@
 </li>
 <li>
 <p>Para incluir o sexo, podemos <span class="hl">facetar</span> o gráfico. Usando <code>facet_wrap</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;O nome da variável segundo a qual facetar deve aparecer depois de um &lt;code&gt;~&lt;/code&gt;.&lt;/p&gt;"><sup>2</sup></a>, geramos dois subgráficos lado a lado:</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
@@ -737,7 +737,7 @@
 <li><p>Se a quantidade grande de pessoas louras de olhos castanhos (em comparação com pessoas louras de olhos azuis) for por causa da pintura de cabelos, então o gráfico acima mostra que as mulheres pintam os cabelos de louro com mais frequência do que os homens.</p></li>
 <li>
 <p>Quando facetamos por cor de cabelos, também podemos observar as mesmas diferenças entre homens e mulheres:</p>
-<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">olhos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
@@ -762,7 +762,7 @@
 <li><p>Em algumas situações, <span class="hl">o <em>data frame</em> já contém as frequências</span> (em vez de conter uma linha por indivíduo).</p></li>
 <li>
 <p>Vamos usar <code>count</code> para criar um <em>data frame</em> assim:</p>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_tot</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">sexo</span>, <span class="va">cabelos</span>, <span class="va">olhos</span><span class="op">)</span>
 
@@ -776,7 +776,7 @@
 <li><p>Para <span class="math inline">\(4\)</span> cores de cabelo, <span class="math inline">\(4\)</span> cores de olhos, e <span class="math inline">\(2\)</span> sexos, são <span class="math inline">\(32\)</span> combinações possíveis.</p></li>
 <li>
 <p>Com este <em>data frame</em>, podemos gerar todos os gráficos anteriores usando <span class="hl"><code>geom_col</code> no lugar de <code>geom_bar</code></span>. Por exemplo:</p>
-<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_tot</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cabelos</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -788,7 +788,7 @@
 <li><p>Com <code>geom_col</code>, <span class="hl">precisamos passar a estética <span class="math inline">\(y\)</span></span> (no nosso exemplo, a variável <code>n</code>, que contém as frequências).</p></li>
 <li>
 <p>Para ordenar as barras, usamos a função <code>fct_reorder</code>, que ordena os níveis de um fator (<code>cabelos</code>) de acordo com o resultado de uma função (<code>sum</code>) aplicada sobre os valores de outra variável (<code>n</code>):</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_tot</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">cabelos</span>, <span class="va">n</span>, <span class="va">sum</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -812,22 +812,22 @@
 <ul>
 <li>
 <p>O R tem uma matriz com as quantidades de telefones em várias regiões do mundo ao longo de vários anos:</p>
-<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">WorldPhones</span>
-<span class="co">##      N.Amer Europe Asia S.Amer Oceania Africa Mid.Amer</span>
-<span class="co">## 1951  45939  21574 2876   1815    1646     89      555</span>
-<span class="co">## 1956  60423  29990 4708   2568    2366   1411      733</span>
-<span class="co">## 1957  64721  32510 5230   2695    2526   1546      773</span>
-<span class="co">## 1958  68484  35218 6662   2845    2691   1663      836</span>
-<span class="co">## 1959  71799  37598 6856   3000    2868   1769      911</span>
-<span class="co">## 1960  76036  40341 8220   3145    3054   1905     1008</span>
-<span class="co">## 1961  79831  43173 9053   3338    3224   2005     1076</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">WorldPhones</span></code></pre></div>
+<pre><code>##      N.Amer Europe Asia S.Amer Oceania Africa Mid.Amer
+## 1951  45939  21574 2876   1815    1646     89      555
+## 1956  60423  29990 4708   2568    2366   1411      733
+## 1957  64721  32510 5230   2695    2526   1546      773
+## 1958  68484  35218 6662   2845    2691   1663      836
+## 1959  71799  37598 6856   3000    2868   1769      911
+## 1960  76036  40341 8220   3145    3054   1905     1008
+## 1961  79831  43173 9053   3338    3224   2005     1076</code></pre>
 </li>
 <li><p>Os números representam milhares.</p></li>
 <li><p><span class="hl">Os números dos anos são os nomes das linhas da matriz.</span></p></li>
 <li>
 <p>Vamos transformar esta matriz em uma <em>tibble</em>:</p>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones</span> <span class="op">&lt;-</span> <span class="va">WorldPhones</span> <span class="op">%&gt;%</span> 
   <span class="fu">as_tibble</span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">'Ano'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>Ano <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Ano</span><span class="op">)</span><span class="op">)</span>
@@ -849,7 +849,7 @@
 </li>
 <li>
 <p>Usamos a função <code>pivot_longer</code> para mudar o formato da <em>tibble</em>:</p>
-<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">&lt;-</span> <span class="va">fones</span> <span class="op">%&gt;%</span> 
   <span class="fu">pivot_longer</span><span class="op">(</span>
     cols <span class="op">=</span> <span class="op">-</span><span class="va">Ano</span>,
@@ -874,7 +874,7 @@
 <ul>
 <li>
 <p><span class="hl">A geometria <code>geom_line</code> gera gráficos de linha.</span> Perceba como geramos uma linha por região:</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ano</span>, y <span class="op">=</span> <span class="va">n</span>, color <span class="op">=</span> <span class="va">Região</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -883,7 +883,7 @@
 </li>
 <li>
 <p>Embora a legenda associe uma cor a cada região, <span class="hl">a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade</span>:</p>
-<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
@@ -904,7 +904,7 @@
 </li>
 <li>
 <p>Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:</p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Região</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'S.Amer'</span>, <span class="st">'Oceania'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
@@ -924,7 +924,7 @@
 <li><p>Mas não vamos falar mais sobre séries temporais aqui.</p></li>
 <li>
 <p>O <span class="hl">pacote <code>tsibble</code></span> oferece maneiras de trabalhar com séries temporais de maneira <em>tidy</em>. Você pode ler a documentação do pacote entrando</p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tsibble.tidyverts.org">tsibble</a></span><span class="op">)</span>
 <span class="op">?</span><span class="va">`tsibble-package`</span></code></pre></div>
 </li>
@@ -979,7 +979,7 @@
 <li>
 <a class="nav-link" href="#boxplots"><span class="header-section-number">5.2</span> Boxplots</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#conjunto-de-dados-1"><span class="header-section-number">5.2.1</span> Conjunto de dados</a></li>
-<li><a class="nav-link" href="#mediana-e-quartis"><span class="header-section-number">5.2.2</span> Mediana e quartis</a></li>
+<li><a class="nav-link" href="#mediana"><span class="header-section-number">5.2.2</span> Mediana e quartis</a></li>
 <li><a class="nav-link" href="#m%C3%A9dia-times-mediana"><span class="header-section-number">5.2.3</span> Média \(\times\) mediana</a></li>
 <li><a class="nav-link" href="#intervalo-interquartil-iqr-e-outliers"><span class="header-section-number">5.2.4</span> Intervalo interquartil (IQR) e outliers</a></li>
 <li><a class="nav-link" href="#gerando-boxplots"><span class="header-section-number">5.2.5</span> Gerando boxplots</a></li>
@@ -1024,7 +1024,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/03/2022)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 28/03/2022)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -32,7 +32,7 @@ embed_yt('TjgLDeIQHIc')
   ```
 
 
-### Mediana e quartis
+### Mediana e quartis { #mediana }
 
 * Para entender *boxplots*, precisamos, antes, entender algumas medidas.
 

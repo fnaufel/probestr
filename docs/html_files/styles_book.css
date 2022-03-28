@@ -24,3 +24,21 @@ div.sourceCode + pre {
 }
 
 
+/* Fix padding of call out boxes to fit icon */
+
+.rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
+  padding: 1rem 1rem 1rem 5rem;
+  border-radius: 10px;
+  background-color: #fcfcfc;
+  background-position: 1rem 50%;
+  background-repeat: no-repeat;
+}
+
+.rmdnote > *:last-child,
+.rmdcaution > *:last-child,
+.rmdimportant > *:last-child,
+.rmdtip > *:last-child,
+.rmdwarning > *:last-child {
+  padding-bottom: 0;
+}
+

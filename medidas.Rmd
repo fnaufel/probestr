@@ -4,3 +4,705 @@ knit: "bookdown::render_book"
 
 # Medidas
 
+## Vídeo
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('C96MOP4YlaY')
+```
+
+## Medidas de centralidade
+
+### Média
+
+* A [média de uma população]{.hl} é escrita como $\mu$, e é definida como 
+  $$\mu = \frac{\sum x}{N}$$
+
+  * $\sum x$ é a soma de todos os dados $x$ da população.
+  
+  * $N$ é a quantidade de elementos na população.
+
+* A [média de uma amostra]{.hl} é escrita como $\bar x$, e é definida como:
+  $$\bar x = \frac{\sum x}{n}$$
+
+  * $\sum x$ é a soma de todos os dados $x$ da amostra.
+  
+  * $n$ é a quantidade de elementos na amostra.
+  
+* O cálculo é essencialmente o mesmo. Só mudam os símbolos: $N$ versus $n$, e $\mu$ versus $\bar x$.
+
+
+#### Exemplo
+
+* Idades dos alunos de uma turma:
+
+  ```{r idades}
+  idades <- c(
+    20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 
+    22, 22, 22, 23, 23, 23, 23, 24, 24, 65
+  )
+  ```
+
+* Média [com]{.hl} o velhinho de $`r max(idades)`$ anos:
+
+  ```{r media}
+  mean(idades)
+  ```
+
+* Média [sem]{.hl} o velhinho:
+
+  ```{r media2}
+  mean(idades[-length(idades)])
+  ```
+
+
+### Mediana
+
+* Já aprendemos sobre a mediana na [seção sobre *boxplots*](#mediana).
+
+* A idéia é que, depois de ordenar os dados, $50\%$ dos dados estarão à esquerda da mediana, e $50\%$ à direita.
+
+* A mediana não é tão sensível a *outliers* quanto à média.
+
+
+#### Exemplo
+
+* Mediana [com]{.hl} o velhinho:
+
+  ```{r mediana}
+  median(idades)
+  ```
+
+* Mediana [sem]{.hl} o velhinho:
+
+  ```{r mediana2}
+  median(idades[-length(idades)])
+  ```
+
+
+### Moda
+
+* A [moda]{.hl} é o [valor mais frequente]{.hl} do conjunto de dados. 
+
+* Pode haver mais de uma moda.
+
+* Por que não existe uma função para a moda em R base? Porque, por incrível que pareça, é complicado definir a moda de forma a conseguir resultados interessantes.
+
+* Vamos definir um conjunto de $1000$ valores numéricos distribuídos normalmente^[Mais sobre a distribuição normal no capítulo ???.], com média igual a $5$ e desvio padrão^[Mais sobre o desvio padrão daqui a pouco.] igual a $2$:
+
+    ```{r}
+    normal <- rnorm(1000, mean = 5, sd = 2)
+    ```
+
+* Eis uma função para retornar um histograma com divisões nos valores inteiros:
+
+    ```{r plot-hist}
+    histograma <- function(
+      dados,
+      divisoes = floor(min(dados)):ceiling(max(dados))
+    ) {
+      
+      dados %>% 
+        as_tibble() %>% 
+        ggplot(aes(x = value)) +
+          geom_histogram(
+            breaks = divisoes, 
+            color = 'black', 
+            fill = '#00000000'
+          ) +
+          scale_x_continuous(breaks = divisoes) +
+          labs(
+            y = NULL,
+            x = NULL
+          )
+      
+    }
+    ```
+
+* []{#dados-normais} O histograma dos nossos dados é
+
+    ```{r}
+    normal %>% histograma()
+    ```
+
+* Vamos calcular a moda com a função `mfv` (*most frequent value*), do pacote `modeest`:
+
+    ```{r mfv}
+    # Pacote com funções para calcular modas
+    library(modeest)
+    
+    # Por causa de um bug na função mfv, 
+    # precisamos de números com ponto decimal
+    # (em vez de vírgula):
+    options(OutDec = '.')
+    mfv(normal)
+    
+    # Voltamos para a vírgula como separador decimal:
+    options(OutDec = ',')
+    ```
+
+* O que houve?!
+
+* O problema é que não há valores repetidos no conjunto de dados! Por isso, todos os $1000$ valores são modais.
+
+* Uma maneira de evitar isto é definir a moda como o [centro do intervalo mais curto que contém metade dos dados]{.hl}. Usamos a função `mlv` (*most likely value*):
+
+    ```{r mlv}
+    moda <- mlv(normal, method = 'venter')
+    moda
+    ```
+
+* Esta moda estimada pode nem estar no conjunto de dados:
+
+    ```{r}
+    moda %in% normal
+    ```
+
+* Mas o resultado de `mlv()` é útil, pois nos diz que, embora não haja valores repetidos, valores próximos de $5$ são mais frequentes, como mostra o histograma.
+
+
+#### Exercício 
+
+* Arrendonde os valores no vetor `normal` para $2$ casas decimais e ache a(s) moda(s) 
+
+  1. com a função `mfv`, e
+  
+  1. com a função `mlv`, usando o método `venter`.
+
+
+## Formas de uma distribuição
+
+* A forma do histograma mostra aspectos importantes da distribuição de um conjunto de dados.
+
+
+### Distribuição Uniforme
+
+* Se o histograma tem todas as barras aproximadamente da mesma altura, dizemos que a distribuição é [uniforme]{.hl}:
+
+    ```{r uniforme}
+    uniforme <- runif(1000, min = 0, max = 10)
+    
+    histograma(uniforme) 
+    ```
+
+* [A distribuição uniforme não tem moda]{.hl}, já que todos os valores têm aproximadamente a mesma frequência.
+
+
+### Simetria
+
+* Se o histograma for simétrico (i.e., os lados esquerdo e direito são "espelhados"), dizemos que a distribuição é [simétrica]{.hl}.
+
+* A distribuição normal [do exemplo acima](#dados-normais) é simétrica.
+
+* A distribuição uniforme também é simétrica.
+
+* Para distribuições simétricas, a média, a mediana e a moda (quando existe e é única) são bem próximas.
+
+  * Para a distribuição normal do exemplo:
+
+    ```{r media-mediana}
+    mean(normal)
+    median(normal)
+    mlv(normal, method = 'venter')
+    ```
+
+  * Para a distribuição uniforme do exemplo:
+
+    ```{r}
+    mean(uniforme)
+    median(uniforme)
+    ```
+
+* Uma distribuição pode ser [simétrica]{.hl}, mas ter [duas (ou mais) modas diferentes]{.hl}:
+
+    ```{r bimodal}
+    sim2 <-  rnorm(1000, mean = 12, sd = 2)
+    bimodal <- c(normal, sim2)
+    
+    histograma(bimodal)
+    ```
+
+* Algumas distribuições não são simétricas, mas têm uma [cauda longa]{.hl} à esquerda ou à direita.
+
+* Dependendo da cauda, as distribuições são chamadas de [assimétricas à esquerda]{.hl} ou [assimétricas à direita]{.hl}.
+
+* Um exemplo: receitas anuais (em milhões de dólares) de CEOs de grandes empresas:
+
+    ```{r ceos}
+    df <- read_csv('./data/CEO_Salary_2012.csv')
+    glimpse(df)
+    ```
+
+* Vamos usar apenas os nomes e os valores anuais:
+
+    ```{r salarios}
+    salarios <- df %>% 
+      select(Name, valor = `1-Year Pay ($mil)`)
+    ```
+
+* Um histograma:
+
+    ```{r ceos-hist}
+    salarios %>% 
+      ggplot(aes(x = valor)) +
+        geom_histogram(breaks = seq(0, 150, 2.5)) +
+        scale_x_continuous(breaks = seq(0, 150, 10)) +
+        labs(y = NULL)
+    ```
+
+* É uma distribuição [assimétrica à direita]{.hl}: a maior parte dos CEOs têm receitas anuais "baixas", de menos de $10$ milhões. À medida que examinamos valores maiores, a quantidade de CEOs vai diminuindo lentamente.
+
+* Observe que a longa cauda à direita "puxa" a média para um valor mais alto do que a mediana.
+
+* A moda, que corresponde à barra mais alta do histograma, é menor que a mediana (e que a média):
+
+  ```{r sumario-ceos}
+  sumario <- salarios %>% 
+    summarise(
+      moda = mlv(valor, method = 'venter'),
+      mediana = median(valor),
+      media = mean(valor)
+    )
+  
+  sumario
+  ```
+
+* Em um *boxplot*, também é possível detectar a assimetria pela grande quantidade de *outliers* em um extremo:
+
+    ```{r ceos-boxplot}
+    salarios %>% 
+      ggplot(aes(y = valor)) +
+        geom_boxplot() +
+        scale_x_continuous(breaks = NULL) +
+        scale_y_continuous(breaks = seq(0, 150, 10))
+    ```
+
+* Com distribuições assimétricas à esquerda, a situação se inverte: a média é menor que a mediana, que é menor que a moda.
+
+
+#### Exercício
+
+* Ache um conjunto de dados com uma distribuição assimétrica à esquerda.
+
+* Faça um histograma.
+
+* Calcule a média, a mediana, e a moda dos dados.
+
+
+## Re-expressão
+
+* Muitas vezes, é recomendável transformar a escala dos dados para que uma distribuição assimétrica se torne simétrica.
+
+* No exemplo das receitas dos CEOs, podemos tomar os [logaritmos]{.hl} dos valores, em vez dos valores:
+
+    ```{r ceos-log}
+    salarios_log <- salarios %>% 
+      mutate(log_valor = log10(valor))
+    ```
+
+    ```{r ceos-log-hist}
+    salarios_log %>% 
+      ggplot(aes(x = log_valor)) +
+        geom_histogram(bins = 20) +
+        labs(
+          x = TeX('$\\log_{10}$ valor'),
+          y = NULL
+        )
+    ```
+
+* O logaritmo de um número na base $10$ é, essencialmente, a quantidade de dígitos do número, vista como uma grandeza contínua.
+
+* Logaritmos negativos vêm de valores entre $0$ e $1$.
+
+* Logaritmo zero vem do valor $1$.
+
+* Valores iguais ou menores que zero não têm logaritmo definido.
+
+* Por isso a mensagem de aviso sobre $3$ valores removidos. São valores iguais a zero:
+
+  ```{r}
+  salarios_log %>% 
+    filter(valor == 0)
+  ```
+
+* Uma vantagem desta escala logarítmica é que podemos entender melhor o histograma. Os dados não estão amontoados de um lado só.
+
+
+### Exercício
+
+* Quais são os registros com $\log_{10} \text{valor} < 0$?
+
+* Faça um *boxplot* dos logaritmos das receitas.
+
+
+## Medidas de posição
+
+### Quantis
+
+* Na [seção sobre *boxplots*](#mediana), falamos sobre [quantis]{.hl}, que são medidas de posição.
+
+* Em R, a função `quantile` calcula quantis de um vetor:
+
+    ```{r quantis}
+    salarios %>% 
+      pull(valor) %>% 
+      quantile()
+    ```
+
+* Você pode passar frações entre $0$ e $1$ para `quantile`. Por exemplo, para calcular o primeiro, o quinto, e o décimo percentis das receitas dos CEOs:
+
+    ```{r decil-1}
+    salarios %>% 
+      pull(valor) %>% 
+      quantile(c(.01, .05, .1))
+    ```
+
+
+## Medidas de dispersão
+
+* Tão importantes quanto as medidas de centralidade são as medidas de dispersão (ou [espalhamento]{.hl}).
+
+* Elas informam o quanto os dados variam.
+
+
+### Amplitude
+
+* Uma medida simples é a [diferença entre o valor máximo e o valor mínimo]{.hl}.
+
+* Lembrando do nosso exemplo das idades dos alunos:
+
+    ```{r idades-reprise}
+    idades
+    ```
+
+* A função `range` retorna o mínimo e o máximo:
+
+    ```{r amplitude}
+    range(idades)
+    ```
+
+* A amplitude destes dados é, então
+    
+    ```{r amplitude2}
+    range(idades)[2] - range(idades)[1]
+    ```
+
+* A diferença de idade entre o aluno mais novo e o mais velho é de $45$ anos, um valor alto, por causa do velhinho.
+
+
+### IQR
+
+* Na [seção sobre *boxplots*](#mediana), também falamos sobre o [intervalo interquartil]{.hl} (IQR).
+
+* No *boxplot*, é a [altura da caixa]{.hl}. Para as idades dos alunos:
+
+    ```{r idades-bp}
+    idades %>% 
+      as_tibble() %>% 
+      ggplot(aes(y = value)) +
+        geom_boxplot() +
+        scale_x_continuous(breaks = NULL) +
+        scale_y_continuous(breaks = seq(20, 70, 5))
+    ```
+
+* O IQR é a diferença entre o primeiro e o terceiro quartis:
+
+    ```{r idades-sumario}
+    summary(idades)
+    unname(summary(idades)[5] - summary(idades)[2])
+    IQR(idades)
+    ```
+
+* Ou seja, os $50\%$ centrais dos alunos têm idade entre $20$ e $23$ anos, um IQR de $3$. 
+
+* É uma variação pequena, mais fiel à realidade do que a amplitude, que é alta por causa do velhinho.
+
+* Quanto maior o IQR, mais espalhados estão os dados.
+
+
+### Variância
+
+* Agora, vamos trabalhar com os pesos (kg) e alturas (m) de um time de basquete:
+
+  ```{r pesos-alturas}
+  medidas <- tibble(
+    altura = .025 * 
+      c(72, 74, 68, 76, 74, 69, 72, 79, 70, 69, 77, 73),
+    peso = 0.45 * 
+      c(180, 168, 225, 201, 189, 192, 197, 162, 174, 171, 185, 210)
+  )
+  
+  medidas
+  ```
+
+  ```{r alturas-sumario}
+  summary(medidas$altura)
+  ```
+  
+  ```{r pesos-sumario}
+  summary(medidas$peso)
+  ```
+
+* A [variância]{.hl} é a maneira mais usada de medir o espalhamento em torno da média.
+
+* Para calcular a variância das alturas e a variância dos pesos, precisamos calcular valores intermediários.
+
+* O [desvio]{.hl} de um valor é a [diferença entre o valor e a média]{.hl}. O desvio pode ser positivo ou negativo.
+
+  ```{r desv}
+  d_medidas <- medidas %>% 
+    mutate(
+      d_altura = altura - mean(altura),
+      d_peso = peso - mean(peso)
+    )
+  
+  d_medidas
+  ```
+
+* Vamos calcular o desvio médio das alturas e o desvio médio dos pesos:
+
+  ```{r desv-medio}
+  d_medidas %>% 
+    summarize(
+      d_medio_altura = mean(d_altura),
+      d_medio_peso = mean(d_peso)
+    )
+  ```
+
+* Não foi uma boa idéia. [Os desvios médios sempre são iguais a zero]{.hl}.^[Você vai provar isto em um exercício.]
+
+* Como resolver isto? Elevando os desvios ao quadrado:
+
+  ```{r dq}
+  dq_medidas <- d_medidas %>% 
+    mutate(
+      dq_altura = d_altura^2,
+      dq_peso = d_peso^2
+    )
+  
+  dq_medidas
+  ```
+
+* Agora temos os [desvios quadrados]{.hl}, que são todos [positivos]{.hl}.
+
+* O [desvio quadrado médio]{.hl} vai ser a [variância]{.hl}:
+
+  ```{r var-medidas}
+  dq_medidas %>% 
+    summarize(
+      var_altura = mean(dq_altura),
+      var_peso = mean(dq_peso)
+    )
+  ```
+
+* Uma vantagem da variância é que *outliers* (que têm desvios quadrados maiores) contribuem mais do que elementos próximos à média (que têm desvios quadrados menores).
+
+* Uma desvantagem da variância é que a [sua unidade é o quadrado da unidade dos valores]{.hl}.
+
+* Neste exemplo, as unidades são $m^2$ e $kg^2$!
+
+
+### Desvio-padrão
+
+* É melhor trabalhar com [a raiz quadrada da variância]{.hl}, que chamamos de [desvio-padrão]{.hl}.
+
+* As unidades são as mesmas que as unidades dos dados.
+
+  ```{r dp-medidas}
+  dq_medidas %>% 
+    summarize(
+      dp_altura = sqrt(mean(dq_altura)),
+      dp_peso = sqrt((mean(dq_peso)))
+    )
+  ```
+
+* Claro que o R tem funções para calcular isso:
+
+  ```{r var-dp-medidas}
+  medidas %>% 
+    summarize(
+      altura_var = var(altura),
+      altura_dp = sd(altura),
+      peso_var = var(peso),
+      peso_dp = sd(peso)
+    )
+  ```
+
+* Mas os valores são diferentes dos que calculamos. Por quê?
+
+
+### Definições
+
+* Para uma [população]{.hl} com $N$ elementos e média $\mu$, a [variância]{.hl} é
+
+  $$
+  \sigma^2 = \frac{\sum (x - \mu)^2}{N}
+  $$
+
+  e o [desvio-padrão]{.hl} é
+
+  $$
+  \sigma = \sqrt{\frac{\sum (x - \mu)^2}{N}}
+  $$
+
+
+* Para uma [amostra]{.hl} com $n$ elementos e média $\bar x$, a [variância]{.hl} é
+
+  $$
+  s^2 = \frac{\sum (x - \bar x)^2}{n-1}
+  $$
+
+  e o [desvio-padrão]{.hl} é
+
+  $$
+  s = \sqrt{\frac{\sum (x - \bar x)^2}{n -1}}
+  $$
+
+* Nós calculamos a versão [populacional]{.hl} destas medidas.
+
+* R calcula a versão [amostral]{.hl} destas medidas.
+
+* Reveja os cálculos e entenda a diferença.
+
+* Note, também, que as [medidas populacionais são representadas por letras gregas]{.hl} --- $\mu$, $\sigma^2$, $\sigma$ ---, enquanto as [medidas amostrais são representadas por letras latinas]{.hl} --- $\bar x$, $s^2$, $s$.
+
+::: {.rmdimportant latex=1}
+
+Mais adiante no curso, você vai entender por que o denominador da variância amostral é $n - 1$, em vez de $n$. 
+
+Nada é por acaso, nem mesmo em Estatística.
+
+:::
+
+
+## Coeficiente de variação
+
+* Proporção entre desvio padrão e média:
+
+$$
+CV = \frac{s}{\bar x}
+$$
+
+* Não tem unidades. É uma razão, que também pode ser lida como uma percentagem.
+
+* Para alturas:
+
+```{r cv-altura}
+statip::cv(medidas$altura)
+```
+
+* Para pesos:
+
+```{r cv-peso}
+statip::cv(medidas$peso)
+```
+
+## Escores padrão
+
+* Mudar a escala de uma variável, mudando as unidades:
+
+  * A média passa a ser zero.
+  * O desvio-padrão passa a ser 1.
+  * I.e., a unidade passa a ser 1 desvio padrão
+  
+* Se a média for $\bar x$ e o desvio padrão for $s$, basta criar a nova variãvel $z$, tal que
+$$
+z = \frac{x - \bar x}{s}
+$$
+
+
+* Em R, a função `scale` faz isso:
+
+```{r score-altura}
+medidas$altura_padrao <- scale(medidas$altura)
+
+medidas %>% 
+  select(altura, altura_padrao)
+```
+
+```{r score-altura2}
+mean(medidas$altura_padrao)
+sd(medidas$altura_padrao)
+```
+
+```{r score-peso}
+medidas$peso_padrao <- scale(medidas$peso)
+
+medidas %>% 
+  select(peso, peso_padrao)
+```
+
+```{r score-peso2}
+mean(medidas$peso_padrao)
+sd(medidas$peso_padrao)
+```
+
+```{r peso-hist}
+medidas %>% 
+  ggplot(aes(x = peso)) +
+    geom_histogram(bins = 6)
+```
+
+```{r peso-padrao-hist}
+medidas %>% 
+  ggplot(aes(x = peso_padrao)) +
+    geom_histogram(bins = 6)
+```
+
+
+## Teorema de Tchebychev
+
+
+::: {.rmdimportant}
+
+Em *qualquer* distribuição, a proporção de dados dentro de $\pm k$ desvios padrão ($k > 1$) da média é de, *no mínimo*
+$$
+1 - \frac{1}{k^2}
+$$
+
+:::
+
+### Exemplo {-}
+
+```{r msleep}
+df <- msleep$sleep_total %>% 
+  as_tibble()
+```
+
+```{r msleep-hist}
+grafico <- df %>% 
+  ggplot(aes(x = value)) +
+    geom_histogram(breaks = 1:20) +
+    scale_x_continuous(breaks = 1:20) +
+    scale_y_continuous(breaks = seq(0, 10, 2))
+
+grafico
+```
+
+```{r tchebyshev}
+media <- mean(df$value)
+dp <- sd(df$value)
+
+k <- 1.3
+
+inicio <- media - k * dp
+fim <- media + k * dp
+
+proporcao <- 1 - 1 / k^2
+
+grafico +
+  geom_histogram(
+    data = df %>% 
+      filter(value >= inicio & value <= fim),
+    fill = 'red',
+    breaks = 1:20
+  ) +
+  labs(
+    title = paste('Exemplo do teorema de Tchebychev: k =', k),
+    subtitle = paste(
+      'Pelo menos', round(proporcao, 2), 'dos dados estão na área vermelha',
+      '\nmédia =', round(media, 2),
+      '\ndp =', round(dp, 2)
+    )
+  )
+```
+

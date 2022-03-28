@@ -48,7 +48,7 @@ table.lightable-paper tbody {
 
 */
 
-/* Several kinds of boxes */
+/* Box  */
 
 .rmdbox {
   margin: 1rem calc(-2px - 0.5em);
@@ -58,26 +58,8 @@ table.lightable-paper tbody {
   background: #fcfcfc;
 }
 
-.rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
-  padding: 1rem 1rem 1rem 5rem;
-  min-height: 80px;
-  border-radius: 10px;
-  background-color: #fcfcfc;
-  background-position: 1rem 50%;
-  background-repeat: no-repeat;
-}
-
 .rmdbox > *:last-child {
   margin-bottom: 0;
-}
-
-.rmdbox > *:last-child,
-.rmdnote > *:last-child,
-.rmdcaution > *:last-child,
-.rmdimportant > *:last-child,
-.rmdtip > *:last-child,
-.rmdwarning > *:last-child {
-  padding-bottom: 0;
 }
 
 @media (max-width: 767.98px) {
@@ -86,6 +68,13 @@ table.lightable-paper tbody {
     border-width: 4px;
   }
 }
+
+.rmdbox > *:last-child {
+  padding-bottom: 0;
+}
+
+
+/* Icons for callout boxes */
 
 .rmdcaution {
   background-image: url("images/caution.png");
