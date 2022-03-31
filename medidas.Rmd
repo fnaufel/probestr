@@ -38,7 +38,8 @@ embed_yt('C96MOP4YlaY')
   ```{r idades}
   idades <- c(
     20, 20, 20, 20, 20, 20, 21, 21, 21, 21, 
-    22, 22, 22, 23, 23, 23, 23, 24, 24, 65
+    22, 22, 22, 23, 23, 23, 23, 24, 24,
+    65
   )
   ```
 
@@ -85,17 +86,17 @@ embed_yt('C96MOP4YlaY')
 
 * Pode haver mais de uma moda.
 
-* Por que não existe uma função para a moda em R base? Porque, por incrível que pareça, é complicado definir a moda de forma a conseguir resultados interessantes.
+* [Não existe uma função para a moda em R base.]{.hl} Por quê? 
 
-* Vamos definir um conjunto de $1000$ valores numéricos distribuídos normalmente^[Mais sobre a distribuição normal no capítulo ???.], com média igual a $5$ e desvio padrão^[Mais sobre o desvio padrão daqui a pouco.] igual a $2$:
+* Por incrível que pareça, [é complicado definir a moda de forma a conseguir resultados interessantes]{.hl}.
+
+* [Por exemplo]{.hl}, vamos definir um conjunto de $1000$ valores numéricos distribuídos normalmente^[Mais sobre a distribuição normal no capítulo ???.], com média igual a $5$ e desvio-padrão^[Mais sobre o desvio-padrão daqui a pouco.] igual a $2$:
 
     ```{r}
     normal <- rnorm(1000, mean = 5, sd = 2)
     ```
 
-* Eis uma função para retornar um histograma com divisões nos valores inteiros:
-
-    ```{r plot-hist}
+    ```{r plot-hist, echo = FALSE}
     histograma <- function(
       dados,
       divisoes = floor(min(dados)):ceiling(max(dados))
@@ -107,7 +108,7 @@ embed_yt('C96MOP4YlaY')
           geom_histogram(
             breaks = divisoes, 
             color = 'black', 
-            fill = '#00000000'
+            fill = 'light gray'
           ) +
           scale_x_continuous(breaks = divisoes) +
           labs(
@@ -120,7 +121,7 @@ embed_yt('C96MOP4YlaY')
 
 * []{#dados-normais} O histograma dos nossos dados é
 
-    ```{r}
+    ```{r echo = FALSE}
     normal %>% histograma()
     ```
 
@@ -160,7 +161,7 @@ embed_yt('C96MOP4YlaY')
 * Mas o resultado de `mlv()` é útil, pois nos diz que, embora não haja valores repetidos, valores próximos de $5$ são mais frequentes, como mostra o histograma.
 
 
-#### Exercício 
+#### Exercícios 
 
 * Arrendonde os valores no vetor `normal` para $2$ casas decimais e ache a(s) moda(s) 
 
@@ -178,9 +179,11 @@ embed_yt('C96MOP4YlaY')
 
 * Se o histograma tem todas as barras aproximadamente da mesma altura, dizemos que a distribuição é [uniforme]{.hl}:
 
-    ```{r uniforme}
+    ```{r uniforme, echo = FALSE}
     uniforme <- runif(1000, min = 0, max = 10)
-    
+    ```
+
+    ```{r echo = FALSE}
     histograma(uniforme) 
     ```
 
@@ -195,7 +198,7 @@ embed_yt('C96MOP4YlaY')
 
 * A distribuição uniforme também é simétrica.
 
-* Para distribuições simétricas, a média, a mediana e a moda (quando existe e é única) são bem próximas.
+* Para distribuições simétricas, a média, a mediana e a moda [(quando existe e é única)]{.hl} são bem próximas.
 
   * Para a distribuição normal do exemplo:
 
@@ -214,7 +217,7 @@ embed_yt('C96MOP4YlaY')
 
 * Uma distribuição pode ser [simétrica]{.hl}, mas ter [duas (ou mais) modas diferentes]{.hl}:
 
-    ```{r bimodal}
+    ```{r bimodal, echo = FALSE}
     sim2 <-  rnorm(1000, mean = 12, sd = 2)
     bimodal <- c(normal, sim2)
     
@@ -228,7 +231,10 @@ embed_yt('C96MOP4YlaY')
 * Um exemplo: receitas anuais (em milhões de dólares) de CEOs de grandes empresas:
 
     ```{r ceos}
-    df <- read_csv('./data/CEO_Salary_2012.csv')
+    df <- read_csv(
+      './data/CEO_Salary_2012.csv',
+      show_col_types = FALSE
+    )
     glimpse(df)
     ```
 
@@ -279,7 +285,7 @@ embed_yt('C96MOP4YlaY')
 * Com distribuições assimétricas à esquerda, a situação se inverte: a média é menor que a mediana, que é menor que a moda.
 
 
-#### Exercício
+#### Exercícios
 
 * Ache um conjunto de dados com uma distribuição assimétrica à esquerda.
 
@@ -327,7 +333,7 @@ embed_yt('C96MOP4YlaY')
 * Uma vantagem desta escala logarítmica é que podemos entender melhor o histograma. Os dados não estão amontoados de um lado só.
 
 
-### Exercício
+### Exercícios
 
 * Quais são os registros com $\log_{10} \text{valor} < 0$?
 
@@ -468,7 +474,7 @@ embed_yt('C96MOP4YlaY')
     )
   ```
 
-* Não foi uma boa idéia. [Os desvios médios sempre são iguais a zero]{.hl}.^[Você vai provar isto em um exercício.]
+* []{#desvio-medio-zero} Não foi uma boa idéia. [O desvio médio sempre é igual a zero]{.hl}.^[Você vai provar isto em um exercício.]
 
 * Como resolver isto? Elevando os desvios ao quadrado:
 
@@ -574,79 +580,226 @@ Nada é por acaso, nem mesmo em Estatística.
 :::
 
 
+### Exercícios
+
+* Quando a variância e o desvio-padrão de um conjunto de dados são iguais a zero?
+
+* Mostre que o [desvio médio de qualquer conjunto de valores é igual a zero](#desvio-medio-zero). 
+
+  Ou seja, considere o conjunto
+
+  $$
+  \{x_1, x_2, \ldots, x_n\}
+  $$
+
+  e prove que
+  
+  $$
+  \sum_{i = 1}^n (x_i - \bar x) = 0
+  $$
+
+  Manipule apenas as variáveis $x_i$. [Não use exemplos, pois eles não provam o enunciado geral.]{.hl}
+  
+  Dica: basta lembrar que $\bar x = \frac{\sum_{i = 1}^n x_i}{n}$.
+
+
 ## Coeficiente de variação
 
-* Proporção entre desvio padrão e média:
+* Em um conjunto de dados, o desvio-padrão é uma medida importante da variação dos dados.
 
-$$
-CV = \frac{s}{\bar x}
-$$
+* Mas a unidade do desvio-padrão muda de um conjunto de dados para outro: alturas em metros, pesos em quilos etc.
 
-* Não tem unidades. É uma razão, que também pode ser lida como uma percentagem.
+* [Podemos eliminar as unidades expressando o desvio-padrão em termos da média]{.hl}.
 
-* Para alturas:
+* O resultado é a fração $\frac{\sigma}{\mu}$ (na população) ou $\frac{s}{\bar x}$ na amostra.
 
-```{r cv-altura}
-statip::cv(medidas$altura)
-```
+* Esta fração é o [coeficiente de variação (CV)]{.hl}.
 
-* Para pesos:
+* O CV não tem unidades. 
 
-```{r cv-peso}
-statip::cv(medidas$peso)
-```
+* Para as alturas do exemplo dos jogadores de basquete:
 
-## Escores padrão
-
-* Mudar a escala de uma variável, mudando as unidades:
-
-  * A média passa a ser zero.
-  * O desvio-padrão passa a ser 1.
-  * I.e., a unidade passa a ser 1 desvio padrão
+  A média das alturas é $`r mean(medidas$altura)`$ metros.
   
-* Se a média for $\bar x$ e o desvio padrão for $s$, basta criar a nova variãvel $z$, tal que
-$$
-z = \frac{x - \bar x}{s}
-$$
+  O desvio-padrão das alturas é $`r sd(medidas$altura)`$ metros.
+  
+  O CV é aproximadamente $`r statip::cv(medidas$altura) %>% fm(4)`$. 
+  
+    ```{r cv-altura}
+    statip::cv(medidas$altura)
+    ```
+  Em outras palavras, para as alturas, um desvio-padrão corresponde a $`r statip::cv(medidas$altura) * 100`\%$ da média.
+  
+* Para os pesos:
 
+  A média dos pesos é $`r mean(medidas$peso)`$ quilos.
+  
+  O desvio-padrão dos pesos é $`r sd(medidas$peso)`$ quilos.
+  
+  O CV é aproximadamente $`r statip::cv(medidas$peso) %>% fm(4)`$. 
+  
+    ```{r}
+    statip::cv(medidas$peso)
+    ```
+
+  Em outras palavras, para os pesos, um desvio-padrão corresponde a $`r statip::cv(medidas$peso) * 100`\%$ da média.
+
+* Segundo estes valores, a variação dos pesos é cerca de $2$ vezes maior do que a variação das alturas.
+
+::: {.rmdcaution latex=1}
+
+O coeficiente de variação sempre faz sentido para dados do [nível racional]{.hl} ([veja a definição](#niveis-de-dados)) --- i.e., dados onde o zero é absoluto.
+
+Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, como você terá chance de ver no exercício.
+
+:::
+
+
+### Exercícios
+
+* Considere o seguinte conjunto de temperaturas (em graus Celsius):
+
+    ```{r}
+    celsius <- c(0, 10, 20, 30, 40)
+    ```
+
+* E as [mesmas temperaturas]{.hl} (em graus Fahrenheit):
+
+    ```{r}
+    fahrenheit <- 9 * celsius / 5 + 32
+    ```
+
+* Calcule para cada um dos dois vetores acima:
+
+  1. A média,
+  
+  1. O desvio-padrão,
+  
+  1. O coeficiente de variação.
+
+* As temperaturas são as mesmas (apenas em unidades diferentes), mas os CVs são diferentes. Por quê?
+
+* Agora, convertemos as [mesmas temperaturas]{.hl} para [a escala Kelvin](https://pt.wikipedia.org/wiki/Kelvin):
+
+    ```{r}
+    kelvin <- celsius + 273.15
+    ```
+
+* E para a [escala Rankine](https://pt.wikipedia.org/wiki/Rankine):
+
+    ```{r}
+    rankine <- fahrenheit + 459.67
+    ```
+
+* Calcule para cada um dos dois vetores acima:
+
+  1. A média,
+  
+  1. O desvio-padrão,
+  
+  1. O coeficiente de variação.
+
+* Compare:
+
+  1. As médias de `celsius` e `kelvin`,
+  
+  1. As médias de `fahrenheit` e `rankine`,
+
+  1. Os desvios-padrão de `celsius` e `kelvin`,
+  
+  1. Os desvios-padrão de `fahrenheit` e `rankine`,
+  
+  1. Os coeficientes de variação de `kelvin` e `rankine`.
+  
+* Explique o que houve.
+
+
+## Escores-padrão
+
+* Para qualquer conjunto de dados, [a unidade usada é uma escolha arbitrária]{.hl}.
+
+* Para alturas, por exemplo, podemos usar metros, centímetros, pés, polegadas etc.
+
+* A escolha de unidades é tão arbitrária que podemos escolher uma unidade (que dificilmente vai ter nome) que faça com que [a média do conjunto de dados seja zero]{.hl} e que [o desvio-padrão seja igual a $1$]{.hl}.
+
+* Isto equivale a tomar, como unidade, o [*desvio-padrão acima da média*]{.hl}.
+
+* Os valores, nesta nova unidade, são chamados de [escores-padrão]{.hl}.
+
+* Dizemos que os valores foram [padronizados]{.hl}.
+
+* Vamos usar as alturas dos jogadores de basquete.
+
+* [Para fazer a altura média virar zero, basta subtrair, de cada altura,  a altura média:]{.hl}
+
+  ```{r}
+  alturas <- medidas$altura
+  mean(alturas)
+  
+  alturas_deslocadas <- alturas - mean(alturas)
+  mean(alturas_deslocadas)
+  ```
+
+* []{#dividir-por-sd} [Para fazer o desvio-padrão ser igual a $1$, basta dividir estes valores pelo desvio-padrão dos dados originais:]{.hl}
+
+  ```{r}
+  sd(alturas)
+  alturas_padronizadas <- alturas_deslocadas / sd(alturas)
+  sd(alturas_padronizadas)
+  ```
+
+* Tome, por exemplo, o seguinte jogador:
+
+  ```{r}
+  altura <- alturas[1] 
+  altura
+  
+  altura_padronizada <- (alturas[1] - mean(alturas)) / sd(alturas)
+  altura_padronizada
+  ```
+
+  Faça as contas: o valor da altura padronizada deste jogador significa que a altura dele está $`r abs(altura_padronizada) %>% fm(6)`$ [desvios-padrão *abaixo* da altura média]{.hl}.
+
+* [No geral:]{.hl} 
+
+  * Se a média for $\bar x$, e
+  
+  * Se o desvio-padrão for $s$, 
+  
+  * Os escores-padrão $z_i$ vão ser
+    $$
+    z_i = \frac{x_i - \bar x}{s}
+    $$
 
 * Em R, a função `scale` faz isso:
 
-```{r score-altura}
-medidas$altura_padrao <- scale(medidas$altura)
+  ```{r score-altura}
+  medidas <- medidas %>% 
+    mutate(altura_padronizada = scale(altura))
+  
+  medidas %>% 
+    select(altura, altura_padronizada)
+  ```
 
-medidas %>% 
-  select(altura, altura_padrao)
-```
+  ```{r score-altura2}
+  mean(medidas$altura_padronizada)
+  sd(medidas$altura_padronizada)
+  ```
 
-```{r score-altura2}
-mean(medidas$altura_padrao)
-sd(medidas$altura_padrao)
-```
 
-```{r score-peso}
-medidas$peso_padrao <- scale(medidas$peso)
+### Exercícios
 
-medidas %>% 
-  select(peso, peso_padrao)
-```
+* Por que, [quando calculamos as alturas deslocadas divididas pelo desvio-padrão das alturas](#dividir-por-sd), temos certeza de que a média dos valores resultantes não mudou?
 
-```{r score-peso2}
-mean(medidas$peso_padrao)
-sd(medidas$peso_padrao)
-```
+* Padronize os pesos dos jogadores de basquete.
 
-```{r peso-hist}
-medidas %>% 
-  ggplot(aes(x = peso)) +
-    geom_histogram(bins = 6)
-```
+* Confira a média e o desvio-padrão dos pesos padronizados.
 
-```{r peso-padrao-hist}
-medidas %>% 
-  ggplot(aes(x = peso_padrao)) +
-    geom_histogram(bins = 6)
-```
+* Crie um *scatterplot* de peso por altura.
+
+* Crie um *scatterplot* de peso padronizado por altura padronizada.
+
+* Compare os dois *scatterplots*. O que muda de um para outro?
 
 
 ## Teorema de Tchebychev
@@ -654,7 +807,7 @@ medidas %>%
 
 ::: {.rmdimportant}
 
-Em *qualquer* distribuição, a proporção de dados dentro de $\pm k$ desvios padrão ($k > 1$) da média é de, *no mínimo*
+Em *qualquer* distribuição, a proporção de dados dentro de $\pm k$ desvios-padrão ($k > 1$) da média é de, *no mínimo*
 $$
 1 - \frac{1}{k^2}
 $$
