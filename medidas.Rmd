@@ -15,16 +15,16 @@ embed_yt('C96MOP4YlaY')
 ### Média
 
 * A [média de uma população]{.hl} é escrita como $\mu$, e é definida como 
-  $$\mu = \frac{\sum x}{N}$$
+  $$\mu = \frac{\sum_{i=1}^N x_i}{N}$$
 
-  * $\sum x$ é a soma de todos os dados $x$ da população.
+  * $\sum_{i=1}^N x_i$ é a soma de todos os dados da população.
   
   * $N$ é a quantidade de elementos na população.
 
 * A [média de uma amostra]{.hl} é escrita como $\bar x$, e é definida como:
-  $$\bar x = \frac{\sum x}{n}$$
+  $$\bar x = \frac{\sum_{i=1}^n x_i}{n}$$
 
-  * $\sum x$ é a soma de todos os dados $x$ da amostra.
+  * $\sum_{i=1}^n x_i$ é a soma de todos os dados da amostra.
   
   * $n$ é a quantidade de elementos na amostra.
   
@@ -169,10 +169,12 @@ embed_yt('C96MOP4YlaY')
   
   1. com a função `mlv`, usando o método `venter`.
 
+  [Considerando o histograma](#dados-normais), qual das respostas você prefere? Por quê?
+
 
 ## Formas de uma distribuição
 
-* A forma do histograma mostra aspectos importantes da distribuição de um conjunto de dados.
+* A forma do histograma mostra aspectos importantes da distribuição dos dados.
 
 
 ### Distribuição Uniforme
@@ -257,7 +259,7 @@ embed_yt('C96MOP4YlaY')
 
 * É uma distribuição [assimétrica à direita]{.hl}: a maior parte dos CEOs têm receitas anuais "baixas", de menos de $10$ milhões. À medida que examinamos valores maiores, a quantidade de CEOs vai diminuindo lentamente.
 
-* Observe que a longa cauda à direita "puxa" a média para um valor mais alto do que a mediana.
+* Observe que [a longa cauda à direita "puxa" a média para um valor mais alto do que a mediana]{.hl}.
 
 * A moda, que corresponde à barra mais alta do histograma, é menor que a mediana (e que a média):
 
@@ -282,10 +284,10 @@ embed_yt('C96MOP4YlaY')
         scale_y_continuous(breaks = seq(0, 150, 10))
     ```
 
-* Com distribuições assimétricas à esquerda, a situação se inverte: a média é menor que a mediana, que é menor que a moda.
+* Com distribuições [assimétricas à esquerda]{.hl}, a situação se inverte: [a média é menor que a mediana, que é menor que a moda]{.hl}.
 
 
-#### Exercícios
+### Exercícios
 
 * Ache um conjunto de dados com uma distribuição assimétrica à esquerda.
 
@@ -296,7 +298,7 @@ embed_yt('C96MOP4YlaY')
 
 ## Re-expressão
 
-* Muitas vezes, é recomendável transformar a escala dos dados para que uma distribuição assimétrica se torne simétrica.
+* Muitas vezes, é recomendável [transformar a escala dos dados]{.hl} para que uma distribuição assimétrica se torne simétrica.
 
 * No exemplo das receitas dos CEOs, podemos tomar os [logaritmos]{.hl} dos valores, em vez dos valores:
 
@@ -354,7 +356,7 @@ embed_yt('C96MOP4YlaY')
       quantile()
     ```
 
-* Você pode passar frações entre $0$ e $1$ para `quantile`. Por exemplo, para calcular o primeiro, o quinto, e o décimo percentis das receitas dos CEOs:
+* Você pode passar frações entre $0$ e $1$ para `quantile`. Por exemplo, para calcular o primeiro, o quinto, e o décimo percentis^[Um percentil é um quantil da forma $k/100$, para $k$ natural, $0 \leq k \leq 100$.] das receitas dos CEOs:
 
     ```{r decil-1}
     salarios %>% 
@@ -367,7 +369,7 @@ embed_yt('C96MOP4YlaY')
 
 * Tão importantes quanto as medidas de centralidade são as medidas de dispersão (ou [espalhamento]{.hl}).
 
-* Elas informam o quanto os dados variam.
+* Elas informam [o quanto os dados variam]{.hl}.
 
 
 ### Amplitude
@@ -418,9 +420,9 @@ embed_yt('C96MOP4YlaY')
     IQR(idades)
     ```
 
-* Ou seja, os $50\%$ centrais dos alunos têm idade entre $20$ e $23$ anos, um IQR de $3$. 
+* Ou seja, [os $50\%$ centrais dos alunos têm idade entre $20$ e $23$ anos]{.hl}, um IQR de $3$. 
 
-* É uma variação pequena, mais fiel à realidade do que a amplitude, que é alta por causa do velhinho.
+* É uma variação pequena, porém mais fiel à realidade do que a amplitude, que é alta por causa do velhinho.
 
 * Quanto maior o IQR, mais espalhados estão os dados.
 
@@ -474,7 +476,7 @@ embed_yt('C96MOP4YlaY')
     )
   ```
 
-* []{#desvio-medio-zero} Não foi uma boa idéia. [O desvio médio sempre é igual a zero]{.hl}.^[Você vai provar isto em um exercício.]
+* []{#desvio-medio-zero} Não foi uma boa idéia. [O desvio médio sempre é igual a zero]{.hl}.^[Você vai provar isto em um exercício.] (O R pode mostrar algum valor diferente de zero por causa da precisão limitada dos números de ponto flutuante.)
 
 * Como resolver isto? Elevando os desvios ao quadrado:
 
@@ -521,7 +523,7 @@ embed_yt('C96MOP4YlaY')
     )
   ```
 
-* Claro que o R tem funções para calcular isso:
+* Claro que o R tem funções para calcular isso: `var` e `sd` (*standard deviation*):
 
   ```{r var-dp-medidas}
   medidas %>% 
@@ -541,26 +543,26 @@ embed_yt('C96MOP4YlaY')
 * Para uma [população]{.hl} com $N$ elementos e média $\mu$, a [variância]{.hl} é
 
   $$
-  \sigma^2 = \frac{\sum (x - \mu)^2}{N}
+  \sigma^2 = \frac{\sum_{i=1}^N (x_i - \mu)^2}{N}
   $$
 
   e o [desvio-padrão]{.hl} é
 
   $$
-  \sigma = \sqrt{\frac{\sum (x - \mu)^2}{N}}
+  \sigma = \sqrt{\frac{\sum_{i=1}^N (x_i - \mu)^2}{N}}
   $$
 
 
 * Para uma [amostra]{.hl} com $n$ elementos e média $\bar x$, a [variância]{.hl} é
 
   $$
-  s^2 = \frac{\sum (x - \bar x)^2}{n-1}
+  s^2 = \frac{\sum_{i=1}^n (x_i - \bar x)^2}{n-1}
   $$
 
   e o [desvio-padrão]{.hl} é
 
   $$
-  s = \sqrt{\frac{\sum (x - \bar x)^2}{n -1}}
+  s = \sqrt{\frac{\sum_{i=1}^n (x_i - \bar x)^2}{n -1}}
   $$
 
 * Nós calculamos a versão [populacional]{.hl} destas medidas.
@@ -600,14 +602,14 @@ Nada é por acaso, nem mesmo em Estatística.
 
   Manipule apenas as variáveis $x_i$. [Não use exemplos, pois eles não provam o enunciado geral.]{.hl}
   
-  Dica: basta lembrar que $\bar x = \frac{\sum_{i = 1}^n x_i}{n}$.
+  **Dica:** lembre que $\displaystyle \bar x = \frac{\sum_{i = 1}^n x_i}{n}$.
 
 
 ## Coeficiente de variação
 
 * Em um conjunto de dados, o desvio-padrão é uma medida importante da variação dos dados.
 
-* Mas a unidade do desvio-padrão muda de um conjunto de dados para outro: alturas em metros, pesos em quilos etc.
+* Mas [a unidade do desvio-padrão muda de um conjunto de dados para outro]{.hl}: alturas em metros, pesos em quilos etc.
 
 * [Podemos eliminar as unidades expressando o desvio-padrão em termos da média]{.hl}.
 
@@ -628,7 +630,7 @@ Nada é por acaso, nem mesmo em Estatística.
     ```{r cv-altura}
     statip::cv(medidas$altura)
     ```
-  Em outras palavras, para as alturas, um desvio-padrão corresponde a $`r statip::cv(medidas$altura) * 100`\%$ da média.
+  Em outras palavras, [para as alturas, um desvio-padrão corresponde a $`r statip::cv(medidas$altura) * 100`\%$ da média]{.hl}.
   
 * Para os pesos:
 
@@ -642,7 +644,7 @@ Nada é por acaso, nem mesmo em Estatística.
     statip::cv(medidas$peso)
     ```
 
-  Em outras palavras, para os pesos, um desvio-padrão corresponde a $`r statip::cv(medidas$peso) * 100`\%$ da média.
+  Em outras palavras, [para os pesos, um desvio-padrão corresponde a $`r statip::cv(medidas$peso) * 100`\%$ da média]{.hl}.
 
 * Segundo estes valores, a variação dos pesos é cerca de $2$ vezes maior do que a variação das alturas.
 
@@ -775,7 +777,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 
   ```{r score-altura}
   medidas <- medidas %>% 
-    mutate(altura_padronizada = scale(altura))
+    mutate(altura_padronizada = scale(altura)[,1])
   
   medidas %>% 
     select(altura, altura_padronizada)
@@ -785,6 +787,8 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
   mean(medidas$altura_padronizada)
   sd(medidas$altura_padronizada)
   ```
+  
+* A função `scale` foi feita para receber e retornar [matrizes]{.hl}. Como estamos trabalhando com [vetores]{.hl}, usamos `scale(altura)[,1]` para tomar apenas a primeira (e única) coluna do resultado.
 
 
 ### Exercícios
@@ -804,58 +808,134 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 
 ## Teorema de Tchebychev
 
+* Grosso modo, [quanto mais alto o desvio-padrão, maior é a distância da média até os valores]{.hl}.
 
-::: {.rmdimportant}
+* Ou seja, [quanto menor o desvio-padrão, maior é a proporção de valores que estão próximos à média]{.hl}.
 
-Em *qualquer* distribuição, a proporção de dados dentro de $\pm k$ desvios-padrão ($k > 1$) da média é de, *no mínimo*
-$$
-1 - \frac{1}{k^2}
-$$
+* O teorema de Tchebychev quantifica esta idéia:
 
-:::
+  ::: {.rmdimportant}
+  
+  Em [*qualquer*]{.hl} distribuição, a proporção de valores [dentro de $\pm k$ desvios-padrão $(k > 1)$ da média]{.hl} é de, [*no mínimo*]{.hl}
+  $$
+  1 - \frac{1}{k^2}
+  $$
+  
+  :::
 
-### Exemplo {-}
 
-```{r msleep}
+### Exemplo
+
+```{r echo = FALSE}
 df <- msleep$sleep_total %>% 
   as_tibble()
 ```
 
-```{r msleep-hist}
-grafico <- df %>% 
-  ggplot(aes(x = value)) +
-    geom_histogram(breaks = 1:20) +
-    scale_x_continuous(breaks = 1:20) +
-    scale_y_continuous(breaks = seq(0, 10, 2))
+* Lembre-se do [conjunto de dados sobre os totais de horas de sono de diversos mamíferos](#mamiferos):
 
-grafico
-```
+  ```{r msleep-hist, echo = FALSE}
+  grafico <- df %>% 
+    ggplot(aes(x = value)) +
+      geom_histogram(breaks = 1:20) +
+      scale_x_continuous(breaks = 1:20) +
+      scale_y_continuous(breaks = seq(0, 10, 2)) +
+      labs(
+        title = 'Horas de sono por dia',
+        subtitle = 'para diversas espécies de mamíferos',
+        x = 'horas de sono',
+        y = 'espécies'
+      )
+  
+  grafico
+  ```
 
-```{r tchebyshev}
-media <- mean(df$value)
-dp <- sd(df$value)
+* Média e desvio-padrão:
 
-k <- 1.3
+  ```{r}
+  media <- mean(df$value)
+  media
+  dp <- sd(df$value)
+  dp
+  ```
 
-inicio <- media - k * dp
-fim <- media + k * dp
+* Qual a proporção de espécies que estão a $1{,}3$ ou menos desvios-padrão de distância da média?
 
-proporcao <- 1 - 1 / k^2
+  ```{r}
+  k <- 1.3
+  inicio <- media - k * dp
+  inicio
+  fim <- media + k * dp
+  fim
+  ```
 
-grafico +
-  geom_histogram(
-    data = df %>% 
-      filter(value >= inicio & value <= fim),
-    fill = 'red',
-    breaks = 1:20
-  ) +
-  labs(
-    title = paste('Exemplo do teorema de Tchebychev: k =', k),
-    subtitle = paste(
-      'Pelo menos', round(proporcao, 2), 'dos dados estão na área vermelha',
-      '\nmédia =', round(media, 2),
-      '\ndp =', round(dp, 2)
+* O teorema diz que no mínimo a seguinte proporção das espécies está dentro deste intervalo:
+
+  ```{r}
+  proporcao_teorema <- 1 - 1 / k^2
+  proporcao_teorema
+  ```
+
+* Graficamente:
+
+  ```{r echo = FALSE}
+  grafico +
+    geom_histogram(
+      data = df %>% 
+        filter(value >= inicio & value <= fim),
+      fill = 'red',
+      breaks = 1:20
+    ) +
+    labs(
+      title = paste('Exemplo do teorema de Tchebychev: k = ', k),
+      subtitle = paste0(
+        'Pelo menos ', 
+        round(proporcao_teorema, 2) * 100, 
+        '% dos dados estão na área vermelha',
+        '\nmédia = ', round(media, 2),
+        '\ndp = ', round(dp, 2)
+      )
     )
-  )
-```
+  ```
 
+* Vamos conferir:
+
+  ```{r}
+  total_especies <- df %>% nrow()
+  total_especies
+  ```
+  
+  ```{r}
+  especies_intervalo <- df %>% 
+    filter(value >= inicio & value <= fim) %>% 
+    nrow()
+  especies_intervalo
+  ```
+  
+  ```{r}
+  proporcao_real <- especies_intervalo / total_especies
+  proporcao_real
+  ```
+
+* Como o teorema usa apenas a média e o desvio-padrão, e [mais nenhuma informação sobre a distribuição dos valores]{.hl} --- forma, simetria etc. --- o que ele garante é, muitas vezes, mais fraco do que a realidade.
+
+* Neste exemplo, o teorema garantia [no mínimo]{.hl} $`r proporcao_teorema * 100`\%$ das espécies a $`r k`$ ou menos desvios-padrão de distância da média.
+
+* A proporção verdadeira é $`r proporcao_real * 100`\%$ das espécies.
+
+* O teorema está certo (claro), mas, sem mais informações sobre a distribuição dos dados, o teorema não pode ser mais preciso.
+
+
+### Exercícios
+
+* 
+
+
+Mudar para distribuição qquer. Perguntar por que não pode ser simétrica.
+
+According to the Environmental Protection Agency, chloroform, which in its gaseous form is suspected to be a cancer-causing agent, is present in small quantities in all the country’s 
+240.000
+ public water sources. If the mean and standard deviation of the amounts of chloroform present in water sources are 
+34
+ and 
+53
+ micrograms per liter (μg/L), respectively, explain why chloroform amounts do not have a normal distribution.

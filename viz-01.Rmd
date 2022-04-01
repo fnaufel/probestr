@@ -109,7 +109,7 @@ knitr::include_graphics('images/countries-1.png')
   * Facetas evitam que informações demais sejam apresentadas no mesmo lugar.
 
 
-## Conjunto de dados
+## Conjunto de dados { #mamiferos }
 
 * Nossos exemplos de gráficos vão usar dados sobre o sono de diversos mamíferos. 
 
