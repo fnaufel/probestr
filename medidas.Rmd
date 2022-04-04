@@ -925,17 +925,10 @@ df <- msleep$sleep_total %>%
 * O teorema está certo (claro), mas, sem mais informações sobre a distribuição dos dados, o teorema não pode ser mais preciso.
 
 
-### Exercícios
+### Exercício
 
-* 
+* Uma loja recebe uma média de $20$ clientes por dia, com desvio-padrão de $2$ clientes.
+
+* Em um ano ($365$ dias), em quantos dias, no mínimo, o número de clientes ficou entre $16$ e $24$, inclusive?
 
 
-Mudar para distribuição qquer. Perguntar por que não pode ser simétrica.
-
-According to the Environmental Protection Agency, chloroform, which in its gaseous form is suspected to be a cancer-causing agent, is present in small quantities in all the country’s 
-240.000
- public water sources. If the mean and standard deviation of the amounts of chloroform present in water sources are 
-34
- and 
-53
- micrograms per liter (μg/L), respectively, explain why chloroform amounts do not have a normal distribution.
