@@ -13,7 +13,9 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 ## Criando uma *tibble*
 
-* Cada coluna é um vetor:
+* Uma *tibble* é uma tabela retangular.
+
+* [Cada coluna é um vetor]{.hl}:
 
   ```{r}
   cores <- tibble(
@@ -24,7 +26,9 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   cores
   ```
 
-* A função `tribble` permite a entrada de forma mais natural. [Lembre-se de usar `~` antes dos nomes das colunas.]{.hl}
+* Isto é um pouco diferente da maneira como estamos acostumados a ver tabelas (como uma coleção de linhas, em vez de uma coleção de colunas).
+
+* A função `tribble` permite a entrada de forma mais natural, linha a linha. [Lembre-se de usar `~` antes dos nomes das colunas.]{.hl}
 
   ```{r}
   cores <- tribble(
@@ -38,7 +42,15 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   cores
   ```
 
-* Se uma coluna não puder ser armazenada em um vetor, a coluna será uma lista:
+  ::: {.rmdcaution latex=1}
+  
+  Mesmo que você crie uma *tibble* linha a linha, o R vai continuar tratando sua *tibble* como uma coleção de colunas.
+  
+  É importante lembrar disto para entender a forma como R manipula estas tabelas.
+  
+  :::
+
+* Se uma coluna não puder ser armazenada em um vetor, a coluna será uma lista (com vetores como elementos):
 
   ```{r}
   cores <- tibble(
@@ -62,11 +74,11 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 ## Operador de *pipe* (`%>%`)
 
-* O `tidyverse` inclui o pacote `magrittr`[^trocadilho], que contém este operador.
+* O `tidyverse` inclui o pacote `magrittr`, que contém o operador `%>%`, chamado *pipe*.[^trocadilho]
 
-[^trocadilho]: Por que o nome do pacote e o nome do operador (*pipe*) formam um trocadilho?
+[^trocadilho]: Por que o nome do pacote e o nome do operador formam um trocadilho?
 
-* A idéia é facilitar a leitura de [composições de comandos]{.hl}. O código
+* A idéia é facilitar a leitura de [composições de funções]{.hl}. O código
 
   ```{r eval=FALSE}
   y <- h(g(f(x)))
@@ -98,13 +110,20 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   y <- x %>% mean(na.rm = TRUE)
   ```
 
-* O *pipe* `EXP %>% f(...)` sempre insere o resultado da expressão `EXP` do lado esquerdo como o [primeiro argumento da função `f`]{.hl}.
+* O *pipe* `EXP %>% f(...)` sempre insere o resultado da expressão `EXP` como o [primeiro argumento da função `f`]{.hl}.
 
 * Se você precisar que o resultado da expressão `EXP` seja inserido em outra posição na lista de argumentos de `f`, use um ponto "`.`" para isso:
 
   ```{r eval=FALSE}
   x %>% consultar(df, .)
   ```
+  
+  equivale a
+
+  ```{r eval=FALSE}
+  consultar(df, x)
+  ```
+  
 
 ## Formato *tidy*
 
@@ -135,9 +154,9 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   cores
   ```
 
-* A maioria das funções do `tidyverse` exige que as *tibbles* estejam neste formato *tidy*.
+* [A maioria das funções do `tidyverse` exige que as *tibbles* estejam neste formato *tidy*.]{.hl}
 
-* Um exemplo mais complexo é o *dataset* `billboard`, com as seguintes colunas para cada música que estava no *top 100* da Billboard no ano de $2000$::
+* Um exemplo mais complexo é o *dataset* `billboard`, com as seguintes colunas (para cada música que estava no *top 100* da Billboard no ano de $2000$):
 
   * Nome do artista ou banda;
   
@@ -168,7 +187,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * [O que é uma observação]{.hl} neste conjunto de dados?
 
-  Uma música que esteve no *top* $100$ da *Billboard* durante o ano *2000*.
+  [A posição, em uma semana, de uma música]{.hl} que esteve no *top* $100$ da *Billboard* durante o ano *2000*.
   
 * [Quais são as variáveis]{.hl} que qualificam cada observação?
 
@@ -176,11 +195,11 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   
   * O título da música,
   
-  * A colocação da música no *top* $100$ da *Billboard* em cada uma das $76$ semanas depois que ela entrou na lista.
+  * A posiçao da música no *top* $100$ da *Billboard* em cada uma das $76$ semanas depois que ela entrou na lista.
   
 * Este último item é complexo, e o criador da *tibble* decidiu criar uma coluna por semana.
 
-* [Uma decisão ruim, pois existe informação embutida nos nomes das colunas.]{.hl} A coluna `wk68` corresponde à posição da música na semana $68$ após ela entrar na lista.
+* [Uma decisão ruim, pois existe informação embutida nos nomes das colunas.]{.hl} A coluna `wk68` corresponde à posição da música na semana $68$ após ela entrar na lista, [mas o número da semana só aparece no nome da coluna]{.hl}!
 
 * Isto [nunca]{.hl} deve acontecer. [A informação deve sempre estar nas células.]{.hl}
 
@@ -188,9 +207,9 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
   * `semana`, com o número da semana; perceba que esta informação vem dos nomes das colunas,
   
-  * `pos`, com a posição da música naquela semana. 
+  * `pos`, com a posição da música naquela semana; esta informação vem das células.
   
-* A *tibble*, que antes era larga, vai ser mais estreita e mais longa.
+* A *tibble*, que antes era larga, [vai ser mais estreita e mais longa]{.hl}.
 
 * A função `pivot_longer`, do pacote `tidyr`, vai fazer o trabalho --- inclusive extraindo os números das semanas dos nomes das colunas:
 
@@ -209,7 +228,25 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   bb_tidy
   ```
 
-* Existem linhas onde `pos` tem o valor `NA`. São resultado da organização original dos dados. No novo formato, não servem mais. Vamos eliminá-las.
+* O R só mostra, por *default*, as $1000$ primeiras linhas de uma *tibble*.
+
+* Na verdade, o número de linhas da tabela original era
+
+  ```{r}
+  bb %>% nrow()
+  ```
+
+* O número de linhas, depois de `pivot_longer`, ficou:
+
+  ```{r}
+  bb_tidy %>% nrow()
+  ```
+
+* Existem linhas onde `pos` tem o valor `NA`. São resultado da organização original dos dados, onde o `NA` indicava que a música não estava no *top* $100$ naquela semana.
+
+* No novo formato, a ausência da linha com aquele número de semana já basta para indicar isto. Então, vamos eliminar as linhas onde `pos` é `NA`.
+
+* A função `filter` [mantém]{.hl} as linhas que [satisfazem]{.hl} a condição dada; por isso, a condição é "`pos` não é `NA`":
 
   ```{r}
   bb_tidy <- bb_tidy %>% 
@@ -217,13 +254,26 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   
   bb_tidy
   ```
-  
+
+* O número de linhas ficou  
+
+  ```{r}
+  bb_tidy %>% nrow()
+  ```
+
+
+### Exercícios
+
+* Todas as semanas deste conjunto de dados são do ano $2000$?
+
+* Qual é o tipo do [primeiro]{.hl} argumento da função `filter()`?
+
 
 ## Manipulando os dados
 
 ### Criando novas colunas: `mutate`, `transmute`
 
-* O *data frame* `cars` tem dados (de $1920$!) sobre as distâncias de frenagem (em pés) de um carro viajando a diversas velocidades (em milhas por hora):
+* O *data frame*^[Considere *data frame* como sinônimo de *tibble*. Na verdade, *tibbles* formam um superconjunto de *data frames*: todo *data frame* é uma *tibble*, mas nem toda *tibble* é um *data frame*.] `cars` tem dados (de $1920$!) sobre as distâncias de frenagem (em pés) de um carro viajando a diversas velocidades (em milhas por hora):
 
   ```{r}
   cars
@@ -240,7 +290,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     )
   ```
 
-* Perceba que as colunas antigas continuam lá. Se quiser manter apenas as colunas novas, use `transmute`:
+* Perceba que as colunas antigas continuam lá. [Se quiser manter apenas as colunas novas, use `transmute`]{.hl}:
 
   ```{r}
   cars %>% 
@@ -273,7 +323,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     distinct()
   ```
 
-* Artistas e músicas:
+* Para ver artistas e músicas:
 
   ```{r}
   bb_tidy %>% 
@@ -281,14 +331,14 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     distinct()
   ```
 
-* Para especificar colunas a não mostrar:
+* Para especificar colunas [a não mostrar]{.hl}, use o sinal de menos "`-`":
 
   ```{r}
   bb_tidy %>% 
-    select(-entrou)
+    select(-c(entrou, semana, pos))
   ```
 
-* Para extrair uma coluna na forma de vetor (`unique` é uma função do R base, aplicável a vetores):
+* Para [extrair uma coluna na forma de vetor]{.hl} (`unique` é uma função do R base, aplicável a vetores):
 
   ```{r}
   bb_tidy %>% 
@@ -306,7 +356,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     filter(artista == 'Spears, Britney')
   ```
 
-* Apenas músicas que chegaram à posição $1$:
+* Apenas músicas que chegaram à posição $1$, sem mostrar a coluna `pos`:
 
   ```{r}
   bb_tidy %>% 
@@ -314,7 +364,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     select(-pos)
   ```
 
-* Apenas músicas que chegaram à posição $1$ em menos de $10$ semanas:
+* Apenas músicas que chegaram à posição $1$ em menos de $10$ semanas, mostrando apenas artista e música:
 
   ```{r}
   bb_tidy %>% 
@@ -341,7 +391,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     slice_tail(n = 4)
   ```
 
-* De acordo com a ordenação de uma coluna ou de uma função das colunas:
+* De acordo com a [ordenação de uma coluna]{.hl} ou [de uma função das colunas]{.hl}:
   
   ```{r}
   bb_tidy %>% 
@@ -413,6 +463,15 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     count(musica, artista, sort = TRUE)
   ```
 
+  De fato, há uma diferença de uma linha.
+  
+  
+#### Exercício
+
+* Ache o título da música que tem dois artistas diferentes. 
+
+  **Sugestão:** conte por música e artista primeiro, depois só por música.
+
 
 ### Agrupando linhas: `group_by` e `summarize`
 
@@ -434,9 +493,11 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     arrange(melhor)
   ```
 
-* Quando usamos `summarize`, o agrupamento mais interno é desfeito. Isto significa que o resultado acima ainda está agrupado por `artista`.
+* Quando usamos `summarize`, só o agrupamento [mais interno]{.hl} é desfeito. Isto significa que [o resultado acima ainda está agrupado por `artista`]{.hl}.
 
-* Quantas semanas cada artista ficou na posição $1$?
+* Quantas semanas cada artista ficou na posição $1$? 
+
+  A função `n()` é uma maneira conveniente de [obter o número de linhas de um grupo]{.hl} (ou, se não houver agrupamento, de toda a *tibble*); mas [`n()` só pode ser chamada em certos contextos]{.hl}, como `summarise()` ou `mutate()`.
 
   ```{r}
   bb_tidy %>% 
@@ -454,7 +515,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
     count(artista, sort = TRUE)
   ```
 
-* Uma pergunta diferente: quais são os artistas cujas músicas apareceram nos *top* $100$ mais tempo depois do lançamento da música?
+* Uma pergunta diferente: quais são os artistas cujas músicas apareceram no *top* $100$ mais tempo depois do lançamento da música?
 
   ```{r}
   bb_tidy %>% 
@@ -464,7 +525,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   ```
 
 
-* Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com `NA`; logo, [a média é sobre a quantidade de semanas em que a música esteve na lista]{.hl}.
+* Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com `NA`; logo, [a média vai ser sobre a quantidade de semanas em que a música esteve na lista]{.hl}.
 
   ```{r}
   media1 <- bb_tidy %>% 
@@ -475,7 +536,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   media1
   ```
 
-* E se quisermos a média sobre o número de semanas desde a entrada da música até a última semana em que a música apareceu na lista?
+* E se quisermos [a média sobre o número de semanas desde a entrada da música até a última semana]{.hl} em que a música apareceu na lista?
 
   ```{r}
   media2 <- bb_tidy %>% 
@@ -486,7 +547,81 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   media2
   ```
 
+  As primeiras linhas são iguais, mas os resultados são diferentes:
+
   ```{r}
   identical(media1, media2)
   ```
 
+## Exercícios
+
+1. Vamos trabalhar com um conjunto de dados sobre super-heróis.
+
+   Execute o seguinte comando para ler os dados para uma *tibble*:
+
+    ```{r messages=FALSE}
+    # read_csv('https://github.com/fnaufel/probestr/raw/master/data/CEO_Salary_2012.csv')
+    herois_info <- read_csv(
+      'data/heroes_information.csv',
+      na = c('', '-', 'NA')
+    ) %>% 
+      # Eliminar a primeira coluna (números de série)
+      select(-1) %>% 
+      # Renomear colunas restantes
+      rename(
+        nome = name,
+        sexo = Gender,
+        olhos = 'Eye color',
+        raça = Race,
+        cabelos = 'Hair color',
+        altura = Height,
+        editora = Publisher,
+        pele = 'Skin color',
+        lado = Alignment,
+        peso = Weight
+      )
+    ```
+
+1. Quantas editoras diferentes existem na *tibble*? Liste-as em ordem decrescente de quantidade de heróis.
+
+1. Na coluna `editora`, substitua 
+
+   * 'Marvel Comics' por 'Marvel', 
+   * 'DC Comics' por 'DC', e 
+   * todas as outras editoras pelo termo 'Outras'.
+   
+   **Dica:** use a função `case_when()`, do `tidyverse`.
+   
+1. Confira, novamente, a quantidade de valores diferentes na coluna `editora`.
+
+1. Existem heróis sem informação de editora. Quantos? Quais são?
+
+1. Altere novamente a coluna `editora`, colocando o valor 'Outras' para os heróis sem informação de editora. Use a função `if_else()` (com *underscore*, não a função `ifelse`).
+
+1. Confira, mais uma vez, a quantidade de valores diferentes na coluna `editora`.
+
+1. Existem heróis sem informação de sexo? Quantos? Para estes heróis, coloque o valor 'Desconhecido' na coluna `sexo`.
+
+1. Qual a altura mínima? Qual a altura máxima? Substitua as alturas negativas por `NA`.
+
+1. Qual o peso mínimo? Qual o peso máximo? Substitua os pesos negativos por `NA`.
+
+1. Qual é o peso médio de todos os heróis? Ignore os valores `NA`.
+
+1. Qual é a altura média de todos os heróis? Ignore os valores `NA`.
+
+1. Qual é a altura média dos heróis, por editora? Ignore os valores `NA`.
+
+1. Quais são os $3$ heróis mais altos de cada sexo?
+
+1. Quais são as $3$ cores de olhos mais comuns para cada sexo?
+
+1. Liste, por editora, as quantidades de heróis do bem, do mal, e neutros.
+
+1. Quantas raças diferentes existem?
+
+1. Qual a quantidade de raças diferentes de cada editora?
+
+1. **DESAFIO:** Liste as raças que só pertencem a uma única editora.
+
+   Existem várias maneiras de fazer isto. Experimente várias, até achar uma que seja mais elegante.
