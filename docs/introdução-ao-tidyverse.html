@@ -415,7 +415,7 @@
 </h3>
 <ul>
 <li><p>Todas as semanas deste conjunto de dados são do ano <span class="math inline">\(2000\)</span>?</p></li>
-<li><p>Qual é o tipo do <span class="hl">primeiro</span> argumento da função <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>?</p></li>
+<li><p>Qual é o tipo do <span class="hl">primeiro</span> argumento da função <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>?</p></li>
 </ul>
 </div>
 </div>
@@ -740,7 +740,7 @@
   <span class="fu">slice_sample</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Evans, Sara","2":"Born To Fly","3":"2000-10-21","4":"4","5":"57"},{"1":"Jean, Wyclef","2":"911","3":"2000-10-07","4":"6","5":"48"},{"1":"Jay-Z","2":"Big Pimpin'","3":"2000-04-22","4":"19","5":"41"},{"1":"Avant","2":"My First Love","3":"2000-11-04","4":"20","5":"79"},{"1":"N'Sync","2":"Bye Bye Bye","3":"2000-01-29","4":"13","5":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Shyne","2":"Bad Boyz","3":"2000-09-09","4":"6","5":"67"},{"1":"Iglesias, Enrique","2":"Rhythm Divine","3":"1999-12-04","4":"1","5":"90"},{"1":"Changing Faces","2":"That Other Woman","3":"2000-09-30","4":"3","5":"66"},{"1":"Williams, Robbie","2":"Angels","3":"1999-11-20","4":"19","5":"95"},{"1":"Gray, Macy","2":"I Try","3":"2000-02-19","4":"8","5":"12"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </li>
@@ -875,7 +875,7 @@
 <li><p>Quando usamos <code>summarize</code>, só o agrupamento <span class="hl">mais interno</span> é desfeito. Isto significa que <span class="hl">o resultado acima ainda está agrupado por <code>artista</code></span>.</p></li>
 <li>
 <p>Quantas semanas cada artista ficou na posição <span class="math inline">\(1\)</span>?</p>
-<p>A função <code>n()</code> é uma maneira conveniente de <span class="hl">obter o número de linhas de um grupo</span> (ou, se não houver agrupamento, de toda a <em>tibble</em>); mas <span class="hl"><code>n()</code> só pode ser chamada em certos contextos</span>, como <code>summarise()</code> ou <code>mutate()</code>.</p>
+<p>A função <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code> é uma maneira conveniente de <span class="hl">obter o número de linhas de um grupo</span> (ou, se não houver agrupamento, de toda a <em>tibble</em>); mas <span class="hl"><code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code> só pode ser chamada em certos contextos</span>, como <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> ou <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>.</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -957,17 +957,25 @@
 <ol style="list-style-type: decimal">
 <li>
 <p>Vamos trabalhar com um conjunto de dados sobre super-heróis.</p>
-<p>Execute o seguinte comando para ler os dados para uma <em>tibble</em>:</p>
+<p>Carregue o <code>tidyverse</code> com o comando</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># read_csv('https://github.com/fnaufel/probestr/raw/master/data/CEO_Salary_2012.csv')</span>
-<span class="va">herois_info</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span>
-  <span class="st">'data/heroes_information.csv'</span>,
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
+<p>Execute o seguinte comando para ler os dados para uma <em>tibble</em>:</p>
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">arquivo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
+  <span class="st">'https://github.com/fnaufel/'</span>,
+  <span class="st">'probestr/raw/master/data/'</span>,
+  <span class="st">'heroes_information.csv'</span>      
+<span class="op">)</span>
+
+<span class="va">herois_info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span>
+  <span class="va">arquivo</span>,
   na <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">''</span>, <span class="st">'-'</span>, <span class="st">'NA'</span><span class="op">)</span>
-<span class="op">)</span> <span class="op">%&gt;%</span> 
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># Eliminar a primeira coluna (números de série)</span>
-  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="co"># Renomear colunas restantes</span>
-  <span class="fu">rename</span><span class="op">(</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>
     nome <span class="op">=</span> <span class="va">name</span>,
     sexo <span class="op">=</span> <span class="va">Gender</span>,
     olhos <span class="op">=</span> <span class="st">'Eye color'</span>,
@@ -979,16 +987,9 @@
     lado <span class="op">=</span> <span class="va">Alignment</span>,
     peso <span class="op">=</span> <span class="va">Weight</span>
   <span class="op">)</span></code></pre></div>
-<pre><code>## New names:
-## Rows: 734 Columns: 11
-## ── Column specification
-## ────────────────────────────────────────────────────────── Delimiter: "," chr
-## (8): name, Gender, Eye color, Race, Hair color, Publisher, Skin color, Alignment
-## dbl (3): ...1, Height, Weight
-## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ Specify
-## the column types or set `show_col_types = FALSE` to quiet this message.
-## • `` -&gt; `...1`</code></pre>
 </li>
+<li><p>Quantas linhas têm a <em>tibble</em>?</p></li>
+<li><p>Existem heróis que aparecem em mais de uma linha?</p></li>
 <li><p>Quantas editoras diferentes existem na <em>tibble</em>? Liste-as em ordem decrescente de quantidade de heróis.</p></li>
 <li>
 <p>Na coluna <code>editora</code>, substitua</p>
@@ -997,11 +998,11 @@
 <li>‘DC Comics’ por ‘DC’, e</li>
 <li>todas as outras editoras pelo termo ‘Outras’.</li>
 </ul>
-<p><strong>Dica:</strong> use a função <code>case_when()</code>, do <code>tidyverse</code>.</p>
+<p><strong>Dica:</strong> use a função <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>, do <code>tidyverse</code>.</p>
 </li>
 <li><p>Confira, novamente, a quantidade de valores diferentes na coluna <code>editora</code>.</p></li>
 <li><p>Existem heróis sem informação de editora. Quantos? Quais são?</p></li>
-<li><p>Altere novamente a coluna <code>editora</code>, colocando o valor ‘Outras’ para os heróis sem informação de editora. Use a função <code>if_else()</code> (com <em>underscore</em>, não a função <code>ifelse</code>).</p></li>
+<li><p>Altere novamente a coluna <code>editora</code>, colocando o valor ‘Outras’ para os heróis sem informação de editora. Use a função <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else()</a></code> (com <em>underscore</em>, não a função <code>ifelse</code>).</p></li>
 <li><p>Confira, mais uma vez, a quantidade de valores diferentes na coluna <code>editora</code>.</p></li>
 <li><p>Existem heróis sem informação de sexo? Quantos? Para estes heróis, coloque o valor ‘Desconhecido’ na coluna <code>sexo</code>.</p></li>
 <li><p>Qual a altura mínima? Qual a altura máxima? Substitua as alturas negativas por <code>NA</code>.</p></li>

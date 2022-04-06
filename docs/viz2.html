@@ -86,8 +86,8 @@
 <li>
 <p>Vamos continuar a trabalhar com os dados sobre as horas de sono de alguns mamíferos:</p>
 <div class="sourceCode" id="cb130"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">vore</span>, <span class="va">order</span>, <span class="va">sleep_total</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">vore</span>, <span class="va">order</span>, <span class="va">sleep_total</span><span class="op">)</span>
 
 <span class="va">sono</span></code></pre></div>
 <div data-pagedtable="false">
@@ -107,8 +107,8 @@
 <li>
 <p>Se tomarmos as quantidades de horas de sono de todos os animais do conjunto de dados e <span class="hl">classificarmos estas quantidades em ordem crescente</span>, vamos ter:</p>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">horas</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu">pull</span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">horas</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">horas</span></code></pre></div>
@@ -161,7 +161,7 @@
 <li>
 <p>Em R, a <span class="hl">função <code>quantile</code></span> generaliza esta idéia: dado um número <span class="math inline">\(q\)</span> entre <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>, <span class="hl">o quantil (com “N”) <span class="math inline">\(q\)</span> é o elemento que está na posição que corresponde à fração <span class="math inline">\(q\)</span> da fila ordenada.</span></p>
 <div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">horas</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">horas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##   25%   50%   75% 
 ##  7,85 10,10 13,75</code></pre>
 </li>
@@ -225,7 +225,7 @@
 <p>Qual fração dos elementos está <span class="hl">entre o primeiro e o terceiro quartis?</span></p>
 <div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span>
-  <span class="va">horas</span><span class="op">[</span><span class="fu">between</span><span class="op">(</span><span class="va">horas</span>, <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
+  <span class="va">horas</span><span class="op">[</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/between.html">between</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">horas</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>
 <span class="op">)</span> <span class="op">/</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span>
   <span class="va">horas</span>
@@ -282,8 +282,8 @@
 <li>
 <p>Outro exemplo: vamos tomar apenas os mamíferos onívoros:</p>
 <div class="sourceCode" id="cb167"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">onivoros</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">vore</span> <span class="op">==</span> <span class="st">'omni'</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">onivoros</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">vore</span> <span class="op">==</span> <span class="st">'omni'</span><span class="op">)</span>
 
 <span class="va">onivoros</span></code></pre></div>
 <div data-pagedtable="false">
@@ -295,8 +295,8 @@
 <li>
 <p>Vamos extrair o vetor de horas de sono:</p>
 <div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">horas</span> <span class="op">&lt;-</span> <span class="va">onivoros</span> <span class="op">%&gt;%</span> 
-  <span class="fu">pull</span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">horas</span> <span class="op">&lt;-</span> <span class="va">onivoros</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">sleep_total</span><span class="op">)</span>
 
 <span class="va">horas</span></code></pre></div>
 <pre><code>##  [1] 17,0 14,9 10,0 10,3  8,3  9,1 18,0 10,1 10,9  9,8  8,0 10,1  9,7  9,4 11,0  8,7
@@ -305,7 +305,7 @@
 <li>
 <p>Vamos calcular o primeiro e terceiro quartis:</p>
 <div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">quartis</span> <span class="op">&lt;-</span> <span class="va">horas</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">quartis</span> <span class="op">&lt;-</span> <span class="va">horas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.75</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">quartis</span></code></pre></div>
@@ -329,8 +329,8 @@
 <li>
 <p>Existem <em>outliers</em> inferiores?</p>
 <div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">onivoros</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sleep_total</span> <span class="op">&lt;</span> <span class="va">limites</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">onivoros</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sleep_total</span> <span class="op">&lt;</span> <span class="va">limites</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["vore"],"name":[2],"type":["chr"],"align":["left"]},{"label":["order"],"name":[3],"type":["chr"],"align":["left"]},{"label":["sleep_total"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -341,8 +341,8 @@
 <li>
 <p>Existem <em>outliers</em> superiores?</p>
 <div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">onivoros</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">sleep_total</span> <span class="op">&gt;</span> <span class="va">limites</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">onivoros</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sleep_total</span> <span class="op">&gt;</span> <span class="va">limites</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["vore"],"name":[2],"type":["chr"],"align":["left"]},{"label":["order"],"name":[3],"type":["chr"],"align":["left"]},{"label":["sleep_total"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Owl monkey","2":"omni","3":"Primates","4":"17,0"},{"1":"Greater short-tailed shrew","2":"omni","3":"Soricomorpha","4":"14,9"},{"1":"North American Opossum","2":"omni","3":"Didelphimorphia","4":"18,0"},{"1":"Tenrec","2":"omni","3":"Afrosoricida","4":"15,6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -361,12 +361,12 @@
 <li>
 <p>No <code>ggplot2</code>, <span class="hl">a geometria <code>geom_boxplot</code> constrói <em>boxplots</em>:</span></p>
 <div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-115-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-116-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>A <span class="hl">caixa</span> vai do valor do <span class="hl">primeiro quartil</span> (embaixo) até o <span class="hl">terceiro quartil</span> (em cima).</p></li>
 <li><p>A <span class="hl">linha horizontal dentro da caixa</span> representa o valor da <span class="hl">mediana</span>.</p></li>
@@ -375,11 +375,11 @@
 <li>
 <p><span id="onivoros"></span> Podemos usar a posição <span class="math inline">\(x\)</span> para desenhar vários <em>boxplots</em>, um para cada dieta:</p>
 <div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">vore</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-116-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-117-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>No <em>boxplot</em> de onívoros, <span class="hl">os <em>outliers</em> aparecem como pontos isolados,</span> acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).</p></li>
 <li><p><em>Boxplots</em> lado a lado são úteis para compararmos grupos diferentes de dados.</p></li>
@@ -393,7 +393,7 @@
 <li><p>As médias (que podem estar próximas ou distantes das medianas).</p></li>
 </ul>
 <div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">vore</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">'gray'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -415,7 +415,7 @@
       x <span class="op">=</span> <span class="st">'dieta'</span>,
       y <span class="op">=</span> <span class="st">'sono total\n(em horas)'</span>
     <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-117-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p><span class="hl">Quando a caixa é longa,</span> o IQR é grande, e <span class="hl">os valores estão muito espalhados;</span> é o caso dos herbívoros e insetívoros.</p></li>
 <li><p><span class="hl">Quando a caixa é curta,</span> o IQR é pequeno, e <span class="hl">os valores estão pouco espalhados</span>; é o caso dos onívoros. Como o IQR é pequeno, os <span class="math inline">\(4\)</span> mamíferos com mais de <span class="math inline">\(14\)</span> horas de sono são <em>outliers</em>.</p></li>
@@ -466,9 +466,9 @@
 <li>
 <p>O <em>array</em> contém apenas os totais de cada classe. Vamos usar a função <code>uncount</code> para gerar uma linha para cada aluno:</p>
 <div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">uncount</span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">df_orig</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/uncount.html">uncount</a></span><span class="op">(</span><span class="va">Freq</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span>
 
 <span class="va">df_orig</span></code></pre></div>
 <div data-pagedtable="false">
@@ -500,8 +500,8 @@
   <span class="st">'Female'</span> <span class="op">=</span> <span class="st">'mulher'</span>
 <span class="op">)</span>
 
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df_orig</span> <span class="op">%&gt;%</span> 
-  <span class="fu">transmute</span><span class="op">(</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df_orig</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>
     cabelos <span class="op">=</span> <span class="va">cabelo</span><span class="op">[</span><span class="va">Hair</span><span class="op">]</span>,
     olhos <span class="op">=</span> <span class="va">olhos</span><span class="op">[</span><span class="va">Eye</span><span class="op">]</span>,
     sexo <span class="op">=</span> <span class="va">sexo</span><span class="op">[</span><span class="va">Sex</span><span class="op">]</span>
@@ -510,7 +510,7 @@
 <li>
 <p>Um sumário:</p>
 <div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table table-sm">
 <colgroup>
 <col width="14%">
@@ -582,11 +582,11 @@
 <li>
 <p><span class="hl">Usamos <code>geom_bar</code> para gerar um gráfico de barras</span> de cores de cabelo:</p>
 <div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cabelos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="100%" style="display: block; margin: auto;"></div>
 <div class="rmdimportant">
 <p><strong>Gráfico de barras <span class="math inline">\(\times\)</span> histograma:</strong></p>
 <ul>
@@ -616,21 +616,8 @@
 <li>
 <p>A <span class="hl">função <code>fct_rev</code></span>, também do pacote <code>forcats</code>, <span class="hl">inverte a ordenação.</span></p>
 <div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
-      x <span class="op">=</span> <span class="st">'cabelos'</span>,
-      y <span class="op">=</span> <span class="cn">NULL</span>
-    <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="100%" style="display: block; margin: auto;"></div>
-</li>
-<li><p>A posição <span class="math inline">\(x\)</span> e a altura de cada barra são estéticas: <span class="hl">a posição <span class="math inline">\(x\)</span> representa a cor dos cabelos</span>, e <span class="hl">a altura representa a frequência daquela cor</span>.</p></li>
-<li>
-<p>Vamos acrescentar mais uma estética: <span class="hl">a cor de preenchimento vai representar o sexo</span>.</p>
-<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="st">'cabelos'</span>,
@@ -638,13 +625,13 @@
     <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-125-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
+<li><p>A posição <span class="math inline">\(x\)</span> e a altura de cada barra são estéticas: <span class="hl">a posição <span class="math inline">\(x\)</span> representa a cor dos cabelos</span>, e <span class="hl">a altura representa a frequência daquela cor</span>.</p></li>
 <li>
-<p>Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (<code>scale_fill_discrete</code>):</p>
-<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<p>Vamos acrescentar mais uma estética: <span class="hl">a cor de preenchimento vai representar o sexo</span>.</p>
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="st">'cabelos'</span>,
       y <span class="op">=</span> <span class="cn">NULL</span>
@@ -652,10 +639,23 @@
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-126-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
+<p>Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (<code>scale_fill_discrete</code>):</p>
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
 <p><span class="hl">Podemos fazer um gráfico de barras horizontais com <code>coord_flip</code>.</span> Isto geralmente é útil quando os rótulos das barras são longos:</p>
 <div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
@@ -663,44 +663,29 @@
       y <span class="op">=</span> <span class="cn">NULL</span>
     <span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-128-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?</p></li>
 <li><p>Se posicionarmos as barras lado a lado, fica mais fácil responder.</p></li>
 <li>
 <p>Usamos o argumento <code>position = 'dodge'</code> de <code>geom_bar</code>. “<em>Dodge</em>” significa “esquivar-se”, em inglês.</p>
 <div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="st">'cabelos'</span>,
       y <span class="op">=</span> <span class="cn">NULL</span>
     <span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'blue'</span>, <span class="st">'red'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-128-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-129-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:</p>
 <div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>
-      type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span>
-    <span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
-      x <span class="op">=</span> <span class="st">'cabelos'</span>,
-      y <span class="op">=</span> <span class="cn">NULL</span>
-    <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-129-1.png" width="100%" style="display: block; margin: auto;"></div>
-</li>
-<li>
-<p>Ou, com barras lado a lado:</p>
-<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>
       type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span>
     <span class="op">)</span> <span class="op">+</span>
@@ -709,6 +694,21 @@
       y <span class="op">=</span> <span class="cn">NULL</span>
     <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-130-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Ou, com barras lado a lado:</p>
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>
+      type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span>
+    <span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      x <span class="op">=</span> <span class="st">'cabelos'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>
+    <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-131-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Observações e perguntas:</p>
@@ -720,8 +720,8 @@
 <li>
 <p>Para incluir o sexo, podemos <span class="hl">facetar</span> o gráfico. Usando <code>facet_wrap</code><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;O nome da variável segundo a qual facetar deve aparecer depois de um &lt;code&gt;~&lt;/code&gt;.&lt;/p&gt;"><sup>3</sup></a>, geramos dois subgráficos lado a lado:</p>
 <div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">cabelos</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="va">olhos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'#908050'</span>, <span class="st">'blue'</span>, <span class="st">'brown'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">sexo</span><span class="op">)</span> <span class="op">+</span>
@@ -730,7 +730,7 @@
       y <span class="op">=</span> <span class="cn">NULL</span>,
       x <span class="op">=</span> <span class="st">'cabelos'</span>
     <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-131-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-132-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 </ul>
 <ul>
@@ -738,8 +738,8 @@
 <li>
 <p>Quando facetamos por cor de cabelos, também podemos observar as mesmas diferenças entre homens e mulheres:</p>
 <div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">olhos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_inorder.html">fct_infreq</a></span><span class="op">(</span><span class="va">olhos</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">'dodge'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">cabelos</span>, labeller <span class="op">=</span> <span class="va">label_both</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html">scale_fill_discrete</a></span><span class="op">(</span>type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'brown'</span>, <span class="st">'blue'</span>, <span class="st">'#908050'</span>, <span class="st">'green'</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -749,7 +749,7 @@
       fill <span class="op">=</span> <span class="st">'olhos'</span>,
       title <span class="op">=</span> <span class="st">'Cor dos olhos e sexo por cor dos cabelos'</span>
     <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-132-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-133-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 </ul>
 </div>
@@ -763,8 +763,8 @@
 <li>
 <p>Vamos usar <code>count</code> para criar um <em>data frame</em> assim:</p>
 <div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_tot</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu">count</span><span class="op">(</span><span class="va">sexo</span>, <span class="va">cabelos</span>, <span class="va">olhos</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">df_tot</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">cabelos</span>, <span class="va">olhos</span><span class="op">)</span>
 
 <span class="va">df_tot</span></code></pre></div>
 <div data-pagedtable="false">
@@ -777,26 +777,26 @@
 <li>
 <p>Com este <em>data frame</em>, podemos gerar todos os gráficos anteriores usando <span class="hl"><code>geom_col</code> no lugar de <code>geom_bar</code></span>. Por exemplo:</p>
 <div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_tot</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">df_tot</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cabelos</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
       y <span class="op">=</span> <span class="cn">NULL</span>
     <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-134-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Com <code>geom_col</code>, <span class="hl">precisamos passar a estética <span class="math inline">\(y\)</span></span> (no nosso exemplo, a variável <code>n</code>, que contém as frequências).</p></li>
 <li>
 <p>Para ordenar as barras, usamos a função <code>fct_reorder</code>, que ordena os níveis de um fator (<code>cabelos</code>) de acordo com o resultado de uma função (<code>sum</code>) aplicada sobre os valores de outra variável (<code>n</code>):</p>
 <div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df_tot</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">cabelos</span>, <span class="va">n</span>, <span class="va">sum</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+<code class="sourceCode R"><span class="va">df_tot</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">cabelos</span>, <span class="va">n</span>, <span class="va">sum</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="st">'cabelos'</span>,
       y <span class="op">=</span> <span class="cn">NULL</span>
     <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 </ul>
 </div>
@@ -828,9 +828,9 @@
 <li>
 <p>Vamos transformar esta matriz em uma <em>tibble</em>:</p>
 <div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fones</span> <span class="op">&lt;-</span> <span class="va">WorldPhones</span> <span class="op">%&gt;%</span> 
-  <span class="fu">as_tibble</span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">'Ano'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>Ano <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Ano</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">fones</span> <span class="op">&lt;-</span> <span class="va">WorldPhones</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span>rownames <span class="op">=</span> <span class="st">'Ano'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>Ano <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">Ano</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">fones</span></code></pre></div>
 <div data-pagedtable="false">
@@ -850,8 +850,8 @@
 <li>
 <p>Usamos a função <code>pivot_longer</code> para mudar o formato da <em>tibble</em>:</p>
 <div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">&lt;-</span> <span class="va">fones</span> <span class="op">%&gt;%</span> 
-  <span class="fu">pivot_longer</span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">&lt;-</span> <span class="va">fones</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>
     cols <span class="op">=</span> <span class="op">-</span><span class="va">Ano</span>,
     names_to <span class="op">=</span> <span class="st">'Região'</span>,
     values_to <span class="op">=</span> <span class="st">'n'</span>
@@ -875,21 +875,21 @@
 <li>
 <p><span class="hl">A geometria <code>geom_line</code> gera gráficos de linha.</span> Perceba como geramos uma linha por região:</p>
 <div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Ano</span>, y <span class="op">=</span> <span class="va">n</span>, color <span class="op">=</span> <span class="va">Região</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1951</span><span class="op">:</span><span class="fl">1961</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-139-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-140-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Embora a legenda associe uma cor a cada região, <span class="hl">a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade</span>:</p>
 <div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
         x <span class="op">=</span> <span class="va">Ano</span>, 
         y <span class="op">=</span> <span class="va">n</span>, 
-        color <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_reorder</span><span class="op">(</span><span class="va">Região</span>, <span class="va">n</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span>
+        color <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">Região</span>, <span class="va">n</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span>
       <span class="op">)</span>
   <span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -900,24 +900,24 @@
       x <span class="op">=</span> <span class="cn">NULL</span>,
       title <span class="op">=</span> <span class="st">'Quantidade de aparelhos de telefone por ano, por região'</span>
     <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-140-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:</p>
 <div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fones_long</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Região</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'S.Amer'</span>, <span class="st">'Oceania'</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">fones_long</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Região</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'S.Amer'</span>, <span class="st">'Oceania'</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="va">Ano</span>, 
       y <span class="op">=</span> <span class="va">n</span>, 
-      color <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_reorder</span><span class="op">(</span><span class="va">Região</span>, <span class="va">n</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span>
+      color <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html">fct_reorder</a></span><span class="op">(</span><span class="va">Região</span>, <span class="va">n</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span>
     <span class="op">)</span>
   <span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1951</span><span class="op">:</span><span class="fl">1961</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, color <span class="op">=</span> <span class="st">'Região'</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-141-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-142-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Estamos tratando estes dados como simples números, mas, na verdade, <span class="hl">este conjunto de dados é uma série temporal (<em>time series</em>)</span>.</p></li>
 <li><p>R tem todo um conjunto de funções para tratar séries temporais, calcular tendências, achar padrões cíclicos, fazer estimativas, e gerar gráficos específicos, entre outras coisas.</p></li>

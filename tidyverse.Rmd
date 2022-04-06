@@ -557,12 +557,23 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 1. Vamos trabalhar com um conjunto de dados sobre super-heróis.
 
+   Carregue o `tidyverse` com o comando
+
+    ```{r eval=FALSE}
+    library(tidyverse)
+    ```
+   
    Execute o seguinte comando para ler os dados para uma *tibble*:
 
-    ```{r messages=FALSE}
-    # read_csv('https://github.com/fnaufel/probestr/raw/master/data/CEO_Salary_2012.csv')
+    ```{r message=FALSE}
+    arquivo <- paste0(
+      'https://github.com/fnaufel/',
+      'probestr/raw/master/data/',
+      'heroes_information.csv'      
+    )
+    
     herois_info <- read_csv(
-      'data/heroes_information.csv',
+      arquivo,
       na = c('', '-', 'NA')
     ) %>% 
       # Eliminar a primeira coluna (números de série)
@@ -581,6 +592,10 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
         peso = Weight
       )
     ```
+
+1. Quantas linhas têm a *tibble*?
+
+1. Existem heróis que aparecem em mais de uma linha?
 
 1. Quantas editoras diferentes existem na *tibble*? Liste-as em ordem decrescente de quantidade de heróis.
 

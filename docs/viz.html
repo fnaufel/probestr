@@ -243,7 +243,7 @@
 <li>
 <p>Podemos usar <code>glimpse</code>, uma função do <code>tidyverse</code>:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">glimpse</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 <pre><code>## Rows: 83
 ## Columns: 11
 ## $ name         &lt;chr&gt; "Cheetah", "Owl monkey", "Mountain beaver", "Greater short-tai…
@@ -271,12 +271,12 @@
 <li>
 <p>Para examinar o <em>data frame</em> interativamente:</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">view</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://tibble.tidyverse.org/reference/view.html">view</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>Podemos produzir um sumário dos dados usando o pacote <em>summarytools</em> (que já foi carregado neste documento):</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table table-sm">
 <colgroup>
 <col width="14%">
@@ -504,9 +504,9 @@ IQE (CV) : 41,6 (4,7)</td>
 <li>
 <p>Mas… a coluna que mostra a dieta (<code>vore</code>) tem só 7 <code>NA</code>. Quais são?</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">vore</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="va">name</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">vore</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Vesper mouse"},{"1":"Desert hedgehog"},{"1":"Deer mouse"},{"1":"Phalanger"},{"1":"Rock hyrax"},{"1":"Mole rat"},{"1":"Musk shrew"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -517,10 +517,10 @@ IQE (CV) : 41,6 (4,7)</td>
 <li>
 <p>Também… a coluna <code>bodywt</code> tem 0 como valor mínimo. Como assim?</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">bodywt</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">bodywt</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">bodywt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">bodywt</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["bodywt"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Lesser short-tailed shrew","2":"0,005"},{"1":"Little brown bat","2":"0,010"},{"1":"Greater short-tailed shrew","2":"0,019"},{"1":"Deer mouse","2":"0,021"},{"1":"House mouse","2":"0,022"},{"1":"Big brown bat","2":"0,023"},{"1":"Northern grasshopper mouse","2":"0,028"},{"1":"Vole","2":"0,035"},{"1":"African striped mouse","2":"0,044"},{"1":"Vesper mouse","2":"0,045"},{"1":"Musk shrew","2":"0,048"},{"1":"Mongolian gerbil","2":"0,053"},{"1":"Star-nosed mole","2":"0,060"},{"1":"Western american chipmunk","2":"0,071"},{"1":"Eastern american mole","2":"0,075"},{"1":"Thirteen-lined ground squirrel","2":"0,101"},{"1":"Tree shrew","2":"0,104"},{"1":"Eastern american chipmunk","2":"0,112"},{"1":"Golden hamster","2":"0,120"},{"1":"Mole rat","2":"0,122"},{"1":"Cotton rat","2":"0,148"},{"1":"Galago","2":"0,200"},{"1":"Golden-mantled ground squirrel","2":"0,205"},{"1":"Degu","2":"0,210"},{"1":"Round-tailed muskrat","2":"0,266"},{"1":"Laboratory rat","2":"0,320"},{"1":"Thick-tailed opposum","2":"0,370"},{"1":"Chinchilla","2":"0,420"},{"1":"Owl monkey","2":"0,480"},{"1":"Desert hedgehog","2":"0,550"},{"1":"Guinea pig","2":"0,728"},{"1":"Squirrel monkey","2":"0,743"},{"1":"European hedgehog","2":"0,770"},{"1":"Tenrec","2":"0,900"},{"1":"Arctic ground squirrel","2":"0,920"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -531,8 +531,8 @@ IQE (CV) : 41,6 (4,7)</td>
 <li>
 <p>Vamos criar uma <em>tibble</em> nova, só com as colunas que nos interessam:</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>
     <span class="va">name</span>, <span class="va">order</span>, <span class="va">genus</span>, <span class="va">vore</span>, <span class="va">bodywt</span>, 
     <span class="va">brainwt</span>, <span class="va">awake</span>, <span class="va">sleep_total</span>
   <span class="op">)</span></code></pre></div>
@@ -540,7 +540,7 @@ IQE (CV) : 41,6 (4,7)</td>
 <li>
 <p>Vamos ver o sumário:</p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">dfSummary</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table style="width:100%;" class="table table-sm">
 <colgroup>
 <col width="14%">
@@ -731,7 +731,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Como as variáveis <code>sleep_total</code> e <code>bodywt</code> estão relacionadas?</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/sono-peso-plot-1-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
@@ -739,7 +739,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>O problema foi que só especificamos o mapeamento estético (com <code>aes</code>, que são as iniciais de <em>aesthetics</em>). <span class="hl">Faltou a geometria.</span></p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/sono-peso-plot-2-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -750,10 +750,10 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Que animais são estes?</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&gt;</span> <span class="fl">250</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span><span class="va">name</span>, <span class="va">bodywt</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">bodywt</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&gt;</span> <span class="fl">250</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">bodywt</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">bodywt</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["bodywt"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Horse","2":"521,000"},{"1":"Cow","2":"600,000"},{"1":"Pilot whale","2":"800,000"},{"1":"Giraffe","2":"899,995"},{"1":"Asian elephant","2":"2547,000"},{"1":"African elephant","2":"6654,000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -765,7 +765,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>A primeira delas é <span class="hl">alterando a opacidade dos pontos</span>. Isto é um ajuste na geometria apenas, pois a opacidade, aqui, não representa informação nenhuma.</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.2</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/sono-peso-plot-alfa-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -773,7 +773,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Outra maneira é usar <code>geom_jitter</code> em vez de <code>geom_point</code>. “<em>Jitter</em>” significa “tremer”. As posições dos pontos são ligeiramente perturbadas, para evitar colisões. Perdemos precisão, mas a visualização fica melhor.</p>
 <div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/sono-peso-plot-jitter-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -781,7 +781,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Vamos mudar os limites do gráfico para nos concentrarmos nos animais menos pesados. Observe que <span class="hl">isto é um ajuste na escala</span>.</p>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">200</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -804,8 +804,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Em vez de mudar a escala do gráfico, vamos filtrar as linhas do <em>data frame</em>:</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/sono-peso-plot-pequenos-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -820,8 +820,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Com a estética <code>color</code>. Observe como a legenda aparece automaticamente.</p>
 <div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span>, color <span class="op">=</span> <span class="va">vore</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/plot-sono-peso-dieta-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -836,8 +836,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Compare com o código anterior.</p>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span>, color <span class="op">=</span> <span class="va">vore</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/plot-sono-peso-dieta-geom-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -855,8 +855,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Compare o último <em>chunk</em> acima com:</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/plot-sono-peso-cor-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -864,8 +864,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Se for uma estética, precisa estar <span class="hl">associada a uma variável</span>, não a um valor fixo. Um erro comum seria fazer:</p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">sleep_total</span>, color <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/plot-sono-peso-cor-erro-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -880,7 +880,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Peso cerebral versus peso corporal:</p>
 <div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 27 rows containing missing values (geom_point).</code></pre>
@@ -889,18 +889,18 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>A mensagem de aviso (<em>warning</em>) diz que há <span class="math inline">\(27\)</span> valores faltantes (<code>NA</code>) em <code>bodywt</code> ou <code>brainwt</code>. De fato:</p>
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">bodywt</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">count</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">bodywt</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"0"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">count</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["n"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"27"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -910,8 +910,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Vamos restringir aos animais mais leves e mudar a opacidade:</p>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">bodywt</span>, y <span class="op">=</span> <span class="va">brainwt</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 18 rows containing missing values (geom_point).</code></pre>
@@ -920,8 +920,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Vamos incluir horas de sono e dieta. Observe as estéticas usadas.</p>
 <div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="va">bodywt</span>, 
@@ -937,8 +937,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Vamos mudar a escala dos tamanhos e incluir rótulos:</p>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">grafico</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">grafico</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">bodywt</span> <span class="op">&lt;</span> <span class="va">limite</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
       x <span class="op">=</span> <span class="va">bodywt</span>, 
@@ -981,7 +981,7 @@ IQE (CV) : 5,9 (0,4)</td>
 
 <span class="va">grafico2</span></code></pre></div>
 <pre><code>## Warning: Removed 18 rows containing missing values (geom_point).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Observe como usamos o gráfico já salvo na variável <code>grafico</code> e simplesmente acrescentamos a nova escala. Este tipo de “montagem” de gráficos <code>ggplot2</code> é bem conveniente, para evitar repetição de código.</p></li>
 <li>
@@ -993,7 +993,7 @@ IQE (CV) : 5,9 (0,4)</td>
 
 <span class="va">grafico3</span></code></pre></div>
 <pre><code>## Warning: Removed 18 rows containing missing values (geom_point).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-75-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:</p>
@@ -1014,7 +1014,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <pre><code>## `geom_smooth()` using formula 'y ~ x'</code></pre>
 <pre><code>## Warning: Removed 18 rows containing non-finite values (stat_smooth).</code></pre>
 <pre><code>## Warning: Removed 18 rows containing missing values (geom_point).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-76-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-77-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Todos os carnívoros têm peso corporal maior que <span class="math inline">\(1\)</span>kg e peso cerebral maior ou igual a <span class="math inline">\(10\)</span>g.</p></li>
 <li><p>Só um carnívoro dorme <span class="math inline">\(8\)</span> horas ou menos. Qual?</p></li>
@@ -1059,13 +1059,13 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>A <span class="hl">amplitude</span> é a diferença entre o valor máximo e o valor mínimo. A função <code>range</code> não retorna a amplitude, mas sim os valores mínimo e máximo:</p>
 <div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1]  1,9 19,9</code></pre>
 </li>
 <li>
 <p>Vamos decidir que cada classe vai ter <span class="math inline">\(2\)</span> horas. A função <code>cut</code> substitui os valores do vetor pelos nomes das classes:</p>
 <div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] [12,14) [16,18) [14,16) [14,16) [4,6)   [14,16) [8,10)  [6,8)   [10,12) [2,4)  
 ## [11] [4,6)   [8,10)  [10,12) [12,14) [10,12) [8,10)  [8,10)  [16,18) [4,6)   [18,20)
@@ -1081,9 +1081,9 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>A função <code>table</code> faz a contagem dos elementos de cada classe:</p>
 <div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span>  
-  <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span>dnn <span class="op">=</span> <span class="st">'Horas de sono'</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  
+  <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span>dnn <span class="op">=</span> <span class="st">'Horas de sono'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1102,7 +1102,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>O <em>default</em> é criar <span class="math inline">\(30\)</span> classes (<em>bins</em>):</p>
 <div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
@@ -1111,7 +1111,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p><span id="histograma1"></span> Vamos mudar isto passando um vetor de limites das classes (<em>breaks</em>). Vamos acrescentar rótulos também:</p>
 <div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -1147,7 +1147,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>O resultado é um <span class="hl">polígono de frequência</span>.</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">pf</span> <span class="op">&lt;-</span> <span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">'red'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
@@ -1174,7 +1174,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Cada geometria está ligada a uma <span class="hl"><code>stat</code></span>, um algoritmo para computar o que vai ser desenhado. Aqui, passamos para a geometria <span class="hl">a função <code>ecdf</code> (<em>empirical cumulative distribution function</em>), do pacote <code>stats</code>, que calcula as frequências acumuladas.</span></p>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sleep_total</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_step</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">'ecdf'</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -1202,7 +1202,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li>
 <p>Para as horas de sono dos mamíferos:</p>
 <div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">sono</span><span class="op">$</span><span class="va">sleep_total</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/graphics/stem.html">stem</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##   The decimal point is at the |
@@ -1236,11 +1236,11 @@ IQE (CV) : 5,9 (0,4)</td>
 <ul>
 <li>
 <p>O <code>ggplot2</code> tem um tema <em>default</em>, chamado <code>theme_gray</code>, que gera <a href="viz.html#grafico4">o <em>scatterplot</em> de um exemplo anterior</a> deste capítulo do seguinte modo:</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Para este material, escolhi o tema <code>theme_linedraw</code>, que usa linhas pretas sobre fundo branco:</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:</p>
@@ -1254,7 +1254,7 @@ IQE (CV) : 5,9 (0,4)</td>
 </li>
 <li>
 <p>O resultado é</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-81-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-82-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Os meus comandos para alterar o tema são</p>
@@ -1333,8 +1333,8 @@ IQE (CV) : 5,9 (0,4)</td>
 <div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 
-<span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op">%&gt;%</span> 
-  <span class="fu">select</span><span class="op">(</span>
+<span class="va">sono</span> <span class="op">&lt;-</span> <span class="va">msleep</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>
     <span class="va">name</span>, <span class="va">order</span>, <span class="va">genus</span>, <span class="va">vore</span>, <span class="va">bodywt</span>, 
     <span class="va">brainwt</span>, <span class="va">awake</span>, <span class="va">sleep_total</span>
   <span class="op">)</span></code></pre></div>
@@ -1359,15 +1359,15 @@ IQE (CV) : 5,9 (0,4)</td>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"DAAG"</span><span class="op">)</span></code></pre></div>
 <p>Vamos usar apenas algumas das variáveis, com nomes em português.</p>
 <div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">hurricNamed</span> <span class="op">%&gt;%</span> 
-  <span class="fu">as_tibble</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">transmute</span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">hurricNamed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>
     id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">Year</span>, <span class="va">Name</span>, sep <span class="op">=</span> <span class="st">'-'</span><span class="op">)</span>,
     nome <span class="op">=</span> <span class="va">Name</span>,
     ano <span class="op">=</span> <span class="va">Year</span>,
     velocidade <span class="op">=</span> <span class="va">LF.WindsMPH</span> <span class="op">*</span> <span class="fl">1.8</span>,     <span class="co"># convertido para km/h</span>
     pressao <span class="op">=</span> <span class="va">LF.PressureMB</span>,            <span class="co"># mbar</span>
-    prejuizo <span class="op">=</span> <span class="va">BaseDam2014</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">)</span>, <span class="co"># milhões de dólares de 2014</span>
+    prejuizo <span class="op">=</span> <span class="va">BaseDam2014</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="op">)</span>, <span class="co"># milhões de dólares de 2014</span>
     mortes <span class="op">=</span> <span class="va">deaths</span>,
     genero <span class="op">=</span> <span class="va">mf</span>
   <span class="op">)</span></code></pre></div>
