@@ -793,7 +793,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
      )
    ```
    
-   Como `if_else` (com *underscore*) é exigente, precisamos passar `NA_real_`    em vez de `NA`.
+   Como `if_else` (com *underscore*) é exigente, precisamos passar `NA_real_` em vez de `NA`.
    
    Situação atual:
 
@@ -870,20 +870,231 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 1. Qual é o peso médio de todos os heróis? Ignore os valores `NA`.
 
+   `r inicio_resposta()`
+      
+   ```{r}
+   herois_info %>% pull(peso) %>% mean(na.rm = TRUE)
+   ```
+    
+   `r fim_resposta()`
+
 1. Qual é a altura média de todos os heróis? Ignore os valores `NA`.
+
+   `r inicio_resposta()`
+      
+   ```{r}
+   herois_info %>% pull(altura) %>% mean(na.rm = TRUE)
+   ```
+    
+   `r fim_resposta()`
 
 1. Qual é a altura média dos heróis, por editora? Ignore os valores `NA`.
 
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% 
+     group_by(editora) %>% 
+     summarize(média = mean(altura, na.rm = TRUE))
+   ```
+   
+   `r fim_resposta()`
+
 1. Quais são os $3$ heróis mais altos de cada sexo?
+
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% 
+     group_by(sexo) %>% 
+     slice_max(altura, n = 3) %>% 
+     select(nome, sexo, altura)
+   ```
+   
+   Como houve empates, foram mostrados $4$ de sexo desconhecido e $4$ do sexo feminino.
+   
+   Leia a documentação da função `slice_max` para descobrir como mostrar    exatamente $n$ de cada grupo. (Dica: "empate", em inglês, é "*tie*".)
+   
+   `r fim_resposta()`
 
 1. Quais são as $3$ cores de olhos mais comuns para cada sexo?
 
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% 
+     group_by(sexo) %>% 
+     count(olhos, sort = TRUE) %>% 
+     slice_head(n = 3)
+   ```
+   
+   `r fim_resposta()`
+
 1. Liste, por editora, as quantidades de heróis do bem, do mal, e neutros.
+
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% 
+     group_by(editora) %>% 
+     count(lado)
+   ```
+   
+   ou
+   
+   ```{r}
+   herois_info %>% 
+     group_by(editora, lado) %>% 
+     summarize(n())
+   ```
+   
+   `r fim_resposta()`
 
 1. Quantas raças diferentes existem?
 
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% 
+     pull(raça) %>% 
+     n_distinct()
+   ```
+   
+   ou (mostrando os nomes das raças e as quantidades de heróis por raça)
+
+   ```{r}
+   herois_info %>% 
+     count(raça)
+   ```
+   
+   ou 
+   
+   ```{r}
+   herois_info %>% 
+     group_by(raça) %>% 
+     summarise(n())
+   ```
+   
+   `r fim_resposta()`
+
 1. Qual a quantidade de raças diferentes de cada editora?
+
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% 
+     group_by(editora) %>% 
+     summarise(n = n_distinct(raça))
+   ```
+   
+   `r fim_resposta()`
 
 1. **DESAFIO:** Liste as raças que só pertencem a uma única editora.
 
    Existem várias maneiras de fazer isto. Experimente várias, até achar uma que seja mais elegante.
+
+   `r inicio_resposta()`
+   
+   * Maneira simples, usando contagem:
+   
+     ```{r}
+     herois_info %>% 
+       group_by(raça) %>% 
+       summarise(n_ed = n_distinct(editora)) %>% 
+       filter(n_ed == 1)
+     ```
+   
+   * Maneira repetitiva, manual:
+   
+     ```{r}
+     racas_marvel <- herois_info %>% 
+       filter(editora == 'Marvel') %>% 
+       select(raça) %>% 
+       unique()
+     
+     racas_dc <- herois_info %>% 
+       filter(editora == 'DC') %>% 
+       select(raça) %>% 
+       unique()
+     
+     racas_outras <- herois_info %>% 
+       filter(editora == 'Outras') %>% 
+       select(raça) %>% 
+       unique()
+     ```
+     
+     Exclusivas da Marvel:
+     
+     ```{r}
+     racas_marvel %>% 
+       setdiff(racas_dc) %>% 
+       setdiff(racas_outras) %>% 
+       arrange(raça)
+     ```
+   
+     Exclusivas da DC:
+   
+     ```{r}
+     racas_dc %>% 
+       setdiff(racas_marvel) %>% 
+       setdiff(racas_outras) %>% 
+       arrange(raça)
+     ```
+     
+     Exclusivas de outras editoras:
+   
+     ```{r}
+     racas_outras %>% 
+       setdiff(racas_dc) %>% 
+       setdiff(racas_marvel) %>% 
+       arrange(raça)
+     ```
+   
+   * Mesma maneira, mas usando uma função:
+     
+     ```{r}
+     racas_exclusivas <- function(x) {
+     
+       esta_editora <- herois_info %>% 
+         filter(editora == x) %>% 
+         select(raça) %>% 
+         unique()
+       
+       outras_editoras <- herois_info %>% 
+         filter(editora != x) %>% 
+         select(raça) %>% 
+         unique()
+       
+       esta_editora %>%
+         setdiff(outras_editoras) %>% 
+         arrange(raça)
+     }
+     ```
+     
+     ```{r}
+     racas_exclusivas('Marvel')
+     ```
+     
+     ```{r}
+     racas_exclusivas('DC')
+     ```
+     
+     ```{r}
+     racas_exclusivas('Outras')
+     ```
+   
+   * Maneira complicada, usando `join`:
+   
+     ```{r}
+     herois_info %>% 
+       select(raça, editora) %>% 
+       group_by(raça) %>% 
+       summarise(n_editoras = n_distinct(editora)) %>% 
+       filter(n_editoras == 1) %>% 
+       inner_join(herois_info, by = 'raça') %>% 
+       select(raça, editora) %>% 
+       unique() %>% 
+       arrange(editora)
+     ```
+   
+   `r fim_resposta()`

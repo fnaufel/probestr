@@ -22,7 +22,7 @@
 }
 /* styles for hidden solutions */
 .webex-solution {
-    height: 2.5em;
+    height: 4em;
     overflow-y: hidden;
     padding: 0.5em;
     margin-bottom: 10px;
@@ -34,7 +34,7 @@
 }
 .webex-solution button {
     height: 2em;
-    margin-bottom: 0.5em;
+    margin-bottom: 2em;
     border-radius: 0.5em;
     background-color: var(--blue);
     color: white;

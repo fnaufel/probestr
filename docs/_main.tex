@@ -350,7 +350,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 06/04/2022)}
+\date{(versão de 12/04/2022)}
 
 \begin{document}
 \maketitle
@@ -1647,13 +1647,13 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 
 \begin{verbatim}
 ## # A tibble: 5 x 5
-##   artista         musica                  entrou     semana   pos
-##   <chr>           <chr>                   <date>      <int> <dbl>
-## 1 John, Elton     Someday Out Of The B... 2000-04-22     12    89
-## 2 Limp Bizkit     N 2 Gether Now          1999-12-04      1    94
-## 3 Janet           Doesn't Really Matte... 2000-06-17      4    30
-## 4 Lopez, Jennifer Feelin' Good            2000-02-19     18    82
-## 5 Metallica       I Disappear             2000-05-13     16    94
+##   artista          musica                  entrou     semana   pos
+##   <chr>            <chr>                   <date>      <int> <dbl>
+## 1 Third Eye Blind  Never Let You Go        2000-01-22      6    22
+## 2 Houston, Whitney My Love Is Your Love    1999-09-04      2    68
+## 3 Goo Goo Dolls    Broadway                2000-04-22      7    29
+## 4 Nelly            (Hot S**t) Country G... 2000-04-29      8    24
+## 5 Beenie Man       Girls Dem Sugar         2000-10-21      2    72
 \end{verbatim}
 \item
   Veja a ajuda de \texttt{slice} para saber mais sobre estas funções. Por exemplo:
@@ -1847,8 +1847,8 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 \end{Shaded}
 
 \begin{verbatim}
-## `summarise()` has grouped output by 'artista'. You can override using the
-## `.groups` argument.
+## `summarise()` has grouped output by 'artista'. You can override using the `.groups`
+## argument.
 \end{verbatim}
 
 \begin{verbatim}
@@ -2053,12 +2053,134 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 \end{Highlighting}
 \end{Shaded}
 \item
-  Quantas linhas têm a \emph{tibble}?
+  Quantas linhas tem a \emph{tibble}?
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% nrow()
+  ```
+
+  ```
+  ## [1] 734
+  ```
+
+
+   \end{comment}
 \item
   Existem heróis que aparecem em mais de uma linha?
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% 
+    count(nome)
+  ```
+
+  ```
+  ## # A tibble: 715 x 2
+  ##   nome              n
+  ##   <chr>         <int>
+  ## 1 A-Bomb            1
+  ## 2 Abe Sapien        1
+  ## 3 Abin Sur          1
+  ## 4 Abomination       1
+  ## 5 Abraxas           1
+  ## 6 Absorbing Man     1
+  ## # ... with 709 more rows
+  ```
+
+  Precisaríamos [examinar a tabela acima]{.hl}, procurando linhas com $n > 1$. 
+
+  [Vamos pedir para o R fazer isto:]{.hl}
+
+
+  ```r
+  repetidos <- herois_info %>% 
+    count(nome) %>% 
+    filter(n > 1)
+
+  repetidos
+  ```
+
+  ```
+  ## # A tibble: 17 x 2
+  ##   nome             n
+  ##   <chr>        <int>
+  ## 1 Angel            2
+  ## 2 Atlas            2
+  ## 3 Atom             2
+  ## 4 Batgirl          2
+  ## 5 Batman           2
+  ## 6 Black Canary     2
+  ## # ... with 11 more rows
+  ```
+
+  Vamos mostrar mais dados destes heróis:
+
+
+  ```r
+  herois_info %>% 
+    filter(nome %in% repetidos$nome) %>% 
+    select(nome, editora, raça, everything())
+  ```
+
+  ```
+  ## # A tibble: 36 x 10
+  ##   nome  editora      raça  sexo  olhos cabelos altura pele  lado   peso
+  ##   <chr> <chr>        <chr> <chr> <chr> <chr>    <dbl> <chr> <chr> <dbl>
+  ## 1 Angel Marvel Comi~ <NA>  Male  blue  Blond      183 <NA>  good     68
+  ## 2 Angel Dark Horse ~ Vamp~ Male  <NA>  <NA>       -99 <NA>  good    -99
+  ## 3 Atlas Marvel Comi~ Muta~ Male  brown Red        183 <NA>  good    101
+  ## 4 Atlas DC Comics    God ~ Male  blue  Brown      198 <NA>  bad     126
+  ## 5 Atom  DC Comics    <NA>  Male  blue  Red        178 <NA>  good     68
+  ## 6 Atom  DC Comics    <NA>  Male  <NA>  <NA>       -99 <NA>  good    -99
+  ## # ... with 30 more rows
+  ```
+
+  Em alguns casos, são editoras diferentes (como para Angel e Atlas). 
+
+  Em alguns casos, o mesmo herói aparece com várias características.
+
+  São $17$ heróis que aparecem mais de uma vez. É um número pequeno o bastante para corrigirmos a situação manualmente. 
+
+  Como não tenho conhecimento suficiente sobre heróis para fazer isso, vou ignorar esta confusão e usar os dados como estão.
+
+
+   \end{comment}
 \item
   Quantas editoras diferentes existem na \emph{tibble}? Liste-as em ordem decrescente de quantidade de heróis.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% count(editora, sort = TRUE)
+  ```
+
+  ```
+  ## # A tibble: 25 x 2
+  ##   editora               n
+  ##   <chr>             <int>
+  ## 1 Marvel Comics       388
+  ## 2 DC Comics           215
+  ## 3 NBC - Heroes         19
+  ## 4 Dark Horse Comics    18
+  ## 5 <NA>                 15
+  ## 6 George Lucas         14
+  ## # ... with 19 more rows
+  ```
+
+
+   \end{comment}
 \item
+  Vamos colocar todas as editores menores em uma classe só.
+
   Na coluna \texttt{editora}, substitua
 
   \begin{itemize}
@@ -2072,40 +2194,836 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   \end{itemize}
 
   \textbf{Dica:} use a função \texttt{case\_when()}, do \texttt{tidyverse}.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info <- herois_info %>% 
+    mutate(
+      editora = case_when(
+        editora == 'Marvel Comics' ~ 'Marvel',
+        editora == 'DC Comics' ~ 'DC',
+        TRUE ~ 'Outras'
+      )
+  )
+  ```
+
+
+   \end{comment}
 \item
   Confira, novamente, a quantidade de valores diferentes na coluna \texttt{editora}.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% count(editora, sort = TRUE)
+  ```
+
+  ```
+  ## # A tibble: 3 x 2
+  ##   editora     n
+  ##   <chr>   <int>
+  ## 1 Marvel    388
+  ## 2 DC        215
+  ## 3 Outras    131
+  ```
+
+
+   \end{comment}
 \item
   Existem heróis sem informação de editora. Quantos? Quais são?
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% filter(is.na(editora))
+  ```
+
+  ```
+  ## # A tibble: 0 x 10
+  ## # ... with 10 variables: nome <chr>, sexo <chr>, olhos <chr>,
+  ## #   raça <chr>, cabelos <chr>, altura <dbl>, editora <chr>,
+  ## #   pele <chr>, lado <chr>, peso <dbl>
+  ```
+
+  Na verdade, a chamada a `case_when()`, da maneira como fiz, já substituiu os `NA` por 'Outras'. Entenda por quê.
+
+
+   \end{comment}
 \item
   Altere novamente a coluna \texttt{editora}, colocando o valor `Outras' para os heróis sem informação de editora. Use a função \texttt{if\_else()} (com \emph{underscore}, não a função \texttt{ifelse}).
+
+  \begin{comment}
+
+
+  Se, no seu caso, ainda houver valores `NA` em `editora`, basta fazer o seguinte:
+
+
+  ```r
+  herois_info <- herois_info %>% 
+    mutate(
+      editora = if_else(is.na(editora), 'Outras', editora)
+    )
+  ```
+
+
+   \end{comment}
 \item
   Confira, mais uma vez, a quantidade de valores diferentes na coluna \texttt{editora}.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% count(editora, sort = TRUE)
+  ```
+
+  ```
+  ## # A tibble: 3 x 2
+  ##   editora     n
+  ##   <chr>   <int>
+  ## 1 Marvel    388
+  ## 2 DC        215
+  ## 3 Outras    131
+  ```
+
+
+   \end{comment}
 \item
   Existem heróis sem informação de sexo? Quantos? Para estes heróis, coloque o valor `Desconhecido' na coluna \texttt{sexo}.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% filter(is.na(sexo))
+  ```
+
+  ```
+  ## # A tibble: 29 x 10
+  ##   nome       sexo  olhos raça  cabelos altura editora pele  lado   peso
+  ##   <chr>      <chr> <chr> <chr> <chr>    <dbl> <chr>   <chr> <chr> <dbl>
+  ## 1 Bird-Brain <NA>  <NA>  <NA>  <NA>       -99 Marvel  <NA>  good    -99
+  ## 2 Blaquesmi~ <NA>  black <NA>  No Hair    -99 Marvel  <NA>  good    -99
+  ## 3 Box III    <NA>  blue  <NA>  Blond      193 Marvel  <NA>  good    110
+  ## 4 Box IV     <NA>  brown <NA>  Brown ~    -99 Marvel  <NA>  good    -99
+  ## 5 Captain U~ <NA>  <NA>  God ~ <NA>       -99 Marvel  <NA>  good    -99
+  ## 6 Cecilia R~ <NA>  brown <NA>  Brown      170 Marvel  <NA>  good     62
+  ## # ... with 23 more rows
+  ```
+
+
+  ```r
+  herois_info <-  herois_info %>% 
+    mutate(
+      sexo = if_else(
+        is.na(sexo),
+        'Desconhecido',
+        sexo
+      )
+    )
+  ```
+
+  Conferindo:
+
+
+  ```r
+  herois_info %>% filter(is.na(sexo))
+  ```
+
+  ```
+  ## # A tibble: 0 x 10
+  ## # ... with 10 variables: nome <chr>, sexo <chr>, olhos <chr>,
+  ## #   raça <chr>, cabelos <chr>, altura <dbl>, editora <chr>,
+  ## #   pele <chr>, lado <chr>, peso <dbl>
+  ```
+
+
+   \end{comment}
 \item
   Qual a altura mínima? Qual a altura máxima? Substitua as alturas negativas por \texttt{NA}.
+
+  \begin{comment}
+
+
+  Podemos extrair o vetor de alturas com `pull` e usar a função `summary` do R    base, que retorna um vetor:
+
+
+  ```r
+  herois_info %>% 
+    pull(altura) %>% 
+    summary()
+  ```
+
+  ```
+  ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  ##   -99,0   -99,0   175,0   102,3   185,0   975,0
+  ```
+
+  Ou podemos usar `summarize`, do `tidyverse`, que retorna uma *tibble*:
+
+
+  ```r
+  herois_info %>% 
+    summarize(
+      minimo = min(altura),
+      maximo = max(altura)
+    )
+  ```
+
+  ```
+  ## # A tibble: 1 x 2
+  ##   minimo maximo
+  ##    <dbl>  <dbl>
+  ## 1    -99    975
+  ```
+
+  Quantas alturas negativas existem?
+
+
+  ```r
+  herois_info %>% count(altura < 0)
+  ```
+
+  ```
+  ## # A tibble: 2 x 2
+  ##   `altura < 0`     n
+  ##   <lgl>        <int>
+  ## 1 FALSE          517
+  ## 2 TRUE           217
+  ```
+
+  Substituindo as alturas negativas por `NA`:
+
+
+  ```r
+  herois_info <- herois_info %>% 
+    mutate(
+      altura = if_else(
+        altura < 0,
+        NA_real_,
+        altura
+      )
+    )
+  ```
+
+  Como `if_else` (com *underscore*) é exigente, precisamos passar `NA_real_` em vez de `NA`.
+
+  Situação atual:
+
+
+  ```r
+  herois_info %>% 
+    pull(altura) %>% 
+    summary()
+  ```
+
+  ```
+  ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  ##    15,2   173,0   183,0   186,7   191,0   975,0     217
+  ```
+
+
+   \end{comment}
 \item
   Qual o peso mínimo? Qual o peso máximo? Substitua os pesos negativos por \texttt{NA}.
+
+  \begin{comment}
+
+
+  Como fizemos com as alturas:
+
+
+  ```r
+  herois_info %>% 
+    pull(peso) %>% 
+    summary()
+  ```
+
+  ```
+  ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  ##  -99,00  -99,00   62,00   43,86   90,00  900,00       2
+  ```
+
+  Observe que existem valores `NA` em peso.
+
+
+  ```r
+  herois_info %>% 
+    summarize(
+      minimo = min(peso),
+      maximo = max(peso)
+    )
+  ```
+
+  ```
+  ## # A tibble: 1 x 2
+  ##   minimo maximo
+  ##    <dbl>  <dbl>
+  ## 1     NA     NA
+  ```
+
+  Para ignorar os valores `NA` nas funções `min()` e `max()`:
+
+
+  ```r
+  herois_info %>% 
+    summarize(
+      minimo = min(peso, na.rm = TRUE),
+      maximo = max(peso, na.rm = TRUE)
+    )
+  ```
+
+  ```
+  ## # A tibble: 1 x 2
+  ##   minimo maximo
+  ##    <dbl>  <dbl>
+  ## 1    -99    900
+  ```
+
+  Quantos pesos negativos existem?
+
+
+  ```r
+  herois_info %>% count(peso < 0)
+  ```
+
+  ```
+  ## # A tibble: 3 x 2
+  ##   `peso < 0`     n
+  ##   <lgl>      <int>
+  ## 1 FALSE        495
+  ## 2 TRUE         237
+  ## 3 NA             2
+  ```
+
+  Substituindo por `NA`:
+
+
+  ```r
+  herois_info <- herois_info %>% 
+    mutate(
+      peso = if_else(
+        peso < 0,
+        NA_real_,
+        peso
+      )
+    )
+  ```
+
+  Como `if_else` (com *underscore*) é exigente, precisamos passar `NA_real_`    em vez de `NA`.
+
+  Situação atual:
+
+
+  ```r
+  herois_info %>% 
+    pull(peso) %>% 
+    summary()
+  ```
+
+  ```
+  ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  ##     2,0    61,0    81,0   112,3   108,0   900,0     239
+  ```
+
+
+   \end{comment}
 \item
   Qual é o peso médio de todos os heróis? Ignore os valores \texttt{NA}.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% pull(peso) %>% mean(na.rm = TRUE)
+  ```
+
+  ```
+  ## [1] 112,2525
+  ```
+
+
+   \end{comment}
 \item
   Qual é a altura média de todos os heróis? Ignore os valores \texttt{NA}.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% pull(altura) %>% mean(na.rm = TRUE)
+  ```
+
+  ```
+  ## [1] 186,7263
+  ```
+
+
+   \end{comment}
 \item
   Qual é a altura média dos heróis, por editora? Ignore os valores \texttt{NA}.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% 
+    group_by(editora) %>% 
+    summarize(média = mean(altura, na.rm = TRUE))
+  ```
+
+  ```
+  ## # A tibble: 3 x 2
+  ##   editora média
+  ##   <chr>   <dbl>
+  ## 1 DC       181.
+  ## 2 Marvel   191.
+  ## 3 Outras   179.
+  ```
+
+
+   \end{comment}
 \item
   Quais são os $3$ heróis mais altos de cada sexo?
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% 
+    group_by(sexo) %>% 
+    slice_max(altura, n = 3) %>% 
+    select(nome, sexo, altura)
+  ```
+
+  ```
+  ## # A tibble: 11 x 3
+  ##   nome          sexo         altura
+  ##   <chr>         <chr>         <dbl>
+  ## 1 Living Brain  Desconhecido    198
+  ## 2 Fabian Cortez Desconhecido    196
+  ## 3 Box III       Desconhecido    193
+  ## 4 Firelord      Desconhecido    193
+  ## 5 Wolfsbane     Female          366
+  ## 6 Rey           Female          297
+  ## # ... with 5 more rows
+  ```
+
+  Como houve empates, foram mostrados $4$ de sexo desconhecido e $4$ do sexo feminino.
+
+  Leia a documentação da função `slice_max` para descobrir como mostrar    exatamente $n$ de cada grupo. (Dica: "empate", em inglês, é "*tie*".)
+
+
+   \end{comment}
 \item
   Quais são as $3$ cores de olhos mais comuns para cada sexo?
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% 
+    group_by(sexo) %>% 
+    count(olhos, sort = TRUE) %>% 
+    slice_head(n = 3)
+  ```
+
+  ```
+  ## # A tibble: 9 x 3
+  ##   sexo         olhos     n
+  ##   <chr>        <chr> <int>
+  ## 1 Desconhecido <NA>     10
+  ## 2 Desconhecido blue      6
+  ## 3 Desconhecido red       5
+  ## 4 Female       blue     76
+  ## 5 Female       green    43
+  ## 6 Female       <NA>     41
+  ## # ... with 3 more rows
+  ```
+
+
+   \end{comment}
 \item
   Liste, por editora, as quantidades de heróis do bem, do mal, e neutros.
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% 
+    group_by(editora) %>% 
+    count(lado)
+  ```
+
+  ```
+  ## # A tibble: 11 x 3
+  ##   editora lado        n
+  ##   <chr>   <chr>   <int>
+  ## 1 DC      bad        59
+  ## 2 DC      good      142
+  ## 3 DC      neutral    13
+  ## 4 DC      <NA>        1
+  ## 5 Marvel  bad       115
+  ## 6 Marvel  good      259
+  ## # ... with 5 more rows
+  ```
+
+  ou
+
+
+  ```r
+  herois_info %>% 
+    group_by(editora, lado) %>% 
+    summarize(n())
+  ```
+
+  ```
+  ## `summarise()` has grouped output by 'editora'. You can override using the `.groups`
+  ## argument.
+  ```
+
+  ```
+  ## # A tibble: 11 x 3
+  ##   editora lado    `n()`
+  ##   <chr>   <chr>   <int>
+  ## 1 DC      bad        59
+  ## 2 DC      good      142
+  ## 3 DC      neutral    13
+  ## 4 DC      <NA>        1
+  ## 5 Marvel  bad       115
+  ## 6 Marvel  good      259
+  ## # ... with 5 more rows
+  ```
+
+
+   \end{comment}
 \item
   Quantas raças diferentes existem?
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% 
+    pull(raça) %>% 
+    n_distinct()
+  ```
+
+  ```
+  ## [1] 62
+  ```
+
+  ou (mostrando os nomes das raças e as quantidades de heróis por raça)
+
+
+  ```r
+  herois_info %>% 
+    count(raça)
+  ```
+
+  ```
+  ## # A tibble: 62 x 2
+  ##   raça          n
+  ##   <chr>     <int>
+  ## 1 Alien         7
+  ## 2 Alpha         5
+  ## 3 Amazon        2
+  ## 4 Android       9
+  ## 5 Animal        4
+  ## 6 Asgardian     5
+  ## # ... with 56 more rows
+  ```
+
+  ou 
+
+
+  ```r
+  herois_info %>% 
+    group_by(raça) %>% 
+    summarise(n())
+  ```
+
+  ```
+  ## # A tibble: 62 x 2
+  ##   raça      `n()`
+  ##   <chr>     <int>
+  ## 1 Alien         7
+  ## 2 Alpha         5
+  ## 3 Amazon        2
+  ## 4 Android       9
+  ## 5 Animal        4
+  ## 6 Asgardian     5
+  ## # ... with 56 more rows
+  ```
+
+
+   \end{comment}
 \item
   Qual a quantidade de raças diferentes de cada editora?
+
+  \begin{comment}
+
+
+
+  ```r
+  herois_info %>% 
+    group_by(editora) %>% 
+    summarise(n = n_distinct(raça))
+  ```
+
+  ```
+  ## # A tibble: 3 x 2
+  ##   editora     n
+  ##   <chr>   <int>
+  ## 1 DC         30
+  ## 2 Marvel     32
+  ## 3 Outras     23
+  ```
+
+
+   \end{comment}
 \item
   \textbf{DESAFIO:} Liste as raças que só pertencem a uma única editora.
 
   Existem várias maneiras de fazer isto. Experimente várias, até achar uma que seja mais elegante.
+
+  \begin{comment}
+
+
+  * Maneira simples, usando contagem:
+
+
+    ```r
+    herois_info %>% 
+      group_by(raça) %>% 
+      summarise(n_ed = n_distinct(editora)) %>% 
+      filter(n_ed == 1)
+    ```
+
+    ```
+    ## # A tibble: 47 x 2
+    ##   raça        n_ed
+    ##   <chr>      <int>
+    ## 1 Alpha          1
+    ## 2 Amazon         1
+    ## 3 Asgardian      1
+    ## 4 Bizarro        1
+    ## 5 Bolovaxian     1
+    ## 6 Clone          1
+    ## # ... with 41 more rows
+    ```
+
+  * Maneira repetitiva, manual:
+
+
+    ```r
+    racas_marvel <- herois_info %>% 
+      filter(editora == 'Marvel') %>% 
+      select(raça) %>% 
+      unique()
+
+    racas_dc <- herois_info %>% 
+      filter(editora == 'DC') %>% 
+      select(raça) %>% 
+      unique()
+
+    racas_outras <- herois_info %>% 
+      filter(editora == 'Outras') %>% 
+      select(raça) %>% 
+      unique()
+    ```
+
+    Exclusivas da Marvel:
+
+
+    ```r
+    racas_marvel %>% 
+      setdiff(racas_dc) %>% 
+      setdiff(racas_outras) %>% 
+      arrange(raça)
+    ```
+
+    ```
+    ## # A tibble: 17 x 1
+    ##   raça          
+    ##   <chr>         
+    ## 1 Asgardian     
+    ## 2 Clone         
+    ## 3 Cosmic Entity 
+    ## 4 Eternal       
+    ## 5 Flora Colossus
+    ## 6 Frost Giant   
+    ## # ... with 11 more rows
+    ```
+
+    Exclusivas da DC:
+
+
+    ```r
+    racas_dc %>% 
+      setdiff(racas_marvel) %>% 
+      setdiff(racas_outras) %>% 
+      arrange(raça)
+    ```
+
+    ```
+    ## # A tibble: 17 x 1
+    ##   raça           
+    ##   <chr>          
+    ## 1 Amazon         
+    ## 2 Bizarro        
+    ## 3 Bolovaxian     
+    ## 4 Czarnian       
+    ## 5 Gorilla        
+    ## 6 Human-Vuldarian
+    ## # ... with 11 more rows
+    ```
+
+    Exclusivas de outras editoras:
+
+
+    ```r
+    racas_outras %>% 
+      setdiff(racas_dc) %>% 
+      setdiff(racas_marvel) %>% 
+      arrange(raça)
+    ```
+
+    ```
+    ## # A tibble: 13 x 1
+    ##   raça              
+    ##   <chr>             
+    ## 1 Alpha             
+    ## 2 Dathomirian Zabrak
+    ## 3 Gungan            
+    ## 4 Human / Clone     
+    ## 5 Human-Vulcan      
+    ## 6 Icthyo Sapien     
+    ## # ... with 7 more rows
+    ```
+
+  * Mesma maneira, mas usando uma função:
+
+
+    ```r
+    racas_exclusivas <- function(x) {
+
+      esta_editora <- herois_info %>% 
+        filter(editora == x) %>% 
+        select(raça) %>% 
+        unique()
+
+      outras_editoras <- herois_info %>% 
+        filter(editora != x) %>% 
+        select(raça) %>% 
+        unique()
+
+      esta_editora %>%
+        setdiff(outras_editoras) %>% 
+        arrange(raça)
+    }
+    ```
+
+
+    ```r
+    racas_exclusivas('Marvel')
+    ```
+
+    ```
+    ## # A tibble: 17 x 1
+    ##   raça          
+    ##   <chr>         
+    ## 1 Asgardian     
+    ## 2 Clone         
+    ## 3 Cosmic Entity 
+    ## 4 Eternal       
+    ## 5 Flora Colossus
+    ## 6 Frost Giant   
+    ## # ... with 11 more rows
+    ```
+
+
+    ```r
+    racas_exclusivas('DC')
+    ```
+
+    ```
+    ## # A tibble: 17 x 1
+    ##   raça           
+    ##   <chr>          
+    ## 1 Amazon         
+    ## 2 Bizarro        
+    ## 3 Bolovaxian     
+    ## 4 Czarnian       
+    ## 5 Gorilla        
+    ## 6 Human-Vuldarian
+    ## # ... with 11 more rows
+    ```
+
+
+    ```r
+    racas_exclusivas('Outras')
+    ```
+
+    ```
+    ## # A tibble: 13 x 1
+    ##   raça              
+    ##   <chr>             
+    ## 1 Alpha             
+    ## 2 Dathomirian Zabrak
+    ## 3 Gungan            
+    ## 4 Human / Clone     
+    ## 5 Human-Vulcan      
+    ## 6 Icthyo Sapien     
+    ## # ... with 7 more rows
+    ```
+
+  * Maneira complicada, usando `join`:
+
+
+    ```r
+    herois_info %>% 
+      select(raça, editora) %>% 
+      group_by(raça) %>% 
+      summarise(n_editoras = n_distinct(editora)) %>% 
+      filter(n_editoras == 1) %>% 
+      inner_join(herois_info, by = 'raça') %>% 
+      select(raça, editora) %>% 
+      unique() %>% 
+      arrange(editora)
+    ```
+
+    ```
+    ## # A tibble: 47 x 2
+    ##   raça            editora
+    ##   <chr>           <chr>  
+    ## 1 Amazon          DC     
+    ## 2 Bizarro         DC     
+    ## 3 Bolovaxian      DC     
+    ## 4 Czarnian        DC     
+    ## 5 Gorilla         DC     
+    ## 6 Human-Vuldarian DC     
+    ## # ... with 41 more rows
+    ```
+
+
+   \end{comment}
 \end{enumerate}
 
 \hypertarget{viz}{%
@@ -3253,7 +4171,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## Warning: Removed 18 rows containing missing values (geom_point).
 \end{verbatim}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-75-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-120-1} \end{center}
 \item
   Observe como usamos o gráfico já salvo na variável \texttt{grafico} e simplesmente acrescentamos a nova escala. Este tipo de ``montagem'' de gráficos \texttt{ggplot2} é bem conveniente, para evitar repetição de código.
 \item
@@ -3274,7 +4192,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## Warning: Removed 18 rows containing missing values (geom_point).
 \end{verbatim}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-76-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-121-1} \end{center}
 \item
   Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:
 
@@ -3310,7 +4228,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## Warning: Removed 18 rows containing missing values (geom_point).
 \end{verbatim}
 
-    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-77-1} \end{center}
+    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-122-1} \end{center}
   \item
     Todos os carnívoros têm peso corporal maior que $1$kg e peso cerebral maior ou igual a $10$g.
   \item
@@ -3611,11 +4529,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O \texttt{ggplot2} tem um tema \emph{default}, chamado \texttt{theme\_gray}, que gera \protect\hyperlink{grafico4}{o \emph{scatterplot} de um exemplo anterior} deste capítulo do seguinte modo:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-80-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-125-1} \end{center}
 \item
   Para este material, escolhi o tema \texttt{theme\_linedraw}, que usa linhas pretas sobre fundo branco:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-81-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-126-1} \end{center}
 \item
   Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:
 
@@ -3634,7 +4552,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O resultado é
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-82-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-127-1} \end{center}
 \item
   Os meus comandos para alterar o tema são
 
@@ -4342,7 +5260,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-116-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-161-1} \end{center}
 \item
   A {\hl{caixa}} vai do valor do {\hl{primeiro quartil}} (embaixo) até o {\hl{terceiro quartil}} (em cima).
 \item
@@ -4363,7 +5281,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-117-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-162-1} \end{center}
 \item
   No \emph{boxplot} de onívoros, {\hl{os \emph{outliers} aparecem como pontos isolados,}} acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).
 \item
@@ -4411,7 +5329,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-118-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-163-1} \end{center}
 \item
   {\hl{Quando a caixa é longa,}} o IQR é grande, e {\hl{os valores estão muito espalhados;}} é o caso dos herbívoros e insetívoros.
 \item
@@ -4618,7 +5536,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-124-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-169-1} \end{center}
 
   \begin{rmdimportant}
 
@@ -4673,7 +5591,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-125-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-170-1} \end{center}
 \item
   A posição $x$ e a altura de cada barra são estéticas: {\hl{a posição $x$ representa a cor dos cabelos}}, e {\hl{a altura representa a frequência daquela cor}}.
 \item
@@ -4691,7 +5609,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-126-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-171-1} \end{center}
 \item
   Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (\texttt{scale\_fill\_discrete}):
 
@@ -4708,7 +5626,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-127-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-172-1} \end{center}
 \item
   {\hl{Podemos fazer um gráfico de barras horizontais com {\mbox{\texttt{coord\_flip}}}.}} Isto geralmente é útil quando os rótulos das barras são longos:
 
@@ -4726,7 +5644,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-128-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-173-1} \end{center}
 \item
   Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?
 \item
@@ -4747,7 +5665,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-129-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-174-1} \end{center}
 \item
   Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:
 
@@ -4766,7 +5684,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-130-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-175-1} \end{center}
 \item
   Ou, com barras lado a lado:
 
@@ -4785,7 +5703,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-131-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-176-1} \end{center}
 \item
   Observações e perguntas:
 
@@ -4814,7 +5732,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-132-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-177-1} \end{center}
 \end{itemize}
 
 \begin{itemize}
@@ -4839,7 +5757,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-133-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-178-1} \end{center}
 \end{itemize}
 
 \hypertarget{data-frame-juxe1-contendo-os-totais}{%
@@ -4890,7 +5808,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-135-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-180-1} \end{center}
 \item
   Com \texttt{geom\_col}, {\hl{precisamos passar a estética $y$}} (no nosso exemplo, a variável \texttt{n}, que contém as frequências).
 \item
@@ -4908,7 +5826,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-136-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-181-1} \end{center}
 \end{itemize}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
@@ -5025,7 +5943,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-140-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-185-1} \end{center}
 \item
   Embora a legenda associe uma cor a cada região, {\hl{a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade}}:
 
@@ -5050,7 +5968,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-141-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-186-1} \end{center}
 \item
   Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:
 
@@ -5071,7 +5989,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-142-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-187-1} \end{center}
 \item
   Estamos tratando estes dados como simples números, mas, na verdade, {\hl{este conjunto de dados é uma série temporal (\emph{time series})}}.
 \item
@@ -5267,7 +6185,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   \protect\hypertarget{dados-normais}{}{} O histograma dos nossos dados é
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-147-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-192-1} \end{center}
 \item
   Vamos calcular a moda com a função \texttt{mfv} (\emph{most frequent value}), do pacote \texttt{modeest}:
 
@@ -5295,206 +6213,206 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-##    [1] -0.40666494 -0.39257995 -0.25399878 -0.07707419 -0.06443928
-##    [6]  0.02265976  0.08320767  0.11297923  0.17041865  0.24855833
-##   [11]  0.31738827  0.33005297  0.35295935  0.42608078  0.48755544
-##   [16]  0.64385326  0.70521752  0.70977687  0.72409413  0.74521941
-##   [21]  0.78338283  0.92000308  0.97000212  1.13137210  1.13245200
-##   [26]  1.14938541  1.18626135  1.19957427  1.20070460  1.26284854
-##   [31]  1.27503845  1.28442568  1.31688509  1.31947152  1.37184809
-##   [36]  1.39162051  1.39767327  1.40883731  1.44565173  1.46476296
-##   [41]  1.47448618  1.50222787  1.53556513  1.53668338  1.54188523
-##   [46]  1.55355546  1.55606701  1.57824788  1.58592673  1.59917778
-##   [51]  1.60828239  1.64223611  1.65568750  1.66431240  1.70505068
-##   [56]  1.71699631  1.72107920  1.72651512  1.73809255  1.73993892
-##   [61]  1.75715752  1.77777395  1.79155681  1.94858872  1.95071211
-##   [66]  1.95719323  1.95840194  1.97120826  1.97208494  2.02148464
-##   [71]  2.03399009  2.03819838  2.04330191  2.05840353  2.06225545
-##   [76]  2.07288550  2.11320321  2.11367826  2.11591138  2.13893675
-##   [81]  2.13896552  2.15007019  2.15499803  2.15899910  2.16699024
-##   [86]  2.18355248  2.21057671  2.32248049  2.33323024  2.34354021
-##   [91]  2.38253684  2.38646743  2.42937347  2.43483064  2.44845558
-##   [96]  2.45108135  2.46069275  2.47029524  2.47100050  2.47388914
-##  [101]  2.47445241  2.50683999  2.51728719  2.52310721  2.54188954
-##  [106]  2.55874683  2.56045969  2.58162854  2.58202679  2.58353958
-##  [111]  2.58872938  2.59411974  2.59492250  2.62824649  2.62997591
-##  [116]  2.63597989  2.65025050  2.66463816  2.66969004  2.69336447
-##  [121]  2.69710177  2.69846797  2.70680670  2.70746470  2.71699771
-##  [126]  2.71811839  2.71975862  2.72593611  2.74298800  2.75084874
-##  [131]  2.76007268  2.76137471  2.76693466  2.77430899  2.77726471
-##  [136]  2.79628414  2.80441314  2.80866952  2.83299542  2.83609728
-##  [141]  2.83756866  2.85030732  2.85611886  2.85679818  2.85742601
-##  [146]  2.87187705  2.88936308  2.89368457  2.89534207  2.90445025
-##  [151]  2.91112060  2.92690321  2.94359519  2.94644111  2.96075316
-##  [156]  2.99909846  3.00679237  3.01266815  3.02124028  3.02839791
-##  [161]  3.03900813  3.04669230  3.04938533  3.06267194  3.06343253
-##  [166]  3.06622427  3.06960190  3.07618329  3.07845847  3.10507706
-##  [171]  3.10789197  3.11131262  3.11139239  3.12396612  3.12591153
-##  [176]  3.12777777  3.14622594  3.18004301  3.18608760  3.21189314
-##  [181]  3.21778173  3.22014001  3.22026002  3.22695648  3.23610108
-##  [186]  3.25930085  3.25982052  3.26198317  3.26367079  3.27428160
-##  [191]  3.27794279  3.31759827  3.31921969  3.32583242  3.32735219
-##  [196]  3.32825022  3.33379866  3.34116703  3.34329243  3.34636713
-##  [201]  3.37130779  3.37142803  3.37434822  3.37818276  3.37979677
-##  [206]  3.39748765  3.39872445  3.41064667  3.41290373  3.43381069
-##  [211]  3.44484762  3.46099627  3.46410159  3.47285423  3.47610615
-##  [216]  3.47783720  3.48606738  3.49068571  3.49739377  3.52273437
-##  [221]  3.53002700  3.53185440  3.54493802  3.54835255  3.55588479
-##  [226]  3.55648900  3.56284880  3.56487817  3.59025900  3.60304316
-##  [231]  3.60808765  3.61136439  3.61904977  3.61913602  3.62541639
-##  [236]  3.63211895  3.63283860  3.63460866  3.63591921  3.63721548
-##  [241]  3.65139739  3.65277778  3.65311901  3.65762834  3.66632848
-##  [246]  3.67419030  3.68648277  3.68653814  3.69823007  3.70287043
-##  [251]  3.70330377  3.71185118  3.71739866  3.72246644  3.73396069
-##  [256]  3.73966742  3.74657131  3.75587159  3.75688907  3.75810903
-##  [261]  3.76090396  3.76522419  3.76568821  3.76745987  3.77378897
-##  [266]  3.78341190  3.78852021  3.79304235  3.79799584  3.80396059
-##  [271]  3.80410693  3.82618795  3.82911390  3.83501666  3.84364737
-##  [276]  3.84581658  3.85055458  3.85169620  3.87216443  3.87453174
-##  [281]  3.87790661  3.88024932  3.88429880  3.90916738  3.91573125
-##  [286]  3.91710145  3.94877178  3.95262968  3.96693813  3.98469054
-##  [291]  3.99703740  3.99820319  4.00659543  4.01359899  4.02121396
-##  [296]  4.02327468  4.02653304  4.03540617  4.03673052  4.04383461
-##  [301]  4.05597788  4.06142612  4.06660436  4.06663785  4.07241359
-##  [306]  4.08839468  4.09836000  4.11143088  4.11164770  4.11242111
-##  [311]  4.11967719  4.12788205  4.13581340  4.13653232  4.14539466
-##  [316]  4.18907775  4.19030650  4.19451472  4.19859826  4.20271989
-##  [321]  4.20330662  4.20419833  4.20646649  4.20665365  4.20752956
-##  [326]  4.20767008  4.20783869  4.21057994  4.21787451  4.21868168
-##  [331]  4.21917575  4.22659498  4.23055907  4.23146519  4.23373744
-##  [336]  4.24738266  4.25372917  4.25651802  4.25841523  4.27052645
-##  [341]  4.27491349  4.28301294  4.28878386  4.29049232  4.30648411
-##  [346]  4.31315460  4.31505460  4.32028175  4.32502851  4.33512831
-##  [351]  4.33960210  4.34662469  4.34724883  4.34836488  4.36147002
-##  [356]  4.36643033  4.37348115  4.37627605  4.38256522  4.38919990
-##  [361]  4.41445844  4.41825210  4.42377369  4.43741205  4.44140503
-##  [366]  4.44203189  4.44727848  4.46135484  4.46326029  4.46330622
-##  [371]  4.48426089  4.48447154  4.48464227  4.48698404  4.49068158
-##  [376]  4.50578197  4.50786307  4.51280831  4.52437737  4.53745186
-##  [381]  4.53945967  4.55394328  4.57047576  4.57058765  4.57199608
-##  [386]  4.57769673  4.57877664  4.58197152  4.58264000  4.58449175
-##  [391]  4.58711887  4.62756386  4.62761936  4.63386902  4.63528410
-##  [396]  4.64148828  4.64772871  4.64800663  4.65473790  4.65932414
-##  [401]  4.66094204  4.66247298  4.66559281  4.66751062  4.67194535
-##  [406]  4.67729739  4.68129508  4.68140414  4.69088644  4.69572005
-##  [411]  4.70398870  4.72151982  4.72400328  4.72473407  4.72510930
-##  [416]  4.72705823  4.74224851  4.74585373  4.74662031  4.74925300
-##  [421]  4.75254733  4.76187380  4.76342091  4.76609689  4.76630959
-##  [426]  4.76990119  4.77058053  4.78086969  4.78524179  4.79108154
-##  [431]  4.79228170  4.79359074  4.79601314  4.79949954  4.81029463
-##  [436]  4.81288580  4.81371125  4.81584572  4.82524427  4.82596759
-##  [441]  4.83018668  4.83442008  4.83741764  4.83774344  4.83940528
-##  [446]  4.84026074  4.84521926  4.84722775  4.85205327  4.85283717
-##  [451]  4.85457704  4.86099903  4.86303987  4.87718757  4.88275235
-##  [456]  4.89204657  4.89556541  4.90818293  4.91393004  4.91921391
-##  [461]  4.92227446  4.92748267  4.92791925  4.93402546  4.93518994
-##  [466]  4.94398816  4.94649019  4.96007047  4.97230633  4.97511264
-##  [471]  4.97530125  4.97657487  4.98053530  4.98686435  4.98788599
-##  [476]  4.99590316  4.99786768  5.00207852  5.00498596  5.01182091
-##  [481]  5.02010117  5.02667888  5.02984746  5.03413651  5.03467542
-##  [486]  5.03610501  5.04575990  5.05033064  5.06352646  5.06566080
-##  [491]  5.06845595  5.06955788  5.07015425  5.07271136  5.07576475
-##  [496]  5.08488367  5.08570791  5.08752805  5.09404573  5.09989509
-##  [501]  5.10161795  5.11237852  5.11475835  5.12203466  5.12281990
-##  [506]  5.12596697  5.13113247  5.13404820  5.13999127  5.14199475
-##  [511]  5.14460787  5.14615906  5.14689225  5.15007914  5.15223531
-##  [516]  5.15675265  5.16350247  5.16350561  5.16669825  5.19093291
-##  [521]  5.19877696  5.20127429  5.20566770  5.20684986  5.20723018
-##  [526]  5.20831999  5.21940982  5.22143175  5.22194983  5.22934659
-##  [531]  5.24023948  5.24049276  5.27315433  5.28264464  5.28787765
-##  [536]  5.29576477  5.30217382  5.30515562  5.31303527  5.31312614
-##  [541]  5.31316860  5.31578303  5.31819039  5.32827603  5.33340576
-##  [546]  5.33585532  5.35053353  5.35058778  5.35828852  5.35912772
-##  [551]  5.35988663  5.36262172  5.36369665  5.36441861  5.36447731
-##  [556]  5.37068696  5.37391529  5.39153290  5.39771305  5.40216950
-##  [561]  5.40958047  5.41110626  5.41917658  5.42135625  5.43031025
-##  [566]  5.43545970  5.44001669  5.44931348  5.45252878  5.45421959
-##  [571]  5.46082269  5.46213266  5.46374621  5.46836222  5.47328311
-##  [576]  5.47497020  5.48611797  5.49086406  5.49278419  5.49310706
-##  [581]  5.50241976  5.50813011  5.52605760  5.52887685  5.53247616
-##  [586]  5.53383611  5.55286268  5.56300104  5.56885810  5.56963162
-##  [591]  5.57636676  5.57882347  5.57954649  5.57966086  5.58041362
-##  [596]  5.58345894  5.58410972  5.58451071  5.58800880  5.59642745
-##  [601]  5.60066610  5.61892886  5.61983630  5.63608799  5.63838633
-##  [606]  5.64455235  5.64683414  5.64910277  5.65178376  5.65510558
-##  [611]  5.65935679  5.66244223  5.66386110  5.66555349  5.66630553
-##  [616]  5.66855053  5.66956432  5.66969423  5.67044142  5.67070838
-##  [621]  5.67530213  5.68209225  5.68356187  5.69722662  5.70456889
-##  [626]  5.70502352  5.70753849  5.70905040  5.71209629  5.71229320
-##  [631]  5.71599287  5.71642367  5.72209110  5.72462871  5.72583595
-##  [636]  5.73383368  5.73805384  5.74065189  5.74152552  5.74405383
-##  [641]  5.74556386  5.74716804  5.76137713  5.76141171  5.76554470
-##  [646]  5.76684085  5.77437855  5.77474658  5.77717461  5.78775833
-##  [651]  5.79183517  5.79367861  5.79894226  5.81055130  5.82128334
-##  [656]  5.82140457  5.82621189  5.82678311  5.82701625  5.82747102
-##  [661]  5.83056944  5.83251182  5.83522199  5.83606150  5.83737401
-##  [666]  5.84162126  5.84294254  5.85501528  5.85996950  5.86592975
-##  [671]  5.87537541  5.87542543  5.88002137  5.91115568  5.91222606
-##  [676]  5.91854992  5.92711322  5.93374125  5.93718746  5.93861076
-##  [681]  5.94302083  5.94731554  5.94817341  5.95225956  5.95654353
-##  [686]  5.95954985  5.98624141  5.99204494  6.00228369  6.00529276
-##  [691]  6.01112166  6.01788454  6.02429264  6.02769647  6.02920039
-##  [696]  6.03104799  6.03388498  6.04087040  6.04103160  6.04479759
-##  [701]  6.04760526  6.04776172  6.04905378  6.05350099  6.05593397
-##  [706]  6.05900120  6.06453234  6.06823477  6.07077471  6.08402816
-##  [711]  6.08988354  6.09054713  6.09099983  6.10407352  6.11068886
-##  [716]  6.13326701  6.15077136  6.15434561  6.15845357  6.16343975
-##  [721]  6.17797005  6.19000565  6.19099899  6.19351983  6.20221767
-##  [726]  6.20284076  6.21476749  6.22174906  6.22368590  6.22563227
-##  [731]  6.23169854  6.23217033  6.23451369  6.25615292  6.26190794
-##  [736]  6.26572208  6.27672022  6.27822092  6.28011230  6.28264620
-##  [741]  6.28925056  6.29003906  6.30522159  6.30876112  6.30963352
-##  [746]  6.31064897  6.31591574  6.32488591  6.32600202  6.33036611
-##  [751]  6.33609815  6.35680678  6.36870479  6.37599818  6.38744376
-##  [756]  6.39818668  6.39851163  6.41708975  6.43464142  6.43489205
-##  [761]  6.45553596  6.46049778  6.46129356  6.46251496  6.46586309
-##  [766]  6.47960440  6.47968091  6.49708092  6.49801798  6.50085506
-##  [771]  6.50171331  6.51830193  6.52467279  6.53363336  6.55859401
-##  [776]  6.56360226  6.56934569  6.57952525  6.58770699  6.59741897
-##  [781]  6.60388007  6.60529772  6.61998131  6.62363295  6.62722345
-##  [786]  6.62853246  6.63362278  6.63447034  6.63519064  6.64355226
-##  [791]  6.66233913  6.66892970  6.67665407  6.67936521  6.68484968
-##  [796]  6.68790423  6.69758004  6.69799456  6.71302420  6.71314429
-##  [801]  6.71559228  6.71973897  6.72679105  6.72925274  6.74974269
-##  [806]  6.75453975  6.75834204  6.78805067  6.80123436  6.81045634
-##  [811]  6.82200991  6.84829705  6.85158573  6.85390933  6.85889313
-##  [816]  6.86382913  6.88047345  6.88567243  6.88785476  6.89430854
-##  [821]  6.89978556  6.92523144  6.93333667  6.93535841  6.93677078
-##  [826]  6.94055474  6.94416783  6.94663848  6.95423666  6.95433829
-##  [831]  6.95610467  6.95661212  6.95854700  6.96222301  6.96253919
-##  [836]  6.97095692  6.98279501  7.01281066  7.01308042  7.01456545
-##  [841]  7.02230987  7.02259799  7.03640966  7.04896306  7.06595390
-##  [846]  7.06932337  7.09712383  7.10728599  7.12040544  7.12283519
-##  [851]  7.14341812  7.14894470  7.15624804  7.16606429  7.16696112
-##  [856]  7.17571690  7.17642344  7.18965445  7.19549981  7.19808508
-##  [861]  7.20894262  7.21496566  7.22470038  7.23214126  7.23308949
-##  [866]  7.27285139  7.27493460  7.29904667  7.30263174  7.31357550
-##  [871]  7.31587816  7.31975123  7.32019113  7.33986269  7.34908346
-##  [876]  7.35418994  7.36370774  7.36531917  7.36929406  7.38098143
-##  [881]  7.38740291  7.39138056  7.40294947  7.41787487  7.41930271
-##  [886]  7.42640966  7.46468392  7.47080160  7.47131712  7.49142237
-##  [891]  7.50918815  7.51133467  7.52020261  7.52313302  7.52569510
-##  [896]  7.53573113  7.54457752  7.56683638  7.56980132  7.59676642
-##  [901]  7.61726949  7.63381364  7.63442696  7.65168888  7.67345735
-##  [906]  7.67450463  7.69069121  7.69433728  7.70609032  7.70998675
-##  [911]  7.71875430  7.72452731  7.75229499  7.77068784  7.77161828
-##  [916]  7.77404136  7.77743646  7.84292241  7.91053318  7.91139905
-##  [921]  7.93237247  7.95741935  7.96383113  7.97678799  7.99902161
-##  [926]  7.99926675  8.01291646  8.04224146  8.05253878  8.05479073
-##  [931]  8.11852294  8.12707524  8.12996951  8.17545463  8.17805652
-##  [936]  8.19633457  8.20531241  8.21637714  8.21938183  8.25029914
-##  [941]  8.27838600  8.27893712  8.28204161  8.31964807  8.40364087
-##  [946]  8.41131531  8.42805827  8.43021009  8.44063430  8.46737073
-##  [951]  8.47412689  8.49440529  8.53124872  8.53949924  8.55896847
-##  [956]  8.56630315  8.57043558  8.57835909  8.58233594  8.59684121
-##  [961]  8.62980082  8.64923590  8.67522763  8.67889667  8.68922775
-##  [966]  8.69024150  8.72848396  8.81117061  8.83714194  8.88114839
-##  [971]  8.92665990  8.93874339  8.95737831  9.06995750  9.10226528
-##  [976]  9.11636089  9.16527145  9.19853221  9.22670312  9.31021237
-##  [981]  9.32496752  9.38114144  9.44201823  9.47483835  9.48487110
-##  [986]  9.48866962  9.54862881  9.64711678  9.70015769  9.73352680
-##  [991]  9.81415771  9.82681334  9.98715783 10.19675389 10.39044337
-##  [996] 10.42431367 10.85576405 10.91881427 11.23992599 11.42745467
+##    [1] -0.55298295 -0.49879679 -0.38565757 -0.28251884 -0.04510405
+##    [6]  0.02831001  0.28307531  0.28962328  0.30535535  0.37548108
+##   [11]  0.48832809  0.58475232  0.63463085  0.81457263  0.90675406
+##   [16]  1.04119634  1.09909979  1.15767635  1.19952655  1.20882480
+##   [21]  1.29357411  1.30653613  1.37552267  1.38683882  1.44625887
+##   [26]  1.44939762  1.45830584  1.47233603  1.50062392  1.51705986
+##   [31]  1.53151865  1.54930057  1.57741695  1.62520318  1.64460300
+##   [36]  1.68445739  1.69481381  1.76193559  1.82081059  1.83176197
+##   [41]  1.83888157  1.85700960  1.86151643  1.86903902  1.87782065
+##   [46]  1.88974147  1.90018763  1.90027248  1.91034177  1.91256702
+##   [51]  1.92182823  1.92611864  1.93077173  1.93590589  1.94149690
+##   [56]  1.95739918  1.95975225  1.98822697  2.00797867  2.00827251
+##   [61]  2.03090944  2.03575976  2.04019901  2.04024904  2.04802186
+##   [66]  2.05646645  2.07449795  2.07926124  2.13601562  2.17599116
+##   [71]  2.18740562  2.20643651  2.21222505  2.21701330  2.23359350
+##   [76]  2.25992683  2.27324721  2.29178308  2.30821314  2.31407224
+##   [81]  2.32166561  2.32807181  2.32863138  2.34727308  2.35642099
+##   [86]  2.35715160  2.35741029  2.36598991  2.37068222  2.37867935
+##   [91]  2.37929394  2.40236281  2.40672962  2.42904864  2.43585918
+##   [96]  2.44467044  2.45365890  2.48543109  2.48765811  2.49136419
+##  [101]  2.49387704  2.49514738  2.49680630  2.50902470  2.51122509
+##  [106]  2.52669435  2.55650809  2.55816004  2.61440244  2.63627293
+##  [111]  2.64656611  2.65784358  2.66164217  2.67084104  2.67462881
+##  [116]  2.67992270  2.68058719  2.69949309  2.69981226  2.70626096
+##  [121]  2.72651779  2.72735345  2.72952943  2.73064274  2.73655107
+##  [126]  2.73735457  2.75264397  2.75700313  2.76307423  2.76476342
+##  [131]  2.78307482  2.79815166  2.84206494  2.84464167  2.84876293
+##  [136]  2.85535067  2.85760130  2.87592706  2.87676990  2.88809310
+##  [141]  2.89559424  2.90707270  2.90828208  2.90985508  2.92364922
+##  [146]  2.92507393  2.92744569  2.93275880  2.93474571  2.93654348
+##  [151]  2.94308224  2.94990237  2.95307648  2.95315509  2.95957251
+##  [156]  2.97294203  2.98074651  2.98831012  3.01161807  3.04655947
+##  [161]  3.06581454  3.06697074  3.07176378  3.07640552  3.07866700
+##  [166]  3.09645316  3.12260566  3.12348707  3.12901305  3.13608295
+##  [171]  3.14312376  3.15139616  3.15621470  3.16542288  3.16641412
+##  [176]  3.16671445  3.16679641  3.18773157  3.18812586  3.19815400
+##  [181]  3.21115563  3.24452530  3.24512854  3.25168775  3.25293357
+##  [186]  3.26522675  3.26624534  3.27127793  3.28841478  3.29740979
+##  [191]  3.30009576  3.32315279  3.32403405  3.32580517  3.33759587
+##  [196]  3.33964567  3.34553398  3.35958051  3.36013876  3.36677745
+##  [201]  3.36765012  3.37883086  3.37884220  3.38842582  3.39185144
+##  [206]  3.40769815  3.43289517  3.44283617  3.47359409  3.47952602
+##  [211]  3.48528413  3.49374667  3.49628301  3.50381883  3.50755418
+##  [216]  3.51225591  3.51641167  3.53075944  3.53622665  3.54217437
+##  [221]  3.54282179  3.54903673  3.55617683  3.55779837  3.56390169
+##  [226]  3.57205173  3.57878237  3.57965778  3.58068177  3.59283167
+##  [231]  3.60174417  3.60183685  3.60445172  3.64619769  3.64680119
+##  [236]  3.66921337  3.69239117  3.69445380  3.69775084  3.69936237
+##  [241]  3.71391516  3.71557606  3.71754932  3.71936933  3.73164209
+##  [246]  3.73523087  3.74595914  3.76886339  3.77288150  3.77560549
+##  [251]  3.77881741  3.78323824  3.78574444  3.79628891  3.80398692
+##  [256]  3.80488853  3.81021175  3.81102173  3.82400100  3.82818833
+##  [261]  3.82945493  3.83208231  3.83914185  3.84602360  3.85927332
+##  [266]  3.86654717  3.86745599  3.87257744  3.87763251  3.88059924
+##  [271]  3.88145121  3.88609031  3.88732383  3.89130100  3.89801146
+##  [276]  3.90363895  3.91558265  3.91621565  3.91959061  3.92124877
+##  [281]  3.92289530  3.93498932  3.93536316  3.93588923  3.93667460
+##  [286]  3.94254979  3.95316257  3.97053331  3.97785447  3.98231287
+##  [291]  3.98264833  3.98363309  3.98499650  3.98580738  3.98811757
+##  [296]  4.00356282  4.00810209  4.01058327  4.01284349  4.01337990
+##  [301]  4.02438428  4.02699334  4.03325417  4.03469725  4.03764576
+##  [306]  4.04030860  4.04962732  4.05934682  4.06451979  4.06935748
+##  [311]  4.07351665  4.07615261  4.07921910  4.07986833  4.08013891
+##  [316]  4.08436169  4.08575326  4.08631961  4.10096657  4.11168927
+##  [321]  4.11698633  4.12011892  4.12030145  4.12606052  4.13802174
+##  [326]  4.14492441  4.14500656  4.15166682  4.15606168  4.15659248
+##  [331]  4.15783519  4.15844876  4.16021689  4.16253298  4.18248717
+##  [336]  4.18372571  4.18909802  4.20255923  4.20287881  4.20337597
+##  [341]  4.20905744  4.21027604  4.22454598  4.22455396  4.22956248
+##  [346]  4.23231015  4.23405103  4.23583784  4.23819240  4.24227622
+##  [351]  4.24659044  4.25385768  4.25777043  4.26036465  4.26445989
+##  [356]  4.26580175  4.27722985  4.28061770  4.28218355  4.30268057
+##  [361]  4.30274626  4.32204272  4.32583042  4.34837280  4.34935072
+##  [366]  4.35734070  4.35836029  4.36613056  4.36905871  4.37325871
+##  [371]  4.37830955  4.37963220  4.38337637  4.38434860  4.39301146
+##  [376]  4.39691753  4.40366445  4.41284836  4.41613792  4.41681460
+##  [381]  4.42218496  4.42914724  4.43872900  4.44167825  4.44230429
+##  [386]  4.44623367  4.45513316  4.45728677  4.45777263  4.45977459
+##  [391]  4.46042816  4.47315222  4.47341891  4.48405738  4.48619896
+##  [396]  4.48842625  4.49614995  4.50288023  4.50401936  4.50965422
+##  [401]  4.51306778  4.51570666  4.52620371  4.53145419  4.53193546
+##  [406]  4.53421678  4.54403904  4.54544148  4.55732130  4.56028714
+##  [411]  4.56138625  4.56235018  4.56252108  4.56419603  4.56620699
+##  [416]  4.57903711  4.58827658  4.58931447  4.59815190  4.60106470
+##  [421]  4.60369899  4.61090488  4.61998370  4.62516356  4.62836331
+##  [426]  4.63041684  4.63131522  4.63524489  4.63544745  4.64594528
+##  [431]  4.64941629  4.64941996  4.65279650  4.65672504  4.66437109
+##  [436]  4.66620689  4.66691680  4.67063417  4.68468651  4.69980501
+##  [441]  4.70187781  4.70895886  4.71239349  4.71398302  4.71635116
+##  [446]  4.71962200  4.72098194  4.72285675  4.72683177  4.72809556
+##  [451]  4.73322000  4.73444722  4.74423149  4.75003686  4.75552732
+##  [456]  4.75625550  4.76386213  4.76415192  4.76435277  4.77468068
+##  [461]  4.78086551  4.78649718  4.78677733  4.78682435  4.79205784
+##  [466]  4.79496292  4.79996314  4.80131839  4.80345578  4.80664397
+##  [471]  4.81314971  4.81335887  4.81433156  4.82153985  4.82586248
+##  [476]  4.83717037  4.84244778  4.84318606  4.84471517  4.84636633
+##  [481]  4.85155148  4.85690565  4.85833171  4.86060051  4.86695864
+##  [486]  4.87589466  4.87696698  4.87764565  4.88108345  4.92577982
+##  [491]  4.92720478  4.92931722  4.92938699  4.93323893  4.93337122
+##  [496]  4.93415475  4.93625551  4.94117859  4.94173232  4.95036805
+##  [501]  4.95352560  4.96165619  4.96621465  4.96859981  4.97089387
+##  [506]  4.97398882  5.00121261  5.00538212  5.01146263  5.01384018
+##  [511]  5.01395529  5.01516776  5.02066096  5.02481496  5.02635428
+##  [516]  5.02725849  5.03100674  5.03545869  5.03782800  5.05358326
+##  [521]  5.05597167  5.05997768  5.06538845  5.07031513  5.07674708
+##  [526]  5.07704334  5.08546073  5.09363800  5.10237835  5.10698528
+##  [531]  5.11113070  5.11803101  5.12688984  5.12706517  5.13140434
+##  [536]  5.14604222  5.16246998  5.17980310  5.18235546  5.19011452
+##  [541]  5.19185767  5.19449644  5.19851675  5.19913544  5.20673147
+##  [546]  5.21160511  5.21465557  5.21493773  5.21765280  5.21973529
+##  [551]  5.22539722  5.23339211  5.24567053  5.25005415  5.25889400
+##  [556]  5.26179521  5.27520061  5.28097540  5.28464377  5.29406106
+##  [561]  5.29805759  5.30503315  5.30794819  5.30892420  5.31014338
+##  [566]  5.31571883  5.31617153  5.32403404  5.33967122  5.33973769
+##  [571]  5.34221980  5.34946305  5.35740523  5.35820711  5.37808704
+##  [576]  5.37844945  5.39212685  5.39283535  5.40033200  5.40728223
+##  [581]  5.41213556  5.43333091  5.44001557  5.45819481  5.46047153
+##  [586]  5.46335796  5.46902799  5.47116483  5.47395051  5.47411296
+##  [591]  5.48652153  5.49713766  5.50295075  5.50358912  5.50787320
+##  [596]  5.50897007  5.51161434  5.51184048  5.51621159  5.51818103
+##  [601]  5.52012727  5.52910074  5.53387542  5.53966888  5.54238008
+##  [606]  5.55089042  5.55416897  5.55693478  5.56000829  5.56002912
+##  [611]  5.56077419  5.56113076  5.56182896  5.56829934  5.57281591
+##  [616]  5.57697967  5.58196384  5.59765919  5.59851818  5.59929037
+##  [621]  5.59941991  5.60026739  5.60579673  5.62745023  5.63177594
+##  [626]  5.64033135  5.64416530  5.65264876  5.65320907  5.65796778
+##  [631]  5.66800033  5.66952922  5.68014681  5.68278780  5.68672541
+##  [636]  5.69390639  5.69894634  5.70179403  5.74265968  5.75183381
+##  [641]  5.75877653  5.76615862  5.76844027  5.78483515  5.78483886
+##  [646]  5.78797843  5.78925585  5.79023620  5.79273433  5.79429256
+##  [651]  5.80051311  5.81876355  5.82013255  5.82017015  5.82227102
+##  [656]  5.82811013  5.83605848  5.83975732  5.84108253  5.84203485
+##  [661]  5.84517784  5.85262021  5.86136581  5.86190318  5.86190392
+##  [666]  5.86689081  5.87610061  5.88008567  5.88552488  5.89390049
+##  [671]  5.91667122  5.91996452  5.93117299  5.94084428  5.94716996
+##  [676]  5.94729836  5.95485897  5.96432537  5.96788813  5.97141379
+##  [681]  5.97806985  5.98820622  5.99410469  5.99692182  5.99774524
+##  [686]  6.00679810  6.01909539  6.03644274  6.04264914  6.04303696
+##  [691]  6.04498570  6.04710531  6.05978805  6.06207311  6.06442442
+##  [696]  6.06686707  6.06852720  6.06887783  6.08321732  6.08737333
+##  [701]  6.10215328  6.10770121  6.11059399  6.11529596  6.11683134
+##  [706]  6.11769756  6.11844230  6.11952047  6.12006514  6.13042852
+##  [711]  6.13212514  6.13294152  6.14482411  6.15275767  6.15382478
+##  [716]  6.15865925  6.16161979  6.16572529  6.17620677  6.17737072
+##  [721]  6.18180982  6.18863240  6.18918016  6.19009820  6.19240524
+##  [726]  6.19587198  6.20094989  6.20940869  6.21037568  6.21227914
+##  [731]  6.21240687  6.22112211  6.22657865  6.23090937  6.23864156
+##  [736]  6.24090629  6.24256280  6.24833852  6.24947761  6.25293645
+##  [741]  6.25710568  6.26498851  6.27983004  6.28583547  6.30162303
+##  [746]  6.30497820  6.30659979  6.31989443  6.33176409  6.33263611
+##  [751]  6.33740066  6.34906022  6.35820937  6.35832455  6.37118414
+##  [756]  6.38300812  6.38686578  6.38950560  6.38987288  6.39078192
+##  [761]  6.39179530  6.39345397  6.39688486  6.39834340  6.40807268
+##  [766]  6.41118991  6.42066613  6.42992441  6.43407757  6.44883427
+##  [771]  6.45141413  6.45231701  6.45488372  6.46148981  6.46232873
+##  [776]  6.46671796  6.47156367  6.49600468  6.50641430  6.50977008
+##  [781]  6.51421666  6.52445707  6.52567548  6.53008852  6.54301857
+##  [786]  6.55721224  6.56302983  6.56439293  6.57178089  6.57584589
+##  [791]  6.58479210  6.58583325  6.58640144  6.59333655  6.60245757
+##  [796]  6.60618102  6.61081118  6.61475479  6.62186239  6.62339424
+##  [801]  6.62560196  6.62790874  6.65071417  6.66243547  6.67251352
+##  [806]  6.68061368  6.70920733  6.71220359  6.72486707  6.72556584
+##  [811]  6.72837023  6.73059887  6.74131671  6.74235209  6.76385137
+##  [816]  6.76766581  6.77628496  6.78545593  6.78600332  6.79133921
+##  [821]  6.79179445  6.79306048  6.80660799  6.82473470  6.82888724
+##  [826]  6.83731947  6.84644935  6.85270937  6.85587657  6.85624555
+##  [831]  6.86915798  6.88023095  6.88161480  6.88330162  6.88334851
+##  [836]  6.89067202  6.89121579  6.89673562  6.90065010  6.90907115
+##  [841]  6.90918201  6.90998987  6.96228176  6.96728381  6.97337717
+##  [846]  6.98004759  6.98007378  6.98577699  6.98898522  6.99310468
+##  [851]  6.99676928  7.00716853  7.01443664  7.01841628  7.02343207
+##  [856]  7.02983168  7.04027324  7.04512647  7.04586758  7.04747222
+##  [861]  7.05222187  7.05455098  7.06857980  7.07323254  7.07782742
+##  [866]  7.09018637  7.09095061  7.09103765  7.10307306  7.13761014
+##  [871]  7.14800766  7.14822727  7.19084074  7.22837723  7.22999816
+##  [876]  7.23281976  7.23743165  7.24496039  7.26020676  7.26395016
+##  [881]  7.28674751  7.29005847  7.29303653  7.30065346  7.30973170
+##  [886]  7.32664438  7.33356097  7.34435322  7.34608054  7.34731652
+##  [891]  7.37432766  7.38516607  7.39430019  7.40031033  7.40885686
+##  [896]  7.41829991  7.41900368  7.46817921  7.52175194  7.52230139
+##  [901]  7.56221099  7.57112789  7.57930352  7.58092216  7.59841350
+##  [906]  7.61684835  7.63035783  7.63827571  7.64997338  7.66075388
+##  [911]  7.67295083  7.68100482  7.69345737  7.72707155  7.73035912
+##  [916]  7.73947046  7.74797377  7.74858349  7.75629338  7.77436512
+##  [921]  7.77934240  7.79243959  7.79402067  7.80584685  7.82193890
+##  [926]  7.82622540  7.83857988  7.84077738  7.85349050  7.86012248
+##  [931]  7.87693739  7.89112381  7.89908856  7.90294501  7.90351537
+##  [936]  7.90480929  7.90505722  7.90902382  7.91694906  7.92664911
+##  [941]  7.92667783  7.94273781  8.02781838  8.03694329  8.03942951
+##  [946]  8.05704670  8.05888797  8.08909533  8.09747670  8.12904701
+##  [951]  8.14232012  8.14956661  8.15994965  8.17336926  8.18687845
+##  [956]  8.20222723  8.21494264  8.22216088  8.24874470  8.26018368
+##  [961]  8.29672475  8.30476792  8.38405279  8.39437847  8.47694831
+##  [966]  8.48948571  8.49338578  8.51173690  8.51277220  8.54423838
+##  [971]  8.55339253  8.56277531  8.57374779  8.69861379  8.78270887
+##  [976]  8.82712365  8.85339348  8.85885463  8.86646136  8.87807179
+##  [981]  9.05289332  9.19120279  9.32207425  9.36313668  9.44871276
+##  [986]  9.62273152  9.64067818  9.64794046  9.69179875  9.69880084
+##  [991]  9.72349588  9.92682852  9.94263946  9.96619218 10.01598475
+##  [996] 10.08362377 10.24087712 10.42457197 11.26067939 11.54295365
 \end{verbatim}
 
 \begin{Shaded}
@@ -5518,7 +6436,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,92561
+## [1] 5,037732
 \end{verbatim}
 \item
   Esta moda estimada pode nem estar no conjunto de dados:
@@ -5570,7 +6488,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   Se o histograma tem todas as barras aproximadamente da mesma altura, dizemos que a distribuição é {\hl{uniforme}}:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-149-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-194-1} \end{center}
 \item
   {\hl{A distribuição uniforme não tem moda}}, já que todos os valores têm aproximadamente a mesma frequência.
 \end{itemize}
@@ -5599,7 +6517,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5,065422
+## [1] 5,01997
 \end{verbatim}
 
 \begin{Shaded}
@@ -5609,7 +6527,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5,100757
+## [1] 4,951947
 \end{verbatim}
 
 \begin{Shaded}
@@ -5619,7 +6537,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,92561
+## [1] 5,037732
 \end{verbatim}
   \item
     Para a distribuição uniforme do exemplo:
@@ -5631,7 +6549,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,825585
+## [1] 5,098863
 \end{verbatim}
 
 \begin{Shaded}
@@ -5641,7 +6559,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,748512
+## [1] 5,19571
 \end{verbatim}
   \end{itemize}
 \item
@@ -6683,7 +7601,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 \item
   Graficamente:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-164-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-209-1} \end{center}
 \item
   Vamos conferir:
 

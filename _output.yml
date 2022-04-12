@@ -11,4 +11,4 @@ fnaufelRmd::bs4_book:
     after_body: html_files/webex.js
 
 fnaufelRmd::pdf_book:
-  []
+  keep_md: true
