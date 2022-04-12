@@ -4,3 +4,8 @@ source(
     package = 'fnaufelRmd'
   )
 )
+
+# For interactive exercises
+# See https://github.com/fnaufel/exercises
+library(exercises)
+exercises::iniciar()

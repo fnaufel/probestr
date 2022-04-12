@@ -6,10 +6,9 @@ fnaufelRmd::bs4_book:
   url: 'https://fnaufel.github.io/probestr/'
   github-repo: fnaufel/probestr
   repo: https://github.com/fnaufel/probestr
-  # If not using Portuguese, change lang: 'pt-br' in your .Rmd file
-  # and uncomment this next line:
-  #
-  # template: 'default'
+  css: ['default', 'html_files/webex.css']
+  includes:
+    after_body: html_files/webex.js
 
 fnaufelRmd::pdf_book:
   []

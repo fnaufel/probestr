@@ -593,33 +593,280 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
       )
     ```
 
-1. Quantas linhas têm a *tibble*?
+1. Quantas linhas tem a *tibble*?
+
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% nrow()
+   ```
+   
+   `r fim_resposta()`
 
 1. Existem heróis que aparecem em mais de uma linha?
 
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% 
+     count(nome)
+   ```
+   
+   Precisaríamos [examinar a tabela acima]{.hl}, procurando linhas com $n > 1$. 
+   
+   [Vamos pedir para o R fazer isto:]{.hl}
+   
+   ```{r}
+   repetidos <- herois_info %>% 
+     count(nome) %>% 
+     filter(n > 1)
+   
+   repetidos
+   ```
+   
+   Vamos mostrar mais dados destes heróis:
+   
+   ```{r}
+   herois_info %>% 
+     filter(nome %in% repetidos$nome) %>% 
+     select(nome, editora, raça, everything())
+   ```
+   
+   Em alguns casos, são editoras diferentes (como para Angel e Atlas). 
+   
+   Em alguns casos, o mesmo herói aparece com várias características.
+   
+   São $`r nrow(repetidos)`$ heróis que aparecem mais de uma vez. É um número pequeno o bastante para corrigirmos a situação manualmente. 
+   
+   Como não tenho conhecimento suficiente sobre heróis para fazer isso, vou ignorar esta confusão e usar os dados como estão.
+   
+   `r fim_resposta()`
+
 1. Quantas editoras diferentes existem na *tibble*? Liste-as em ordem decrescente de quantidade de heróis.
 
-1. Na coluna `editora`, substitua 
+   `r inicio_resposta()`
+     
+   ```{r}
+   herois_info %>% count(editora, sort = TRUE)
+   ```
+     
+   `r fim_resposta()`
+
+1. Vamos colocar todas as editores menores em uma classe só. 
+
+   Na coluna `editora`, substitua 
 
    * 'Marvel Comics' por 'Marvel', 
    * 'DC Comics' por 'DC', e 
    * todas as outras editoras pelo termo 'Outras'.
    
    **Dica:** use a função `case_when()`, do `tidyverse`.
+
+   `r inicio_resposta()`
    
+   ```{r}
+   herois_info <- herois_info %>% 
+     mutate(
+       editora = case_when(
+         editora == 'Marvel Comics' ~ 'Marvel',
+         editora == 'DC Comics' ~ 'DC',
+         TRUE ~ 'Outras'
+       )
+   )
+   ```
+   
+   `r fim_resposta()`
+
 1. Confira, novamente, a quantidade de valores diferentes na coluna `editora`.
+
+   `r inicio_resposta()`
+     
+   ```{r}
+   herois_info %>% count(editora, sort = TRUE)
+   ```
+     
+   `r fim_resposta()`
 
 1. Existem heróis sem informação de editora. Quantos? Quais são?
 
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% filter(is.na(editora))
+   ```
+   
+   Na verdade, a chamada a `case_when()`, da maneira como fiz, já substituiu os `NA` por 'Outras'. Entenda por quê.
+     
+   `r fim_resposta()`
+
 1. Altere novamente a coluna `editora`, colocando o valor 'Outras' para os heróis sem informação de editora. Use a função `if_else()` (com *underscore*, não a função `ifelse`).
+
+   `r inicio_resposta()`
+   
+   Se, no seu caso, ainda houver valores `NA` em `editora`, basta fazer o seguinte:
+   
+   ```{r eval=FALSE}
+   herois_info <- herois_info %>% 
+     mutate(
+       editora = if_else(is.na(editora), 'Outras', editora)
+     )
+   ```
+   
+   `r fim_resposta()`
+
 
 1. Confira, mais uma vez, a quantidade de valores diferentes na coluna `editora`.
 
+   `r inicio_resposta()`
+     
+   ```{r}
+   herois_info %>% count(editora, sort = TRUE)
+   ```
+     
+   `r fim_resposta()`
+
 1. Existem heróis sem informação de sexo? Quantos? Para estes heróis, coloque o valor 'Desconhecido' na coluna `sexo`.
+
+   `r inicio_resposta()`
+   
+   ```{r}
+   herois_info %>% filter(is.na(sexo))
+   ```
+   
+   ```{r}
+   herois_info <-  herois_info %>% 
+     mutate(
+       sexo = if_else(
+         is.na(sexo),
+         'Desconhecido',
+         sexo
+       )
+     )
+   ```
+
+   Conferindo:
+   
+   ```{r}
+   herois_info %>% filter(is.na(sexo))
+   ```
+
+   `r fim_resposta()`
 
 1. Qual a altura mínima? Qual a altura máxima? Substitua as alturas negativas por `NA`.
 
+   `r inicio_resposta()`
+   
+   Podemos extrair o vetor de alturas com `pull` e usar a função `summary` do R    base, que retorna um vetor:
+   
+   ```{r}
+   herois_info %>% 
+     pull(altura) %>% 
+     summary()
+   ```
+   
+   Ou podemos usar `summarize`, do `tidyverse`, que retorna uma *tibble*:
+   
+   ```{r}
+   herois_info %>% 
+     summarize(
+       minimo = min(altura),
+       maximo = max(altura)
+     )
+   ```
+   
+   Quantas alturas negativas existem?
+   
+   ```{r}
+   herois_info %>% count(altura < 0)
+   ```
+   
+   Substituindo as alturas negativas por `NA`:
+   
+   ```{r}
+   herois_info <- herois_info %>% 
+     mutate(
+       altura = if_else(
+         altura < 0,
+         NA_real_,
+         altura
+       )
+     )
+   ```
+   
+   Como `if_else` (com *underscore*) é exigente, precisamos passar `NA_real_`    em vez de `NA`.
+   
+   Situação atual:
+
+   ```{r}
+   herois_info %>% 
+     pull(altura) %>% 
+     summary()
+   ```
+   
+   `r fim_resposta()`
+
 1. Qual o peso mínimo? Qual o peso máximo? Substitua os pesos negativos por `NA`.
+
+   `r inicio_resposta()`
+   
+   Como fizemos com as alturas:
+   
+   ```{r}
+   herois_info %>% 
+     pull(peso) %>% 
+     summary()
+   ```
+   
+   Observe que existem valores `NA` em peso.
+   
+   ```{r}
+   herois_info %>% 
+     summarize(
+       minimo = min(peso),
+       maximo = max(peso)
+     )
+   ```
+   
+   Para ignorar os valores `NA` nas funções `min()` e `max()`:
+   
+   ```{r}
+   herois_info %>% 
+     summarize(
+       minimo = min(peso, na.rm = TRUE),
+       maximo = max(peso, na.rm = TRUE)
+     )
+   ```
+   
+   Quantos pesos negativos existem?
+   
+   ```{r}
+   herois_info %>% count(peso < 0)
+   ```
+   
+   Substituindo por `NA`:
+   
+   ```{r}
+   herois_info <- herois_info %>% 
+     mutate(
+       peso = if_else(
+         peso < 0,
+         NA_real_,
+         peso
+       )
+     )
+   ```
+   
+   Como `if_else` (com *underscore*) é exigente, precisamos passar `NA_real_`    em vez de `NA`.
+   
+   Situação atual:
+
+   ```{r}
+   herois_info %>% 
+     pull(peso) %>% 
+     summary()
+   ```
+   
+   `r fim_resposta()`
 
 1. Qual é o peso médio de todos os heróis? Ignore os valores `NA`.
 
