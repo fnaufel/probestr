@@ -14,7 +14,7 @@ cover-image: "images/640px-Nightingale-mortality.jpg"
 documentclass: "report"
 classoption: '11pt'
 geometry: 'margin=1in'
-bibliography: []
+bibliography: ['bibliography.bib', 'packages.bib']
 link-citations: yes
 ---
 

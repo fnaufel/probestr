@@ -31,5 +31,7 @@ rmd_files: [
   "tidyverse.Rmd",
   "viz-01.Rmd",
   "viz-02.Rmd",
-  "medidas.Rmd"
+  "medidas.Rmd",
+  "probabilidades.Rmd",
+  "refs.Rmd"
 ]

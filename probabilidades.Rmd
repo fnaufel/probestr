@@ -1,0 +1,889 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Probabilidades {#probs}
+
+## Vídeo 1
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('hJfyzRzEs44')
+```
+
+## Espaço amostral
+
+* Para falar em probabilidades, precisamos falar de [experimentos, resultados, espaços amostrais, e eventos]{.hl}.
+
+* Um [experimento probabilístico]{.hl} é um experimento cujo resultado exato é desconhecido *a priori*; mais ainda: [executar o experimento diversas vezes, nas mesmas condições, pode produzir resultados diferentes]{.hl}.
+
+* O [espaço amostral]{.hl} é o conjunto de [todos os resultados possíveis]{.hl} de um experimento probabilístico, representados de alguma forma.
+
+* Exemplos:
+
+  1. Experimento: lançar uma moeda;  
+     Espaço amostral: $\{ K, C \}$ (onde $K$ é cara, $C$ é coroa).
+  
+  1. Experimento: lançar $2$ moedas;  
+     Espaço amostral: $\{ (K,K), (K,C), (C,K), (C,C) \}$.
+     
+  1. Experimento: lançar um dado;  
+     Espaço amostral: $\{ 1, 2, 3, 4, 5, 6 \}$.
+  
+  1. Experimento: lançar $2$ dados:  
+     Espaço amostral: $\{ (1, 1), (1, 2), \ldots, (6, 5), (6, 6) \}$.
+
+
+## Evento
+
+* Um [evento]{.hl} é um subconjunto do espaço amostral; ou seja, um evento é um [conjunto de resultados]{.hl}.
+
+* Exemplos:
+
+  1. Lançar uma moeda e [obter cara]{.hl}: $\{ K \}$.
+  
+  1. Lançar 2 moedas e [obter resultados iguais]{.hl}: $\{ (K,K), (C,C) \}$.
+  
+  1. Lançar um dado e [obter um número maior que 4]{.hl}: $\{ 5, 6 \}$.
+  
+  1. Lançar 2 dados e [obter 2 números iguais]{.hl}: $\{ (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) \}$.
+  
+* Dizemos que [o evento $A$ ocorreu]{.hl} se o experimento foi realizado e [o resultado obtido está no conjunto que corresponde ao evento $A$]{.hl}.
+
+
+## Análise Combinatória
+
+* Para calcularmos probabilidades, vamos precisar [contar a quantidade de certos objetos complexos]{.hl} (formados por partes menores).
+
+* Existem [técnicas de contagem]{.hl}, que são assunto de [Análise Combinatória]{.hl}.
+
+* Exemplos:
+
+  1. Quantas senhas de $6$ caracteres (dentre letras e dígitos apenas) existem, [sem distinguir entre minúsculas e maiúsculas]{.hl}?
+  
+     `r inicio_resposta()`
+     
+     * O conjunto de letras e dígitos tem $36$ elementos.
+     
+     * A resposta é $36^{6} = 2.176.782.336$.
+     
+     `r fim_resposta()`
+     
+
+  1. E se não puder haver repetição de caracteres?
+  
+     `r inicio_resposta()`
+     
+     * Agora, a resposta é
+       $$
+       36 \cdot 35 \cdot 34 \cdot 33 \cdot 32 \cdot 31 = 1.402.410.240
+       $$
+     
+     `r fim_resposta()`
+
+* Se você nunca tiver estudado técnicas de contagem, ou se quiser revisar ou aprender mais, consulte o excelente livro @oliveira-2004-analis.
+
+
+## Probabilidade clássica
+
+* Nesta abordagem (que nem sempre é a correta para o problema que estamos tentando resolver), cada resultado do espaço amostral tem a mesma chance de ocorrer.
+
+* Para um evento $E$:
+  $$
+  P(E) = \frac{\text{Qtde de resultados em } E}{\text{Qtde de resultados no espaço amostral}}
+  $$
+  
+* De um baralho normal, de 52 cartas, qual a probabilidade de escolher uma carta ao acaso e obter
+
+  1. Uma carta de ouros?
+  
+  2. Uma carta vermelha?
+  
+  3. Uma carta de figura (J, Q ou K)?
+  
+  4. Uma carta de ouros, copas, paus ou espadas?
+  
+  5. Um carta de um naipe verde?
+
+
+## Probabilidade empírica (estatística)
+
+* Baseada em repetições de um experimento probabilístico.
+
+* A probabilidade de um evento é sua *frequência relativa*:
+  $$
+  P(E) = \frac{\text{Qtde de ocorrências de } E}{\text{Qtde total de repetições do experimento}}
+  $$
+  
+::: {.rmdimportant}
+
+### Lei dos grandes números {-}
+
+Quando o número $n$ de repetições de um experimento tende a infinito, a frequência relativa de um evento tende à sua probabilidade real.
+
+:::
+
+??? Use patchwork here
+
+```{r lancar-e-plotar-caras}
+lancar <- function(lancamentos, n = 100) {
+
+  moeda <- c('k', 'c')
+  novos <- sample(moeda, n, replace = TRUE)
+  c(lancamentos, novos)
+  
+}
+
+plotar <- function(lancamentos) {
+  
+  n <- length(lancamentos)
+  caras <- tibble(caras = cumsum(lancamentos == 'k')/(1:n))
+
+  intervalo <- 10 ^ (ceiling(log10(n)) - 1)  
+  grafico <- caras %>% 
+    ggplot(aes(x = 1:n, y = caras)) +
+      geom_line(color = 'blue') +
+      scale_y_continuous(
+        name = 'proporção\nde caras',
+        breaks = seq(0, 1, 0.1),
+        limits = c(0,1)
+      ) +
+      scale_x_continuous(
+        name = 'lançamentos',
+        breaks = seq(0, n, intervalo)
+      )
+  
+  print(grafico)
+  
+}
+```
+
+```{r lancar}
+resultados <- vector()
+
+for (i in 1:10) {
+  resultados <- lancar(resultados)
+  plotar(resultados)
+}
+```
+
+::: {.rmdimportant}
+
+Isto **não** quer dizer que eventos que não acontecem há muito tempo têm probabilidade maior de acontecer no futuro próximo.
+
+:::
+
+## Probabilidade subjetiva
+
+* Crença.
+
+* Consistente com os valores que você estaria disposto a apostar contra alguém para que a aposta seja justa.
+
+* Exemplo???
+
+
+## Formalização de probabilidades
+
+::: {.rmdimportant}
+
+1. $0 \leq P(A) \leq 1$, para qualquer evento $A$
+
+2. $P(\Omega) = 1$, onde $\Omega$ é o espaço amostral
+
+3. $P(\bar A) = 1 - P(A)$, onde $\bar A$ é o evento complementar de $A$ (i.e., o evento que corresponde a $A$ *não* ocorrer)
+
+4. $P(A \cup B) = P(A) + P(B)$, onde $A$ e $B$ são eventos disjuntos (i.e., $A$ e $B$ não podem ocorrer ao mesmo tempo)
+
+??? Coleção de uma quantidade infinita (contável) de conjuntos ???
+
+:::
+
+
+## Eventos independentes (explicação informal)
+
+A probabilidade de os eventos $A$ e $B$ acontecerem ao mesmo tempo é escrita como
+$$
+P(A, B) \qquad \text{ou como} \qquad P(A \cap B)
+$$
+
+Se a ocorrência de $A$ não influencia a ocorrência de $B$, nem vice-versa, dizemos que os eventos $A$ e $B$ são *independentes*.
+
+Exemplo: 
+
+* O experimento é lançar um dado duas vezes.
+
+* $A$ é o evento *o primeiro lançamento deu um número par*.
+
+* $B$ é o evento *o segundo lançamento deu 6*.
+
+Quando $A$ e $B$ são independentes,
+$$
+P(A, B) = P(A) \cdot P(B)
+$$
+
+
+## $P(A \cup B)$ com $A$ e $B$ não-disjuntos
+
+$$
+P(A \cup B) = P(A) + P(B) - P(A, B)
+$$
+
+??? Imagem ???
+
+
+## Problema do aniversário
+
+Em uma sala estão 25 pessoas escolhidas ao acaso. Qual a probabilidade de que pelo menos 2 delas façam aniversário no mesmo dia do ano?
+
+### Premissas
+
+* Os dias dos aniversários das pessoas são independentes.
+
+* Cada dia do ano tem a mesma probabilidade de ser o aniversário de alguém.
+
+* Vamos ignorar anos bissextos. Cada ano tem 365 dias.
+
+### Solução teórica
+
+* Queremos achar $P(I)$, onde $I$ é o evento de que pelo menos duas pessoas têm aniversários iguais.
+
+* Vamos calcular a probabilidade $P(N)$ de que *não* haja aniversários iguais.
+
+* Este evento $N$ é o complementar do evento $I$, i.e., $N = \bar I$.
+
+* Então, $P(I) = 1 - P(N)$.
+
+* $P(N)$ é a probabilidade de que todos os aniversários caiam em dias diferentes:
+
+  * A pessoa 1 pode ter nascido em qualquer dia do ano.
+  
+  * A pessoa 2 precisa ter nascido em algum dos outros 364 dias. A probabilidade deste evento é $\frac{364}{365}$.
+  
+  * A pessoa 3 precisa ter nascido em algum dos outros 363 dias. A probabilidade deste evento é $\frac{363}{365}$.
+  
+  * $\ldots$
+  
+  * A pessoa 25 precisa ter nascido em algum dos outros 341 dias. A probabilidade deste evento é $\frac{341}{365}$.
+
+* Como os nascimentos são independentes, temos
+  $$
+  P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot \frac{341}{365}
+       = \frac{364 \cdot 363 \cdot \cdots \cdot 341}{365^{24}}
+  $$
+
+```{r pn}
+pn <- prod((364:341)/365)
+pn
+```
+
+* A resposta é
+
+```{r pi}
+1 - pn
+```
+
+* Surpreso? Com 25 pessoas na sala, é mais provável haver do que não haver coincidência de aniversários!
+
+
+### Simulação
+
+Vamos simular milhares de salas com 25 pessoas satisfazendo as [premissas](#premissas) e ver em quantas delas há coincidência de aniversários:
+
+```{r aniversario}
+nsalas <- 1e4
+npessoas <- 25
+
+coincidencia <- function(sala) {
+  
+  !(length(unique(sala)) == length(sala))
+  
+}
+
+testar_sala <- function(npessoas) {
+  
+  sala <- sample(1:365, npessoas, replace = TRUE)
+  coincidencia(sala)
+  
+}
+
+simular <- function(npessoas, nsalas) {
+  
+  resultados <- replicate(nsalas, testar_sala(npessoas))
+  mean(resultados)
+
+}
+
+simular(npessoas, nsalas)
+```
+
+### Para diferentes valores de $n \in \{2, 3, \ldots, 50\}$
+
+#### Soluções teóricas
+
+```{r n-teorico}
+npessoas <- 2:50
+
+p <- function(n) {
+  
+  1 - prod((364:(366 - n))/365)
+  
+}
+
+probs <- sapply(npessoas, p)
+
+grafico <- probs %>% 
+  as_tibble() %>% 
+  ggplot(aes(x = npessoas, y = value)) +
+    geom_line(color = 'blue') +
+    labs(
+      title = 'Probabilidades de haver coincidência de aniversário em um grupo de n pessoas',
+      y = NULL,
+      x = 'n'
+    )
+
+grafico
+```
+
+#### Simulação
+
+```{r n-simul}
+nsalas <- 1e3
+npessoas <- 2:50
+
+probs_sim <- sapply(npessoas, simular, nsalas)
+
+grafico +
+  geom_line(
+    data = as_tibble(probs_sim),
+    mapping = aes(y = value),
+    color = 'red'
+  ) +
+  labs(
+    subtitle = '(teóricas em azul, simulações em vermelho)'
+  )
+```
+
+### Premissas mais realistas
+
+* Vamos considerar anos bissextos. O total de dias muda para 366, mas um dos dias tem $1/4$ da probabilidade dos outros de ser o aniversário de alguém.
+
+* Vamos supor que haja 165 dias em que a probabilidade de alguém nascer é 25% maior do que nos outros 201 dias.
+
+* A solução teórica é bem mais complexa do que no caso uniforme!
+
+```{r premissas-real}
+nsalas <- 1e3
+npessoas <- 2:50
+
+pesos <- c(
+  rep(4, 200),    # dias normais
+  rep(5, 165),    # dias mais prováveis
+  1               # 29 de fevereiro
+)
+
+testar_sala <- function(npessoas, pesos) {
+  
+  sala <- sample(1:366, npessoas, replace = TRUE, prob = pesos)
+  coincidencia(sala)
+  
+}
+
+simular <- function(npessoas, nsalas, pesos) {
+  
+  resultados <- replicate(nsalas, testar_sala(npessoas, pesos))
+  mean(resultados)
+
+}
+
+novas_probs <- sapply(npessoas, simular, nsalas, pesos)
+
+grafico +
+  geom_line(
+    data = as_tibble(novas_probs),
+    mapping = aes(y = value),
+    color = 'red'
+  ) +
+  labs(
+    subtitle = '(teóricas com premissas originais em azul, simulações com novas premissas em vermelho)'
+  )
+
+```
+
+## Exercícios
+
+### Semanas com mais nascimentos
+
+Imagine que 50% dos nascimentos de um ano aconteçam em um período de 15 semanas, e o restante dos nascimentos seja distribuído de maneira uniforme no restante do ano. Ignore anos bissextos. 
+
+Faça simulações como na seção anterior ($2 \leq n \leq 50$) e construa o gráfico comparando com as probabilidades teóricas (com as premissas originais).
+
+
+### Pôquer
+
+Uma mão de pôquer consiste de 5 cartas retiradas ao acaso de um baralho de 32 cartas (4 naipes, cada um com cartas 7, 8, 9, 10, J, Q, K, A).
+
+Calcule as seguintes probabilidades teoricamente e através de simulações.
+
+1. Qual a probabilidade de obter uma mão sem ases? 
+
+1. Qual a probabilidade de obter 4 ases?
+
+1. Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) de naipes quaisquer?
+
+1. Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) do mesmo naipe?
+
+
+### Dados
+
+Calcule as seguintes probabilidades teoricamente e através de simulações.
+
+1. Você lança um dado não-viciado 6 vezes. Qual a probabilidade de que saiam os 6 números?
+
+1. Idem, se você lançar o dado 10 vezes.
+
+1. Repita os 2 itens acima, para um dado viciado, no qual 
+   $$
+   P(1) = \frac{1}{12}, \quad P(2) = P(3) = P(4) = P(5) = \frac{1}{6}, \quad P(6) = \frac{3}{12}
+   $$ 
+
+
+## Vídeo 2
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('NVP-MwtGp0Q')
+```
+
+
+## Probabilidade da união de dois eventos
+
+### Exemplo: cães e gatos
+
+* Suponha que 25% das pessoas têm cachorro, 29% das pessoas têm gato, e 12% das pessoas têm cachorro e gato.
+
+* Qual a probabilidade de que uma pessoa tenha gato ou cachorro ou ambos?
+  $$
+  \begin{align*}
+  P(\text{cachorro } \cup \text{ gato}) 
+    &= P(\text{cachorro}) + P(\text{gato}) - P(\text{cachorro } \cap \text{ gato}) \\
+    &= 0{,}25 + 0{,}29 - 0{,}12 \\
+    &= 0{,}42
+  \end{align*}
+  $$
+
+
+### No geral
+
+$$
+\begin{align*}
+P(A_1 \cup A_2 \cup \cdots \cup A_n) &=
+  P(A_1) + P(A_2) + \cdots + P(A_n) \\
+  & - P(A_1 \cap A_2) - \cdots - P(A_{n-1} \cap A_n) \\
+  & + P(A_1 \cap A_2 \cap A_3) + \cdots + P(A_{n-2} \cap A_{n-1} \cap A_n) \\
+  & \cdots \\
+  & \pm P(A_1 \cap A_2 \cap \cdots \cap A_n )
+\end{align*}
+$$
+
+
+## Probabilidade condicional
+
+$$
+P(A \mid B) = \text{probabilidade de } A \text{ quando sabemos que } B \text{ ocorreu}
+$$
+
+### Exemplo: Titanic
+
+```{r tit}
+Titanic
+```
+
+```{r tit-flat}
+tit_tab <- Titanic %>% 
+  ftable(row.vars = 'Survived', col.vars = 'Class') %>% 
+  as.table() %>% 
+  addmargins()
+
+tit_tab
+```
+
+#### Probabilidade de ser tripulante {-}
+
+```{r p-trip}
+tit_tab['Sum', 'Crew']
+tit_tab['Sum', 'Sum']
+ptrip <- tit_tab['Sum', 'Crew'] / tit_tab['Sum', 'Sum']
+ptrip
+```
+
+#### Probabilidade de não ser tripulante {-}
+
+Uma maneira: $1 - P(\text{tripulante})$ 
+
+```{r p-n-trip}
+1 - ptrip
+```
+
+Outra maneira: probabilidade de ser passageiro de 1ª, 2ª ou 3ª classe
+
+```{r p-n-trip-2}
+ntrip <- tit_tab['Sum', c('1st', '2nd', '3rd')]
+ntrip
+tit_tab['Sum', 'Sum']
+sum(ntrip) / tit_tab['Sum', 'Sum']
+```
+
+#### Probabilidade de sobreviver {-}
+
+```{r p-surv}
+tit_tab['Yes', 'Sum'] 
+tit_tab['Sum', 'Sum']
+tit_tab['Yes', 'Sum'] / tit_tab['Sum', 'Sum']
+```
+
+#### Probabilidade de ser de primeira classe {-}
+
+```{r p-1st}
+tit_tab['Sum', '1st']
+tit_tab['Sum', 'Sum']
+tit_tab['Sum', '1st'] / tit_tab['Sum', 'Sum']
+```
+
+#### Probabilidade de sobreviver *E* ser de primeira classe {-}
+
+::: {.rmdimportant}
+
+Queremos saber quantas pessoas, *do total de pessoas a bordo*, eram de primeira classe e sobreviveram.
+
+Isto é uma *probabilidade conjunta*.
+
+:::
+
+```{r p-1st-surv}
+tit_tab['Yes', '1st']
+tit_tab['Sum', 'Sum']
+tit_tab['Yes', '1st'] / tit_tab['Sum', 'Sum']
+```
+
+#### Probabilidade de uma pessoa da primeira classe sobreviver {-}
+
+::: {.rmdimportant}
+
+Em outras palavras: qual a probabilidade de uma pessoa sobreviver, se a pessoa estava na primeira classe?
+
+Cuidado, agora.
+
+Já sabemos que a pessoa é da primeira classe. Logo, restringimos o universo a estas `r tit_tab['Sum', '1st']` pessoas.
+
+A pergunta é: quantas pessoas que atendem a *condição* de ser da 1ª classe sobreviveram?
+
+Isto é uma *probabilidade condicional*.
+
+:::
+
+```{r p-surv-given-1st}
+tit_tab['Yes', '1st']
+tit_tab['Sum', '1st'] 
+tit_tab['Yes', '1st'] / tit_tab['Sum', '1st'] 
+```
+
+Olhando para o cálculo acima, Perceba que 
+$$
+P(\text{sobreviveu} \mid \text{1ª classe} )
+$$
+é o mesmo que
+$$
+\frac{P(\text{sobreviveu} \cap \text{1ª classe})}{P(\text{1ª classe})}
+$$
+
+#### Probabilidade de um sobrevivente ser da primeira classe {-}
+
+::: {.rmdimportant}
+
+No geral, $P(A \mid B) \neq P(B \mid A)$
+
+:::
+
+Agora, restringimos o universo às pessoas que sobreviveram. Dentre estas, quantas são da primeira classe?
+
+```{r p-1st-given-surv}
+tit_tab['Yes', '1st']
+tit_tab['Yes', 'Sum']
+tit_tab['Yes', '1st'] / tit_tab['Yes', 'Sum']
+```
+
+### No geral
+
+$$
+P(A \mid B) \quad=\quad \frac{P(A \cap B)}{P(B)}
+$$
+
+### Exercícios
+
+No Titanic,
+
+1. Qual a probabilidade de um tripulante sobreviver?
+
+1. Qual a probabilidade de um sobrevivente ser tripulante?
+
+1. Qual a probabilidade de um não-tripulante sobreviver?
+
+1. Qual a probabilidade de um sobrevivente não ser tripulante?
+ 
+
+## Probabilidade conjunta
+
+A fórmula para calcular $P(A \mid B)$ nos dá uma maneira de calcular $P(A \cap B)$:
+$$
+P(A \cap B) \quad=\quad P(A \mid B) \cdot P(B)
+$$
+ou, invertendo $A$ e $B$,
+$$
+P(A \cap B) \quad=\quad P(B \mid A) \cdot P(A)
+$$
+
+## Independência
+
+No vídeo anterior, vimos que, para dois eventos *independentes* $A$ e $B$, a probabilidade conjunta $P(A \cap B)$ é igual a $P(A) \cdot P(B)$.
+
+Olhando para as fórmulas acima para a probabilidade conjunta, se $A$ e $B$ forem independentes, então
+$$
+\begin{align*}
+P(A \cap B) &= P(A \mid B) \cdot P(B) \\
+            &= P(A) \cdot P(B)
+\end{align*}
+$$
+o que nos diz que
+$$
+P(A \mid B) = P(A)
+$$
+
+Da mesma forma,
+$$
+P(B \mid A) = P(B)
+$$
+
+Em palavras: saber que um dos eventos ocorreu não altera a probabilidade do outro evento.
+
+Esta é a definição formal de eventos independentes.
+
+### Exemplos
+
+#### Estar na primeira classe e sobreviver são independentes? {-}
+
+* $P(\text{sobreviver} \mid \text{1ª classe})$:
+
+```{r sobr-given-1st}
+tit_tab['Yes', '1st']
+tit_tab['Sum', '1st']
+tit_tab['Yes', '1st'] / tit_tab['Sum', '1st']
+```
+
+* $P(\text{sobreviver})$:
+
+```{r p-sobreviver}
+tit_tab['Yes', 'Sum'] 
+tit_tab['Sum', 'Sum']
+tit_tab['Yes', 'Sum'] / tit_tab['Sum', 'Sum']
+```
+
+Não!
+
+#### Faltas e turno de trabalho {-}
+
+Numa empresa: 
+
+* 75 funcionários trabalham no turno diurno, com um número de faltas de 3 por semana.
+
+* 25 funcionários trabalham no turno noturno, com um número de faltas de 1 por semana.
+
+Faltar é independente do turno de trabalho?
+
+```{r faltas}
+faltas <- array(
+  c(3, 1, 72, 24),
+  dim = c(2, 2),
+  dimnames = list(
+    'Turno' = c('Diurno', 'Noturno'),
+    'Presença' = c('Faltou', 'Presente')
+  )
+) %>% 
+  addmargins()
+
+faltas
+```
+
+* $P(\text{Faltou})$:
+
+```{r faltou}
+faltas['Sum', 'Faltou']
+faltas['Sum', 'Sum']
+faltas['Sum', 'Faltou'] / faltas['Sum', 'Sum']
+```
+
+* $P(\text{Faltou} \mid \text{Diurno})$:
+
+```{r faltou-dia}
+faltas['Diurno', 'Faltou']
+faltas['Diurno', 'Sum']
+faltas['Diurno', 'Faltou'] / faltas['Diurno', 'Sum']
+```
+
+* $P(\text{Faltou} \mid \text{Noturno})$:
+
+```{r faltou-noite}
+faltas['Noturno', 'Faltou']
+faltas['Noturno', 'Sum']
+faltas['Noturno', 'Faltou'] / faltas['Noturno', 'Sum']
+```
+
+Sim!
+
+
+## Probabilidade total
+
+### Exemplo
+
+Dentre 80 homens, 30 têm olhos azuis; dentre 50 mulheres, 20 têm olhos azuis. Neste grupo de pessoas, qual a probabilidade de ter olhos azuis?
+
+Como homens e mulheres formam uma *partição* deste grupo --- i.e., cada pessoa só pode ser homem ou mulher (não ambos) e cada pessoa precisa ser homem ou mulher.
+
+A probabilidade de ter olhos azuis vai ser
+$$
+\begin{align*}
+P(A) &= P(A \cap H) + P(A \cap M) \\
+     &= P(A \mid H) P(H) + P(A \mid M) P(M)
+\end{align*}
+$$
+onde
+
+* $A$ = ter olhos azuis
+* $H$ = ser homem
+* $M$ = ser mulher
+
+Então,
+$$
+\begin{align*}
+P(A) = \frac{30}{130} + \frac{20}{130} = \frac{50}{130} \approx 0{,}39
+\end{align*}
+$$
+ou, usando a segunda fórmula,
+$$
+\begin{align*}
+P(A) &= \frac{30}{80} \cdot \frac{80}{130} + \frac{20}{50} \cdot \frac{50}{130} \\
+     &= \frac{50}{130} \\
+     &\approx 0{,}39
+\end{align*}
+$$
+
+
+## Teorema de Bayes
+
+### Exemplo
+
+* De todos os emails, 60% são spam:
+$$
+P(\text{spam}) = 0{,}6
+$$
+
+* De todos os emails que são spam, 90% contêm a palavra "compre":
+$$
+P(\text{compre} \mid \text{spam}) = 0{,}9
+$$
+
+* De todos os emails (spam ou não), 70% contêm a palavra "compre":
+$$
+P(\text{compre}) = 0{,}7
+$$
+
+* Acabo de receber um email. Sem abri-lo, qual a probabilidade de ser spam? 
+
+  Bem, na ausência de informação adicional, $P(\text{spam}) = 0{,}6$.
+
+* Abri o email. Ele contém a palavra "compre". Agora, qual a probabilidade de ser spam?
+$$
+P(\text{spam} \mid \text{compre}) = ?
+$$
+
+* Lembre-se de que
+$$
+P(\text{compre} \cap \text{spam}) = P(\text{spam} \mid \text{compre}) \cdot P(\text{compre})
+$$
+
+* Mas também
+$$
+P(\text{compre} \cap \text{spam}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
+$$
+
+* As duas expressões são iguais:
+$$
+P(\text{spam} \mid \text{compre}) \cdot P(\text{compre}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
+$$
+
+* Daí, isolando o termo que queremos descobrir:
+$$
+P(\text{spam} \mid \text{compre}) = \frac{P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})}{P(\text{compre})}
+$$
+
+* Substituindo os valores:
+$$
+P(\text{spam} \mid \text{compre}) = \frac{0{,}9 \cdot 0{,}6}{0{,}7} \approx 0{,}77
+$$
+
+
+### No geral
+
+$$
+P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
+$$
+
+E se você não souber $P(B)$?
+
+Use o teorema da probabilidade total:
+$$
+P(B) = P(B \cap A_1) + P(B \cap A_2) + \cdots + P(B \cap A_n)
+$$
+onde os $A_i$ formam uma partição da população.
+
+Isto equivale a 
+$$P(B) = P(B \mid A_1)P(A_1) + P(B \mid A_2)P(A_2) + \cdots + P(B \mid A_n)P(A_n)$$
+
+
+### Outro exemplo
+
+* Uma doença afeta 5 pessoas em 100.000.
+
+* O exame que detecta a doença tem precisão de 99,9%; i.e., quando uma pessoa está doente, o exame dá positivo 99,9% das vezes.
+
+* Quando uma pessoa *não* está doente, o exame dá positivo 1% das vezes.
+
+* Você faz o exame, e o resultado é positivo. 
+
+* Qual a probabilidade de você ter a doença?
+
+* $P(D) = 0{,}00005$; daí, $P(ND) = 0{,}99995$.
+
+* $P(+ \mid D) = 0{,}999$; daí, $P(- \mid D) = 0{,}001$ (falso negativo).
+
+* $P(+ \mid ND) = 0{,}01$ (falso positivo); daí, $P(- \mid ND) = 0{,}99$
+
+* Não temos $P(+)$, mas podemos achar usando o teorema da probabilidade total:
+  $$
+  \begin{align*}
+  P(+) &= P(+ \cap D) \;+\; P(+ \cap ND) \\
+     &= P(+ \mid D)P(D) \;+\; P(+ \mid ND)P(ND) \\
+     &= 0{,}999 \cdot 0{,}00005 \;+\; 0{,}01 \cdot 0{,}99995 \\
+     &= 0{,}01004945
+  \end{align*}
+  $$
+
+* Queremos saber $P(D \mid +)$. Pelo teorema de Bayes:
+
+  $$
+  \begin{align*}
+    P(D \mid +) &= \frac{P(+ \mid D)P(D)}{P(+)} \\
+                &= \frac{0{,}999 \cdot 0{,}00005}{0{,}01004945} \\
+                &= 0{,}00497
+  \end{align*}
+  $$
+
+* A probabilidade de estar doente é menos do que 0,5%!
+

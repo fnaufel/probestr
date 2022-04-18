@@ -779,8 +779,6 @@ embed_yt('QqnOvgBXJ-s')
 * Use `geom_col` para reproduzir, a partir do *data frame* `df_tot`, todos os gráficos que foram gerados com `geom_bar` na seção [Gerando gráficos de barras](#gerando-gr%C3%A1ficos-de-barras).
 
 
-### 
-
 ## Referências sobre visualização e R
 
 ::: {.rmdtip latex=1}
