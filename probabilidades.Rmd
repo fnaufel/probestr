@@ -85,168 +85,382 @@ embed_yt('hJfyzRzEs44')
 
 ## Probabilidade clássica
 
-* Nesta abordagem (que nem sempre é a correta para o problema que estamos tentando resolver), cada resultado do espaço amostral tem a mesma chance de ocorrer.
+* Nesta abordagem simples --- que pode não ser a correta para o problema que estamos tentando resolver ---, [cada resultado do espaço amostral tem a mesma chance de ocorrer]{.hl}.
 
-* Para um evento $E$:
+* Ou seja, para um evento $A$, a probabilidade $P(A)$ é
+
   $$
-  P(E) = \frac{\text{Qtde de resultados em } E}{\text{Qtde de resultados no espaço amostral}}
+  P(A) = \frac{\text{Qtde de resultados em } A}{\text{Qtde de resultados no espaço amostral}}
   $$
   
-* De um baralho normal, de 52 cartas, qual a probabilidade de escolher uma carta ao acaso e obter
+* Exemplo: de um baralho normal, de $52$ cartas, qual a probabilidade de escolher uma carta ao acaso e obter
 
   1. Uma carta de ouros?
   
+     `r inicio_resposta()`
+     
+     $$
+     \frac{13}{52} = \frac{1}{4}
+     $$
+     
+     `r fim_resposta()`
+     
   2. Uma carta vermelha?
   
+     `r inicio_resposta()`
+     
+     $$
+     \frac{26}{52} = \frac{1}{2}
+     $$
+     
+     `r fim_resposta()`
+
   3. Uma carta de figura (J, Q ou K)?
   
+     `r inicio_resposta()`
+     
+     $$
+     \frac{12}{52} = \frac{3}{13}
+     $$
+     
+     `r fim_resposta()`
+
   4. Uma carta de ouros, copas, paus ou espadas?
   
+     `r inicio_resposta()`
+     
+     $$
+     \frac{52}{52} = 1
+     $$
+     
+     `r fim_resposta()`
+  
   5. Um carta de um naipe verde?
+  
+     `r inicio_resposta()`
+     
+     $$
+     \frac{0}{52} = 0
+     $$
+     
+     `r fim_resposta()`
+
+  ::: {.rmdcaution latex=1}
+  
+  Só podemos usar este raciocínio [se todos os resultados do experimento tiverem a mesma probabilidade]{.hl} de ocorrer. 
+  
+  Como a carta é escolhida [ao acaso]{.hl}, esta condição é satisfeita neste exemplo.
+  
+  :::
 
 
-## Probabilidade empírica (estatística)
+## Probabilidade empírica
 
-* Baseada em repetições de um experimento probabilístico.
+* Baseada em [repetições de um experimento probabilístico]{.hl}.
 
-* A probabilidade de um evento é sua *frequência relativa*:
+* Nesta abordagem, a probabilidade de um evento é sua [frequência relativa]{.hl}:
+
   $$
-  P(E) = \frac{\text{Qtde de ocorrências de } E}{\text{Qtde total de repetições do experimento}}
+  P(A) = \frac{\text{Qtde de ocorrências de } A}{\text{Qtde total de repetições do experimento}}
   $$
   
-::: {.rmdimportant}
+* Esta abordagem é fácil de usar quando é possível repetir o experimento muitas vezes, nas mesmas condições (lançar uma moeda, escolher uma carta de um baralho).
 
-### Lei dos grandes números {-}
+* Em outros casos (calcular a probabilidade de um candidato vencer uma eleição), não é possível repetir o experimento nas mesmas condições.
 
-Quando o número $n$ de repetições de um experimento tende a infinito, a frequência relativa de um evento tende à sua probabilidade real.
-
-:::
-
-??? Use patchwork here
-
-```{r lancar-e-plotar-caras}
-lancar <- function(lancamentos, n = 100) {
-
-  moeda <- c('k', 'c')
-  novos <- sample(moeda, n, replace = TRUE)
-  c(lancamentos, novos)
+* Exemplo: se lançarmos uma moeda não-viciada muitas vezes, a proporção de caras vai ser aproximadamente $0{,}5$. Os gráficos abaixo mostram como, à medida que o número de lançamentos aumenta (no eixo horizontal), a proporção de caras (no eixo vertical) vai se aproximando de $0{,}5$:
   
-}
+    ```{r lancar-e-plotar-caras, echo=FALSE}
+    lancar <- function(lancamentos, n = 100) {
+    
+      moeda <- c('k', 'c')
+      novos <- sample(moeda, n, replace = TRUE)
+      c(lancamentos, novos)
+      
+    }
+    
+    plotar <- function(lancamentos) {
+      
+      n <- length(lancamentos)
+      caras <- tibble(caras = cumsum(lancamentos == 'k')/(1:n))
+    
+      intervalo <- 10 ^ (ceiling(log10(n)) - 1)  
+      grafico <- caras %>% 
+        ggplot(aes(x = 1:n, y = caras)) +
+          geom_line(color = 'blue') +
+          scale_y_continuous(
+            name = '',
+            breaks = seq(0, 1, 0.1),
+            limits = c(0,1)
+          ) +
+          scale_x_continuous(
+            name = 'lançamentos',
+            breaks = seq(0, n, intervalo)
+          ) +
+        theme(
+          axis.text.x = element_text(angle = 45),
+          axis.title.x = element_text(vjust = 8)
+        )
+      
+      # print(grafico)
+      grafico
+      
+    }
+    ```
 
-plotar <- function(lancamentos) {
+    ```{r lancar, fig.height=15, echo=FALSE}
+    resultados <- vector()
+    graficos <- list()
+    
+    for (i in 1:10) {
+      resultados <- lancar(resultados)
+      graficos[[i]] <- plotar(resultados)
+    }
+    
+    wrap_plots(
+      graficos, 
+      ncol = 2, 
+      byrow = TRUE,
+      heights = unit(10, 'lines')
+    )
+    ```
+
+
+* A [[lei dos grandes números]{.hl}](https://pt.wikipedia.org/wiki/Lei_dos_grandes_n%C3%BAmeros) é um resultado matemático que diz, essencialmente, que, [quando o número $n$ de repetições de um experimento tende a infinito, a frequência relativa de um evento tende à sua probabilidade real]{.hl}.
+
+
+  ::: {.rmdcaution}
   
-  n <- length(lancamentos)
-  caras <- tibble(caras = cumsum(lancamentos == 'k')/(1:n))
-
-  intervalo <- 10 ^ (ceiling(log10(n)) - 1)  
-  grafico <- caras %>% 
-    ggplot(aes(x = 1:n, y = caras)) +
-      geom_line(color = 'blue') +
-      scale_y_continuous(
-        name = 'proporção\nde caras',
-        breaks = seq(0, 1, 0.1),
-        limits = c(0,1)
-      ) +
-      scale_x_continuous(
-        name = 'lançamentos',
-        breaks = seq(0, n, intervalo)
-      )
+  Um [erro comum]{.hl} é achar que, se houve poucas caras nos lançamentos mais recentes, então a probabilidade de o resultado ser cara no próximo lançamento é maior, para que a proporção de caras fique mais perto de $0{,}5$.
   
-  print(grafico)
+  A lei dos grandes números fala sobre os resultados do experimento quando $n$ tende ao infinito, [não no futuro próximo]{.hl}.
   
-}
-```
+  Em lançamentos [independentes]{.hl} de uma moeda [não-viciada]{.hl}, a probabilidade de cara [sempre]{.hl} é $0{,}5$.
+  
+  :::
 
-```{r lancar}
-resultados <- vector()
-
-for (i in 1:10) {
-  resultados <- lancar(resultados)
-  plotar(resultados)
-}
-```
-
-::: {.rmdimportant}
-
-Isto **não** quer dizer que eventos que não acontecem há muito tempo têm probabilidade maior de acontecer no futuro próximo.
-
-:::
 
 ## Probabilidade subjetiva
 
-* Crença.
+* Outra interpretação de probabilidades se baseia na [crença]{.hl} --- a estimativa de um agente sobre a ocorrência de um evento.
 
-* Consistente com os valores que você estaria disposto a apostar contra alguém para que a aposta seja justa.
+* Uma maneira de quantificar a crença é através de [apostas justas]{.hl}.
 
-* Exemplo???
+* Por exemplo, você aposta com um amigo que
+
+  * Se o seu time de basquete^[Considere que, no basquete, o empate é impossível.] vencer o próximo jogo contra o dele, você pagará $\$3$ para ele.
+  
+  * Se o time dele vencer o próximo jogo contra o seu, ele pagará $\$1$ para você. 
+  
+* Se você considera justa esta aposta, então [você crê que a probabilidade de o time dele vencer é $3$ vezes maior do que a probabilidade de o seu time vencer]{.hl}. 
+
+* Como [a soma das probabilidades de um evento e do evento complementar deve ser $1$]{.hl}, isto equivale a dizer que
+
+  $$
+  P(\text{seu time vencer}) = 1/4 \qquad\text{e}\qquad  P(\text{time dele vencer}) = 3/4
+  $$
+  
+* Em mais detalhes:
+
+  * Você pode receber menos com uma probabilidade maior,
+  
+  * Seu amigo pode receber mais com uma probabilidade menor,
+  
+  * A razão entre as quantias ($3$) é contrabalançada exatamente pela razão entre as probabilidades ($1/3$).
 
 
-## Formalização de probabilidades
+## Formalização de probabilidades {#axiomas}
 
-::: {.rmdimportant}
+* Para trabalhar matematicamente com probabilidades, é preciso definir as "regras do jogo".
 
-1. $0 \leq P(A) \leq 1$, para qualquer evento $A$
+* [Tudo]{.hl} que se pode concluir sobre probabilidades é [consequência dos seguintes axiomas]{.hl}, [formulados por Kolmogorov em 1933](https://pt.wikipedia.org/wiki/Axiomas_de_probabilidade#Axiomas):
 
-2. $P(\Omega) = 1$, onde $\Omega$ é o espaço amostral
+  1. $0 \leq P(A) \leq 1$, para qualquer evento $A$.
 
-3. $P(\bar A) = 1 - P(A)$, onde $\bar A$ é o evento complementar de $A$ (i.e., o evento que corresponde a $A$ *não* ocorrer)
+  2. $P(\Omega) = 1$, onde $\Omega$ é o espaço amostral (o conjunto de todos os resultados possíveis do experimento em questão);
 
-4. $P(A \cup B) = P(A) + P(B)$, onde $A$ e $B$ são eventos disjuntos (i.e., $A$ e $B$ não podem ocorrer ao mesmo tempo)
+  3. $P(\bar A) = 1 - P(A)$, onde $\bar A$ é o evento [complementar]{.hl} de $A$ (i.e., o evento que corresponde a $A$ [não]{.hl} ocorrer)
 
-??? Coleção de uma quantidade infinita (contável) de conjuntos ???
+  4. $P(A_1 \cup \cdots \cup A_n) = P(A_1) + \cdots + P(A_n)$, onde $A_1, \ldots, A_n$ são eventos [disjuntos dois a dois]{.hl} (i.e., $A_i$ e $A_j$ [não podem ocorrer ao mesmo tempo]{.hl}, para todo par $(i, j)$ com $i \neq j$).
 
-:::
+* Mostre, a partir dos axiomas acima, que
 
+  $$
+  P(\varnothing) = 0
+  $$
+
+  `r inicio_dica()`
+  
+  $$\varnothing = \bar \Omega $$
+  
+  `r fim_dica()`
+
+  `r inicio_resposta()`
+  
+  $$
+  \begin{aligned}
+    P(\varnothing) 
+    &= P(\bar \Omega) \\
+    &= 1 - P(\Omega) & \text{(pelo axioma 3)}\\
+    &= 1 - 1 & \text{(pelo axioma 2)} \\
+    &= 0
+  \end{aligned}
+  $$
+  
+  `r fim_resposta()`
+  
+    
+  
 
 ## Eventos independentes (explicação informal)
 
-A probabilidade de os eventos $A$ e $B$ acontecerem ao mesmo tempo é escrita como
-$$
-P(A, B) \qquad \text{ou como} \qquad P(A \cap B)
-$$
+* Se a ocorrência de $A$ [não influencia]{.hl} a ocorrência de $B$, nem vice-versa, dizemos que os eventos $A$ e $B$ são [independentes]{.hl}.
 
-Se a ocorrência de $A$ não influencia a ocorrência de $B$, nem vice-versa, dizemos que os eventos $A$ e $B$ são *independentes*.
+* Exemplo: 
 
-Exemplo: 
+  * O experimento é [lançar um dado duas vezes]{.hl}.
 
-* O experimento é lançar um dado duas vezes.
+  * $A$ é o evento o [primeiro lançamento deu um número par]{.hl}.
 
-* $A$ é o evento *o primeiro lançamento deu um número par*.
+  * $B$ é o evento [o segundo lançamento deu 6]{.hl}.
+  
+  * Saber se $A$ aconteceu [não nos ajuda]{.hl} em nada a estimar se $B$ aconteceu.
+  
+  * Aqui, [$A$ e $B$ são independentes]{.hl}.
 
-* $B$ é o evento *o segundo lançamento deu 6*.
+* Outro exemplo: 
 
-Quando $A$ e $B$ são independentes,
-$$
-P(A, B) = P(A) \cdot P(B)
-$$
+  * O experimento é [lançar um dado duas vezes]{.hl}.
+
+  * $A$ é o evento o [primeiro lançamento deu um número menor que $3$]{.hl}.
+
+  * $B$ é o evento [a soma dos dois lançamentos é maior que $8$]{.hl}.
+  
+  * Agora, saber se $A$ aconteceu [ajuda]{.hl} a estimar se $B$ aconteceu.
+  
+  * Na verdade, [se $A$ aconteceu, $B$ é impossível]{.hl} (a probabilidade de $B$, dado $A$, é $0$).
+  
+  * Se $A$ não aconteceu, a probabilidade de $B$ é $5/12$.
+  
+  * Aqui, $A$ e $B$ [não são independentes]{.hl}.
+
+* []{#independentes-produto} A probabilidade de os eventos $A$ e $B$ acontecerem ao mesmo tempo é escrita como
+
+  $$
+  P(A, B) \qquad \text{ou como} \qquad P(A \cap B)
+  $$
+
+* Quando $A$ e $B$ são [independentes]{.hl},
+
+  $$
+  P(A, B) = P(A) \cdot P(B)
+  $$
+
+* Ou seja, [quando $A$ e $B$ são independentes, a probabilidade de $A$ e $B$ acontecerem ao mesmo tempo é igual ao produto das probabilidades de $A$ e de $B$]{.hl}.
+
+* Mais adiante, vamos ver uma definição formal de independência, e vamos provar esta última igualdade.
 
 
 ## $P(A \cup B)$ com $A$ e $B$ não-disjuntos
 
-$$
-P(A \cup B) = P(A) + P(B) - P(A, B)
-$$
+* Um dos [axiomas de probabilidade](#axiomas) fala sobre a probabilidade da união de vários eventos [disjuntos]{.hl} (sem elementos em comum):
 
-??? Imagem ???
+  $$
+  P(A_1 \cup \cdots \cup A_n) = P(A_1) + \cdots + P(A_n)
+  $$
+
+* E [se os eventos não forem disjuntos]{.hl}?
+
+* Veja a figura abaixo:
+
+  ???
+  
+* Imagine que a probabilidade de um evento é proporcional à sua área nesta figura.
+
+* Se você somar a área de $A$ com a área de $B$, você vai estar [contando duas vezes]{.hl} a área comum aos dois (a área que corresponde a $A \cap B$).
+
+* Por isso, [o certo é "descontar" esta área]{.hl}.
+
+* O resultado é
+
+  $$
+  P(A \cup B) = P(A) + P(B) - P(A \cap B)
+  $$
+
+* Exemplo: suponha que 25% das pessoas têm cachorro, 29% das pessoas têm gato, e 12% das pessoas têm cachorro e gato.
+
+* Qual a probabilidade de que uma pessoa tenha gato ou cachorro ou ambos?
+
+  $$
+  \begin{align*}
+  P(\text{cachorro } \cup \text{ gato}) 
+    &= P(\text{cachorro}) + P(\text{gato}) - P(\text{cachorro } \cap \text{ gato}) \\
+    &= 0{,}25 + 0{,}29 - 0{,}12 \\
+    &= 0{,}42
+  \end{align*}
+  $$
 
 
+* No geral, para $n$ eventos $A_1, \ldots, A_n$:
+
+  $$
+  \begin{align*}
+  P(A_1 \cup \cdots \cup A_n) &=
+    P(A_1) + \cdots + P(A_n) \\
+    & - P(A_1 \cap A_2) - \cdots - P(A_{n-1} \cap A_n) \\
+    & + P(A_1 \cap A_2 \cap A_3) + \cdots + P(A_{n-2} \cap A_{n-1} \cap A_n) \\
+    & \cdots \\
+    & \pm P(A_1 \cap \cdots \cap A_n )
+  \end{align*}
+  $$
+
+* Na última linha
+
+  * o sinal vai ser $+$ se $n$ for ímpar;
+
+  * o sinal vai ser $-$ se $n$ for par;
+  
+  * poderíamos escrever, então, $(-1)^{n+1} \cdot P(A_1 \cap \cdots \cap A_n )$.
+  
+* Escreva, seguindo o padrão acima, a expressão para 
+
+  $$
+  P(A \cup B \cup C)
+  $$
+  
+  `r inicio_resposta()`
+  
+  $$
+  \begin{align*}
+  P(A \cup B \cup C) &=
+    P(A) + P(B) + P(C) \\
+    & - P(A \cap B) - P(A \cap C) - P(B \cap C) \\
+    & + P(A \cap B \cap C)
+  \end{align*}
+  $$
+
+  `r fim_resposta()`
+  
+  
 ## Problema do aniversário
-
-Em uma sala estão 25 pessoas escolhidas ao acaso. Qual a probabilidade de que pelo menos 2 delas façam aniversário no mesmo dia do ano?
-
-### Premissas
-
-* Os dias dos aniversários das pessoas são independentes.
-
-* Cada dia do ano tem a mesma probabilidade de ser o aniversário de alguém.
-
-* Vamos ignorar anos bissextos. Cada ano tem 365 dias.
 
 ### Solução teórica
 
+* Em uma sala estão $25$ pessoas escolhidas ao acaso. 
+
+* [Qual a probabilidade de que pelo menos $2$ delas façam aniversário no mesmo dia do ano?]{.hl}
+
+* Premissas:
+
+  * Os dias dos aniversários das pessoas são independentes.
+
+  * Cada dia do ano tem a mesma probabilidade de ser o aniversário de alguém.
+
+  * Vamos ignorar anos bissextos. Cada ano tem 365 dias.
+
 * Queremos achar $P(I)$, onde $I$ é o evento de que pelo menos duas pessoas têm aniversários iguais.
 
-* Vamos calcular a probabilidade $P(N)$ de que *não* haja aniversários iguais.
+* Vamos calcular a probabilidade $P(N)$ de que [não]{.hl} haja aniversários iguais.
 
 * Este evento $N$ é o complementar do evento $I$, i.e., $N = \bar I$.
 
@@ -254,96 +468,152 @@ Em uma sala estão 25 pessoas escolhidas ao acaso. Qual a probabilidade de que p
 
 * $P(N)$ é a probabilidade de que todos os aniversários caiam em dias diferentes:
 
-  * A pessoa 1 pode ter nascido em qualquer dia do ano.
+  * A pessoa $1$ pode ter nascido em qualquer dia do ano.
   
-  * A pessoa 2 precisa ter nascido em algum dos outros 364 dias. A probabilidade deste evento é $\frac{364}{365}$.
+  * A pessoa $2$ precisa ter nascido em algum dos outros $364$ dias. A probabilidade é $\frac{364}{365}$.
   
-  * A pessoa 3 precisa ter nascido em algum dos outros 363 dias. A probabilidade deste evento é $\frac{363}{365}$.
+  * A pessoa $3$ precisa ter nascido em algum dos outros $363$ dias. A probabilidade é $\frac{363}{365}$.
   
   * $\ldots$
   
-  * A pessoa 25 precisa ter nascido em algum dos outros 341 dias. A probabilidade deste evento é $\frac{341}{365}$.
+  * A pessoa $25$ precisa ter nascido em algum dos outros $341$ dias. A probabilidade é $\frac{341}{365}$.
 
-* Como os nascimentos são independentes, temos
+* [Como os nascimentos são independentes](#independentes-produto), a probabilidade de todos os eventos acontecerem juntos é o produto das probabilidades:
+
   $$
-  P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot \frac{341}{365}
+  P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
+         \frac{341}{365}
        = \frac{364 \cdot 363 \cdot \cdots \cdot 341}{365^{24}}
   $$
 
-```{r pn}
-pn <- prod((364:341)/365)
-pn
-```
+* O que dá
 
-* A resposta é
+    ```{r pn}
+    pn <- prod((364:341)/365)
+    pn
+    ```
 
-```{r pi}
-1 - pn
-```
+* Então, $P(I)$ é
 
-* Surpreso? Com 25 pessoas na sala, é mais provável haver do que não haver coincidência de aniversários!
+    ```{r pi}
+    1 - pn
+    ```
+
+* Surpreso? Com $25$ pessoas na sala, é mais provável haver do que não haver coincidência de aniversários!
 
 
 ### Simulação
 
-Vamos simular milhares de salas com 25 pessoas satisfazendo as [premissas](#premissas) e ver em quantas delas há coincidência de aniversários:
+* Vamos simular milhares de salas com $25$ pessoas satisfazendo as [premissas](#premissas) e ver em quantas delas há coincidência de aniversários. Examine o código abaixo:
 
-```{r aniversario}
-nsalas <- 1e4
-npessoas <- 25
-
-coincidencia <- function(sala) {
-  
-  !(length(unique(sala)) == length(sala))
-  
-}
-
-testar_sala <- function(npessoas) {
-  
-  sala <- sample(1:365, npessoas, replace = TRUE)
-  coincidencia(sala)
-  
-}
-
-simular <- function(npessoas, nsalas) {
-  
-  resultados <- replicate(nsalas, testar_sala(npessoas))
-  mean(resultados)
-
-}
-
-simular(npessoas, nsalas)
-```
+    ```{r aniversario}
+    nsalas <- 1e4
+    npessoas <- 25
+    
+    coincidencia <- function(sala) {
+    
+      # Se a quantidade de valores únicos for diferente 
+      # da quantidade total de valores, então há repetição  
+      !(length(unique(sala)) == length(sala))
+      
+    }
+    
+    gerar_e_testar <- function(npessoas) {
+      
+      # Escolhemos, ao acaso, npessoas números entre 1 e 365,
+      # com reposição
+      sala <- sample(1:365, npessoas, replace = TRUE)
+      
+      # Testamos se há alguma coincidência de aniversários
+      coincidencia(sala)
+      
+    }
+    
+    simular <- function(npessoas, nsalas) {
+      
+      resultados <- replicate(nsalas, gerar_e_testar(npessoas))
+      
+      # Como resultados é um vetor booleano, tirar a média
+      # vai dar a proporção de resultados verdadeiros,
+      # que é a probabilidade.
+      mean(resultados)
+    
+    }
+    
+    simular(npessoas, nsalas)
+    ```
 
 ### Para diferentes valores de $n \in \{2, 3, \ldots, 50\}$
 
-#### Soluções teóricas
+#### Soluções teóricas {-}
 
-```{r n-teorico}
-npessoas <- 2:50
+* Vamos calcular as probabilidades de coincidência para diferentes quantidades $n$ de pessoas na sala e fazer um gráfico:
 
-p <- function(n) {
+    ```{r n-teorico}
+    npessoas <- 2:50
+    
+    p <- function(n) {
+      
+      # Fórmula geral, para n pessoas
+      1 - prod((364:(366 - n))/365)
+      
+    }
+    
+    probs <- sapply(npessoas, p)
+    
+    grafico <- probs %>% 
+      as_tibble() %>% 
+      ggplot(aes(x = npessoas, y = value)) +
+        geom_line(color = 'blue') +
+        labs(
+          title = 'Probabilidades de coincidência com n pessoas',
+          y = NULL,
+          x = 'n'
+        )
+    
+    grafico
+    ```
+
+* Este problema é tão usado em cursos de probabilidade que o R oferece as funções `pbirthday` e `qbirthday`.
+
+* Leia a ajuda de `pbirthday` e recrie o gráfico acima usando esta função.
+
+* Leia a ajuda de `qbirthday` e responda:
+
+  * Quantas pessoas são necessárias para que a probabilidade de uma ou mais coincidências seja de pelo menos $50\%$?
   
-  1 - prod((364:(366 - n))/365)
+    `r inicio_resposta()`
+    
+    Os valores *default* dos argumentos resolvem este problema:
+    
+    ```{r}
+    qbirthday()
+    ```
+
+    `r fim_resposta()`
+    
+  * Quantas pessoas são necessárias para que a probabilidade de uma ou mais coincidências seja de pelo menos $90\%$?
   
-}
+    `r inicio_resposta()`
+    
+    ```{r}
+    qbirthday(.9)
+    ```
 
-probs <- sapply(npessoas, p)
+    `r fim_resposta()`
 
-grafico <- probs %>% 
-  as_tibble() %>% 
-  ggplot(aes(x = npessoas, y = value)) +
-    geom_line(color = 'blue') +
-    labs(
-      title = 'Probabilidades de haver coincidência de aniversário em um grupo de n pessoas',
-      y = NULL,
-      x = 'n'
-    )
+  * Quantas pessoas são necessárias para que haja uma probabilidade de pelo menos $50\%$ de que $5$ ou mais pessoas façam aniversário no mesmo dia?
 
-grafico
-```
+    `r inicio_resposta()`
+    
+    ```{r}
+    qbirthday(coincident = 5)
+    ```
 
-#### Simulação
+    `r fim_resposta()`
+
+
+#### Simulação {-}
 
 ```{r n-simul}
 nsalas <- 1e3
@@ -362,88 +632,401 @@ grafico +
   )
 ```
 
+
 ### Premissas mais realistas
 
-* Vamos considerar anos bissextos. O total de dias muda para 366, mas um dos dias tem $1/4$ da probabilidade dos outros de ser o aniversário de alguém.
+* [Vamos considerar anos bissextos]{.hl}. O total de dias muda para $366$, mas um dos dias ($29$ de fevereiro) tem $1/4$ da probabilidade de um dia normal de ser o aniversário de alguém.
 
-* Vamos supor que haja 165 dias em que a probabilidade de alguém nascer é 25% maior do que nos outros 201 dias.
+* [Além disso]{.hl}, vamos supor que haja $165$ dias em que a probabilidade de alguém nascer é $25\%$ maior do que nos $200$ dias normais.
 
 * A solução teórica é bem mais complexa do que no caso uniforme!
 
-```{r premissas-real}
-nsalas <- 1e3
-npessoas <- 2:50
+* Vamos fazer apenas a simulação. 
 
-pesos <- c(
-  rep(4, 200),    # dias normais
-  rep(5, 165),    # dias mais prováveis
-  1               # 29 de fevereiro
-)
+* Preste atenção no vetor `pesos`, que representam as probabilidades de dias diferentes:
 
-testar_sala <- function(npessoas, pesos) {
+  * $200$ dias normais têm peso $4$;
   
-  sala <- sample(1:366, npessoas, replace = TRUE, prob = pesos)
-  coincidencia(sala)
+  * $165$ dias mais prováveis têm peso $5$;
   
-}
-
-simular <- function(npessoas, nsalas, pesos) {
+  * $1$ dia ($29$ de fevereiro) tem peso $1$.
   
-  resultados <- replicate(nsalas, testar_sala(npessoas, pesos))
-  mean(resultados)
+* [Estes pesos não são probabilidades, porque a soma deles não é $1$]{.hl}.
 
-}
+* A função `sample` [normaliza]{.hl} automaticamente estes pesos. 
 
-novas_probs <- sapply(npessoas, simular, nsalas, pesos)
+* Normalizar significa dividir todos os valores pela mesma constante, de forma que a soma seja $1$.
 
-grafico +
-  geom_line(
-    data = as_tibble(novas_probs),
-    mapping = aes(y = value),
-    color = 'red'
-  ) +
-  labs(
-    subtitle = '(teóricas com premissas originais em azul, simulações com novas premissas em vermelho)'
+    ```{r premissas-real}
+    nsalas <- 1e3
+    npessoas <- 2:50
+    
+    pesos <- c(
+      rep(4, 200),    # dias normais
+      rep(5, 165),    # dias mais prováveis
+      1               # 29 de fevereiro
+    )
+    
+    gerar_e_testar <- function(npessoas, pesos) {
+      
+      sala <- sample(1:366, npessoas, replace = TRUE, prob = pesos)
+      coincidencia(sala)
+      
+    }
+    
+    simular <- function(npessoas, nsalas, pesos) {
+      
+      resultados <- replicate(nsalas, gerar_e_testar(npessoas, pesos))
+      mean(resultados)
+    
+    }
+    
+    novas_probs <- sapply(npessoas, simular, nsalas, pesos)
+    
+    grafico +
+      geom_line(
+        data = as_tibble(novas_probs),
+        mapping = aes(y = value),
+        color = 'red'
+      ) +
+      labs(
+        subtitle = paste(
+          '(teóricas com premissas originais: azul;', 
+          'simulações com novas premissas: vermelho)'
+        )
+      )
+    ```
+
+* As novas premissas não mudaram muita coisa.
+
+* Escreva a versão normalizada do vetor `pesos`.
+
+  `r inicio_resposta()`
+  
+  O vetor original é
+  
+  $$
+  (
+  \underbrace{4, \ldots, 4}_{200\text{ vezes}},\;\; 
+  \underbrace{5, \ldots, 5}_{165\text{ vezes}},\;\;
+  1
   )
+  $$
+  
+  A soma de todos os elementos é 
+  
+  $$
+  200 \cdot 4 + 165 \cdot 165 + 1 = 1.626
+  $$
+  
+  O vetor normalizado fica
+  
+  $$
+  \left(
+  \underbrace{\frac4{1626}, \ldots, \frac4{1626}}_{200\text{ vezes}},\;\; 
+  \underbrace{\frac5{1626}, \ldots, \frac5{1626}}_{165\text{ vezes}},\;\; 
+  \frac1{1626}
+  \right)
+  $$
+  
+  ou
+  
+  $$
+  \left(
+  \underbrace{\frac2{813}, \ldots, \frac2{813}}_{200\text{ vezes}},\;\; 
+  \underbrace{\frac5{1626}, \ldots, \frac5{1626}}_{165\text{ vezes}},\;\; 
+  \frac1{1626}
+  \right)
+  $$
 
-```
+  `r fim_resposta()`
+  
 
 ## Exercícios
 
 ### Semanas com mais nascimentos
 
-Imagine que 50% dos nascimentos de um ano aconteçam em um período de 15 semanas, e o restante dos nascimentos seja distribuído de maneira uniforme no restante do ano. Ignore anos bissextos. 
+* Imagine que $50\%$ dos nascimentos de um ano aconteçam em um período de $15$ semanas, e o restante dos nascimentos seja distribuído de maneira uniforme no restante do ano. Ignore anos bissextos. 
 
-Faça simulações como na seção anterior ($2 \leq n \leq 50$) e construa o gráfico comparando com as probabilidades teóricas (com as premissas originais).
+* Faça simulações como na seção anterior ($2 \leq n \leq 50$) e construa o gráfico comparando com as probabilidades teóricas (com as premissas originais).
+
+* Interprete o resultado.
+
+  `r inicio_resposta()`
+  
+  * $15$ semanas são $105$ dias.
+
+  * O restante do ano tem $260$ dias.
+
+    ```{r cache=TRUE}
+    nsalas <- 1e4
+    npessoas <- 2:50
+    
+    # Probabilidades teóricas, premissas originais
+    p <- function(n) {
+      
+      1 - prod((364:(366 - n))/365)
+      
+    }
+    
+    probs <- sapply(npessoas, p)
+    
+    grafico <- probs %>% 
+      as_tibble() %>% 
+      ggplot(aes(x = npessoas, y = value)) +
+        geom_line(color = 'blue') +
+        labs(
+          title = 'Probabilidades de coincidência com n pessoas',
+          y = NULL,
+          x = 'n'
+        )
+    
+    # Probabilidades com 15 semanas com 50% dos nascimentos
+    pesos <- c(
+      rep(50/105, 105),    # dias das semanas com mais nascimentos
+      rep(50/260, 260)     # dias das semanas normais
+    )
+    
+    coincidencia <- function(sala) {
+      
+      !(length(unique(sala)) == length(sala))
+      
+    }
+    
+    gerar_e_testar <- function(npessoas, pesos) {
+      
+      sala <- sample(1:365, npessoas, replace = TRUE, prob = pesos)
+      coincidencia(sala)
+      
+    }
+    
+    simular <- function(npessoas, nsalas, pesos) {
+      
+      resultados <- replicate(nsalas, gerar_e_testar(npessoas, pesos))
+      mean(resultados)
+    
+    }
+    
+    novas_probs <- sapply(npessoas, simular, nsalas, pesos)
+    
+    grafico +
+      geom_line(
+        data = as_tibble(novas_probs),
+        mapping = aes(y = value),
+        color = 'red'
+      ) +
+      labs(
+        subtitle = paste(
+          '(teóricas com premissas originais: azul;', 
+          'simulações com novas premissas: vermelho)'
+        )
+      )
+    ```
+
+  * Com as novas premissas, a probabilidade de coincidência é maior para quase todos os valores de $n$: a linha vermelha está acima da linha azul.
+  
+  * Como metade dos nascimentos está concentrada nas $15$ semanas, a probabilidade de haver coincidência para $n$ pessoas é maior do que com as premissas originais. 
+  
+  `r fim_resposta()`
+  
+  
 
 
 ### Pôquer
 
-Uma mão de pôquer consiste de 5 cartas retiradas ao acaso de um baralho de 32 cartas (4 naipes, cada um com cartas 7, 8, 9, 10, J, Q, K, A).
+* Uma mão de pôquer consiste de $5$ cartas retiradas ao acaso de um baralho de $32$ cartas ($4$ naipes, cada um com cartas 7, 8, 9, 10, J, Q, K, A).
 
-Calcule as seguintes probabilidades teoricamente e através de simulações.
+* Calcule as seguintes probabilidades teoricamente e através de simulações.
 
-1. Qual a probabilidade de obter uma mão sem ases? 
+  1. Qual a probabilidade de obter uma mão sem ases? 
+  
+     `r inicio_resposta()`
+    
+     * A ordem das cartas não importa.
+ 
+     * Basta calcular o número de mãos possíveis usando as $28$ cartas que  não são ases:
+     
+       $$
+       {28 \choose 5} = `r choose(28, 5)`
+       $$
 
-1. Qual a probabilidade de obter 4 ases?
+     * E dividir pelo total de mão possíveis:
+     
+       $$
+       {32 \choose 5} = `r choose(32, 5)`
+       $$
 
-1. Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) de naipes quaisquer?
+     * O resultado é aproximadamente $`r (choose(28, 5)/choose(32, 5))`$.
+     
+     * Criando as cartas:
 
-1. Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) do mesmo naipe?
+       ```{r baralho}
+       baralho <- expand_grid(
+         numero = c(7:10, 'J', 'Q', 'K', 'A'),
+         naipe = c('♥', '♦', '♣', '♠')
+       ) %>% 
+         mutate(carta = paste(numero, naipe)) %>% 
+         pull(carta)
+       ```
 
+     * Função para gerar uma mão:
+    
+       ```{r uma-mao}
+       mao <- function(){
+         sample(baralho, size = 5)
+       }
+       ```
+
+     * Testar se a mão tem (pelo menos) um ás:
+
+       ```{r tem-as}
+       tem_as <- function(mao) {
+         
+         any(str_starts(mao, 'A'))
+         
+       }
+       ```
+
+     * Simulação:
+
+       ```{r sem-ases, cache=TRUE}
+       nsim <- 1e6
+       maos <- rerun(nsim, mao())
+       
+       mean(!map_lgl(maos, tem_as))
+       ```
+    
+     `r fim_resposta()`
+
+  1. Qual a probabilidade de obter $4$ ases?
+  
+     `r inicio_resposta()`
+     
+     * A ordem das cartas não importa.
+     
+     * Existe uma mão com $4$ ases para cada uma das outras $28$ cartas. Ou seja, existem $28$ mãos com $4$ ases.
+     
+     * Logo, a resposta é 
+     
+       $$
+       \frac{28}{\binom{32}{5}} = 
+       \frac{28}{`r choose(32, 5)`} \approx `r (28/choose(32, 5)) %>% fm(6)`
+       $$
+       
+     * Uma probabilidade de pouco mais de [um décimo de milésimo]{.hl}.
+          
+     * Testar se a mão tem $4$ ases:
+     
+       ```{r tem-4-ases}
+       tem_4_ases <- function(mao) {
+         
+         sum(str_starts(mao, 'A')) == 4
+         
+       }
+       ```
+     
+     * Simular (usando as mesmas mãos geradas na resposta anterior):
+     
+       ```{r com-4-ases, cache=TRUE}
+       mean(map_lgl(maos, tem_4_ases))
+       ```
+     
+     `r fim_resposta()`
+     
+  1. Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) de naipes quaisquer?
+  
+     `r inicio_resposta()`
+     
+     * São $4$ possibilidades para o primeiro número da sequência (7, 8, 9, 10).
+     
+     * Cada uma das $5$ cartas pode ter um de $4$ naipes, dando $4^5$      possibilidades.
+     
+     * Então, existem $4 \cdot 4^5 = 4^6 = `r 4^6`$ sequências.
+     
+     * A resposta é 
+     
+       $$
+       \frac{`r 4^6`}{\binom{32}{5}} =
+       \frac{`r 4^6`}{`r choose(32, 5)`} 
+       \approx `r (4^6/choose(32, 5)) %>% fm(6)`
+       $$
+          
+     * Testar se a mão tem sequência:
+     
+       ```{r tem-seq}
+       tem_seq <- function(mao) {
+       
+         all(c(7, 8, 9, 1, 'J') %in% str_sub(mao, 1, 1)) ||
+         all(c(8, 9, 1, 'J', 'Q') %in% str_sub(mao, 1, 1)) ||
+         all(c(9, 1, 'J', 'Q', 'K') %in% str_sub(mao, 1, 1)) ||
+         all(c(1, 'J', 'Q', 'K', 'A') %in% str_sub(mao, 1, 1))
+         
+       }
+       ```
+     
+     * Simular (usando as mesmas mãos geradas na primeira resposta):
+     
+       ```{r com-seq, cache=TRUE}
+       mean(map_lgl(maos, tem_seq))
+       ```
+     
+     `r fim_resposta()`
+     
+  1. Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) do mesmo naipe?
+
+     `r inicio_resposta()`
+     
+     * Cada naipe tem $4$ sequências possíveis.
+     
+     * O total de sequências do mesmo naipe, então, é $4 \cdot 4 = 16$.
+     
+     * A resposta é
+     
+       $$
+       \frac{16}{\binom{32}{5}} = 
+       \frac{16}{`r choose(32, 5)`} \approx
+       `r (16/choose(32, 5)) %>% fm(6)`
+       $$
+
+     * [É mais improvável obter uma sequência do mesmo naipe do que obter $4$ ases.]{.hl}
+     
+     * Testar se a mão tem sequência do mesmo naipe:
+     
+       ```{r tem-seq-naipe}
+       tem_seq_naipe <- function(mao) {
+         
+         tem_seq(mao) && (
+           all(str_ends(mao, '♥')) ||
+           all(str_ends(mao, '♦')) ||
+           all(str_ends(mao, '♠')) ||
+           all(str_ends(mao, '♣'))
+         )
+         
+       }
+       ```
+     
+     * Simular:
+         
+       ```{r com-seq-naipe, cache=TRUE}
+       mean(map_lgl(maos, tem_seq_naipe))
+       ```
+     
+     `r fim_resposta()`
+     
 
 ### Dados
 
-Calcule as seguintes probabilidades teoricamente e através de simulações.
+* Calcule as seguintes probabilidades teoricamente e através de simulações.
 
-1. Você lança um dado não-viciado 6 vezes. Qual a probabilidade de que saiam os 6 números?
-
-1. Idem, se você lançar o dado 10 vezes.
-
-1. Repita os 2 itens acima, para um dado viciado, no qual 
-   $$
-   P(1) = \frac{1}{12}, \quad P(2) = P(3) = P(4) = P(5) = \frac{1}{6}, \quad P(6) = \frac{3}{12}
-   $$ 
+  1. Você lança um dado não-viciado $6$ vezes. Qual a probabilidade de que saiam os $6$ números?
+  
+  1. Idem, se você lançar o dado $10$ vezes.
+  
+  1. Repita os $2$ itens acima, para um dado viciado, no qual 
+  
+     $$
+     P(1) = \frac{1}{12}, \quad P(2) = P(3) = P(4) = P(5) = \frac{1}{6}, \quad P(6) = \frac{3}{12}
+     $$ 
 
 
 ## Vídeo 2
@@ -454,35 +1037,6 @@ embed_yt('NVP-MwtGp0Q')
 
 
 ## Probabilidade da união de dois eventos
-
-### Exemplo: cães e gatos
-
-* Suponha que 25% das pessoas têm cachorro, 29% das pessoas têm gato, e 12% das pessoas têm cachorro e gato.
-
-* Qual a probabilidade de que uma pessoa tenha gato ou cachorro ou ambos?
-  $$
-  \begin{align*}
-  P(\text{cachorro } \cup \text{ gato}) 
-    &= P(\text{cachorro}) + P(\text{gato}) - P(\text{cachorro } \cap \text{ gato}) \\
-    &= 0{,}25 + 0{,}29 - 0{,}12 \\
-    &= 0{,}42
-  \end{align*}
-  $$
-
-
-### No geral
-
-$$
-\begin{align*}
-P(A_1 \cup A_2 \cup \cdots \cup A_n) &=
-  P(A_1) + P(A_2) + \cdots + P(A_n) \\
-  & - P(A_1 \cap A_2) - \cdots - P(A_{n-1} \cap A_n) \\
-  & + P(A_1 \cap A_2 \cap A_3) + \cdots + P(A_{n-2} \cap A_{n-1} \cap A_n) \\
-  & \cdots \\
-  & \pm P(A_1 \cap A_2 \cap \cdots \cap A_n )
-\end{align*}
-$$
-
 
 ## Probabilidade condicional
 

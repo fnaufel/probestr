@@ -5,6 +5,8 @@ source(
   )
 )
 
+library(patchwork)
+
 # For interactive exercises
 # See https://github.com/fnaufel/exercises
 library(exercises)
