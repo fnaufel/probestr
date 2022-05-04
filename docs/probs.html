@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Capítulo 7 Probabilidades | Probabilidade e Estatística com R</title>
+<meta name="author" content="Fernando Náufel">
+<meta name="description" content="7.1 Vídeo 1    7.2 Espaço amostral Para falar em probabilidades, precisamos falar de experimentos, resultados, espaços amostrais, e eventos. Um experimento probabilístico é um experimento cujo...">
+<meta name="generator" content="bookdown 0.26 with bs4_book()">
+<meta property="og:title" content="Capítulo 7 Probabilidades | Probabilidade e Estatística com R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
+<meta property="og:description" content="7.1 Vídeo 1    7.2 Espaço amostral Para falar em probabilidades, precisamos falar de experimentos, resultados, espaços amostrais, e eventos. Um experimento probabilístico é um experimento cujo...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Capítulo 7 Probabilidades | Probabilidade e Estatística com R">
+<meta name="twitter:description" content="7.1 Vídeo 1    7.2 Espaço amostral Para falar em probabilidades, precisamos falar de experimentos, resultados, espaços amostrais, e eventos. Um experimento probabilístico é um experimento cujo...">
+<meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/_Lexend-0.4.1/font.css" rel="stylesheet">
+<link href="libs/_JetBrains%20Mono-0.4.1/font.css" rel="stylesheet">
+<link href="libs/_Roboto-0.4.1/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
+<link rel="stylesheet" href="html_files/styles_book.css">
+<link rel="stylesheet" href="html_files/webex.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Ir para conteúdo principal</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Probabilidade e Estatística com R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar sumário</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+</form>
+
+      <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Apresentação</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O Que É Estatística?</a></li>
+<li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
+<li><a class="" href="introdu%C3%A7%C3%A3o-ao-tidyverse.html"><span class="header-section-number">3</span> Introdução ao tidyverse</a></li>
+<li><a class="" href="viz.html"><span class="header-section-number">4</span> Visualização com ggplot2</a></li>
+<li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
+<li><a class="active" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/fnaufel/probestr">Ver código-fonte do livro <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="probs" class="section level1" number="7">
+<h1>
+<span class="header-section-number">Capítulo 7</span> Probabilidades<a class="anchor" aria-label="anchor" href="#probs"><i class="fas fa-link"></i></a>
+</h1>
+<div id="vídeo-1-4" class="section level2" number="7.1">
+<h2>
+<span class="header-section-number">7.1</span> Vídeo 1<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-1-4"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/hJfyzRzEs44" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="espaço-amostral" class="section level2" number="7.2">
+<h2>
+<span class="header-section-number">7.2</span> Espaço amostral<a class="anchor" aria-label="anchor" href="#espa%C3%A7o-amostral"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Para falar em probabilidades, precisamos falar de <span class="hl">experimentos, resultados, espaços amostrais, e eventos</span>.</p></li>
+<li><p>Um <span class="hl">experimento probabilístico</span> é um experimento cujo resultado exato é desconhecido <em>a priori</em>; mais ainda: <span class="hl">executar o experimento diversas vezes, nas mesmas condições, pode produzir resultados diferentes</span>.</p></li>
+<li><p>O <span class="hl">espaço amostral</span> é o conjunto de <span class="hl">todos os resultados possíveis</span> de um experimento probabilístico, representados de alguma forma.</p></li>
+<li>
+<p>Exemplos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Experimento: lançar uma moeda;<br>
+Espaço amostral: <span class="math inline">\(\{ K, C \}\)</span> (onde <span class="math inline">\(K\)</span> é cara, <span class="math inline">\(C\)</span> é coroa).</p></li>
+<li><p>Experimento: lançar <span class="math inline">\(2\)</span> moedas;<br>
+Espaço amostral: <span class="math inline">\(\{ (K,K), (K,C), (C,K), (C,C) \}\)</span>.</p></li>
+<li><p>Experimento: lançar um dado;<br>
+Espaço amostral: <span class="math inline">\(\{ 1, 2, 3, 4, 5, 6 \}\)</span>.</p></li>
+<li><p>Experimento: lançar <span class="math inline">\(2\)</span> dados:<br>
+Espaço amostral: <span class="math inline">\(\{ (1, 1), (1, 2), \ldots, (6, 5), (6, 6) \}\)</span>.</p></li>
+</ol>
+</li>
+</ul>
+</div>
+<div id="evento" class="section level2" number="7.3">
+<h2>
+<span class="header-section-number">7.3</span> Evento<a class="anchor" aria-label="anchor" href="#evento"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Um <span class="hl">evento</span> é um subconjunto do espaço amostral; ou seja, um evento é um <span class="hl">conjunto de resultados</span>.</p></li>
+<li>
+<p>Exemplos:</p>
+<ol style="list-style-type: decimal">
+<li><p>Lançar uma moeda e <span class="hl">obter cara</span>:<br><span class="math inline">\(\{ K \}\)</span>.</p></li>
+<li><p>Lançar 2 moedas e <span class="hl">obter resultados iguais</span>:<br><span class="math inline">\(\{ (K,K), (C,C) \}\)</span>.</p></li>
+<li><p>Lançar um dado e <span class="hl">obter um número maior que 4</span>:<br><span class="math inline">\(\{ 5, 6 \}\)</span>.</p></li>
+<li><p>Lançar 2 dados e <span class="hl">obter 2 números iguais</span>:<br><span class="math inline">\(\{ (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) \}\)</span>.</p></li>
+</ol>
+</li>
+<li><p>Dizemos que <span class="hl">o evento <span class="math inline">\(A\)</span> ocorreu</span> se o experimento foi realizado e <span class="hl">o resultado obtido está no conjunto que corresponde ao evento <span class="math inline">\(A\)</span></span>.</p></li>
+</ul>
+</div>
+<div id="análise-combinatória" class="section level2" number="7.4">
+<h2>
+<span class="header-section-number">7.4</span> Análise Combinatória<a class="anchor" aria-label="anchor" href="#an%C3%A1lise-combinat%C3%B3ria"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Para calcularmos probabilidades, vamos precisar <span class="hl">contar a quantidade de certos objetos complexos</span> (formados por partes menores).</p></li>
+<li><p>Existem <span class="hl">técnicas de contagem</span>, que são assunto de <span class="hl">Análise Combinatória</span>.</p></li>
+<li>
+<p>Exemplos:</p>
+<ol style="list-style-type: decimal">
+<li>
+<p>Quantas senhas de <span class="math inline">\(6\)</span> caracteres (dentre letras e dígitos apenas) existem, <span class="hl">sem distinguir entre minúsculas e maiúsculas</span>?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<ul>
+<li><p>O conjunto de letras e dígitos tem <span class="math inline">\(36\)</span> elementos.</p></li>
+<li><p>A resposta é <span class="math inline">\(36^{6} = 2.176.782.336\)</span>.</p></li>
+</ul>
+</div>
+</li>
+<li>
+<p>E se não puder haver repetição de caracteres?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<ul>
+<li>Agora, a resposta é
+<span class="math display">\[
+36 \cdot 35 \cdot 34 \cdot 33 \cdot 32 \cdot 31 = 1.402.410.240
+\]</span>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</li>
+<li><p>Se você nunca tiver estudado técnicas de contagem, ou se quiser revisar ou aprender mais, consulte o excelente livro <span class="citation">Oliveira Morgado et al. (<a href="refer%C3%AAncias.html#ref-oliveira-2004-analis" role="doc-biblioref">2004</a>)</span>.</p></li>
+</ul>
+</div>
+<div id="probabilidade-clássica" class="section level2" number="7.5">
+<h2>
+<span class="header-section-number">7.5</span> Probabilidade clássica<a class="anchor" aria-label="anchor" href="#probabilidade-cl%C3%A1ssica"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Nesta abordagem simples — que pode não ser a correta para o problema que estamos tentando resolver —, <span class="hl">cada resultado do espaço amostral tem a mesma chance de ocorrer</span>.</p></li>
+<li>
+<p>Ou seja, para um evento <span class="math inline">\(A\)</span>, a probabilidade <span class="math inline">\(P(A)\)</span> é</p>
+<p><span class="math display">\[
+P(A) = \frac{\text{Qtde de resultados em } A}{\text{Qtde de resultados no espaço amostral}}
+\]</span></p>
+</li>
+<li>
+<p>Exemplo: de um baralho normal, de <span class="math inline">\(52\)</span> cartas, qual a probabilidade de escolher uma carta ao acaso e obter</p>
+<ol style="list-style-type: decimal">
+<li>
+<p>Uma carta de ouros?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p><span class="math display">\[
+\frac{13}{52} = \frac{1}{4}
+\]</span></p>
+</div>
+</li>
+<li>
+<p>Uma carta vermelha?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p><span class="math display">\[
+\frac{26}{52} = \frac{1}{2}
+\]</span></p>
+</div>
+</li>
+<li>
+<p>Uma carta de figura (J, Q ou K)?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p><span class="math display">\[
+\frac{12}{52} = \frac{3}{13}
+\]</span></p>
+</div>
+</li>
+<li>
+<p>Uma carta de ouros, copas, paus ou espadas?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p><span class="math display">\[
+\frac{52}{52} = 1
+\]</span></p>
+</div>
+</li>
+<li>
+<p>Um carta de um naipe verde?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p><span class="math display">\[
+\frac{0}{52} = 0
+\]</span></p>
+</div>
+</li>
+</ol>
+<div class="rmdcaution">
+<p>Só podemos usar este raciocínio <span class="hl">se todos os resultados do experimento tiverem a mesma probabilidade</span> de ocorrer.</p>
+<p>Como a carta é escolhida <span class="hl">ao acaso</span>, esta condição é satisfeita neste exemplo.</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="probabilidade-empírica" class="section level2" number="7.6">
+<h2>
+<span class="header-section-number">7.6</span> Probabilidade empírica<a class="anchor" aria-label="anchor" href="#probabilidade-emp%C3%ADrica"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Baseada em <span class="hl">repetições de um experimento probabilístico</span>.</p></li>
+<li>
+<p>Nesta abordagem, a probabilidade de um evento é sua <span class="hl">frequência relativa</span>:</p>
+<p><span class="math display">\[
+P(A) = \frac{\text{Qtde de ocorrências de } A}{\text{Qtde total de repetições do experimento}}
+\]</span></p>
+</li>
+<li><p>Esta abordagem é fácil de usar quando é possível repetir o experimento muitas vezes, nas mesmas condições (lançar uma moeda, escolher uma carta de um baralho).</p></li>
+<li><p>Em outros casos (calcular a probabilidade de um candidato vencer uma eleição), não é possível repetir o experimento nas mesmas condições.</p></li>
+<li>
+<p>Exemplo: se lançarmos uma moeda não-viciada muitas vezes, a proporção de caras vai ser aproximadamente <span class="math inline">\(0{,}5\)</span>. Os gráficos abaixo mostram como, à medida que o número de lançamentos aumenta (no eixo horizontal), a proporção de caras (no eixo vertical) vai se aproximando de <span class="math inline">\(0{,}5\)</span>:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/lancar-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>A <a href="https://pt.wikipedia.org/wiki/Lei_dos_grandes_n%C3%BAmeros"><span class="hl">lei dos grandes números</span></a> é um resultado matemático que diz, essencialmente, que, <span class="hl">quando o número <span class="math inline">\(n\)</span> de repetições de um experimento tende a infinito, a frequência relativa de um evento tende à sua probabilidade real</span>.</p>
+<div class="rmdcaution">
+<p>Um <span class="hl">erro comum</span> é achar que, se houve poucas caras nos lançamentos mais recentes, então a probabilidade de o resultado ser cara no próximo lançamento é maior, para que a proporção de caras fique mais perto de <span class="math inline">\(0{,}5\)</span>.</p>
+<p>A lei dos grandes números fala sobre os resultados do experimento quando <span class="math inline">\(n\)</span> tende ao infinito, <span class="hl">não no futuro próximo</span>.</p>
+<p>Em lançamentos <span class="hl">independentes</span> de uma moeda <span class="hl">não-viciada</span>, a probabilidade de cara <span class="hl">sempre</span> é <span class="math inline">\(0{,}5\)</span>.</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="probabilidade-subjetiva" class="section level2" number="7.7">
+<h2>
+<span class="header-section-number">7.7</span> Probabilidade subjetiva<a class="anchor" aria-label="anchor" href="#probabilidade-subjetiva"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Outra interpretação de probabilidades se baseia na <span class="hl">crença</span> — a estimativa de um agente sobre a ocorrência de um evento.</p></li>
+<li><p>Uma maneira de quantificar a crença é através de <span class="hl">apostas justas</span>.</p></li>
+<li>
+<p>Por exemplo, você aposta com um amigo que</p>
+<ul>
+<li><p>Se o seu time de basquete<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Considere que, no basquete, o empate é impossível.&lt;/p&gt;"><sup>8</sup></a> vencer o próximo jogo contra o dele, você pagará <span class="math inline">\(\$3\)</span> para ele.</p></li>
+<li><p>Se o time dele vencer o próximo jogo contra o seu, ele pagará <span class="math inline">\(\$1\)</span> para você.</p></li>
+</ul>
+</li>
+<li><p>Se você considera justa esta aposta, então <span class="hl">você crê que a probabilidade de o time dele vencer é <span class="math inline">\(3\)</span> vezes maior do que a probabilidade de o seu time vencer</span>.</p></li>
+<li>
+<p>Como <span class="hl">a soma das probabilidades de um evento e do evento complementar deve ser <span class="math inline">\(1\)</span></span>, isto equivale a dizer que</p>
+<p><span class="math display">\[
+P(\text{seu time vencer}) = 1/4 \qquad\text{e}\qquad  P(\text{time dele vencer}) = 3/4
+\]</span></p>
+</li>
+<li>
+<p>Em mais detalhes:</p>
+<ul>
+<li><p>Você pode receber menos com uma probabilidade maior,</p></li>
+<li><p>Seu amigo pode receber mais com uma probabilidade menor,</p></li>
+<li><p>A razão entre as quantias (<span class="math inline">\(3\)</span>) é contrabalançada exatamente pela razão entre as probabilidades (<span class="math inline">\(1/3\)</span>).</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="axiomas" class="section level2" number="7.8">
+<h2>
+<span class="header-section-number">7.8</span> Formalização de probabilidades<a class="anchor" aria-label="anchor" href="#axiomas"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Para trabalhar matematicamente com probabilidades, é preciso definir as “regras do jogo”.</p></li>
+<li>
+<p><span class="hl">Tudo</span> que se pode concluir sobre probabilidades é <span class="hl">consequência dos seguintes axiomas</span>, <a href="https://pt.wikipedia.org/wiki/Axiomas_de_probabilidade#Axiomas">formulados por Kolmogorov em 1933</a>:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(0 \leq P(A) \leq 1\)</span>, para qualquer evento <span class="math inline">\(A\)</span>.</p></li>
+<li><p><span class="math inline">\(P(\Omega) = 1\)</span>, onde <span class="math inline">\(\Omega\)</span> é o espaço amostral (o conjunto de todos os resultados possíveis do experimento em questão);</p></li>
+<li><p><span class="math inline">\(P(\bar A) = 1 - P(A)\)</span>, onde <span class="math inline">\(\bar A\)</span> é o evento <span class="hl">complementar</span> de <span class="math inline">\(A\)</span> (i.e., o evento que corresponde a <span class="math inline">\(A\)</span> <span class="hl">não</span> ocorrer)</p></li>
+<li><p><span class="math inline">\(P(A_1 \cup \cdots \cup A_n) = P(A_1) + \cdots + P(A_n)\)</span>, onde <span class="math inline">\(A_1, \ldots, A_n\)</span> são eventos <span class="hl">disjuntos dois a dois</span> (i.e., <span class="math inline">\(A_i\)</span> e <span class="math inline">\(A_j\)</span> <span class="hl">não podem ocorrer ao mesmo tempo</span>, para todo par <span class="math inline">\((i, j)\)</span> com <span class="math inline">\(i \neq j\)</span>).</p></li>
+</ol>
+</li>
+<li>
+<p>Mostre, a partir dos axiomas acima, que</p>
+<p><span class="math display">\[
+P(\varnothing) = 0
+\]</span></p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Dica
+</button>
+<p><span class="math display">\[\varnothing = \bar \Omega \]</span></p>
+</div>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p><span class="math display">\[
+\begin{aligned}
+  P(\varnothing)
+  &amp;= P(\bar \Omega) \\
+  &amp;= 1 - P(\Omega) &amp; \text{(pelo axioma 3)}\\
+  &amp;= 1 - 1 &amp; \text{(pelo axioma 2)} \\
+  &amp;= 0
+\end{aligned}
+\]</span></p>
+</div>
+</li>
+</ul>
+</div>
+<div id="eventos-independentes-explicação-informal" class="section level2" number="7.9">
+<h2>
+<span class="header-section-number">7.9</span> Eventos independentes (explicação informal)<a class="anchor" aria-label="anchor" href="#eventos-independentes-explica%C3%A7%C3%A3o-informal"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Se a ocorrência de <span class="math inline">\(A\)</span> <span class="hl">não influencia</span> a ocorrência de <span class="math inline">\(B\)</span>, nem vice-versa, dizemos que os eventos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> são <span class="hl">independentes</span>.</p></li>
+<li>
+<p>Exemplo:</p>
+<ul>
+<li><p>O experimento é <span class="hl">lançar um dado duas vezes</span>.</p></li>
+<li><p><span class="math inline">\(A\)</span> é o evento o <span class="hl">primeiro lançamento deu um número par</span>.</p></li>
+<li><p><span class="math inline">\(B\)</span> é o evento <span class="hl">o segundo lançamento deu 6</span>.</p></li>
+<li><p>Saber se <span class="math inline">\(A\)</span> aconteceu <span class="hl">não nos ajuda</span> em nada a estimar se <span class="math inline">\(B\)</span> aconteceu.</p></li>
+<li><p>Aqui, <span class="hl"><span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> são independentes</span>.</p></li>
+</ul>
+</li>
+<li>
+<p>Outro exemplo:</p>
+<ul>
+<li><p>O experimento é <span class="hl">lançar um dado duas vezes</span>.</p></li>
+<li><p><span class="math inline">\(A\)</span> é o evento o <span class="hl">primeiro lançamento deu um número menor que <span class="math inline">\(3\)</span></span>.</p></li>
+<li><p><span class="math inline">\(B\)</span> é o evento <span class="hl">a soma dos dois lançamentos é maior que <span class="math inline">\(8\)</span></span>.</p></li>
+<li><p>Agora, saber se <span class="math inline">\(A\)</span> aconteceu <span class="hl">ajuda</span> a estimar se <span class="math inline">\(B\)</span> aconteceu.</p></li>
+<li><p>Na verdade, <span class="hl">se <span class="math inline">\(A\)</span> aconteceu, <span class="math inline">\(B\)</span> é impossível</span> (a probabilidade de <span class="math inline">\(B\)</span>, dado <span class="math inline">\(A\)</span>, é <span class="math inline">\(0\)</span>).</p></li>
+<li><p>Se <span class="math inline">\(A\)</span> não aconteceu, a probabilidade de <span class="math inline">\(B\)</span> é <span class="math inline">\(5/12\)</span>.</p></li>
+<li><p>Aqui, <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> <span class="hl">não são independentes</span>.</p></li>
+</ul>
+</li>
+<li>
+<p><span id="independentes-produto"></span> A probabilidade de os eventos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> acontecerem ao mesmo tempo é escrita como</p>
+<p><span class="math display">\[
+P(A, B) \qquad \text{ou como} \qquad P(A \cap B)
+\]</span></p>
+</li>
+<li>
+<p>Quando <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> são <span class="hl">independentes</span>,</p>
+<p><span class="math display">\[
+P(A, B) = P(A) \cdot P(B)
+\]</span></p>
+</li>
+<li><p>Ou seja, <span class="hl">quando <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> são independentes, a probabilidade de <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> acontecerem ao mesmo tempo é igual ao produto das probabilidades de <span class="math inline">\(A\)</span> e de <span class="math inline">\(B\)</span></span>.</p></li>
+<li><p>Mais adiante, vamos ver uma definição formal de independência, e vamos provar esta última igualdade.</p></li>
+</ul>
+</div>
+<div id="pa-cup-b-com-a-e-b-não-disjuntos" class="section level2" number="7.10">
+<h2>
+<span class="header-section-number">7.10</span> <span class="math inline">\(P(A \cup B)\)</span> com <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> não-disjuntos<a class="anchor" aria-label="anchor" href="#pa-cup-b-com-a-e-b-n%C3%A3o-disjuntos"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<p>Um dos <a href="probs.html#axiomas">axiomas de probabilidade</a> fala sobre a probabilidade da união de vários eventos <span class="hl">disjuntos</span> (sem elementos em comum):</p>
+<p><span class="math display">\[
+P(A_1 \cup \cdots \cup A_n) = P(A_1) + \cdots + P(A_n)
+\]</span></p>
+</li>
+<li><p>E <span class="hl">se os eventos não forem disjuntos</span>?</p></li>
+<li>
+<p>Veja a figura abaixo:</p>
+<p>???</p>
+</li>
+<li><p>Imagine que a probabilidade de um evento é proporcional à sua área nesta figura.</p></li>
+<li><p>Se você somar a área de <span class="math inline">\(A\)</span> com a área de <span class="math inline">\(B\)</span>, você vai estar <span class="hl">contando duas vezes</span> a área comum aos dois (a área que corresponde a <span class="math inline">\(A \cap B\)</span>).</p></li>
+<li><p>Por isso, <span class="hl">o certo é “descontar” esta área</span>.</p></li>
+<li>
+<p>O resultado é</p>
+<p><span class="math display">\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\]</span></p>
+</li>
+<li><p>Exemplo: suponha que 25% das pessoas têm cachorro, 29% das pessoas têm gato, e 12% das pessoas têm cachorro e gato.</p></li>
+<li>
+<p>Qual a probabilidade de que uma pessoa tenha gato ou cachorro ou ambos?</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(\text{cachorro } \cup \text{ gato})
+  &amp;= P(\text{cachorro}) + P(\text{gato}) - P(\text{cachorro } \cap \text{ gato}) \\
+  &amp;= 0{,}25 + 0{,}29 - 0{,}12 \\
+  &amp;= 0{,}42
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>No geral, para <span class="math inline">\(n\)</span> eventos <span class="math inline">\(A_1, \ldots, A_n\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A_1 \cup \cdots \cup A_n) &amp;=
+  P(A_1) + \cdots + P(A_n) \\
+  &amp; - P(A_1 \cap A_2) - \cdots - P(A_{n-1} \cap A_n) \\
+  &amp; + P(A_1 \cap A_2 \cap A_3) + \cdots + P(A_{n-2} \cap A_{n-1} \cap A_n) \\
+  &amp; \cdots \\
+  &amp; \pm P(A_1 \cap \cdots \cap A_n )
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>Na última linha</p>
+<ul>
+<li><p>o sinal vai ser <span class="math inline">\(+\)</span> se <span class="math inline">\(n\)</span> for ímpar;</p></li>
+<li><p>o sinal vai ser <span class="math inline">\(-\)</span> se <span class="math inline">\(n\)</span> for par;</p></li>
+<li><p>poderíamos escrever, então, <span class="math inline">\((-1)^{n+1} \cdot P(A_1 \cap \cdots \cap A_n )\)</span>.</p></li>
+</ul>
+</li>
+<li>
+<p>Escreva, seguindo o padrão acima, a expressão para</p>
+<p><span class="math display">\[
+P(A \cup B \cup C)
+\]</span></p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p><span class="math display">\[
+\begin{aligned}
+P(A \cup B \cup C) &amp;=
+  P(A) + P(B) + P(C) \\
+  &amp; - P(A \cap B) - P(A \cap C) - P(B \cap C) \\
+  &amp; + P(A \cap B \cap C)
+\end{aligned}
+\]</span></p>
+</div>
+</li>
+</ul>
+</div>
+<div id="problema-do-aniversário" class="section level2" number="7.11">
+<h2>
+<span class="header-section-number">7.11</span> Problema do aniversário<a class="anchor" aria-label="anchor" href="#problema-do-anivers%C3%A1rio"><i class="fas fa-link"></i></a>
+</h2>
+<div id="solução-teórica" class="section level3" number="7.11.1">
+<h3>
+<span class="header-section-number">7.11.1</span> Solução teórica<a class="anchor" aria-label="anchor" href="#solu%C3%A7%C3%A3o-te%C3%B3rica"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Em uma sala estão <span class="math inline">\(25\)</span> pessoas escolhidas ao acaso.</p></li>
+<li><p><span class="hl">Qual a probabilidade de que pelo menos <span class="math inline">\(2\)</span> delas façam aniversário no mesmo dia do ano?</span></p></li>
+<li>
+<p>Premissas:</p>
+<ul>
+<li><p>Os dias dos aniversários das pessoas são independentes.</p></li>
+<li><p>Cada dia do ano tem a mesma probabilidade de ser o aniversário de alguém.</p></li>
+<li><p>Vamos ignorar anos bissextos. Cada ano tem 365 dias.</p></li>
+</ul>
+</li>
+<li><p>Queremos achar <span class="math inline">\(P(I)\)</span>, onde <span class="math inline">\(I\)</span> é o evento de que pelo menos duas pessoas têm aniversários iguais.</p></li>
+<li><p>Vamos calcular a probabilidade <span class="math inline">\(P(N)\)</span> de que <span class="hl">não</span> haja aniversários iguais.</p></li>
+<li><p>Este evento <span class="math inline">\(N\)</span> é o complementar do evento <span class="math inline">\(I\)</span>, i.e., <span class="math inline">\(N = \bar I\)</span>.</p></li>
+<li><p>Então, <span class="math inline">\(P(I) = 1 - P(N)\)</span>.</p></li>
+<li>
+<p><span class="math inline">\(P(N)\)</span> é a probabilidade de que todos os aniversários caiam em dias diferentes:</p>
+<ul>
+<li><p>A pessoa <span class="math inline">\(1\)</span> pode ter nascido em qualquer dia do ano.</p></li>
+<li><p>A pessoa <span class="math inline">\(2\)</span> precisa ter nascido em algum dos outros <span class="math inline">\(364\)</span> dias. A probabilidade é <span class="math inline">\(\frac{364}{365}\)</span>.</p></li>
+<li><p>A pessoa <span class="math inline">\(3\)</span> precisa ter nascido em algum dos outros <span class="math inline">\(363\)</span> dias. A probabilidade é <span class="math inline">\(\frac{363}{365}\)</span>.</p></li>
+<li><p><span class="math inline">\(\ldots\)</span></p></li>
+<li><p>A pessoa <span class="math inline">\(25\)</span> precisa ter nascido em algum dos outros <span class="math inline">\(341\)</span> dias. A probabilidade é <span class="math inline">\(\frac{341}{365}\)</span>.</p></li>
+</ul>
+</li>
+<li>
+<p><a href="probs.html#independentes-produto">Como os nascimentos são independentes</a>, a probabilidade de todos os eventos acontecerem juntos é o produto das probabilidades:</p>
+<p><span class="math display">\[
+P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
+       \frac{341}{365}
+     = \frac{364 \cdot 363 \cdot \cdots \cdot 341}{365^{24}}
+\]</span></p>
+</li>
+<li>
+<p>O que dá</p>
+<div class="sourceCode" id="cb369"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="op">(</span><span class="fl">364</span><span class="op">:</span><span class="fl">341</span><span class="op">)</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span>
+<span class="va">pn</span></code></pre></div>
+<pre><code>## [1] 0,4313003</code></pre>
+</li>
+<li>
+<p>Então, <span class="math inline">\(P(I)\)</span> é</p>
+<div class="sourceCode" id="cb371"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1</span> <span class="op">-</span> <span class="va">pn</span></code></pre></div>
+<pre><code>## [1] 0,5686997</code></pre>
+</li>
+<li><p>Surpreso? Com <span class="math inline">\(25\)</span> pessoas na sala, é mais provável haver do que não haver coincidência de aniversários!</p></li>
+</ul>
+</div>
+<div id="simulação" class="section level3" number="7.11.2">
+<h3>
+<span class="header-section-number">7.11.2</span> Simulação<a class="anchor" aria-label="anchor" href="#simula%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>Vamos simular milhares de salas com <span class="math inline">\(25\)</span> pessoas satisfazendo as <a href="#premissas">premissas</a> e ver em quantas delas há coincidência de aniversários. Examine o código abaixo:</p>
+<div class="sourceCode" id="cb373"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e4</span>
+<span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">25</span>
+
+<span class="va">coincidencia</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sala</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="co"># Se a quantidade de valores únicos for diferente </span>
+  <span class="co"># da quantidade total de valores, então há repetição  </span>
+  <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">sala</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sala</span><span class="op">)</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">gerar_e_testar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">npessoas</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="co"># Escolhemos, ao acaso, npessoas números entre 1 e 365,</span>
+  <span class="co"># com reposição</span>
+  <span class="va">sala</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">365</span>, <span class="va">npessoas</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+  <span class="co"># Testamos se há alguma coincidência de aniversários</span>
+  <span class="fu">coincidencia</span><span class="op">(</span><span class="va">sala</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">simular</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">nsalas</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">resultados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">nsalas</span>, <span class="fu">gerar_e_testar</span><span class="op">(</span><span class="va">npessoas</span><span class="op">)</span><span class="op">)</span>
+
+  <span class="co"># Como resultados é um vetor booleano, tirar a média</span>
+  <span class="co"># vai dar a proporção de resultados verdadeiros,</span>
+  <span class="co"># que é a probabilidade.</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="fu">simular</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">nsalas</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0,5679</code></pre>
+</li>
+</ul>
+</div>
+<div id="para-diferentes-valores-de-n-in-2-3-ldots-50" class="section level3" number="7.11.3">
+<h3>
+<span class="header-section-number">7.11.3</span> Para diferentes valores de <span class="math inline">\(n \in \{2, 3, \ldots, 50\}\)</span><a class="anchor" aria-label="anchor" href="#para-diferentes-valores-de-n-in-2-3-ldots-50"><i class="fas fa-link"></i></a>
+</h3>
+<div id="soluções-teóricas" class="section level4 unnumbered">
+<h4>Soluções teóricas<a class="anchor" aria-label="anchor" href="#solu%C3%A7%C3%B5es-te%C3%B3ricas"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>Vamos calcular as probabilidades de coincidência para diferentes quantidades <span class="math inline">\(n\)</span> de pessoas na sala e fazer um gráfico:</p>
+<div class="sourceCode" id="cb375"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span>
+
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="co"># Fórmula geral, para n pessoas</span>
+  <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="op">(</span><span class="fl">364</span><span class="op">:</span><span class="op">(</span><span class="fl">366</span> <span class="op">-</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">p</span><span class="op">)</span>
+
+<span class="va">grafico</span> <span class="op">&lt;-</span> <span class="va">probs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">npessoas</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      title <span class="op">=</span> <span class="st">'Probabilidades de coincidência com n pessoas'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>,
+      x <span class="op">=</span> <span class="st">'n'</span>
+    <span class="op">)</span>
+
+<span class="va">grafico</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/n-teorico-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Este problema é tão usado em cursos de probabilidade que o R oferece as funções <code>pbirthday</code> e <code>qbirthday</code>.</p></li>
+<li><p>Leia a ajuda de <code>pbirthday</code> e recrie o gráfico acima usando esta função.</p></li>
+<li>
+<p>Leia a ajuda de <code>qbirthday</code> e responda:</p>
+<ul>
+<li>
+<p>Quantas pessoas são necessárias para que a probabilidade de uma ou mais coincidências seja de pelo menos <span class="math inline">\(50\%\)</span>?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p>Os valores <em>default</em> dos argumentos resolvem este problema:</p>
+<div class="sourceCode" id="cb376"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/birthday.html">qbirthday</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 23</code></pre>
+</div>
+</li>
+<li>
+<p>Quantas pessoas são necessárias para que a probabilidade de uma ou mais coincidências seja de pelo menos <span class="math inline">\(90\%\)</span>?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<div class="sourceCode" id="cb378"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/birthday.html">qbirthday</a></span><span class="op">(</span><span class="fl">.9</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 41</code></pre>
+</div>
+</li>
+<li>
+<p>Quantas pessoas são necessárias para que haja uma probabilidade de pelo menos <span class="math inline">\(50\%\)</span> de que <span class="math inline">\(5\)</span> ou mais pessoas façam aniversário no mesmo dia?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<div class="sourceCode" id="cb380"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/birthday.html">qbirthday</a></span><span class="op">(</span>coincident <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 313</code></pre>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="simulação-1" class="section level4 unnumbered">
+<h4>Simulação<a class="anchor" aria-label="anchor" href="#simula%C3%A7%C3%A3o-1"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb382"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e3</span>
+<span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span>
+
+<span class="va">probs_sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">simular</span>, <span class="va">nsalas</span><span class="op">)</span>
+
+<span class="va">grafico</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">probs_sim</span><span class="op">)</span>,
+    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">value</span><span class="op">)</span>,
+    color <span class="op">=</span> <span class="st">'red'</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+    subtitle <span class="op">=</span> <span class="st">'(teóricas em azul, simulações em vermelho)'</span>
+  <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/n-simul-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+</div>
+<div id="premissas-mais-realistas" class="section level3" number="7.11.4">
+<h3>
+<span class="header-section-number">7.11.4</span> Premissas mais realistas<a class="anchor" aria-label="anchor" href="#premissas-mais-realistas"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p><span class="hl">Vamos considerar anos bissextos</span>. O total de dias muda para <span class="math inline">\(366\)</span>, mas um dos dias (<span class="math inline">\(29\)</span> de fevereiro) tem <span class="math inline">\(1/4\)</span> da probabilidade de um dia normal de ser o aniversário de alguém.</p></li>
+<li><p><span class="hl">Além disso</span>, vamos supor que haja <span class="math inline">\(165\)</span> dias em que a probabilidade de alguém nascer é <span class="math inline">\(25\%\)</span> maior do que nos <span class="math inline">\(200\)</span> dias normais.</p></li>
+<li><p>A solução teórica é bem mais complexa do que no caso uniforme!</p></li>
+<li><p>Vamos fazer apenas a simulação.</p></li>
+<li>
+<p>Preste atenção no vetor <code>pesos</code>, que representam as probabilidades de dias diferentes:</p>
+<ul>
+<li><p><span class="math inline">\(200\)</span> dias normais têm peso <span class="math inline">\(4\)</span>;</p></li>
+<li><p><span class="math inline">\(165\)</span> dias mais prováveis têm peso <span class="math inline">\(5\)</span>;</p></li>
+<li><p><span class="math inline">\(1\)</span> dia (<span class="math inline">\(29\)</span> de fevereiro) tem peso <span class="math inline">\(1\)</span>.</p></li>
+</ul>
+</li>
+<li><p><span class="hl">Estes pesos não são probabilidades, porque a soma deles não é <span class="math inline">\(1\)</span></span>.</p></li>
+<li><p>A função <code>sample</code> <span class="hl">normaliza</span> automaticamente estes pesos.</p></li>
+<li>
+<p>Normalizar significa dividir todos os valores pela mesma constante, de forma que a soma seja <span class="math inline">\(1\)</span>.</p>
+<div class="sourceCode" id="cb383"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e3</span>
+<span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span>
+
+<span class="va">pesos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">200</span><span class="op">)</span>,    <span class="co"># dias normais</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">165</span><span class="op">)</span>,    <span class="co"># dias mais prováveis</span>
+  <span class="fl">1</span>               <span class="co"># 29 de fevereiro</span>
+<span class="op">)</span>
+
+<span class="va">gerar_e_testar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">pesos</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">sala</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">366</span>, <span class="va">npessoas</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">pesos</span><span class="op">)</span>
+  <span class="fu">coincidencia</span><span class="op">(</span><span class="va">sala</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">simular</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">nsalas</span>, <span class="va">pesos</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">resultados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">nsalas</span>, <span class="fu">gerar_e_testar</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">pesos</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">novas_probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">simular</span>, <span class="va">nsalas</span>, <span class="va">pesos</span><span class="op">)</span>
+
+<span class="va">grafico</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">novas_probs</span><span class="op">)</span>,
+    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">value</span><span class="op">)</span>,
+    color <span class="op">=</span> <span class="st">'red'</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
+      <span class="st">'(teóricas com premissas originais: azul;'</span>, 
+      <span class="st">'simulações com novas premissas: vermelho)'</span>
+    <span class="op">)</span>
+  <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/premissas-real-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>As novas premissas não mudaram muita coisa.</p></li>
+<li>
+<p>Escreva a versão normalizada do vetor <code>pesos</code>.</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<p>O vetor original é</p>
+<p><span class="math display">\[
+(
+\underbrace{4, \ldots, 4}_{200\text{ vezes}},\;\;
+\underbrace{5, \ldots, 5}_{165\text{ vezes}},\;\;
+1
+)
+\]</span></p>
+<p>A soma de todos os elementos é</p>
+<p><span class="math display">\[
+200 \cdot 4 + 165 \cdot 165 + 1 = 1.626
+\]</span></p>
+<p>O vetor normalizado fica</p>
+<p><span class="math display">\[
+\left(
+\underbrace{\frac4{1626}, \ldots, \frac4{1626}}_{200\text{ vezes}},\;\;
+\underbrace{\frac5{1626}, \ldots, \frac5{1626}}_{165\text{ vezes}},\;\;
+\frac1{1626}
+\right)
+\]</span></p>
+<p>ou</p>
+<p><span class="math display">\[
+\left(
+\underbrace{\frac2{813}, \ldots, \frac2{813}}_{200\text{ vezes}},\;\;
+\underbrace{\frac5{1626}, \ldots, \frac5{1626}}_{165\text{ vezes}},\;\;
+\frac1{1626}
+\right)
+\]</span></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="exercícios-13" class="section level2" number="7.12">
+<h2>
+<span class="header-section-number">7.12</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-13"><i class="fas fa-link"></i></a>
+</h2>
+<div id="semanas-com-mais-nascimentos" class="section level3" number="7.12.1">
+<h3>
+<span class="header-section-number">7.12.1</span> Semanas com mais nascimentos<a class="anchor" aria-label="anchor" href="#semanas-com-mais-nascimentos"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Imagine que <span class="math inline">\(50\%\)</span> dos nascimentos de um ano aconteçam em um período de <span class="math inline">\(15\)</span> semanas, e o restante dos nascimentos seja distribuído de maneira uniforme no restante do ano. Ignore anos bissextos.</p></li>
+<li><p>Faça simulações como na seção anterior (<span class="math inline">\(2 \leq n \leq 50\)</span>) e construa o gráfico comparando com as probabilidades teóricas (com as premissas originais).</p></li>
+<li>
+<p>Interprete o resultado.</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<ul>
+<li><p><span class="math inline">\(15\)</span> semanas são <span class="math inline">\(105\)</span> dias.</p></li>
+<li>
+<p>O restante do ano tem <span class="math inline">\(260\)</span> dias.</p>
+<div class="sourceCode" id="cb384"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e4</span>
+<span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span>
+
+<span class="co"># Probabilidades teóricas, premissas originais</span>
+<span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="op">(</span><span class="fl">364</span><span class="op">:</span><span class="op">(</span><span class="fl">366</span> <span class="op">-</span> <span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">p</span><span class="op">)</span>
+
+<span class="va">grafico</span> <span class="op">&lt;-</span> <span class="va">probs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">npessoas</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">'blue'</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+      title <span class="op">=</span> <span class="st">'Probabilidades de coincidência com n pessoas'</span>,
+      y <span class="op">=</span> <span class="cn">NULL</span>,
+      x <span class="op">=</span> <span class="st">'n'</span>
+    <span class="op">)</span>
+
+<span class="co"># Probabilidades com 15 semanas com 50% dos nascimentos</span>
+<span class="va">pesos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">50</span><span class="op">/</span><span class="fl">105</span>, <span class="fl">105</span><span class="op">)</span>,    <span class="co"># dias das semanas com mais nascimentos</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">50</span><span class="op">/</span><span class="fl">260</span>, <span class="fl">260</span><span class="op">)</span>     <span class="co"># dias das semanas normais</span>
+<span class="op">)</span>
+
+<span class="va">coincidencia</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sala</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">sala</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">sala</span><span class="op">)</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">gerar_e_testar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">pesos</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">sala</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">365</span>, <span class="va">npessoas</span>, replace <span class="op">=</span> <span class="cn">TRUE</span>, prob <span class="op">=</span> <span class="va">pesos</span><span class="op">)</span>
+  <span class="fu">coincidencia</span><span class="op">(</span><span class="va">sala</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">simular</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">nsalas</span>, <span class="va">pesos</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="va">resultados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">nsalas</span>, <span class="fu">gerar_e_testar</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">pesos</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span>
+
+<span class="op">}</span>
+
+<span class="va">novas_probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">simular</span>, <span class="va">nsalas</span>, <span class="va">pesos</span><span class="op">)</span>
+
+<span class="va">grafico</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>
+    data <span class="op">=</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">novas_probs</span><span class="op">)</span>,
+    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">value</span><span class="op">)</span>,
+    color <span class="op">=</span> <span class="st">'red'</span>
+  <span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span>
+      <span class="st">'(teóricas com premissas originais: azul;'</span>, 
+      <span class="st">'simulações com novas premissas: vermelho)'</span>
+    <span class="op">)</span>
+  <span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-218-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Com as novas premissas, a probabilidade de coincidência é maior para quase todos os valores de <span class="math inline">\(n\)</span>: a linha vermelha está acima da linha azul.</p></li>
+<li><p>Como metade dos nascimentos está concentrada nas <span class="math inline">\(15\)</span> semanas, a probabilidade de haver coincidência para <span class="math inline">\(n\)</span> pessoas é maior do que com as premissas originais.</p></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="pôquer" class="section level3" number="7.12.2">
+<h3>
+<span class="header-section-number">7.12.2</span> Pôquer<a class="anchor" aria-label="anchor" href="#p%C3%B4quer"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Uma mão de pôquer consiste de <span class="math inline">\(5\)</span> cartas retiradas ao acaso de um baralho de <span class="math inline">\(32\)</span> cartas (<span class="math inline">\(4\)</span> naipes, cada um com cartas 7, 8, 9, 10, J, Q, K, A).</p></li>
+<li>
+<p>Calcule as seguintes probabilidades teoricamente e através de simulações.</p>
+<ol style="list-style-type: decimal">
+<li>
+<p>Qual a probabilidade de obter uma mão sem ases?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<ul>
+<li><p>A ordem das cartas não importa.</p></li>
+<li>
+<p>Basta calcular o número de mãos possíveis usando as <span class="math inline">\(28\)</span> cartas que não são ases:</p>
+<p><span class="math display">\[
+{28 \choose 5} = 98.280
+\]</span></p>
+</li>
+<li>
+<p>E dividir pelo total de mão possíveis:</p>
+<p><span class="math display">\[
+{32 \choose 5} = 201.376
+\]</span></p>
+</li>
+<li><p>O resultado é aproximadamente <span class="math inline">\(0{,}49\)</span>.</p></li>
+<li>
+<p>Criando as cartas:</p>
+<div class="sourceCode" id="cb385"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">baralho</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html">expand_grid</a></span><span class="op">(</span>
+  numero <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="st">'J'</span>, <span class="st">'Q'</span>, <span class="st">'K'</span>, <span class="st">'A'</span><span class="op">)</span>,
+  naipe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'♥'</span>, <span class="st">'♦'</span>, <span class="st">'♣'</span>, <span class="st">'♠'</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>carta <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">numero</span>, <span class="va">naipe</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">carta</span><span class="op">)</span></code></pre></div>
+</li>
+<li>
+<p>Função para gerar uma mão:</p>
+<div class="sourceCode" id="cb386"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mao</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">baralho</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+</li>
+<li>
+<p>Testar se a mão tem (pelo menos) um ás:</p>
+<div class="sourceCode" id="cb387"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tem_as</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'A'</span><span class="op">)</span><span class="op">)</span>
+
+<span class="op">}</span></code></pre></div>
+</li>
+<li>
+<p>Simulação:</p>
+<div class="sourceCode" id="cb388"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">nsim</span> <span class="op">&lt;-</span> <span class="fl">1e6</span>
+<span class="va">maos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/rerun.html">rerun</a></span><span class="op">(</span><span class="va">nsim</span>, <span class="fu">mao</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_as</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0,489165</code></pre>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Qual a probabilidade de obter <span class="math inline">\(4\)</span> ases?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<ul>
+<li><p>A ordem das cartas não importa.</p></li>
+<li><p>Existe uma mão com <span class="math inline">\(4\)</span> ases para cada uma das outras <span class="math inline">\(28\)</span> cartas. Ou seja, existem <span class="math inline">\(28\)</span> mãos com <span class="math inline">\(4\)</span> ases.</p></li>
+<li>
+<p>Logo, a resposta é</p>
+<p><span class="math display">\[
+\frac{28}{\binom{32}{5}} =
+\frac{28}{201.376} \approx 0{,}000139
+\]</span></p>
+</li>
+<li><p>Uma probabilidade de pouco mais de <span class="hl">um décimo de milésimo</span>.</p></li>
+<li>
+<p>Testar se a mão tem <span class="math inline">\(4\)</span> ases:</p>
+<div class="sourceCode" id="cb390"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tem_4_ases</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'A'</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span>
+
+<span class="op">}</span></code></pre></div>
+</li>
+<li>
+<p>Simular (usando as mesmas mãos geradas na resposta anterior):</p>
+<div class="sourceCode" id="cb391"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_4_ases</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0,000145</code></pre>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) de naipes quaisquer?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<ul>
+<li><p>São <span class="math inline">\(4\)</span> possibilidades para o primeiro número da sequência (7, 8, 9, 10).</p></li>
+<li><p>Cada uma das <span class="math inline">\(5\)</span> cartas pode ter um de <span class="math inline">\(4\)</span> naipes, dando <span class="math inline">\(4^5\)</span> possibilidades.</p></li>
+<li><p>Então, existem <span class="math inline">\(4 \cdot 4^5 = 4^6 = 4.096\)</span> sequências.</p></li>
+<li>
+<p>A resposta é</p>
+<p><span class="math display">\[
+\frac{4.096}{\binom{32}{5}} =
+\frac{4.096}{201.376}
+\approx 0{,}020340
+\]</span></p>
+</li>
+<li>
+<p>Testar se a mão tem sequência:</p>
+<div class="sourceCode" id="cb393"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tem_seq</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">1</span>, <span class="st">'J'</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">mao</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">1</span>, <span class="st">'J'</span>, <span class="st">'Q'</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">mao</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">9</span>, <span class="fl">1</span>, <span class="st">'J'</span>, <span class="st">'Q'</span>, <span class="st">'K'</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">mao</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">'J'</span>, <span class="st">'Q'</span>, <span class="st">'K'</span>, <span class="st">'A'</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">mao</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+
+<span class="op">}</span></code></pre></div>
+</li>
+<li>
+<p>Simular (usando as mesmas mãos geradas na primeira resposta):</p>
+<div class="sourceCode" id="cb394"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_seq</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0,020036</code></pre>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Qual a probabilidade de obter uma sequência (7 a J, 8 a Q, 9 a K, ou 10 a A) do mesmo naipe?</p>
+<div class="webex-solution" style="overflow-x: hidden;">
+<button>
+Resposta
+</button>
+<ul>
+<li><p>Cada naipe tem <span class="math inline">\(4\)</span> sequências possíveis.</p></li>
+<li><p>O total de sequências do mesmo naipe, então, é <span class="math inline">\(4 \cdot 4 = 16\)</span>.</p></li>
+<li>
+<p>A resposta é</p>
+<p><span class="math display">\[
+\frac{16}{\binom{32}{5}} =
+\frac{16}{201.376} \approx
+0{,}000079
+\]</span></p>
+</li>
+<li><p><span class="hl">É mais improvável obter uma sequência do mesmo naipe do que obter <span class="math inline">\(4\)</span> ases.</span></p></li>
+<li>
+<p>Testar se a mão tem sequência do mesmo naipe:</p>
+<div class="sourceCode" id="cb396"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tem_seq_naipe</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span>
+
+  <span class="fu">tem_seq</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_ends</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'♥'</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_ends</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'♦'</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_ends</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'♠'</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_ends</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'♣'</span><span class="op">)</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="op">}</span></code></pre></div>
+</li>
+<li>
+<p>Simular:</p>
+<div class="sourceCode" id="cb397"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_seq_naipe</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0,000069</code></pre>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</li>
+</ul>
+</div>
+<div id="dados" class="section level3" number="7.12.3">
+<h3>
+<span class="header-section-number">7.12.3</span> Dados<a class="anchor" aria-label="anchor" href="#dados"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>Calcule as seguintes probabilidades teoricamente e através de simulações.</p>
+<ol style="list-style-type: decimal">
+<li><p>Você lança um dado não-viciado <span class="math inline">\(6\)</span> vezes. Qual a probabilidade de que saiam os <span class="math inline">\(6\)</span> números?</p></li>
+<li><p>Idem, se você lançar o dado <span class="math inline">\(10\)</span> vezes.</p></li>
+</ol>
+</li>
+</ul>
+</div>
+</div>
+<div id="vídeo-2-3" class="section level2" number="7.13">
+<h2>
+<span class="header-section-number">7.13</span> Vídeo 2<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-2-3"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/NVP-MwtGp0Q" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="probabilidade-condicional" class="section level2" number="7.14">
+<h2>
+<span class="header-section-number">7.14</span> Probabilidade condicional<a class="anchor" aria-label="anchor" href="#probabilidade-condicional"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p><span class="hl">Em um mesmo experimento, saber que um evento <span class="math inline">\(B\)</span> aconteceu pode dar informação sobre um outro evento <span class="math inline">\(A\)</span>.</span></p></li>
+<li><p>Por exemplo, ao lançar um dado, a probabilidade de <span class="math inline">\(A\)</span> — <span class="hl">conseguir um <span class="math inline">\(6\)</span></span> — é de <span class="math inline">\(1/6\)</span>.</p></li>
+<li><p>Se formos informados que o evento <span class="math inline">\(B\)</span> — <span class="hl">o lançamento deu um número maior que <span class="math inline">\(3\)</span></span> — ocorreu, então a probabilidade de ter conseguido um <span class="math inline">\(6\)</span> passa para <span class="math inline">\(1/3\)</span>.</p></li>
+<li>
+<p>Escrevemos</p>
+<p><span class="math display">\[
+P(A) = 1/6
+\]</span></p>
+<p>e</p>
+<p><span class="math display">\[
+P(A \mid B) = 1/3
+\]</span></p>
+</li>
+<li><p><span class="math inline">\(P(A \mid B)\)</span> é a <span class="hl">probabilidade de <span class="math inline">\(A\)</span> ocorrer, dado que <span class="math inline">\(B\)</span> ocorreu</span>.</p></li>
+<li><p>É uma probabilidade <span class="hl">condicional</span>. Estamos <span class="hl">condicionando sobre <span class="math inline">\(B\)</span></span>.</p></li>
+</ul>
+<div id="exemplo-titanic" class="section level3" number="7.14.1">
+<h3>
+<span class="header-section-number">7.14.1</span> Exemplo: Titanic<a class="anchor" aria-label="anchor" href="#exemplo-titanic"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>A seguinte tabela mostra as quantidades de pessoas no Titanic, categorizadas como sobreviventes ou não, e divididas pela classe:</p>
+<pre><code>##           Classe
+## Sobreviveu    1    2    3 Tripulação Total
+##      Não    122  167  528        673  1490
+##      Sim    203  118  178        212   711
+##      Total  325  285  706        885  2201</code></pre>
+</li>
+</ul>
+<div id="probabilidade-de-ser-tripulante" class="section level4 unnumbered">
+<h4>Probabilidade de ser tripulante<a class="anchor" aria-label="anchor" href="#probabilidade-de-ser-tripulante"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Escolha uma das <span class="math inline">\(2.201\)</span> pessoas <span class="hl">ao acaso</span>.</p></li>
+<li><p>Qual é a probabilidade de a pessoa escolhida <span class="hl">ser um tripulante</span>?</p></li>
+<li>
+<p>Esta é uma probabilidade <span class="hl">não-condicional</span>: basta dividir o total de tripulantes pelo total de pessoas:</p>
+<p><span class="math display">\[
+P(\text{tripulante}) =
+\frac
+{885}
+{2.201}
+\]</span></p>
+</li>
+<li>
+<p>A tabela está na variável <code>tit_tab</code>. Em R, podemos indexar uma tabela pelos nomes. O primeiro índice corresponde à linha, o segundo à coluna:</p>
+<div class="sourceCode" id="cb400"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ptrip</span> <span class="op">&lt;-</span> 
+  <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Tripulação'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span>
+
+<span class="va">ptrip</span></code></pre></div>
+<pre><code>## [1] 0,40209</code></pre>
+</li>
+</ul>
+</div>
+<div id="probabilidade-de-não-ser-tripulante" class="section level4 unnumbered">
+<h4>Probabilidade de não ser tripulante<a class="anchor" aria-label="anchor" href="#probabilidade-de-n%C3%A3o-ser-tripulante"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Escolha uma das <span class="math inline">\(2.201\)</span> pessoas <span class="hl">ao acaso</span>.</p></li>
+<li><p>Qual é a probabilidade de a pessoa escolhida <span class="hl">não ser um tripulante</span>?</p></li>
+<li>
+<p>Esta é uma probabilidade <span class="hl">não-condicional</span>: basta dividir o total de não-tripulantes pelo total de pessoas:</p>
+<p><span class="math display">\[
+P(\text{não-tripulante}) =
+\frac
+{325 + 285 + 706}
+{2.201}
+\]</span></p>
+</li>
+<li>
+<p>Em R, podemos selecionar várias células de uma tabela; basta usar um vetor como índice:</p>
+<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ntrip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
+
+<span class="va">ntrip</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,59791</code></pre>
+</li>
+<li>
+<p>Mas nem era preciso fazer este cálculo. Basta perceber que “ser tripulante” e “ser não-tripulante” são <span class="hl">eventos complementares</span>. Daí,</p>
+<p><span class="math display">\[
+P(\text{não-tripulante}) = 1 - P(\text{tripulante})
+\]</span></p>
+<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1</span> <span class="op">-</span> <span class="va">ptrip</span></code></pre></div>
+<pre><code>## [1] 0,59791</code></pre>
+</li>
+</ul>
+</div>
+<div id="probabilidade-de-sobreviver" class="section level4 unnumbered">
+<h4>Probabilidade de sobreviver<a class="anchor" aria-label="anchor" href="#probabilidade-de-sobreviver"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Escolha uma das <span class="math inline">\(2.201\)</span> pessoas <span class="hl">ao acaso</span>.</p></li>
+<li><p>Qual é a probabilidade de a pessoa escolhida <span class="hl">ter sobrevivido</span>?</p></li>
+<li>
+<p>Esta é uma probabilidade <span class="hl">não-condicional</span>: basta dividir o total de sobreviventes pelo total de pessoas:</p>
+<p><span class="math display">\[
+P(\text{sobrevivente}) =
+\frac
+{711}
+{2.201}
+\]</span></p>
+<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'Total'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,323035</code></pre>
+</li>
+</ul>
+</div>
+<div id="probabilidade-de-ser-de-primeira-classe" class="section level4 unnumbered">
+<h4>Probabilidade de ser de primeira classe<a class="anchor" aria-label="anchor" href="#probabilidade-de-ser-de-primeira-classe"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Escolha uma das <span class="math inline">\(2.201\)</span> pessoas <span class="hl">ao acaso</span>.</p></li>
+<li><p>Qual é a probabilidade de a pessoa escolhida <span class="hl">ser da primeira classe</span>?</p></li>
+<li>
+<p>Esta é uma probabilidade <span class="hl">não-condicional</span>: basta dividir o total de passageiros da primeira classe pelo total de pessoas:</p>
+<p><span class="math display">\[
+P(\text{1ª classe}) =
+\frac
+{325}
+{2.201}
+\]</span></p>
+<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,1476602</code></pre>
+</li>
+</ul>
+</div>
+<div id="probabilidade-de-sobreviver-e-ser-de-primeira-classe" class="section level4 unnumbered">
+<h4>Probabilidade de sobreviver <em>E</em> ser de primeira classe<a class="anchor" aria-label="anchor" href="#probabilidade-de-sobreviver-e-ser-de-primeira-classe"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Escolha uma das <span class="math inline">\(2.201\)</span> pessoas <span class="hl">ao acaso</span>.</p></li>
+<li><p>Qual é a probabilidade de a pessoa escolhida <span class="hl">ter sobrevivido e ser da primeira classe</span>?</p></li>
+<li><p>Isto é uma <span class="hl">probabilidade conjunta</span> — a probabilidade de dois eventos terem ocorrido ao mesmo tempo. <span class="hl">Ainda não é uma probabilidade condicional</span>.</p></li>
+<li>
+<p>Queremos saber a proporção de pessoas, do total de pessoas a bordo, que eram de primeira classe e sobreviveram.</p>
+<p><span class="math display">\[
+P(\text{sobrevivente da 1ª classe}) =
+\frac
+{203}
+{2.201}
+\]</span></p>
+<div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,0922308</code></pre>
+</li>
+</ul>
+</div>
+<div id="probabilidade-de-uma-pessoa-da-primeira-classe-sobreviver" class="section level4 unnumbered">
+<h4>Probabilidade de uma pessoa da primeira classe sobreviver<a class="anchor" aria-label="anchor" href="#probabilidade-de-uma-pessoa-da-primeira-classe-sobreviver"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Escolha uma das <span class="math inline">\(2.201\)</span> pessoas <span class="hl">ao acaso</span>.</p></li>
+<li><p>Qual é a probabilidade de a pessoa escolhida <span class="hl">ter sobrevivido, dado que a pessoa estava na primeira classe</span>?</p></li>
+<li>
+<p>Isto é uma <span class="hl">probabilidade condicional</span>, escrita como</p>
+<p><span class="math display">\[
+P(\text{sobrevivente } \mid \text{ 1ª classe})
+\]</span></p>
+</li>
+<li><p>Cuidado, agora.</p></li>
+<li>
+<p>Já sabemos que a pessoa é da primeira classe. Logo, <span class="hl">restringimos o universo a estas 325 pessoas</span>. O denominador vai ser o total de passageiros da primeira classe:</p>
+<p><span class="math display">\[
+P(\text{sobrevivente } \mid \text{ 1ª classe}) =
+\frac
+{203}
+{325}
+\]</span></p>
+<div class="sourceCode" id="cb412"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'1'</span><span class="op">]</span> </code></pre></div>
+<pre><code>## [1] 0,6246154</code></pre>
+</li>
+<li>
+<p>Perceba que</p>
+<p><span class="math display">\[
+P(\text{sobreviveu} \mid \text{1ª classe} )
+\]</span></p>
+<p>é o mesmo que</p>
+<p><span class="math display">\[
+\frac{P(\text{sobreviveu } \cap \text{ 1ª classe})}{P(\text{1ª classe})}
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="probabilidade-de-um-sobrevivente-ser-da-primeira-classe" class="section level4 unnumbered">
+<h4>Probabilidade de um sobrevivente ser da primeira classe<a class="anchor" aria-label="anchor" href="#probabilidade-de-um-sobrevivente-ser-da-primeira-classe"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Escolha uma das <span class="math inline">\(2.201\)</span> pessoas <span class="hl">ao acaso</span>.</p></li>
+<li><p>Qual é a probabilidade de a pessoa escolhida <span class="hl">ser da primeira classe, dado que ela sobreviveu</span>?</p></li>
+<li>
+<p>Isto é outra <span class="hl">probabilidade condicional</span>, escrita como</p>
+<p><span class="math display">\[
+P(\text{1ª classe } \mid \text{ sobreviveu})
+\]</span></p>
+</li>
+<li><p><span class="hl">Não é a mesma probabilidade</span> que <span class="math inline">\(P(\text{sobreviveu} \mid \text{1ª classe})\)</span>.</p></li>
+<li>
+<p>Em português:</p>
+<ul>
+<li>
+<p><span class="hl"><span class="math inline">\(P(\text{sobreviveu} \mid \text{1ª classe})\)</span></span> é a probabilidade de</p>
+<ul>
+<li><p>A pessoa sobreviver, dado que era da primeira classe;</p></li>
+<li><p>Equivalentemente: alguém da primeira classe sobreviver.</p></li>
+</ul>
+</li>
+<li>
+<p><span class="hl"><span class="math inline">\(P(\text{1ª classe } \mid \text{ sobreviveu})\)</span></span> é a probabilidade de</p>
+<ul>
+<li><p>A pessoa ter sido da primeira classe, dado que sobreviveu;</p></li>
+<li><p>Equivalentemente: alguém que sobreviveu ter sido da primeira classe.</p></li>
+</ul>
+</li>
+<li><p>Releia até entender.</p></li>
+</ul>
+</li>
+<li>
+<p>Agora, restringimos o universo às pessoas que sobreviveram. Dentre estas, quantas são da primeira classe?</p>
+<p><span class="math display">\[
+P(\text{1ª classe } \mid \text{ sobreviveu}) =
+\frac
+{203}
+{711}
+\]</span></p>
+<div class="sourceCode" id="cb414"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,2855134</code></pre>
+<div class="rmdimportant">
+<p>Este é um exemplo de que <span class="math inline">\(P(A \mid B)\)</span> pode ser <span class="hl">diferente</span> de <span class="math inline">\(P(B \mid A)\)</span>.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="definição-de-probabilidade-condicional" class="section level3" number="7.14.2">
+<h3>
+<span class="header-section-number">7.14.2</span> Definição de probabilidade condicional<a class="anchor" aria-label="anchor" href="#defini%C3%A7%C3%A3o-de-probabilidade-condicional"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Como vimos nos exemplos, <span class="hl">para calcular <span class="math inline">\(P(A \mid B)\)</span>, restringimos o universo aos elementos onde <span class="math inline">\(B\)</span> acontece</span>, e, deste universo, verificamos quantos elementos também correspondem a <span class="math inline">\(A\)</span> acontecer — isto é, <span class="hl">elementos onde <span class="math inline">\(A \cap B\)</span> acontece</span>.</p></li>
+<li>
+<p>Em termos de frequência relativa:</p>
+<p><span class="math display">\[
+\frac{\text{ocorrências de } A \cap B}{\text{ocorrências de }B}
+\]</span></p>
+</li>
+<li>
+<p>Em termos de probabilidade, a definição é</p>
+<p><span class="math display">\[
+P(A \mid B) \quad=\quad \frac{P(A \cap B)}{P(B)}
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="exercícios-14" class="section level3" number="7.14.3">
+<h3>
+<span class="header-section-number">7.14.3</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-14"><i class="fas fa-link"></i></a>
+</h3>
+<p>No Titanic,</p>
+<ol style="list-style-type: decimal">
+<li><p>Qual a probabilidade de um tripulante sobreviver?</p></li>
+<li><p>Qual a probabilidade de um sobrevivente ser tripulante?</p></li>
+<li><p>Qual a probabilidade de um não-tripulante sobreviver?</p></li>
+<li><p>Qual a probabilidade de um sobrevivente não ser tripulante?</p></li>
+<li>
+<p>Compare as probabilidades condicionais de uma pessoa sobreviver dado que</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Ela estava na 1ª classe. (Já calculada no exemplo acima: <span class="math inline">\(0{,}62\)</span>.)</p></li>
+<li><p>Ela estava na 2ª classe.</p></li>
+<li><p>Ela estava na 3ª classe.</p></li>
+<li><p>Ela era da tripulação.</p></li>
+</ol>
+<p>Que conclusões você tira?</p>
+</li>
+</ol>
+</div>
+</div>
+<div id="probabilidade-conjunta" class="section level2" number="7.15">
+<h2>
+<span class="header-section-number">7.15</span> Probabilidade conjunta<a class="anchor" aria-label="anchor" href="#probabilidade-conjunta"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Imagine que queremos calcular a probabilidade de dois eventos <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> acontecerem <span class="hl">ao mesmo tempo</span>.</p></li>
+<li><p>Ou seja, queremos descobrir <span class="hl">a probabilidade conjunta <span class="math inline">\(P(A \cap B)\)</span></span>.</p></li>
+<li><p>Muitas vezes, é difícil calcular esta probabilidade diretamente.</p></li>
+<li>
+<p>A fórmula para calcular <span class="math inline">\(P(A \mid B)\)</span> nos dá uma maneira de calcular <span class="math inline">\(P(A \cap B)\)</span>:</p>
+<p><span class="math display">\[
+P(A \mid B) \;=\; \frac{P(A \cap B)}{P(B)}
+\quad\iff\quad
+P(A \cap B) \;=\; P(A \mid B) \cdot P(B)
+\]</span></p>
+</li>
+<li>
+<p>Ou, invertendo <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>,</p>
+<p><span class="math display">\[
+P(B \mid A) \;=\; \frac{P(A \cap B)}{P(A)}
+\quad\iff\quad
+P(A \cap B) \;=\; P(B \mid A) \cdot P(A)
+\]</span></p>
+</li>
+<li>
+<p>Em palavras:</p>
+<ul>
+<li><p>A <span class="hl">probabilidade de <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> acontecerem juntos</span> é a <span class="hl">probabilidade de <span class="math inline">\(A\)</span> dado que <span class="math inline">\(B\)</span> aconteceu</span>, multiplicada pela <span class="hl">probabilidade de <span class="math inline">\(B\)</span></span>.</p></li>
+<li><p>Ou, invertendo <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>, a <span class="hl">probabilidade de <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> acontecerem juntos</span> é a <span class="hl">probabilidade de <span class="math inline">\(B\)</span> dado que <span class="math inline">\(A\)</span> aconteceu</span>, multiplicada pela <span class="hl">probabilidade de <span class="math inline">\(A\)</span></span>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="independência" class="section level2" number="7.16">
+<h2>
+<span class="header-section-number">7.16</span> Independência<a class="anchor" aria-label="anchor" href="#independ%C3%AAncia"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p><a href="#eventos-independentes-explica%C3%A7%C3%A3o-informal">Mais acima</a>, vimos que, para dois eventos <span class="hl">independentes</span> <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span>, a probabilidade conjunta <span class="math inline">\(P(A \cap B)\)</span> é igual a <span class="math inline">\(P(A) \cdot P(B)\)</span>.</p></li>
+<li>
+<p>Olhando para as fórmulas acima para a probabilidade conjunta, se <span class="math inline">\(A\)</span> e <span class="math inline">\(B\)</span> forem independentes, então</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A \cap B) &amp;= P(A \mid B) \cdot P(B) \\
+            &amp;= P(A) \cdot P(B)
+\end{aligned}
+\]</span></p>
+<p>o que nos diz que</p>
+<p><span class="math display">\[
+P(A \mid B) = P(A)
+\]</span></p>
+</li>
+<li>
+<p>Da mesma forma,</p>
+<p><span class="math display">\[
+P(B \mid A) = P(B)
+\]</span></p>
+</li>
+<li><p>Em palavras: <span class="hl">saber que um dos eventos ocorreu não altera a probabilidade do outro evento</span>.</p></li>
+<li><p>Qualquer uma das <span class="math inline">\(3\)</span> igualdades pode ser tomada como a definição formal de <span class="hl">eventos independentes</span>.</p></li>
+</ul>
+<div id="exemplos" class="section level3" number="7.16.1">
+<h3>
+<span class="header-section-number">7.16.1</span> Exemplos<a class="anchor" aria-label="anchor" href="#exemplos"><i class="fas fa-link"></i></a>
+</h3>
+<div id="estar-na-primeira-classe-e-sobreviver-são-independentes" class="section level4 unnumbered">
+<h4>Estar na primeira classe e sobreviver são independentes?<a class="anchor" aria-label="anchor" href="#estar-na-primeira-classe-e-sobreviver-s%C3%A3o-independentes"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>A probabilidade de sobreviver, dado que a pessoa estava na 1ª classe, é</p>
+<p><span class="math display">\[
+P(\text{sobreviver} \mid \text{1ª classe}) =
+\frac{203}{325}
+\]</span></p>
+<div class="sourceCode" id="cb416"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'1'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,6246154</code></pre>
+</li>
+<li>
+<p>Mas a probabilidade (incondicional) de sobreviver é</p>
+<p><span class="math display">\[
+P(\text{sobreviver}) = \frac{711}{2.201}
+\]</span></p>
+<div class="sourceCode" id="cb418"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'Total'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,323035</code></pre>
+</li>
+<li><p>Como as probabilidades são diferentes, os eventos <span class="hl">não são independentes</span>.</p></li>
+<li><p>Verifique se <span class="math inline">\(P(\text{sobreviver} \cap \text{1ª classe}) = P(\text{sobreviver}) \cdot P(\text{1ª classe})\)</span>.</p></li>
+</ul>
+</div>
+<div id="faltas-e-turno-de-trabalho" class="section level4 unnumbered">
+<h4>Faltas e turno de trabalho<a class="anchor" aria-label="anchor" href="#faltas-e-turno-de-trabalho"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>Numa empresa:</p>
+<ul>
+<li><p><span class="math inline">\(75\)</span> funcionários trabalham no turno diurno, com um número de faltas de <span class="math inline">\(3\)</span> por semana.</p></li>
+<li><p><span class="math inline">\(25\)</span> funcionários trabalham no turno noturno, com um número de faltas de <span class="math inline">\(1\)</span> por semana.</p></li>
+<li><p>Faltar é independente do turno de trabalho?</p></li>
+</ul>
+</li>
+<li>
+<p>Vamos construir uma tabela:</p>
+<div class="sourceCode" id="cb420"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">faltas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">72</span>, <span class="fl">24</span><span class="op">)</span>,
+  dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>
+<span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/addmargins.html">addmargins</a></span><span class="op">(</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">faltas</span><span class="op">)</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+    <span class="st">'Turno'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Diurno'</span>, <span class="st">'Noturno'</span>, <span class="st">'Total'</span><span class="op">)</span>,
+    <span class="st">'Presença'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'Faltou'</span>, <span class="st">'Presente'</span>, <span class="st">'Total'</span><span class="op">)</span>
+  <span class="op">)</span>
+
+<span class="va">faltas</span></code></pre></div>
+<pre><code>##          Presença
+## Turno     Faltou Presente Total
+##   Diurno       3       72    75
+##   Noturno      1       24    25
+##   Total        4       96   100</code></pre>
+</li>
+<li>
+<p>A probabilidade (incondicional) de faltar é</p>
+<p><span class="math display">\[
+P(\text{Faltou}) =
+\frac{4}
+{100}
+\]</span></p>
+<div class="sourceCode" id="cb422"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">faltas</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Faltou'</span><span class="op">]</span> <span class="op">/</span> <span class="va">faltas</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,04</code></pre>
+</li>
+<li>
+<p>A probabilidade de faltar no turno diurno é</p>
+<p><span class="math display">\[
+P(\text{Faltou} \mid \text{Diurno}) =
+\frac{3}
+{75}
+\]</span></p>
+<div class="sourceCode" id="cb424"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">faltas</span><span class="op">[</span><span class="st">'Diurno'</span>, <span class="st">'Faltou'</span><span class="op">]</span> <span class="op">/</span> <span class="va">faltas</span><span class="op">[</span><span class="st">'Diurno'</span>, <span class="st">'Total'</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 0,04</code></pre>
+</li>
+<li><p>Como as probabilidades são iguais, os eventos <span class="hl">são independentes</span>.</p></li>
+<li><p>Verifique que <span class="math inline">\(P(\text{Faltou}) = P(\text{Faltou} \mid \text{Noturno})\)</span>.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="probabilidade-total" class="section level2" number="7.17">
+<h2>
+<span class="header-section-number">7.17</span> Probabilidade total<a class="anchor" aria-label="anchor" href="#probabilidade-total"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exemplo-3" class="section level3" number="7.17.1">
+<h3>
+<span class="header-section-number">7.17.1</span> Exemplo<a class="anchor" aria-label="anchor" href="#exemplo-3"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Dentre <span class="math inline">\(80\)</span> homens, <span class="math inline">\(30\)</span> têm olhos azuis.</p></li>
+<li><p>Dentre <span class="math inline">\(50\)</span> mulheres, <span class="math inline">\(20\)</span> têm olhos azuis.</p></li>
+<li><p>Neste grupo de pessoas, qual a <span class="hl">probabilidade de ter olhos azuis</span>?</p></li>
+<li><p>Homens e mulheres formam uma <span class="hl">partição</span> deste grupo — i.e., cada pessoa <span class="hl">só pode</span> ser homem ou mulher (não ambos) e cada pessoa <span class="hl">precisa</span> ser homem ou mulher.</p></li>
+<li>
+<p>O evento “ter olhos azuis” se subdivide em dois casos <span class="hl">mutuamente exclusivos</span>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Ter olhos azuis e ser homem;</p></li>
+<li><p>Ter olhos azuis e ser mulher.</p></li>
+</ol>
+</li>
+<li>
+<p>Vamos chamar os eventos de</p>
+<ul>
+<li><p><span class="math inline">\(A\)</span> = ter olhos azuis</p></li>
+<li><p><span class="math inline">\(H\)</span> = ser homem</p></li>
+<li><p><span class="math inline">\(M\)</span> = ser mulher</p></li>
+</ul>
+</li>
+<li>
+<p>Calculamos a probabilidade <span class="math inline">\(P(A)\)</span> somando as probabilidades dos dois casos:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A) &amp;= P(A \cap H) + P(A \cap M)
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>Então,</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A) = \frac{30}{130} + \frac{20}{130} = \frac{50}{130} \approx 0{,}39
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>Ou, <span class="hl">antes de somar</span>, podemos transformar as probabilidades conjuntas em produtos de uma probabilidade condicional por uma probabilidade não-condicional:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A) &amp;= P(A \cap H) + P(A \cap M) \\
+     &amp;= P(A \mid H) P(H) + P(A \mid M) P(M)
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>O que nos dá o mesmo resultado:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(A) &amp;= \frac{30}{80} \cdot \frac{80}{130} + \frac{20}{50} \cdot \frac{50}{130} \\
+     &amp;= \frac{50}{130} \\
+     &amp;\approx 0{,}39
+\end{aligned}
+\]</span></p>
+</li>
+</ul>
+</div>
+</div>
+<div id="teorema-de-bayes" class="section level2" number="7.18">
+<h2>
+<span class="header-section-number">7.18</span> Teorema de Bayes<a class="anchor" aria-label="anchor" href="#teorema-de-bayes"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exemplo-4" class="section level3" number="7.18.1">
+<h3>
+<span class="header-section-number">7.18.1</span> Exemplo<a class="anchor" aria-label="anchor" href="#exemplo-4"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>De <span class="hl">todos</span> os <em>emails</em>, <span class="math inline">\(60\%\)</span> são <em>spam</em>:</p>
+<p><span class="math display">\[
+P(\text{spam}) = 0{,}6
+\]</span></p>
+</li>
+<li>
+<p>De todos os <em>emails</em> <span class="hl">que são <em>spam</em></span>, <span class="math inline">\(90\%\)</span> contêm a palavra “compre”:</p>
+<p><span class="math display">\[
+P(\text{compre} \mid \text{spam}) = 0{,}9
+\]</span></p>
+</li>
+<li>
+<p>De <span class="hl">todos</span> os <em>emails</em> (<em>spam</em> ou não), <span class="math inline">\(70\%\)</span> contêm a palavra “compre”:</p>
+<p><span class="math display">\[
+P(\text{compre}) = 0{,}7
+\]</span></p>
+</li>
+<li><p>Você acaba de receber um <em>email</em>. <span class="hl">Antes de você abri-lo, qual a probabilidade de o <em>email</em> ser <em>spam</em></span>?</p></li>
+<li><p>Bem, <span class="hl">na ausência de informação adicional</span>, <span class="math inline">\(P(\text{spam}) = 0{,}6\)</span>.</p></li>
+<li><p>Você abre o <em>email</em>. <span class="hl">Ele contém a palavra “compre”</span>.</p></li>
+<li>
+<p>Agora, qual a probabilidade de ser <em>spam</em>?</p>
+<p><span class="math display">\[
+P(\text{spam} \mid \text{compre}) = {}?
+\]</span></p>
+</li>
+<li>
+<p>Lembre-se de que</p>
+<p><span class="math display">\[
+P(\text{compre} \cap \text{spam}) = P(\text{spam} \mid \text{compre}) \cdot P(\text{compre})
+\]</span></p>
+</li>
+<li>
+<p>Mas também</p>
+<p><span class="math display">\[
+P(\text{compre} \cap \text{spam}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
+\]</span></p>
+</li>
+<li>
+<p>As duas expressões são iguais:</p>
+<p><span class="math display">\[
+P(\text{spam} \mid \text{compre}) \cdot P(\text{compre}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
+\]</span></p>
+</li>
+<li>
+<p>Isolando o termo que queremos descobrir:</p>
+<p><span class="math display">\[
+P(\text{spam} \mid \text{compre}) = \frac{P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})}{P(\text{compre})}
+\]</span></p>
+</li>
+<li>
+<p>Substituindo os valores:</p>
+<p><span class="math display">\[
+P(\text{spam} \mid \text{compre}) = \frac{0{,}9 \cdot 0{,}6}{0{,}7} \approx 0{,}77
+\]</span></p>
+</li>
+<li>
+<p>Isto é <span class="hl">inferência bayesiana</span>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Começamos com uma probabilidade não-condicional: <span class="hl"><em>a priori</em></span>, <span class="math inline">\(P(\text{spam}) = 0{,}6\)</span>;</p></li>
+<li><p>Obtivemos <span class="hl">nova informação</span>: o <em>email</em> contém “compre”;</p></li>
+<li><p>Usamos esta informação para calcular uma probabilidade condicional, <span class="hl"><em>a posteriori</em></span>:</p></li>
+</ol>
+<p><span class="math display">\[
+  P(\text{spam} \mid \text{compre}) = \frac{P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})}{P(\text{compre})}
+  \]</span></p>
+</li>
+<li><p>Perceba que, para isso, precisamos da probabilidade não-condicional <span class="math inline">\(P(\text{compre})\)</span> (no denominador).</p></li>
+</ul>
+</div>
+<div id="no-geral" class="section level3" number="7.18.2">
+<h3>
+<span class="header-section-number">7.18.2</span> No geral<a class="anchor" aria-label="anchor" href="#no-geral"><i class="fas fa-link"></i></a>
+</h3>
+<p><span class="math display">\[
+P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
+\]</span></p>
+<ul>
+<li><p>E se você não souber <span class="math inline">\(P(B)\)</span>?</p></li>
+<li>
+<p>Use o teorema da probabilidade total:</p>
+<p><span class="math display">\[
+P(B) = P(B \cap A_1) + P(B \cap A_2) + \cdots + P(B \cap A_n)
+\]</span>
+onde os <span class="math inline">\(A_i\)</span> formam uma partição da população.</p>
+</li>
+<li>
+<p>Isto equivale a</p>
+<p><span class="math display">\[
+P(B) = P(B \mid A_1)P(A_1) + P(B \mid A_2)P(A_2) + \cdots + P(B \mid A_n)P(A_n)
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="outro-exemplo" class="section level3" number="7.18.3">
+<h3>
+<span class="header-section-number">7.18.3</span> Outro exemplo<a class="anchor" aria-label="anchor" href="#outro-exemplo"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Uma <span class="hl">doença rara</span> afeta <span class="math inline">\(5\)</span> pessoas em <span class="math inline">\(100.000\)</span>.</p></li>
+<li><p>O exame que detecta a doença tem precisão de <span class="math inline">\(99{,}9\%\)</span>; i.e., <span class="hl">quando uma pessoa está doente, o exame dá positivo <span class="math inline">\(99{,}9\%\)</span> das vezes</span>.</p></li>
+<li><p><span class="hl">Quando uma pessoa <em>não</em> está doente, o exame dá positivo <span class="math inline">\(1\%\)</span> das vezes</span>. Este caso é um falso positivo.</p></li>
+<li><p>Você faz o exame, e <span class="hl">o resultado é positivo</span>.</p></li>
+<li><p><span class="hl">Dado este resultado, qual a probabilidade de você ter a doença?</span></p></li>
+<li>
+<p>Vamos nomear os eventos:</p>
+<ul>
+<li><p><span class="math inline">\(D = {}\)</span> você está doente;</p></li>
+<li><p><span class="math inline">\(ND = {}\)</span> você <span class="hl">não</span> está doente;</p></li>
+<li><p><span class="math inline">\(+ = {}\)</span> o exame deu positivo;</p></li>
+<li><p><span class="math inline">\(- = {}\)</span> o exame deu negativo.</p></li>
+</ul>
+</li>
+<li>
+<p>Vamos usar Bayes:</p>
+<p><span class="math display">\[
+P(D \mid +) = \frac{P(+ \mid D)P(D)}{P(+)}
+\]</span></p>
+</li>
+<li><p><span class="math inline">\(P(+ \mid D) = 0{,}999\)</span>, pelo enunciado.</p></li>
+<li><p><span class="math inline">\(P(D) = 0{,}00005\)</span>, pelo enunciado.</p></li>
+<li><p>Daí, <span class="math inline">\(P(ND) = 1 - P(D) = 0{,}99995\)</span>.</p></li>
+<li>
+<p>Não temos <span class="math inline">\(P(+)\)</span>, mas podemos achar usando o <a href="probs.html#probabilidade-total">teorema da probabilidade total</a>, lembrando que o enunciado diz que <span class="math inline">\(P(+ \mid ND) = 0{,}01\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(+) &amp;= P(+ \cap D) \;+\; P(+ \cap ND) \\
+   &amp;= P(+ \mid D)P(D) \;+\; P(+ \mid ND)P(ND) \\
+   &amp;= 0{,}999 \cdot 0{,}00005 \;+\; 0{,}01 \cdot 0{,}99995 \\
+   &amp;= 0{,}01004945
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>Inserindo os valores no teorema de Bayes:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  P(D \mid +) &amp;= \frac{P(+ \mid D)P(D)}{P(+)} \\
+              &amp;= \frac{0{,}999 \cdot 0{,}00005}{0{,}01004945} \\
+              &amp;= 0{,}00497
+\end{aligned}
+\]</span></p>
+</li>
+<li><p>A probabilidade de estar doente é <span class="hl">menos do que <span class="math inline">\(0{,}5\%\)</span></span>!</p></li>
+<li><p>Você provavelmente esperava uma probabilidade maior.</p></li>
+<li>
+<p>Qual das <span class="math inline">\(3\)</span> probabilidades usadas no cálculo fez o resultado ser tão pequeno?</p>
+<ul>
+<li><p><span class="math inline">\(P(+ \mid D)\)</span>?</p></li>
+<li><p><span class="math inline">\(P(D)\)</span>?</p></li>
+<li><p><span class="math inline">\(P(+)\)</span>?</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  if (t = document.getElementById("webex-total_correct")) {
+    var correct = document.getElementsByClassName("webex-correct").length;
+    var solvemes = document.getElementsByClassName("webex-solveme").length;
+    var radiogroups = document.getElementsByClassName("webex-radiogroup").length;
+    var selects = document.getElementsByClassName("webex-select").length;
+
+    t.innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+init_exercises = function() {
+  console.log("onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+  }
+
+  update_total_correct();
+}
+
+$(init_exercises)
+
+</script><div class="chapter-nav">
+<div class="prev"><a href="medidas.html"><span class="header-section-number">6</span> Medidas</a></div>
+<div class="next"><a href="refer%C3%AAncias.html">Referências</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#probs"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="nav-link" href="#v%C3%ADdeo-1-4"><span class="header-section-number">7.1</span> Vídeo 1</a></li>
+<li><a class="nav-link" href="#espa%C3%A7o-amostral"><span class="header-section-number">7.2</span> Espaço amostral</a></li>
+<li><a class="nav-link" href="#evento"><span class="header-section-number">7.3</span> Evento</a></li>
+<li><a class="nav-link" href="#an%C3%A1lise-combinat%C3%B3ria"><span class="header-section-number">7.4</span> Análise Combinatória</a></li>
+<li><a class="nav-link" href="#probabilidade-cl%C3%A1ssica"><span class="header-section-number">7.5</span> Probabilidade clássica</a></li>
+<li><a class="nav-link" href="#probabilidade-emp%C3%ADrica"><span class="header-section-number">7.6</span> Probabilidade empírica</a></li>
+<li><a class="nav-link" href="#probabilidade-subjetiva"><span class="header-section-number">7.7</span> Probabilidade subjetiva</a></li>
+<li><a class="nav-link" href="#axiomas"><span class="header-section-number">7.8</span> Formalização de probabilidades</a></li>
+<li><a class="nav-link" href="#eventos-independentes-explica%C3%A7%C3%A3o-informal"><span class="header-section-number">7.9</span> Eventos independentes (explicação informal)</a></li>
+<li><a class="nav-link" href="#pa-cup-b-com-a-e-b-n%C3%A3o-disjuntos"><span class="header-section-number">7.10</span> \(P(A \cup B)\) com \(A\) e \(B\) não-disjuntos</a></li>
+<li>
+<a class="nav-link" href="#problema-do-anivers%C3%A1rio"><span class="header-section-number">7.11</span> Problema do aniversário</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#solu%C3%A7%C3%A3o-te%C3%B3rica"><span class="header-section-number">7.11.1</span> Solução teórica</a></li>
+<li><a class="nav-link" href="#simula%C3%A7%C3%A3o"><span class="header-section-number">7.11.2</span> Simulação</a></li>
+<li><a class="nav-link" href="#para-diferentes-valores-de-n-in-2-3-ldots-50"><span class="header-section-number">7.11.3</span> Para diferentes valores de \(n \in \{2, 3, \ldots, 50\}\)</a></li>
+<li><a class="nav-link" href="#premissas-mais-realistas"><span class="header-section-number">7.11.4</span> Premissas mais realistas</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exerc%C3%ADcios-13"><span class="header-section-number">7.12</span> Exercícios</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#semanas-com-mais-nascimentos"><span class="header-section-number">7.12.1</span> Semanas com mais nascimentos</a></li>
+<li><a class="nav-link" href="#p%C3%B4quer"><span class="header-section-number">7.12.2</span> Pôquer</a></li>
+<li><a class="nav-link" href="#dados"><span class="header-section-number">7.12.3</span> Dados</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#v%C3%ADdeo-2-3"><span class="header-section-number">7.13</span> Vídeo 2</a></li>
+<li>
+<a class="nav-link" href="#probabilidade-condicional"><span class="header-section-number">7.14</span> Probabilidade condicional</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exemplo-titanic"><span class="header-section-number">7.14.1</span> Exemplo: Titanic</a></li>
+<li><a class="nav-link" href="#defini%C3%A7%C3%A3o-de-probabilidade-condicional"><span class="header-section-number">7.14.2</span> Definição de probabilidade condicional</a></li>
+<li><a class="nav-link" href="#exerc%C3%ADcios-14"><span class="header-section-number">7.14.3</span> Exercícios</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#probabilidade-conjunta"><span class="header-section-number">7.15</span> Probabilidade conjunta</a></li>
+<li>
+<a class="nav-link" href="#independ%C3%AAncia"><span class="header-section-number">7.16</span> Independência</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exemplos"><span class="header-section-number">7.16.1</span> Exemplos</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#probabilidade-total"><span class="header-section-number">7.17</span> Probabilidade total</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exemplo-3"><span class="header-section-number">7.17.1</span> Exemplo</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#teorema-de-bayes"><span class="header-section-number">7.18</span> Teorema de Bayes</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exemplo-4"><span class="header-section-number">7.18.1</span> Exemplo</a></li>
+<li><a class="nav-link" href="#no-geral"><span class="header-section-number">7.18.2</span> No geral</a></li>
+<li><a class="nav-link" href="#outro-exemplo"><span class="header-section-number">7.18.3</span> Outro exemplo</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/fnaufel/probestr/blob/master/probabilidades.Rmd">Ver código-fonte <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/fnaufel/probestr/edit/master/probabilidades.Rmd">Editar esta página <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 04/05/2022)</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Criado com o <a class="text-light" href="https://bookdown.org">pacote bookdown</a> do R.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

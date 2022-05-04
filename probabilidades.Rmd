@@ -1333,7 +1333,7 @@ No Titanic,
 
 * Imagine que queremos calcular a probabilidade de dois eventos $A$ e $B$ acontecerem [ao mesmo tempo]{.hl}.
 
-* Ou seja, queremos descobrir [$P(A \cap B)$]{.hl}.
+* Ou seja, queremos descobrir [a probabilidade conjunta $P(A \cap B)$]{.hl}.
 
 * Muitas vezes, é difícil calcular esta probabilidade diretamente.
 
@@ -1361,191 +1361,259 @@ No Titanic,
 
 ## Independência
 
-No vídeo anterior, vimos que, para dois eventos *independentes* $A$ e $B$, a probabilidade conjunta $P(A \cap B)$ é igual a $P(A) \cdot P(B)$.
+* [Mais acima](#eventos-independentes-explica%C3%A7%C3%A3o-informal), vimos que, para dois eventos [independentes]{.hl} $A$ e $B$, a probabilidade conjunta $P(A \cap B)$ é igual a $P(A) \cdot P(B)$.
 
-Olhando para as fórmulas acima para a probabilidade conjunta, se $A$ e $B$ forem independentes, então
-$$
-\begin{aligned}
-P(A \cap B) &= P(A \mid B) \cdot P(B) \\
-            &= P(A) \cdot P(B)
-\end{aligned}
-$$
-o que nos diz que
-$$
-P(A \mid B) = P(A)
-$$
+* Olhando para as fórmulas acima para a probabilidade conjunta, se $A$ e $B$ forem independentes, então
 
-Da mesma forma,
-$$
-P(B \mid A) = P(B)
-$$
+  $$
+  \begin{aligned}
+  P(A \cap B) &= P(A \mid B) \cdot P(B) \\
+              &= P(A) \cdot P(B)
+  \end{aligned}
+  $$
 
-Em palavras: saber que um dos eventos ocorreu não altera a probabilidade do outro evento.
+  o que nos diz que
 
-Esta é a definição formal de eventos independentes.
+  $$
+  P(A \mid B) = P(A)
+  $$
+
+* Da mesma forma,
+
+  $$
+  P(B \mid A) = P(B)
+  $$
+
+* Em palavras: [saber que um dos eventos ocorreu não altera a probabilidade do outro evento]{.hl}.
+
+* Qualquer uma das $3$ igualdades pode ser tomada como a definição formal de [eventos independentes]{.hl}.
+
 
 ### Exemplos
 
 #### Estar na primeira classe e sobreviver são independentes? {-}
 
-* $P(\text{sobreviver} \mid \text{1ª classe})$:
+* A probabilidade de sobreviver, dado que a pessoa estava na 1ª classe, é 
 
-```{r sobr-given-1st}
-tit_tab['Sim', '1']
-tit_tab['Total', '1']
-tit_tab['Sim', '1'] / tit_tab['Total', '1']
-```
+  $$
+  P(\text{sobreviver} \mid \text{1ª classe}) = 
+  \frac{`r tit_tab['Sim', '1']`}{`r tit_tab['Total', '1']`}
+  $$
 
-* $P(\text{sobreviver})$:
+    ```{r sobr-given-1st}
+    tit_tab['Sim', '1'] / tit_tab['Total', '1']
+    ```
 
-```{r p-sobreviver}
-tit_tab['Sim', 'Total'] 
-tit_tab['Total', 'Total']
-tit_tab['Sim', 'Total'] / tit_tab['Total', 'Total']
-```
+* Mas a probabilidade (incondicional) de sobreviver é 
 
-Não!
+  $$
+  P(\text{sobreviver}) = \frac{`r tit_tab['Sim', 'Total']`}{`r tit_tab['Total', 'Total']`}
+  $$
+
+    ```{r p-sobreviver}
+    tit_tab['Sim', 'Total'] / tit_tab['Total', 'Total']
+    ```
+
+* Como as probabilidades são diferentes, os eventos [não são independentes]{.hl}.
+
+* Verifique se $P(\text{sobreviver} \cap \text{1ª classe}) = P(\text{sobreviver}) \cdot P(\text{1ª classe})$.
+
 
 #### Faltas e turno de trabalho {-}
 
-Numa empresa: 
+* Numa empresa: 
 
-* 75 funcionários trabalham no turno diurno, com um número de faltas de 3 por semana.
+  * $75$ funcionários trabalham no turno diurno, com um número de faltas de $3$ por semana.
 
-* 25 funcionários trabalham no turno noturno, com um número de faltas de 1 por semana.
+  * $25$ funcionários trabalham no turno noturno, com um número de faltas de $1$ por semana.
 
-Faltar é independente do turno de trabalho?
+  * Faltar é independente do turno de trabalho?
+  
+* Vamos construir uma tabela:
 
-```{r faltas}
-faltas <- array(
-  c(3, 1, 72, 24),
-  dim = c(2, 2),
-  dimnames = list(
-    'Turno' = c('Diurno', 'Noturno'),
-    'Presença' = c('Faltou', 'Presente')
-  )
-) %>% 
-  addmargins()
+    ```{r faltas}
+    faltas <- array(
+      c(3, 1, 72, 24),
+      dim = c(2, 2)
+    ) %>% 
+      addmargins()
+    
+    dimnames(faltas) = list(
+        'Turno' = c('Diurno', 'Noturno', 'Total'),
+        'Presença' = c('Faltou', 'Presente', 'Total')
+      )
+    
+    faltas
+    ```
 
-faltas
-```
+* A probabilidade (incondicional) de faltar é
 
-* $P(\text{Faltou})$:
+  $$
+  P(\text{Faltou}) = 
+  \frac{`r faltas['Total', 'Faltou']`}
+  {`r faltas['Total', 'Total']`}
+  $$
 
-```{r faltou}
-faltas['Sum', 'Faltou']
-faltas['Sum', 'Sum']
-faltas['Sum', 'Faltou'] / faltas['Sum', 'Sum']
-```
+    ```{r faltou}
+    faltas['Total', 'Faltou'] / faltas['Total', 'Total']
+    ```
 
-* $P(\text{Faltou} \mid \text{Diurno})$:
+* A probabilidade de faltar no turno diurno é
 
-```{r faltou-dia}
-faltas['Diurno', 'Faltou']
-faltas['Diurno', 'Sum']
-faltas['Diurno', 'Faltou'] / faltas['Diurno', 'Sum']
-```
+  $$
+  P(\text{Faltou} \mid \text{Diurno}) = 
+  \frac{`r faltas['Diurno', 'Faltou']`}
+  {`r faltas['Diurno', 'Total']`}
+  $$
 
-* $P(\text{Faltou} \mid \text{Noturno})$:
+    ```{r faltou-dia}
+    faltas['Diurno', 'Faltou'] / faltas['Diurno', 'Total']
+    ```
 
-```{r faltou-noite}
-faltas['Noturno', 'Faltou']
-faltas['Noturno', 'Sum']
-faltas['Noturno', 'Faltou'] / faltas['Noturno', 'Sum']
-```
+* Como as probabilidades são iguais, os eventos [são independentes]{.hl}.
 
-Sim!
+* Verifique que $P(\text{Faltou}) = P(\text{Faltou} \mid \text{Noturno})$.
 
 
 ## Probabilidade total
 
 ### Exemplo
 
-Dentre 80 homens, 30 têm olhos azuis; dentre 50 mulheres, 20 têm olhos azuis. Neste grupo de pessoas, qual a probabilidade de ter olhos azuis?
+* Dentre $80$ homens, $30$ têm olhos azuis.
 
-Como homens e mulheres formam uma *partição* deste grupo --- i.e., cada pessoa só pode ser homem ou mulher (não ambos) e cada pessoa precisa ser homem ou mulher.
+* Dentre $50$ mulheres, $20$ têm olhos azuis. 
 
-A probabilidade de ter olhos azuis vai ser
-$$
-\begin{aligned}
-P(A) &= P(A \cap H) + P(A \cap M) \\
-     &= P(A \mid H) P(H) + P(A \mid M) P(M)
-\end{aligned}
-$$
-onde
+* Neste grupo de pessoas, qual a [probabilidade de ter olhos azuis]{.hl}?
 
-* $A$ = ter olhos azuis
-* $H$ = ser homem
-* $M$ = ser mulher
+* Homens e mulheres formam uma [partição]{.hl} deste grupo --- i.e., cada pessoa [só pode]{.hl} ser homem ou mulher (não ambos) e cada pessoa [precisa]{.hl} ser homem ou mulher.
 
-Então,
-$$
-\begin{aligned}
-P(A) = \frac{30}{130} + \frac{20}{130} = \frac{50}{130} \approx 0{,}39
-\end{aligned}
-$$
-ou, usando a segunda fórmula,
-$$
-\begin{aligned}
-P(A) &= \frac{30}{80} \cdot \frac{80}{130} + \frac{20}{50} \cdot \frac{50}{130} \\
-     &= \frac{50}{130} \\
-     &\approx 0{,}39
-\end{aligned}
-$$
+* O evento "ter olhos azuis" se subdivide em dois casos [mutuamente exclusivos]{.hl}:
+
+  1. Ter olhos azuis e ser homem;
+  
+  1. Ter olhos azuis e ser mulher.
+
+* Vamos chamar os eventos de
+
+  * $A$ = ter olhos azuis
+  
+  * $H$ = ser homem
+  
+  * $M$ = ser mulher
+
+* Calculamos a probabilidade $P(A)$ somando as probabilidades dos dois casos:
+
+  $$
+  \begin{aligned}
+  P(A) &= P(A \cap H) + P(A \cap M)
+  \end{aligned}
+  $$
+
+* Então,
+
+  $$
+  \begin{aligned}
+  P(A) = \frac{30}{130} + \frac{20}{130} = \frac{50}{130} \approx 0{,}39
+  \end{aligned}
+  $$
+
+* Ou, [antes de somar]{.hl}, podemos transformar as probabilidades conjuntas em produtos de uma probabilidade condicional por uma probabilidade não-condicional:
+
+  $$
+  \begin{aligned}
+  P(A) &= P(A \cap H) + P(A \cap M) \\
+       &= P(A \mid H) P(H) + P(A \mid M) P(M)
+  \end{aligned}
+  $$
+
+* O que nos dá o mesmo resultado:
+
+  $$
+  \begin{aligned}
+  P(A) &= \frac{30}{80} \cdot \frac{80}{130} + \frac{20}{50} \cdot \frac{50}{130} \\
+       &= \frac{50}{130} \\
+       &\approx 0{,}39
+  \end{aligned}
+  $$
 
 
 ## Teorema de Bayes
 
 ### Exemplo
 
-* De todos os emails, 60% são spam:
-$$
-P(\text{spam}) = 0{,}6
-$$
+* De [todos]{.hl} os *emails*, $60\%$ são *spam*:
 
-* De todos os emails que são spam, 90% contêm a palavra "compre":
-$$
-P(\text{compre} \mid \text{spam}) = 0{,}9
-$$
+  $$
+  P(\text{spam}) = 0{,}6
+  $$
 
-* De todos os emails (spam ou não), 70% contêm a palavra "compre":
-$$
-P(\text{compre}) = 0{,}7
-$$
+* De todos os *emails* [que são *spam*]{.hl}, $90\%$ contêm a palavra "compre":
 
-* Acabo de receber um email. Sem abri-lo, qual a probabilidade de ser spam? 
+  $$
+  P(\text{compre} \mid \text{spam}) = 0{,}9
+  $$
 
-  Bem, na ausência de informação adicional, $P(\text{spam}) = 0{,}6$.
+* De [todos]{.hl} os *emails* (*spam* ou não), $70\%$ contêm a palavra "compre":
 
-* Abri o email. Ele contém a palavra "compre". Agora, qual a probabilidade de ser spam?
-$$
-P(\text{spam} \mid \text{compre}) = ?
-$$
+  $$
+  P(\text{compre}) = 0{,}7
+  $$
+
+* Você acaba de receber um *email*. [Antes de você abri-lo, qual a probabilidade de o *email* ser *spam*]{.hl}? 
+
+* Bem, [na ausência de informação adicional]{.hl}, $P(\text{spam}) = 0{,}6$.
+
+* Você abre o *email*. [Ele contém a palavra "compre"]{.hl}. 
+
+* Agora, qual a probabilidade de ser *spam*?
+
+  $$
+  P(\text{spam} \mid \text{compre}) = {}?
+  $$
 
 * Lembre-se de que
-$$
-P(\text{compre} \cap \text{spam}) = P(\text{spam} \mid \text{compre}) \cdot P(\text{compre})
-$$
+
+  $$
+  P(\text{compre} \cap \text{spam}) = P(\text{spam} \mid \text{compre}) \cdot P(\text{compre})
+  $$
 
 * Mas também
-$$
-P(\text{compre} \cap \text{spam}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
-$$
+
+  $$
+  P(\text{compre} \cap \text{spam}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
+  $$
 
 * As duas expressões são iguais:
-$$
-P(\text{spam} \mid \text{compre}) \cdot P(\text{compre}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
-$$
 
-* Daí, isolando o termo que queremos descobrir:
-$$
-P(\text{spam} \mid \text{compre}) = \frac{P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})}{P(\text{compre})}
-$$
+  $$
+  P(\text{spam} \mid \text{compre}) \cdot P(\text{compre}) = P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})
+  $$
+
+* Isolando o termo que queremos descobrir:
+
+  $$
+  P(\text{spam} \mid \text{compre}) = \frac{P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})}{P(\text{compre})}
+  $$
 
 * Substituindo os valores:
-$$
-P(\text{spam} \mid \text{compre}) = \frac{0{,}9 \cdot 0{,}6}{0{,}7} \approx 0{,}77
-$$
+
+  $$
+  P(\text{spam} \mid \text{compre}) = \frac{0{,}9 \cdot 0{,}6}{0{,}7} \approx 0{,}77
+  $$
+
+* Isto é [inferência bayesiana]{.hl}: 
+
+  1. Começamos com uma probabilidade não-condicional: [*a priori*]{.hl}, $P(\text{spam}) = 0{,}6$;
+  
+  1. Obtivemos [nova informação]{.hl}: o *email* contém "compre";
+  
+  1. Usamos esta informação para calcular uma probabilidade condicional, [*a posteriori*]{.hl}: 
+
+    $$
+    P(\text{spam} \mid \text{compre}) = \frac{P(\text{compre} \mid \text{spam}) \cdot P(\text{spam})}{P(\text{compre})}
+    $$
+  
+* Perceba que, para isso, precisamos da probabilidade não-condicional $P(\text{compre})$ (no denominador).
 
 
 ### No geral
@@ -1554,37 +1622,58 @@ $$
 P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
 $$
 
-E se você não souber $P(B)$?
+* E se você não souber $P(B)$?
 
-Use o teorema da probabilidade total:
-$$
-P(B) = P(B \cap A_1) + P(B \cap A_2) + \cdots + P(B \cap A_n)
-$$
-onde os $A_i$ formam uma partição da população.
+* Use o teorema da probabilidade total:
 
-Isto equivale a 
-$$P(B) = P(B \mid A_1)P(A_1) + P(B \mid A_2)P(A_2) + \cdots + P(B \mid A_n)P(A_n)$$
+  $$
+  P(B) = P(B \cap A_1) + P(B \cap A_2) + \cdots + P(B \cap A_n)
+  $$
+  onde os $A_i$ formam uma partição da população.
+
+* Isto equivale a 
+
+  $$
+  P(B) = P(B \mid A_1)P(A_1) + P(B \mid A_2)P(A_2) + \cdots + P(B \mid A_n)P(A_n)
+  $$
 
 
 ### Outro exemplo
 
-* Uma doença afeta 5 pessoas em 100.000.
+* Uma [doença rara]{.hl} afeta $5$ pessoas em $100.000$.
 
-* O exame que detecta a doença tem precisão de 99,9%; i.e., quando uma pessoa está doente, o exame dá positivo 99,9% das vezes.
+* O exame que detecta a doença tem precisão de $99{,}9\%$; i.e., [quando uma pessoa está doente, o exame dá positivo $99{,}9\%$ das vezes]{.hl}.
 
-* Quando uma pessoa *não* está doente, o exame dá positivo 1% das vezes.
+* [Quando uma pessoa *não* está doente, o exame dá positivo $1\%$ das vezes]{.hl}. Este caso é um falso positivo.
 
-* Você faz o exame, e o resultado é positivo. 
+* Você faz o exame, e [o resultado é positivo]{.hl}. 
 
-* Qual a probabilidade de você ter a doença?
+* [Dado este resultado, qual a probabilidade de você ter a doença?]{.hl}
 
-* $P(D) = 0{,}00005$; daí, $P(ND) = 0{,}99995$.
+* Vamos nomear os eventos:
 
-* $P(+ \mid D) = 0{,}999$; daí, $P(- \mid D) = 0{,}001$ (falso negativo).
+  * $D = {}$ você está doente;
+  
+  * $ND = {}$ você [não]{.hl} está doente;
+  
+  * $+ = {}$ o exame deu positivo;
+  
+  * $- = {}$ o exame deu negativo.
+  
+* Vamos usar Bayes:
 
-* $P(+ \mid ND) = 0{,}01$ (falso positivo); daí, $P(- \mid ND) = 0{,}99$
+  $$
+  P(D \mid +) = \frac{P(+ \mid D)P(D)}{P(+)}
+  $$
 
-* Não temos $P(+)$, mas podemos achar usando o teorema da probabilidade total:
+* $P(+ \mid D) = 0{,}999$, pelo enunciado.
+
+* $P(D) = 0{,}00005$, pelo enunciado. 
+
+* Daí, $P(ND) = 1 - P(D) = 0{,}99995$.
+
+* Não temos $P(+)$, mas podemos achar usando o [teorema da probabilidade total](#probabilidade-total), lembrando que o enunciado diz que $P(+ \mid ND) = 0{,}01$:
+
   $$
   \begin{aligned}
   P(+) &= P(+ \cap D) \;+\; P(+ \cap ND) \\
@@ -1594,7 +1683,7 @@ $$P(B) = P(B \mid A_1)P(A_1) + P(B \mid A_2)P(A_2) + \cdots + P(B \mid A_n)P(A_n
   \end{aligned}
   $$
 
-* Queremos saber $P(D \mid +)$. Pelo teorema de Bayes:
+* Inserindo os valores no teorema de Bayes:
 
   $$
   \begin{aligned}
@@ -1604,5 +1693,15 @@ $$P(B) = P(B \mid A_1)P(A_1) + P(B \mid A_2)P(A_2) + \cdots + P(B \mid A_n)P(A_n
   \end{aligned}
   $$
 
-* A probabilidade de estar doente é menos do que 0,5%!
+* A probabilidade de estar doente é [menos do que $0{,}5\%$]{.hl}!
 
+* Você provavelmente esperava uma probabilidade maior.
+
+* Qual das $3$ probabilidades usadas no cálculo fez o resultado ser tão pequeno?
+
+  * $P(+ \mid D)$?
+  
+  * $P(D)$?
+  
+  * $P(+)$?
+  
