@@ -39,13 +39,17 @@ embed_yt('hJfyzRzEs44')
 
 * Exemplos:
 
-  1. Lançar uma moeda e [obter cara]{.hl}: $\{ K \}$.
+  1. Lançar uma moeda e [obter cara]{.hl}:  
+     $\{ K \}$.
   
-  1. Lançar 2 moedas e [obter resultados iguais]{.hl}: $\{ (K,K), (C,C) \}$.
+  1. Lançar 2 moedas e [obter resultados iguais]{.hl}:  
+     $\{ (K,K), (C,C) \}$.
   
-  1. Lançar um dado e [obter um número maior que 4]{.hl}: $\{ 5, 6 \}$.
+  1. Lançar um dado e [obter um número maior que 4]{.hl}:  
+     $\{ 5, 6 \}$.
   
-  1. Lançar 2 dados e [obter 2 números iguais]{.hl}: $\{ (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) \}$.
+  1. Lançar 2 dados e [obter 2 números iguais]{.hl}:  
+     $\{ (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) \}$.
   
 * Dizemos que [o evento $A$ ocorreu]{.hl} se o experimento foi realizado e [o resultado obtido está no conjunto que corresponde ao evento $A$]{.hl}.
 
@@ -392,26 +396,26 @@ embed_yt('hJfyzRzEs44')
 * Qual a probabilidade de que uma pessoa tenha gato ou cachorro ou ambos?
 
   $$
-  \begin{align*}
+  \begin{aligned}
   P(\text{cachorro } \cup \text{ gato}) 
     &= P(\text{cachorro}) + P(\text{gato}) - P(\text{cachorro } \cap \text{ gato}) \\
     &= 0{,}25 + 0{,}29 - 0{,}12 \\
     &= 0{,}42
-  \end{align*}
+  \end{aligned}
   $$
 
 
 * No geral, para $n$ eventos $A_1, \ldots, A_n$:
 
   $$
-  \begin{align*}
+  \begin{aligned}
   P(A_1 \cup \cdots \cup A_n) &=
     P(A_1) + \cdots + P(A_n) \\
     & - P(A_1 \cap A_2) - \cdots - P(A_{n-1} \cap A_n) \\
     & + P(A_1 \cap A_2 \cap A_3) + \cdots + P(A_{n-2} \cap A_{n-1} \cap A_n) \\
     & \cdots \\
     & \pm P(A_1 \cap \cdots \cap A_n )
-  \end{align*}
+  \end{aligned}
   $$
 
 * Na última linha
@@ -431,12 +435,12 @@ embed_yt('hJfyzRzEs44')
   `r inicio_resposta()`
   
   $$
-  \begin{align*}
+  \begin{aligned}
   P(A \cup B \cup C) &=
     P(A) + P(B) + P(C) \\
     & - P(A \cap B) - P(A \cap C) - P(B \cap C) \\
     & + P(A \cap B \cap C)
-  \end{align*}
+  \end{aligned}
   $$
 
   `r fim_resposta()`
@@ -1022,12 +1026,6 @@ grafico +
   
   1. Idem, se você lançar o dado $10$ vezes.
   
-  1. Repita os $2$ itens acima, para um dado viciado, no qual 
-  
-     $$
-     P(1) = \frac{1}{12}, \quad P(2) = P(3) = P(4) = P(5) = \frac{1}{6}, \quad P(6) = \frac{3}{12}
-     $$ 
-
 
 ## Vídeo 2
 
@@ -1036,139 +1034,275 @@ embed_yt('NVP-MwtGp0Q')
 ```
 
 
-## Probabilidade da união de dois eventos
-
 ## Probabilidade condicional
 
-$$
-P(A \mid B) = \text{probabilidade de } A \text{ quando sabemos que } B \text{ ocorreu}
-$$
+* [Em um mesmo experimento, saber que um evento $B$ aconteceu pode dar informação sobre um outro evento $A$.]{.hl}
+
+* Por exemplo, ao lançar um dado, a probabilidade de $A$ --- [conseguir um $6$]{.hl} --- é de $1/6$.
+
+* Se formos informados que o evento $B$ --- [o lançamento deu um número maior que $3$]{.hl} --- ocorreu, então a probabilidade de ter conseguido um $6$ passa para $1/3$.
+
+* Escrevemos
+
+  $$
+  P(A) = 1/6
+  $$
+
+  e
+  
+  $$
+  P(A \mid B) = 1/3
+  $$
+
+* $P(A \mid B)$ é a [probabilidade de $A$ ocorrer, dado que $B$ ocorreu]{.hl}.
+
+* É uma probabilidade [condicional]{.hl}. Estamos [condicionando sobre $B$]{.hl}.
+
 
 ### Exemplo: Titanic
 
-```{r tit}
-Titanic
-```
+* A seguinte tabela mostra as quantidades de pessoas no Titanic, categorizadas como sobreviventes ou não, e divididas pela classe:
 
-```{r tit-flat}
-tit_tab <- Titanic %>% 
-  ftable(row.vars = 'Survived', col.vars = 'Class') %>% 
-  as.table() %>% 
-  addmargins()
+    ```{r tit-flat, echo=FALSE}
+    tit_tab <- Titanic %>% 
+      ftable(row.vars = 'Survived', col.vars = 'Class') %>% 
+      as.table() %>% 
+      addmargins()
+    
+    dimnames(tit_tab) <- list(
+      Sobreviveu = c('Não', 'Sim', 'Total'),
+      Classe = c('1', '2', '3', 'Tripulação', 'Total')
+    )
+    
+    tit_tab
+    ```
 
-tit_tab
-```
 
 #### Probabilidade de ser tripulante {-}
 
-```{r p-trip}
-tit_tab['Sum', 'Crew']
-tit_tab['Sum', 'Sum']
-ptrip <- tit_tab['Sum', 'Crew'] / tit_tab['Sum', 'Sum']
-ptrip
-```
+* Escolha uma das $2.201$ pessoas [ao acaso]{.hl}.
+
+* Qual é a probabilidade de a pessoa escolhida [ser um tripulante]{.hl}?
+
+* Esta é uma probabilidade [não-condicional]{.hl}: basta dividir o total de tripulantes pelo total de pessoas:
+
+  $$
+  P(\text{tripulante}) = 
+  \frac
+  {`r tit_tab["Total", "Tripulação"]`}
+  {`r tit_tab["Total", "Total"]`}
+  $$
+
+* A tabela está na variável `tit_tab`. Em R, podemos indexar uma tabela pelos nomes. O primeiro índice corresponde à linha, o segundo à coluna:
+
+    ```{r p-trip}
+    ptrip <- 
+      tit_tab['Total', 'Tripulação'] / tit_tab['Total', 'Total']
+    
+    ptrip
+    ```
 
 #### Probabilidade de não ser tripulante {-}
 
-Uma maneira: $1 - P(\text{tripulante})$ 
+* Escolha uma das $2.201$ pessoas [ao acaso]{.hl}.
 
-```{r p-n-trip}
-1 - ptrip
-```
+* Qual é a probabilidade de a pessoa escolhida [não ser um tripulante]{.hl}?
 
-Outra maneira: probabilidade de ser passageiro de 1ª, 2ª ou 3ª classe
+* Esta é uma probabilidade [não-condicional]{.hl}: basta dividir o total de não-tripulantes pelo total de pessoas:
 
-```{r p-n-trip-2}
-ntrip <- tit_tab['Sum', c('1st', '2nd', '3rd')]
-ntrip
-tit_tab['Sum', 'Sum']
-sum(ntrip) / tit_tab['Sum', 'Sum']
-```
+  $$
+  P(\text{não-tripulante}) = 
+  \frac
+  {`r paste(tit_tab["Total", c('1', '2', '3')], collapse = ' + ')`}
+  {`r tit_tab["Total", "Total"]`}
+  $$
+
+* Em R, podemos selecionar várias células de uma tabela; basta usar um vetor como índice:
+
+    ```{r p-n-trip-2}
+    ntrip <- sum(tit_tab['Total', c('1', '2', '3')])
+    
+    ntrip / tit_tab['Total', 'Total']
+    ```
+
+* Mas nem era preciso fazer este cálculo. Basta perceber que "ser tripulante" e "ser não-tripulante" são [eventos complementares]{.hl}. Daí, 
+
+  $$
+  P(\text{não-tripulante}) = 1 - P(\text{tripulante})
+  $$ 
+
+    ```{r p-n-trip}
+    1 - ptrip
+    ```
+
 
 #### Probabilidade de sobreviver {-}
 
-```{r p-surv}
-tit_tab['Yes', 'Sum'] 
-tit_tab['Sum', 'Sum']
-tit_tab['Yes', 'Sum'] / tit_tab['Sum', 'Sum']
-```
+* Escolha uma das $2.201$ pessoas [ao acaso]{.hl}.
+
+* Qual é a probabilidade de a pessoa escolhida [ter sobrevivido]{.hl}?
+
+* Esta é uma probabilidade [não-condicional]{.hl}: basta dividir o total de sobreviventes pelo total de pessoas:
+
+  $$
+  P(\text{sobrevivente}) = 
+  \frac
+  {`r tit_tab["Sim", "Total"]`}
+  {`r tit_tab["Total", "Total"]`}
+  $$
+
+    ```{r p-surv}
+    tit_tab['Sim', 'Total'] / tit_tab['Total', 'Total']
+    ```
+
 
 #### Probabilidade de ser de primeira classe {-}
 
-```{r p-1st}
-tit_tab['Sum', '1st']
-tit_tab['Sum', 'Sum']
-tit_tab['Sum', '1st'] / tit_tab['Sum', 'Sum']
-```
+* Escolha uma das $2.201$ pessoas [ao acaso]{.hl}.
+
+* Qual é a probabilidade de a pessoa escolhida [ser da primeira classe]{.hl}?
+
+* Esta é uma probabilidade [não-condicional]{.hl}: basta dividir o total de passageiros da primeira classe pelo total de pessoas:
+
+  $$
+  P(\text{1ª classe}) = 
+  \frac
+  {`r tit_tab["Total", '1']`}
+  {`r tit_tab["Total", "Total"]`}
+  $$
+
+    ```{r p-1st}
+    tit_tab['Total', '1'] / tit_tab['Total', 'Total']
+    ```
+
 
 #### Probabilidade de sobreviver *E* ser de primeira classe {-}
 
-::: {.rmdimportant}
+* Escolha uma das $2.201$ pessoas [ao acaso]{.hl}.
 
-Queremos saber quantas pessoas, *do total de pessoas a bordo*, eram de primeira classe e sobreviveram.
+* Qual é a probabilidade de a pessoa escolhida [ter sobrevivido e ser da primeira classe]{.hl}?
 
-Isto é uma *probabilidade conjunta*.
+* Isto é uma [probabilidade conjunta]{.hl} --- a probabilidade de dois eventos terem ocorrido ao mesmo tempo. [Ainda não é uma probabilidade condicional]{.hl}.
 
-:::
+* Queremos saber a proporção de pessoas, do total de pessoas a bordo, que eram de primeira classe e sobreviveram.
 
-```{r p-1st-surv}
-tit_tab['Yes', '1st']
-tit_tab['Sum', 'Sum']
-tit_tab['Yes', '1st'] / tit_tab['Sum', 'Sum']
-```
+  $$
+  P(\text{sobrevivente da 1ª classe}) = 
+  \frac
+  {`r tit_tab["Sim", "1"]`}
+  {`r tit_tab["Total", "Total"]`}
+  $$
+
+    ```{r p-1st-surv}
+    tit_tab['Sim', '1'] / tit_tab['Total', 'Total']
+    ```
+
 
 #### Probabilidade de uma pessoa da primeira classe sobreviver {-}
 
-::: {.rmdimportant}
+* Escolha uma das $2.201$ pessoas [ao acaso]{.hl}.
 
-Em outras palavras: qual a probabilidade de uma pessoa sobreviver, se a pessoa estava na primeira classe?
+* Qual é a probabilidade de a pessoa escolhida [ter sobrevivido, dado que a pessoa estava na primeira classe]{.hl}?
 
-Cuidado, agora.
+* Isto é uma [probabilidade condicional]{.hl}, escrita como
 
-Já sabemos que a pessoa é da primeira classe. Logo, restringimos o universo a estas `r tit_tab['Sum', '1st']` pessoas.
+  $$
+  P(\text{sobrevivente } \mid \text{ 1ª classe})
+  $$
 
-A pergunta é: quantas pessoas que atendem a *condição* de ser da 1ª classe sobreviveram?
+* Cuidado, agora.
 
-Isto é uma *probabilidade condicional*.
+* Já sabemos que a pessoa é da primeira classe. Logo, [restringimos o universo a estas `r tit_tab['Total', '1']` pessoas]{.hl}. O denominador vai ser o total de passageiros da primeira classe:
 
-:::
+  $$
+  P(\text{sobrevivente } \mid \text{ 1ª classe}) = 
+  \frac
+  {`r tit_tab["Sim", "1"]`}
+  {`r tit_tab["Total", "1"]`}
+  $$
 
-```{r p-surv-given-1st}
-tit_tab['Yes', '1st']
-tit_tab['Sum', '1st'] 
-tit_tab['Yes', '1st'] / tit_tab['Sum', '1st'] 
-```
+    ```{r p-surv-given-1st}
+    tit_tab['Sim', '1'] / tit_tab['Total', '1'] 
+    ```
 
-Olhando para o cálculo acima, Perceba que 
-$$
-P(\text{sobreviveu} \mid \text{1ª classe} )
-$$
-é o mesmo que
-$$
-\frac{P(\text{sobreviveu} \cap \text{1ª classe})}{P(\text{1ª classe})}
-$$
+* Perceba que 
+
+  $$
+  P(\text{sobreviveu} \mid \text{1ª classe} )
+  $$
+
+  é o mesmo que
+  
+  $$
+  \frac{P(\text{sobreviveu } \cap \text{ 1ª classe})}{P(\text{1ª classe})}
+  $$
 
 #### Probabilidade de um sobrevivente ser da primeira classe {-}
 
-::: {.rmdimportant}
+* Escolha uma das $2.201$ pessoas [ao acaso]{.hl}.
 
-No geral, $P(A \mid B) \neq P(B \mid A)$
+* Qual é a probabilidade de a pessoa escolhida [ser da primeira classe, dado que ela sobreviveu]{.hl}?
 
-:::
+* Isto é outra [probabilidade condicional]{.hl}, escrita como
 
-Agora, restringimos o universo às pessoas que sobreviveram. Dentre estas, quantas são da primeira classe?
+  $$
+  P(\text{1ª classe } \mid \text{ sobreviveu})
+  $$
 
-```{r p-1st-given-surv}
-tit_tab['Yes', '1st']
-tit_tab['Yes', 'Sum']
-tit_tab['Yes', '1st'] / tit_tab['Yes', 'Sum']
-```
+* [Não é a mesma probabilidade]{.hl} que $P(\text{sobreviveu} \mid \text{1ª classe})$.
 
-### No geral
+* Em português:
 
-$$
-P(A \mid B) \quad=\quad \frac{P(A \cap B)}{P(B)}
-$$
+  * [$P(\text{sobreviveu} \mid \text{1ª classe})$]{.hl} é a probabilidade de
+  
+    * A pessoa sobreviver, dado que era da primeira classe;
+    
+    * Equivalentemente: alguém da primeira classe sobreviver.
+
+  * [$P(\text{1ª classe } \mid \text{ sobreviveu})$]{.hl} é a probabilidade de
+  
+    * A pessoa ter sido da primeira classe, dado que sobreviveu;
+    
+    * Equivalentemente: alguém que sobreviveu ter sido da primeira classe.
+    
+  * Releia até entender.
+
+* Agora, restringimos o universo às pessoas que sobreviveram. Dentre estas, quantas são da primeira classe?
+
+  $$
+  P(\text{1ª classe } \mid \text{ sobreviveu}) = 
+  \frac
+  {`r tit_tab["Sim", "1"]`}
+  {`r tit_tab["Sim", "Total"]`}
+  $$
+
+    ```{r p-1st-given-surv}
+    tit_tab['Sim', '1'] / tit_tab['Sim', 'Total']
+    ```
+
+  ::: {.rmdimportant}
+  
+  Este é um exemplo de que $P(A \mid B)$ pode ser [diferente]{.hl} de $P(B \mid A)$.
+  
+  :::
+
+
+### Definição de probabilidade condicional
+
+* Como vimos nos exemplos, [para calcular $P(A \mid B)$, restringimos o universo aos elementos onde $B$ acontece]{.hl}, e, deste universo, verificamos quantos elementos também correspondem a $A$ acontecer --- isto é, [elementos onde $A \cap B$ acontece]{.hl}.
+
+* Em termos de frequência relativa:
+
+  $$
+  \frac{\text{ocorrências de } A \cap B}{\text{ocorrências de }B}
+  $$
+
+* Em termos de probabilidade, a definição é
+
+  $$
+  P(A \mid B) \quad=\quad \frac{P(A \cap B)}{P(B)}
+  $$
+
 
 ### Exercícios
 
@@ -1181,18 +1315,49 @@ No Titanic,
 1. Qual a probabilidade de um não-tripulante sobreviver?
 
 1. Qual a probabilidade de um sobrevivente não ser tripulante?
+
+1. Compare as probabilidades condicionais de uma pessoa sobreviver dado que
+
+   a. Ela estava na 1ª classe. (Já calculada no exemplo acima: $`r tit_tab['Sim', '1'] / tit_tab['Total', '1']`$.)
+   
+   a. Ela estava na 2ª classe.
+   
+   a. Ela estava na 3ª classe.
+   
+   a. Ela era da tripulação.
+   
+   Que conclusões você tira?
  
 
 ## Probabilidade conjunta
 
-A fórmula para calcular $P(A \mid B)$ nos dá uma maneira de calcular $P(A \cap B)$:
-$$
-P(A \cap B) \quad=\quad P(A \mid B) \cdot P(B)
-$$
-ou, invertendo $A$ e $B$,
-$$
-P(A \cap B) \quad=\quad P(B \mid A) \cdot P(A)
-$$
+* Imagine que queremos calcular a probabilidade de dois eventos $A$ e $B$ acontecerem [ao mesmo tempo]{.hl}.
+
+* Ou seja, queremos descobrir [$P(A \cap B)$]{.hl}.
+
+* Muitas vezes, é difícil calcular esta probabilidade diretamente.
+
+* A fórmula para calcular $P(A \mid B)$ nos dá uma maneira de calcular $P(A \cap B)$:
+
+  $$
+  P(A \mid B) \;=\; \frac{P(A \cap B)}{P(B)} 
+  \quad\iff\quad
+  P(A \cap B) \;=\; P(A \mid B) \cdot P(B)
+  $$
+* Ou, invertendo $A$ e $B$,
+
+  $$
+  P(B \mid A) \;=\; \frac{P(A \cap B)}{P(A)} 
+  \quad\iff\quad
+  P(A \cap B) \;=\; P(B \mid A) \cdot P(A)
+  $$
+
+* Em palavras: 
+
+  * A [probabilidade de $A$ e $B$ acontecerem juntos]{.hl} é a [probabilidade de $A$ dado que $B$ aconteceu]{.hl}, multiplicada pela [probabilidade de $B$]{.hl}.
+  
+  * Ou, invertendo $A$ e $B$, a [probabilidade de $A$ e $B$ acontecerem juntos]{.hl} é a [probabilidade de $B$ dado que $A$ aconteceu]{.hl}, multiplicada pela [probabilidade de $A$]{.hl}.
+
 
 ## Independência
 
@@ -1200,10 +1365,10 @@ No vídeo anterior, vimos que, para dois eventos *independentes* $A$ e $B$, a pr
 
 Olhando para as fórmulas acima para a probabilidade conjunta, se $A$ e $B$ forem independentes, então
 $$
-\begin{align*}
+\begin{aligned}
 P(A \cap B) &= P(A \mid B) \cdot P(B) \\
             &= P(A) \cdot P(B)
-\end{align*}
+\end{aligned}
 $$
 o que nos diz que
 $$
@@ -1226,17 +1391,17 @@ Esta é a definição formal de eventos independentes.
 * $P(\text{sobreviver} \mid \text{1ª classe})$:
 
 ```{r sobr-given-1st}
-tit_tab['Yes', '1st']
-tit_tab['Sum', '1st']
-tit_tab['Yes', '1st'] / tit_tab['Sum', '1st']
+tit_tab['Sim', '1']
+tit_tab['Total', '1']
+tit_tab['Sim', '1'] / tit_tab['Total', '1']
 ```
 
 * $P(\text{sobreviver})$:
 
 ```{r p-sobreviver}
-tit_tab['Yes', 'Sum'] 
-tit_tab['Sum', 'Sum']
-tit_tab['Yes', 'Sum'] / tit_tab['Sum', 'Sum']
+tit_tab['Sim', 'Total'] 
+tit_tab['Total', 'Total']
+tit_tab['Sim', 'Total'] / tit_tab['Total', 'Total']
 ```
 
 Não!
@@ -1302,10 +1467,10 @@ Como homens e mulheres formam uma *partição* deste grupo --- i.e., cada pessoa
 
 A probabilidade de ter olhos azuis vai ser
 $$
-\begin{align*}
+\begin{aligned}
 P(A) &= P(A \cap H) + P(A \cap M) \\
      &= P(A \mid H) P(H) + P(A \mid M) P(M)
-\end{align*}
+\end{aligned}
 $$
 onde
 
@@ -1315,17 +1480,17 @@ onde
 
 Então,
 $$
-\begin{align*}
+\begin{aligned}
 P(A) = \frac{30}{130} + \frac{20}{130} = \frac{50}{130} \approx 0{,}39
-\end{align*}
+\end{aligned}
 $$
 ou, usando a segunda fórmula,
 $$
-\begin{align*}
+\begin{aligned}
 P(A) &= \frac{30}{80} \cdot \frac{80}{130} + \frac{20}{50} \cdot \frac{50}{130} \\
      &= \frac{50}{130} \\
      &\approx 0{,}39
-\end{align*}
+\end{aligned}
 $$
 
 
@@ -1421,22 +1586,22 @@ $$P(B) = P(B \mid A_1)P(A_1) + P(B \mid A_2)P(A_2) + \cdots + P(B \mid A_n)P(A_n
 
 * Não temos $P(+)$, mas podemos achar usando o teorema da probabilidade total:
   $$
-  \begin{align*}
+  \begin{aligned}
   P(+) &= P(+ \cap D) \;+\; P(+ \cap ND) \\
      &= P(+ \mid D)P(D) \;+\; P(+ \mid ND)P(ND) \\
      &= 0{,}999 \cdot 0{,}00005 \;+\; 0{,}01 \cdot 0{,}99995 \\
      &= 0{,}01004945
-  \end{align*}
+  \end{aligned}
   $$
 
 * Queremos saber $P(D \mid +)$. Pelo teorema de Bayes:
 
   $$
-  \begin{align*}
+  \begin{aligned}
     P(D \mid +) &= \frac{P(+ \mid D)P(D)}{P(+)} \\
                 &= \frac{0{,}999 \cdot 0{,}00005}{0{,}01004945} \\
                 &= 0{,}00497
-  \end{align*}
+  \end{aligned}
   $$
 
 * A probabilidade de estar doente é menos do que 0,5%!
