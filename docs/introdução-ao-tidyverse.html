@@ -78,7 +78,7 @@
 <li><p>Uma <em>tibble</em> é uma tabela retangular.</p></li>
 <li>
 <p><span class="hl">Cada coluna é um vetor</span>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
   pessoa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'João'</span>, <span class="st">'Maria'</span>, <span class="st">'Pedro'</span>, <span class="st">'Ana'</span><span class="op">)</span>,
   <span class="st">'cor favorita'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'azul'</span>, <span class="st">'rosa'</span>, <span class="st">'preto'</span>, <span class="st">'branco'</span><span class="op">)</span>
@@ -94,7 +94,7 @@
 <li><p>Isto é um pouco diferente da maneira como estamos acostumados a ver tabelas (como uma coleção de linhas, em vez de uma coleção de colunas).</p></li>
 <li>
 <p>A função <code>tribble</code> permite a entrada de forma mais natural, linha a linha. <span class="hl">Lembre-se de usar <code>~</code> antes dos nomes das colunas.</span></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span>
   <span class="op">~</span><span class="va">pessoa</span>, <span class="op">~</span><span class="st">'cor favorita'</span>,
    <span class="st">"João"</span>,          <span class="st">"azul"</span>,
@@ -116,7 +116,7 @@
 </li>
 <li>
 <p>Se uma coluna não puder ser armazenada em um vetor, a coluna será uma lista (com vetores como elementos):</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
   pessoa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'João'</span>, <span class="st">'Maria'</span>, <span class="st">'Pedro'</span>, <span class="st">'Ana'</span><span class="op">)</span>,
   <span class="st">'cor favorita'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
@@ -136,7 +136,7 @@
 </li>
 <li>
 <p>Use <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code> para examinar interativamente o conteúdo de uma coluna-lista:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cores</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
@@ -152,35 +152,35 @@
 <ul>
 <li>
 <p>A idéia é facilitar a leitura de <span class="hl">composições de funções</span>. O código</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">h</span><span class="op">(</span><span class="fu">g</span><span class="op">(</span><span class="fu">f</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>pode ser escrito como</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">h</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>Esta segunda versão é mais fiel à ordem em que as operações acontecem.</p></li>
 <li>
 <p>Na verdade, R tem um operador de <span class="hl">atribuição para a direita</span>, mas poucas pessoas recomendam usá-lo:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">f</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">g</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">h</span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">y</span></code></pre></div>
 </li>
 <li>
 <p>Se <code>f</code>, <code>g</code> e <code>h</code> forem funções de um argumento só, os parênteses podem ser omitidos:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">f</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">g</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="va">h</span></code></pre></div>
 </li>
 <li>
 <p>Se a função <code>f</code> tiver outros argumentos, escreva-os normalmente na chamada a <code>f</code>:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </li>
 <li><p>O <em>pipe</em> <code>EXP %&gt;% f(...)</code> sempre insere o resultado da expressão <code>EXP</code> como o <span class="hl">primeiro argumento da função <code>f</code></span>.</p></li>
 <li>
 <p>Se você precisar que o resultado da expressão <code>EXP</code> seja inserido em outra posição na lista de argumentos de <code>f</code>, use um ponto “<code>.</code>” para isso:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">consultar</span><span class="op">(</span><span class="va">df</span>, <span class="va">.</span><span class="op">)</span></code></pre></div>
 <p>equivale a</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">consultar</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
 </li>
 </ul>
@@ -192,7 +192,7 @@
 <ul>
 <li>
 <p>Nossa última versão da <em>tibble</em> <code>cores</code> é um pouco mais complexa do que deveria ser:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cores</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -212,7 +212,7 @@
 <li><p>A <em>tibble</em> não está no formato <em>tidy</em>.</p></li>
 <li>
 <p>Podemos “extrair” estes vetores “aninhados” usando o comando <code>unnest</code>, do pacote <code>tidyr</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cores</span> <span class="op">&lt;-</span> <span class="va">cores</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">`cor favorita`</span><span class="op">)</span>
 
@@ -232,7 +232,7 @@
 <li><p>Data em que a música entrou no <em>top 100</em> da Billboard;</p></li>
 <li><p>Para cada uma das <span class="math inline">\(76\)</span> semanas seguintes, a posição da música no <em>top 100</em>.</p></li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">billboard</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Rows: 317
 ## Columns: 79
@@ -318,14 +318,14 @@
 </li>
 <li>
 <p>Vamos renomear as colunas:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb</span> <span class="op">&lt;-</span> <span class="va">billboard</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>
     artista <span class="op">=</span> <span class="va">artist</span>,
     musica <span class="op">=</span> <span class="va">track</span>,
     entrou <span class="op">=</span> <span class="va">date.entered</span>
   <span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -358,7 +358,7 @@
 <li><p>A <em>tibble</em>, que antes era larga, <span class="hl">vai ser mais estreita e mais longa</span>.</p></li>
 <li>
 <p>A função <code>pivot_longer</code>, do pacote <code>tidyr</code>, vai fazer o trabalho — inclusive extraindo os números das semanas dos nomes das colunas:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">&lt;-</span> <span class="va">bb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>
     <span class="va">wk1</span><span class="op">:</span><span class="va">wk76</span>,
@@ -380,13 +380,13 @@
 <li><p>O R só mostra, por <em>default</em>, as <span class="math inline">\(1000\)</span> primeiras linhas de uma <em>tibble</em>.</p></li>
 <li>
 <p>Na verdade, o número de linhas da tabela original era</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 317</code></pre>
 </li>
 <li>
 <p>O número de linhas, depois de <code>pivot_longer</code>, ficou:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 24092</code></pre>
 </li>
@@ -394,7 +394,7 @@
 <li><p>No novo formato, a ausência da linha com aquele número de semana já basta para indicar isto. Então, vamos eliminar as linhas onde <code>pos</code> é <code>NA</code>.</p></li>
 <li>
 <p>A função <code>filter</code> <span class="hl">mantém</span> as linhas que <span class="hl">satisfazem</span> a condição dada; por isso, a condição é “<code>pos</code> não é <code>NA</code>”:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op">&lt;-</span> <span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span>
 
@@ -407,7 +407,7 @@
 </li>
 <li>
 <p>O número de linhas ficou</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5307</code></pre>
 </li>
@@ -433,7 +433,7 @@
 <ul>
 <li>
 <p>O <em>data frame</em><a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Considere &lt;em&gt;data frame&lt;/em&gt; como sinônimo de &lt;em&gt;tibble&lt;/em&gt;. Na verdade, &lt;em&gt;tibbles&lt;/em&gt; formam um superconjunto de &lt;em&gt;data frames&lt;/em&gt;: todo &lt;em&gt;data frame&lt;/em&gt; é uma &lt;em&gt;tibble&lt;/em&gt;, mas nem toda &lt;em&gt;tibble&lt;/em&gt; é um &lt;em&gt;data frame&lt;/em&gt;.&lt;/p&gt;"><sup>2</sup></a> <code>cars</code> tem dados (de <span class="math inline">\(1920\)</span>!) sobre as distâncias de frenagem (em pés) de um carro viajando a diversas velocidades (em milhas por hora):</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -443,7 +443,7 @@
 </li>
 <li>
 <p>Vamos criar colunas novas com os valores convertidos para km/h e metros; além disso, uma coluna com a taxa de frenagem:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     velocidade <span class="op">=</span> <span class="va">speed</span> <span class="op">*</span> <span class="fl">1.6</span>,
@@ -458,7 +458,7 @@
 </li>
 <li>
 <p>Perceba que as colunas antigas continuam lá. <span class="hl">Se quiser manter apenas as colunas novas, use <code>transmute</code></span>:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">transmute</a></span><span class="op">(</span>
     velocidade <span class="op">=</span> <span class="va">speed</span> <span class="op">*</span> <span class="fl">1.6</span>,
@@ -482,7 +482,7 @@
 <li><p>Vamos voltar à nossa <em>tibble</em> dos <em>top</em> <span class="math inline">\(100\)</span> da <em>Billboard</em>.</p></li>
 <li>
 <p>Para ver só a coluna de artistas:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">artista</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -493,7 +493,7 @@
 </li>
 <li>
 <p>Para eliminar as repetições:</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -505,7 +505,7 @@
 </li>
 <li>
 <p>Para ver artistas e músicas:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -517,7 +517,7 @@
 </li>
 <li>
 <p>Para especificar colunas <span class="hl">a não mostrar</span>, use o sinal de menos “<code>-</code>”:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">entrou</span>, <span class="va">semana</span>, <span class="va">pos</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -528,7 +528,7 @@
 </li>
 <li>
 <p>Para <span class="hl">extrair uma coluna na forma de vetor</span> (<code>unique</code> é uma função do R base, aplicável a vetores):</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -656,7 +656,7 @@
 <ul>
 <li>
 <p>Apenas as músicas da Britney Spears:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">artista</span> <span class="op">==</span> <span class="st">'Spears, Britney'</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -667,7 +667,7 @@
 </li>
 <li>
 <p>Apenas músicas que chegaram à posição <span class="math inline">\(1\)</span>, sem mostrar a coluna <code>pos</code>:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">pos</span><span class="op">)</span></code></pre></div>
@@ -679,7 +679,7 @@
 </li>
 <li>
 <p>Apenas músicas que chegaram à posição <span class="math inline">\(1\)</span> em menos de <span class="math inline">\(10\)</span> semanas, mostrando apenas artista e música:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span>, <span class="va">semana</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span></code></pre></div>
@@ -692,7 +692,7 @@
 <li><p>As funções da família <code>slice</code> filtram linhas de diversas maneiras.</p></li>
 <li>
 <p>De acordo com seus índices (números de linha):</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1000</span>, <span class="fl">5000</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -700,7 +700,7 @@
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"1","5":"87"},{"1":"Clark Family Experience","2":"Meanwhile Back At Th...","3":"2000-11-18","4":"3","5":"81"},{"1":"Vassar, Phil","2":"Carlene","3":"2000-03-04","4":"3","5":"64"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -708,7 +708,7 @@
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"1","5":"87"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"2","5":"82"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"3","5":"72"},{"1":"2 Pac","2":"Baby Don't Cry (Keep...","3":"2000-02-26","4":"4","5":"77"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_tail</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -719,7 +719,7 @@
 </li>
 <li>
 <p>De acordo com a <span class="hl">ordenação de uma coluna</span> ou <span class="hl">de uma função das colunas</span>:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_min</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -727,7 +727,7 @@
 {"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Aaliyah","2":"Try Again","3":"2000-03-18","4":"14","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"11","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"12","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"13","5":"1"},{"1":"Aguilera, Christina","2":"Come On Over Baby (A...","3":"2000-08-05","4":"14","5":"1"},{"1":"Aguilera, Christina","2":"What A Girl Wants","3":"1999-11-27","4":"8","5":"1"},{"1":"Aguilera, Christina","2":"What A Girl Wants","3":"1999-11-27","4":"9","5":"1"},{"1":"Carey, Mariah","2":"Thank God I Found Yo...","3":"1999-12-11","4":"11","5":"1"},{"1":"Creed","2":"With Arms Wide Open","3":"2000-05-13","4":"27","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"9","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"10","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"11","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"12","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"13","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"14","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"15","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"16","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"17","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"18","5":"1"},{"1":"Destiny's Child","2":"Independent Women Pa...","3":"2000-09-23","4":"19","5":"1"},{"1":"Destiny's Child","2":"Say My Name","3":"1999-12-25","4":"13","5":"1"},{"1":"Destiny's Child","2":"Say My Name","3":"1999-12-25","4":"14","5":"1"},{"1":"Destiny's Child","2":"Say My Name","3":"1999-12-25","4":"15","5":"1"},{"1":"Iglesias, Enrique","2":"Be With You","3":"2000-04-01","4":"13","5":"1"},{"1":"Iglesias, Enrique","2":"Be With You","3":"2000-04-01","4":"14","5":"1"},{"1":"Iglesias, Enrique","2":"Be With You","3":"2000-04-01","4":"15","5":"1"},{"1":"Janet","2":"Doesn't Really Matte...","3":"2000-06-17","4":"11","5":"1"},{"1":"Janet","2":"Doesn't Really Matte...","3":"2000-06-17","4":"12","5":"1"},{"1":"Janet","2":"Doesn't Really Matte...","3":"2000-06-17","4":"13","5":"1"},{"1":"Lonestar","2":"Amazed","3":"1999-06-05","4":"40","5":"1"},{"1":"Lonestar","2":"Amazed","3":"1999-06-05","4":"41","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"6","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"7","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"8","5":"1"},{"1":"Madonna","2":"Music","3":"2000-08-12","4":"9","5":"1"},{"1":"N'Sync","2":"It's Gonna Be Me","3":"2000-05-06","4":"13","5":"1"},{"1":"N'Sync","2":"It's Gonna Be Me","3":"2000-05-06","4":"14","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"9","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"10","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"11","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"12","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"13","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"14","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"15","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"16","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"17","5":"1"},{"1":"Santana","2":"Maria, Maria","3":"2000-02-12","4":"18","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"15","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"16","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"17","5":"1"},{"1":"Savage Garden","2":"I Knew I Loved You","3":"1999-10-23","4":"19","5":"1"},{"1":"Sisqo","2":"Incomplete","3":"2000-06-24","4":"8","5":"1"},{"1":"Sisqo","2":"Incomplete","3":"2000-06-24","4":"9","5":"1"},{"1":"Vertical Horizon","2":"Everything You Want","3":"2000-01-22","4":"26","5":"1"},{"1":"matchbox twenty","2":"Bent","3":"2000-04-29","4":"13","5":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">semana</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -738,12 +738,12 @@
 </li>
 <li>
 <p>Aleatoriamente, criando uma amostra:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Aaliyah","2":"Try Again","3":"2000-03-18","4":"2","5":"53"},{"1":"Gray, Macy","2":"I Try","3":"2000-02-19","4":"13","5":"6"},{"1":"Aaliyah","2":"I Don't Wanna","3":"2000-01-29","4":"13","5":"38"},{"1":"Lonestar","2":"Smile","3":"1999-12-18","4":"18","5":"78"},{"1":"Red Hot Chili Peppers","2":"Otherside","3":"2000-02-12","4":"12","5":"29"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Barenaked Ladies","2":"Pinch Me","3":"2000-09-09","4":"16","5":"20"},{"1":"Aguilera, Christina","2":"I Turn To You","3":"2000-04-15","4":"5","5":"21"},{"1":"Lonestar","2":"Amazed","3":"1999-06-05","4":"16","5":"35"},{"1":"McBride, Martina","2":"Love's The Only Hous...","3":"2000-02-05","4":"7","5":"52"},{"1":"Diffie, Joe","2":"It's Always Somethin...","3":"2000-08-12","4":"1","5":"81"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </li>
@@ -764,7 +764,7 @@
 <ul>
 <li>
 <p>Por título, sem repetições:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">musica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -777,7 +777,7 @@
 </li>
 <li>
 <p>Por título, sem repetições, em ordem inversa:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">musica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -797,7 +797,7 @@
 <ul>
 <li>
 <p>Quantas semanas cada artista ficou nos <em>top</em> <span class="math inline">\(100\)</span>? Duas músicas na mesma semana contam como duas semanas.</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">artista</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -808,7 +808,7 @@
 </li>
 <li>
 <p>Quantas semanas cada música ficou nos <em>top</em> <span class="math inline">\(100\)</span>?</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">musica</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -819,7 +819,7 @@
 </li>
 <li>
 <p>Se houve músicas com o mesmo nome, mas de artistas diferentes, <span class="hl">o código acima está errado</span>. O certo é</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">musica</span>, <span class="va">artista</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -849,7 +849,7 @@
 <ul>
 <li>
 <p>Qual foi a melhor posição que cada artista alcançou?</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>melhor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -862,7 +862,7 @@
 </li>
 <li>
 <p>Qual foi a melhor posição que cada música alcançou?</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>melhor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -879,7 +879,7 @@
 <li>
 <p>Quantas semanas cada artista ficou na posição <span class="math inline">\(1\)</span>?</p>
 <p>A função <code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code> é uma maneira conveniente de <span class="hl">obter o número de linhas de um grupo</span> (ou, se não houver agrupamento, de toda a <em>tibble</em>); mas <span class="hl"><code><a href="https://dplyr.tidyverse.org/reference/context.html">n()</a></code> só pode ser chamada em certos contextos</span>, como <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> ou <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
@@ -893,7 +893,7 @@
 </li>
 <li>
 <p>Perceba que <code>count</code>, que vimos mais acima, faz agrupamentos do mesmo modo:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pos</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">artista</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -905,7 +905,7 @@
 </li>
 <li>
 <p>Uma pergunta diferente: quais são os artistas cujas músicas apareceram no <em>top</em> <span class="math inline">\(100\)</span> mais tempo depois do lançamento da música?</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">artista</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>semanas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">semana</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -918,7 +918,7 @@
 </li>
 <li>
 <p>Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com <code>NA</code>; logo, <span class="hl">a média vai ser sobre a quantidade de semanas em que a música esteve na lista</span>.</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">media1</span> <span class="op">&lt;-</span> <span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">'drop'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -933,7 +933,7 @@
 </li>
 <li>
 <p>E se quisermos <span class="hl">a média sobre o número de semanas desde a entrada da música até a última semana</span> em que a música apareceu na lista?</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">media2</span> <span class="op">&lt;-</span> <span class="va">bb_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">artista</span>, <span class="va">musica</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">semana</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">'drop'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -946,7 +946,7 @@
   </script>
 </div>
 <p>As primeiras linhas são iguais, mas os resultados são diferentes:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">media1</span>, <span class="va">media2</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </li>
@@ -961,10 +961,10 @@
 <li>
 <p>Vamos trabalhar com um conjunto de dados sobre super-heróis.</p>
 <p>Carregue o <code>tidyverse</code> com o comando</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 <p>Execute o seguinte comando para ler os dados para uma <em>tibble</em>:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">arquivo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
   <span class="st">'https://github.com/fnaufel/'</span>,
   <span class="st">'probestr/raw/master/data/'</span>,
@@ -997,7 +997,7 @@
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 734</code></pre>
 </div>
@@ -1008,7 +1008,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">nome</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -1018,7 +1018,7 @@ Resposta
 </div>
 <p>Precisaríamos <span class="hl">examinar a tabela acima</span>, procurando linhas com <span class="math inline">\(n &gt; 1\)</span>.</p>
 <p><span class="hl">Vamos pedir para o R fazer isto:</span></p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">repetidos</span> <span class="op">&lt;-</span> <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">nome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
@@ -1030,7 +1030,7 @@ Resposta
   </script>
 </div>
 <p>Vamos mostrar mais dados destes heróis:</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">nome</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">repetidos</span><span class="op">$</span><span class="va">nome</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">nome</span>, <span class="va">editora</span>, <span class="va">raça</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1051,7 +1051,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">editora</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1073,7 +1073,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op">&lt;-</span> <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     editora <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
@@ -1090,7 +1090,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">editora</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1105,7 +1105,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">editora</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1122,7 +1122,7 @@ Resposta
 Resposta
 </button>
 <p>Se, no seu caso, ainda houver valores <code>NA</code> em <code>editora</code>, basta fazer o seguinte:</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op">&lt;-</span> <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     editora <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">editora</span><span class="op">)</span>, <span class="st">'Outras'</span>, <span class="va">editora</span><span class="op">)</span>
@@ -1135,7 +1135,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">editora</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1150,14 +1150,14 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["nome"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sexo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["olhos"],"name":[3],"type":["chr"],"align":["left"]},{"label":["raça"],"name":[4],"type":["chr"],"align":["left"]},{"label":["cabelos"],"name":[5],"type":["chr"],"align":["left"]},{"label":["altura"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["editora"],"name":[7],"type":["chr"],"align":["left"]},{"label":["pele"],"name":[8],"type":["chr"],"align":["left"]},{"label":["lado"],"name":[9],"type":["chr"],"align":["left"]},{"label":["peso"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"Bird-Brain","2":"NA","3":"NA","4":"NA","5":"NA","6":"-99","7":"Marvel","8":"NA","9":"good","10":"-99"},{"1":"Blaquesmith","2":"NA","3":"black","4":"NA","5":"No Hair","6":"-99","7":"Marvel","8":"NA","9":"good","10":"-99"},{"1":"Box III","2":"NA","3":"blue","4":"NA","5":"Blond","6":"193","7":"Marvel","8":"NA","9":"good","10":"110"},{"1":"Box IV","2":"NA","3":"brown","4":"NA","5":"Brown / Black","6":"-99","7":"Marvel","8":"NA","9":"good","10":"-99"},{"1":"Captain Universe","2":"NA","3":"NA","4":"God / Eternal","5":"NA","6":"-99","7":"Marvel","8":"NA","9":"good","10":"-99"},{"1":"Cecilia Reyes","2":"NA","3":"brown","4":"NA","5":"Brown","6":"170","7":"Marvel","8":"NA","9":"good","10":"62"},{"1":"Clea","2":"NA","3":"NA","4":"NA","5":"White","6":"-99","7":"Marvel","8":"NA","9":"good","10":"-99"},{"1":"Cypher","2":"NA","3":"blue","4":"NA","5":"Blond","6":"175","7":"Marvel","8":"NA","9":"good","10":"68"},{"1":"Darkside","2":"NA","3":"NA","4":"NA","5":"NA","6":"-99","7":"Outras","8":"NA","9":"bad","10":"-99"},{"1":"Ego","2":"NA","3":"NA","4":"NA","5":"NA","6":"-99","7":"Marvel","8":"NA","9":"bad","10":"-99"},{"1":"Fabian Cortez","2":"NA","3":"blue","4":"NA","5":"Brown","6":"196","7":"Marvel","8":"NA","9":"bad","10":"96"},{"1":"Feral","2":"NA","3":"yellow (without irises)","4":"NA","5":"Orange / White","6":"175","7":"Marvel","8":"NA","9":"good","10":"50"},{"1":"Firelord","2":"NA","3":"white","4":"NA","5":"Yellow","6":"193","7":"Marvel","8":"NA","9":"good","10":"99"},{"1":"Fixer","2":"NA","3":"red","4":"NA","5":"No Hair","6":"-99","7":"Marvel","8":"NA","9":"bad","10":"-99"},{"1":"Forge","2":"NA","3":"brown","4":"NA","5":"Black","6":"183","7":"Marvel","8":"NA","9":"good","10":"81"},{"1":"Franklin Storm","2":"NA","3":"blue","4":"NA","5":"Grey","6":"188","7":"Marvel","8":"NA","9":"good","10":"92"},{"1":"Ghost Rider II","2":"NA","3":"NA","4":"NA","5":"NA","6":"-99","7":"Marvel","8":"NA","9":"good","10":"-99"},{"1":"Godzilla","2":"NA","3":"NA","4":"Kaiju","5":"NA","6":"108","7":"Outras","8":"grey","9":"bad","10":"NA"},{"1":"Living Brain","2":"NA","3":"yellow","4":"NA","5":"NA","6":"198","7":"Marvel","8":"NA","9":"bad","10":"360"},{"1":"Living Tribunal","2":"NA","3":"blue","4":"Cosmic Entity","5":"No Hair","6":"-99","7":"Marvel","8":"gold","9":"neutral","10":"-99"},{"1":"Machine Man","2":"NA","3":"red","4":"NA","5":"Black","6":"183","7":"Marvel","8":"NA","9":"good","10":"383"},{"1":"Man of Miracles","2":"NA","3":"blue","4":"God / Eternal","5":"Silver","6":"-99","7":"Outras","8":"NA","9":"NA","10":"-99"},{"1":"One-Above-All","2":"NA","3":"NA","4":"Cosmic Entity","5":"NA","6":"-99","7":"Marvel","8":"NA","9":"neutral","10":"-99"},{"1":"Parademon","2":"NA","3":"NA","4":"Parademon","5":"NA","6":"-99","7":"DC","8":"NA","9":"bad","10":"-99"},{"1":"Penance","2":"NA","3":"NA","4":"NA","5":"NA","6":"-99","7":"Marvel","8":"NA","9":"good","10":"-99"},{"1":"Shadow King","2":"NA","3":"red","4":"NA","5":"NA","6":"185","7":"Marvel","8":"NA","9":"good","10":"149"},{"1":"Spider-Man","2":"NA","3":"red","4":"Human","5":"Brown","6":"178","7":"Marvel","8":"NA","9":"good","10":"77"},{"1":"Vision II","2":"NA","3":"red","4":"NA","5":"No Hair","6":"191","7":"Marvel","8":"NA","9":"good","10":"135"},{"1":"Wiz Kid","2":"NA","3":"brown","4":"NA","5":"Black","6":"140","7":"Marvel","8":"NA","9":"good","10":"39"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op">&lt;-</span>  <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     sexo <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span>
@@ -1167,7 +1167,7 @@ Resposta
     <span class="op">)</span>
   <span class="op">)</span></code></pre></div>
 <p>Conferindo:</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1183,14 +1183,14 @@ Resposta
 Resposta
 </button>
 <p>Podemos extrair o vetor de alturas com <code>pull</code> e usar a função <code>summary</code> do R base, que retorna um vetor:</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">altura</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   -99,0   -99,0   175,0   102,3   185,0   975,0</code></pre>
 <p>Ou podemos usar <code>summarize</code>, do <code>tidyverse</code>, que retorna uma <em>tibble</em>:</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>
     minimo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">altura</span><span class="op">)</span>,
@@ -1202,7 +1202,7 @@ Resposta
   </script>
 </div>
 <p>Quantas alturas negativas existem?</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">altura</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1210,7 +1210,7 @@ Resposta
   </script>
 </div>
 <p>Substituindo as alturas negativas por <code>NA</code>:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op">&lt;-</span> <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     altura <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span>
@@ -1221,7 +1221,7 @@ Resposta
   <span class="op">)</span></code></pre></div>
 <p>Como <code>if_else</code> (com <em>underscore</em>) é exigente, precisamos passar <code>NA_real_</code> em vez de <code>NA</code>.</p>
 <p>Situação atual:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">altura</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -1236,14 +1236,14 @@ Resposta
 Resposta
 </button>
 <p>Como fizemos com as alturas:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##  -99,00  -99,00   62,00   43,86   90,00  900,00       2</code></pre>
 <p>Observe que existem valores <code>NA</code> em peso.</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>
     minimo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span>,
@@ -1255,7 +1255,7 @@ Resposta
   </script>
 </div>
 <p>Para ignorar os valores <code>NA</code> nas funções <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code> e <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>:</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>
     minimo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">peso</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,
@@ -1267,7 +1267,7 @@ Resposta
   </script>
 </div>
 <p>Quantos pesos negativos existem?</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">peso</span> <span class="op">&lt;</span> <span class="fl">0</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1275,7 +1275,7 @@ Resposta
   </script>
 </div>
 <p>Substituindo por <code>NA</code>:</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op">&lt;-</span> <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     peso <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span>
@@ -1286,7 +1286,7 @@ Resposta
   <span class="op">)</span></code></pre></div>
 <p>Como <code>if_else</code> (com <em>underscore</em>) é exigente, precisamos passar <code>NA_real_</code> em vez de <code>NA</code>.</p>
 <p>Situação atual:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -1300,7 +1300,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 112,2525</code></pre>
 </div>
@@ -1311,7 +1311,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">altura</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span>na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 186,7263</code></pre>
 </div>
@@ -1322,7 +1322,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">editora</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>média <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">altura</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1339,7 +1339,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">altura</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1359,7 +1359,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">olhos</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1377,7 +1377,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">editora</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">lado</span><span class="op">)</span></code></pre></div>
@@ -1387,7 +1387,7 @@ Resposta
   </script>
 </div>
 <p>ou</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">editora</span>, <span class="va">lado</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1406,13 +1406,13 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 62</code></pre>
 <p>ou (mostrando os nomes das raças e as quantidades de heróis por raça)</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
@@ -1421,7 +1421,7 @@ Resposta
   </script>
 </div>
 <p>ou</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1438,7 +1438,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">editora</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1459,7 +1459,7 @@ Resposta
 <ul>
 <li>
 <p>Maneira simples, usando contagem:</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n_ed <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/n_distinct.html">n_distinct</a></span><span class="op">(</span><span class="va">editora</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1472,7 +1472,7 @@ Resposta
 </li>
 <li>
 <p>Maneira repetitiva, manual:</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">racas_marvel</span> <span class="op">&lt;-</span> <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">editora</span> <span class="op">==</span> <span class="st">'Marvel'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1488,7 +1488,7 @@ Resposta
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Exclusivas da Marvel:</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">racas_marvel</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">racas_dc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">racas_outras</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1499,7 +1499,7 @@ Resposta
   </script>
 </div>
 <p>Exclusivas da DC:</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">racas_dc</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">racas_marvel</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">racas_outras</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1510,7 +1510,7 @@ Resposta
   </script>
 </div>
 <p>Exclusivas de outras editoras:</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">racas_outras</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">racas_dc</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">racas_marvel</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1523,7 +1523,7 @@ Resposta
 </li>
 <li>
 <p>Mesma maneira, mas usando uma função:</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">racas_exclusivas</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
 
   <span class="va">esta_editora</span> <span class="op">&lt;-</span> <span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1540,21 +1540,21 @@ Resposta
     <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html">setdiff</a></span><span class="op">(</span><span class="va">outras_editoras</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
     <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">racas_exclusivas</span><span class="op">(</span><span class="st">'Marvel'</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["raça"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Asgardian"},{"1":"Clone"},{"1":"Cosmic Entity"},{"1":"Eternal"},{"1":"Flora Colossus"},{"1":"Frost Giant"},{"1":"Human-Kree"},{"1":"Human-Spartoi"},{"1":"Inhuman"},{"1":"Kakarantharaian"},{"1":"Luphomoid"},{"1":"Mutant / Clone"},{"1":"Neyaphem"},{"1":"Spartoi"},{"1":"Strontian"},{"1":"Symbiote"},{"1":"Zen-Whoberian"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">racas_exclusivas</span><span class="op">(</span><span class="st">'DC'</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["raça"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"Amazon"},{"1":"Bizarro"},{"1":"Bolovaxian"},{"1":"Czarnian"},{"1":"Gorilla"},{"1":"Human-Vuldarian"},{"1":"Korugaran"},{"1":"Kryptonian"},{"1":"Martian"},{"1":"Metahuman"},{"1":"New God"},{"1":"Parademon"},{"1":"Planet"},{"1":"Talokite"},{"1":"Tamaranean"},{"1":"Ungaran"},{"1":"Zombie"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">racas_exclusivas</span><span class="op">(</span><span class="st">'Outras'</span><span class="op">)</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -1564,7 +1564,7 @@ Resposta
 </li>
 <li>
 <p>Maneira complicada, usando <code>join</code>:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">herois_info</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">raça</span>, <span class="va">editora</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">raça</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> 
@@ -1799,7 +1799,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 04/05/2022)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 30/08/2022)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

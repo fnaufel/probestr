@@ -84,7 +84,7 @@ embed_yt('hJfyzRzEs44')
      
      `r fim_resposta()`
 
-* Se você nunca tiver estudado técnicas de contagem, ou se quiser revisar ou aprender mais, consulte o excelente livro @oliveira-2004-analis.
+* Se você nunca tiver estudado técnicas de contagem, ou se quiser revisar ou aprender mais, consulte o excelente livro @morgadoAnaliseCombinatoriaProbabilidade2004.
 
 
 ## Probabilidade clássica

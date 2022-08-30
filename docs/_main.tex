@@ -373,7 +373,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 04/05/2022)}
+\date{(versão de 30/08/2022)}
 
 \begin{document}
 \maketitle
@@ -659,6 +659,17 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 \FunctionTok{swirl}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
+\item
+  Se, quando você tentar instalar os exercícios, acontecer um erro, desinstale todos os cursos com os comandos
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(swirl)}
+\FunctionTok{uninstall\_all\_courses}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+  e tente instalar os exercícios novamente.
 \end{enumerate}
 
 \hypertarget{introduuxe7uxe3o-ao-tidyverse}{%
@@ -1670,13 +1681,13 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 
 \begin{verbatim}
 ## # A tibble: 5 x 5
-##   artista              musica                  entrou     semana   pos
-##   <chr>                <chr>                   <date>      <int> <dbl>
-## 1 Cagle, Chris         My Love Goes On And ... 2000-10-21     10    83
-## 2 Hollister, Dave      Can't Stay              2000-03-25      2    84
-## 3 Price, Kelly         Love Sets You Free      2000-05-13      4   100
-## 4 Lox                  Ryde or Die, Chick      2000-03-18      2    73
-## 5 Backstreet Boys, The Shape Of My Heart       2000-10-14      2    25
+##   artista         musica                  entrou     semana   pos
+##   <chr>           <chr>                   <date>      <int> <dbl>
+## 1 Ginuwine        None Of Ur Friends B... 1999-12-11      7    48
+## 2 Funkmaster Flex Do You                  2000-11-11      2    92
+## 3 Levert, Gerald  Mr. Too Damn Good       2000-03-18      3    83
+## 4 Vitamin C       The Itch                2000-12-02      8    95
+## 5 Ying Yang Twins Whistle While You Tw... 2000-03-18      9    85
 \end{verbatim}
 \item
   Veja a ajuda de \texttt{slice} para saber mais sobre estas funções. Por exemplo:
@@ -3087,15 +3098,15 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   Informações sobre cada país são representadas por características do ponto correspondente (as {\hl{estéticas}}):
 
   \begin{longtable}[]{@{}lll@{}}
-  \toprule
+  \toprule()
   Variável & Geometria & Estética \\
-  \midrule
+  \midrule()
   \endhead
   PIB \emph{per capita} & ponto & posição x \\
   Expectativa de vida & ponto & posição y \\
   População & ponto & tamanho \\
   Continente & ponto & cor \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 \item
   Você pode usar outras estéticas para representar informações:
@@ -3325,7 +3336,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3976}}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2771}}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1325}}@{}}
-  \toprule
+  \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
   Variável
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -3335,7 +3346,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
   Faltante
   \end{minipage} \\
-  \midrule
+  \midrule()
   \endhead
   \begin{minipage}[t]{\linewidth}\raggedright
   name\\
@@ -3540,7 +3551,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   0\\
   (0,0\%)\strut
   \end{minipage} \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 \item
   Vemos que há muitos \texttt{NA} em diversas variáveis. Para nossos exemplos simples de visualização, vamos usar as colunas
@@ -3639,7 +3650,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4024}}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2805}}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1341}}@{}}
-  \toprule
+  \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
   Variável
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -3649,7 +3660,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
   Faltante
   \end{minipage} \\
-  \midrule
+  \midrule()
   \endhead
   \begin{minipage}[t]{\linewidth}\raggedright
   name\\
@@ -3809,7 +3820,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   0\\
   (0,0\%)\strut
   \end{minipage} \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 \end{itemize}
 
@@ -4194,7 +4205,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## Warning: Removed 18 rows containing missing values (geom_point).
 \end{verbatim}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-120-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-121-1} \end{center}
 \item
   Observe como usamos o gráfico já salvo na variável \texttt{grafico} e simplesmente acrescentamos a nova escala. Este tipo de ``montagem'' de gráficos \texttt{ggplot2} é bem conveniente, para evitar repetição de código.
 \item
@@ -4215,7 +4226,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## Warning: Removed 18 rows containing missing values (geom_point).
 \end{verbatim}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-121-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-122-1} \end{center}
 \item
   Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:
 
@@ -4251,7 +4262,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## Warning: Removed 18 rows containing missing values (geom_point).
 \end{verbatim}
 
-    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-122-1} \end{center}
+    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-123-1} \end{center}
   \item
     Todos os carnívoros têm peso corporal maior que $1$kg e peso cerebral maior ou igual a $10$g.
   \item
@@ -4552,11 +4563,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O \texttt{ggplot2} tem um tema \emph{default}, chamado \texttt{theme\_gray}, que gera \protect\hyperlink{grafico4}{o \emph{scatterplot} de um exemplo anterior} deste capítulo do seguinte modo:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-125-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-126-1} \end{center}
 \item
   Para este material, escolhi o tema \texttt{theme\_linedraw}, que usa linhas pretas sobre fundo branco:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-126-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-127-1} \end{center}
 \item
   Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:
 
@@ -4575,7 +4586,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O resultado é
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-127-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-128-1} \end{center}
 \item
   Os meus comandos para alterar o tema são
 
@@ -5283,7 +5294,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-161-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-162-1} \end{center}
 \item
   A {\hl{caixa}} vai do valor do {\hl{primeiro quartil}} (embaixo) até o {\hl{terceiro quartil}} (em cima).
 \item
@@ -5304,7 +5315,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-162-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-163-1} \end{center}
 \item
   No \emph{boxplot} de onívoros, {\hl{os \emph{outliers} aparecem como pontos isolados,}} acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).
 \item
@@ -5352,7 +5363,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-163-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-164-1} \end{center}
 \item
   {\hl{Quando a caixa é longa,}} o IQR é grande, e {\hl{os valores estão muito espalhados;}} é o caso dos herbívoros e insetívoros.
 \item
@@ -5478,7 +5489,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3425}}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3151}}
     >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1507}}@{}}
-  \toprule
+  \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
   Variável
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
@@ -5488,7 +5499,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
   Faltante
   \end{minipage} \\
-  \midrule
+  \midrule()
   \endhead
   \begin{minipage}[t]{\linewidth}\raggedright
   cabelos\\
@@ -5537,7 +5548,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
   0\\
   (0,0\%)\strut
   \end{minipage} \\
-  \bottomrule
+  \bottomrule()
   \end{longtable}
 \end{itemize}
 
@@ -5559,7 +5570,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-169-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-170-1} \end{center}
 
   \begin{rmdimportant}
 
@@ -5614,7 +5625,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-170-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-171-1} \end{center}
 \item
   A posição $x$ e a altura de cada barra são estéticas: {\hl{a posição $x$ representa a cor dos cabelos}}, e {\hl{a altura representa a frequência daquela cor}}.
 \item
@@ -5632,7 +5643,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-171-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-172-1} \end{center}
 \item
   Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (\texttt{scale\_fill\_discrete}):
 
@@ -5649,7 +5660,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-172-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-173-1} \end{center}
 \item
   {\hl{Podemos fazer um gráfico de barras horizontais com {\mbox{\texttt{coord\_flip}}}.}} Isto geralmente é útil quando os rótulos das barras são longos:
 
@@ -5667,7 +5678,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-173-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-174-1} \end{center}
 \item
   Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?
 \item
@@ -5688,7 +5699,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-174-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-175-1} \end{center}
 \item
   Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:
 
@@ -5707,7 +5718,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-175-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-176-1} \end{center}
 \item
   Ou, com barras lado a lado:
 
@@ -5726,7 +5737,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-176-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-177-1} \end{center}
 \item
   Observações e perguntas:
 
@@ -5755,7 +5766,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-177-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-178-1} \end{center}
 \end{itemize}
 
 \begin{itemize}
@@ -5780,7 +5791,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-178-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-179-1} \end{center}
 \end{itemize}
 
 \hypertarget{data-frame-juxe1-contendo-os-totais}{%
@@ -5831,7 +5842,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-180-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-181-1} \end{center}
 \item
   Com \texttt{geom\_col}, {\hl{precisamos passar a estética $y$}} (no nosso exemplo, a variável \texttt{n}, que contém as frequências).
 \item
@@ -5849,7 +5860,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-181-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-182-1} \end{center}
 \end{itemize}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
@@ -5966,7 +5977,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-185-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-186-1} \end{center}
 \item
   Embora a legenda associe uma cor a cada região, {\hl{a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade}}:
 
@@ -5991,7 +6002,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-186-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-187-1} \end{center}
 \item
   Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:
 
@@ -6012,7 +6023,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-187-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-188-1} \end{center}
 \item
   Estamos tratando estes dados como simples números, mas, na verdade, {\hl{este conjunto de dados é uma série temporal (\emph{time series})}}.
 \item
@@ -6205,7 +6216,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   \protect\hypertarget{dados-normais}{}{} O histograma dos nossos dados é
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-192-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-193-1} \end{center}
 \item
   Vamos calcular a moda com a função \texttt{mfv} (\emph{most frequent value}), do pacote \texttt{modeest}:
 
@@ -6233,206 +6244,206 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-##    [1] -1.66945492 -0.27624682 -0.13713112 -0.12094119 -0.06536332
-##    [6] -0.01795423  0.13609223  0.33289959  0.34804058  0.35762175
-##   [11]  0.38340677  0.43580706  0.53682352  0.69176975  0.72966165
-##   [16]  0.76217920  0.82304019  0.83023861  0.88669790  0.90302511
-##   [21]  0.90657207  0.90803862  0.91771026  0.99430211  1.00161332
-##   [26]  1.00405813  1.04463933  1.05889354  1.06600620  1.09597331
-##   [31]  1.09737843  1.10894352  1.13956902  1.14285443  1.16611248
-##   [36]  1.17570281  1.17610675  1.17942339  1.20165899  1.20882109
-##   [41]  1.21077652  1.21699705  1.23633069  1.25155765  1.26430127
-##   [46]  1.28336633  1.30382838  1.31968343  1.32178380  1.36873775
-##   [51]  1.41459736  1.43683951  1.43859834  1.45754064  1.46691225
-##   [56]  1.49482076  1.51097287  1.53275076  1.53520959  1.66285296
-##   [61]  1.66858985  1.68644013  1.69542849  1.71313864  1.71420571
-##   [66]  1.72917834  1.76151240  1.79322806  1.83714171  1.85377245
-##   [71]  1.85533522  1.86680576  1.87652194  1.88560214  1.89411346
-##   [76]  1.92796284  1.96810623  2.01515144  2.03103492  2.05605305
-##   [81]  2.08805090  2.09629858  2.10022393  2.12184906  2.12817031
-##   [86]  2.14022406  2.16789674  2.17200763  2.17860907  2.19369680
-##   [91]  2.24007891  2.26761384  2.27263642  2.28552132  2.29460525
-##   [96]  2.29633089  2.30773961  2.31375275  2.31695682  2.32427517
-##  [101]  2.32546215  2.33242139  2.33677826  2.34760895  2.35624915
-##  [106]  2.35696253  2.35743194  2.35762260  2.36442877  2.37103003
-##  [111]  2.37130228  2.37591693  2.37741089  2.40775518  2.42763000
-##  [116]  2.43648407  2.44926275  2.46329634  2.46400456  2.47667182
-##  [121]  2.47854600  2.48895850  2.51209616  2.52047081  2.53003948
-##  [126]  2.53370723  2.54467028  2.54763389  2.55503538  2.57778580
-##  [131]  2.57978353  2.58622930  2.58794006  2.59570712  2.60659009
-##  [136]  2.63455414  2.63458362  2.64758219  2.65300762  2.65505120
-##  [141]  2.66330146  2.69027278  2.70132126  2.70372755  2.70404168
-##  [146]  2.71684851  2.73069755  2.73408326  2.74063720  2.74280864
-##  [151]  2.74281530  2.75160144  2.75463690  2.76382270  2.76468358
-##  [156]  2.78870424  2.79471592  2.79721563  2.79782176  2.79925216
-##  [161]  2.81681647  2.82865417  2.84865446  2.86267346  2.86455826
-##  [166]  2.86751929  2.86972129  2.87677939  2.89180848  2.89346528
-##  [171]  2.89364114  2.89888458  2.90896833  2.91277888  2.92150527
-##  [176]  2.93092578  2.93753995  2.93886348  2.94661350  2.94903705
-##  [181]  2.95162577  2.97392889  2.98236747  2.98590733  2.98984349
-##  [186]  3.00253351  3.00763112  3.01596412  3.01825068  3.02659726
-##  [191]  3.03097429  3.04901042  3.05855511  3.06081707  3.06680557
-##  [196]  3.07568370  3.09838425  3.10295538  3.10495535  3.10641267
-##  [201]  3.11640749  3.12351487  3.14268826  3.14914125  3.15997979
-##  [206]  3.16000262  3.16852820  3.19237211  3.19515576  3.20757878
-##  [211]  3.22268857  3.24027741  3.24481513  3.24491614  3.24754616
-##  [216]  3.24836865  3.25083134  3.26407286  3.26653748  3.27486371
-##  [221]  3.27896083  3.28654884  3.31274627  3.33127504  3.33748765
-##  [226]  3.34459781  3.35594084  3.35744188  3.37429867  3.37904541
-##  [231]  3.39545647  3.39780864  3.39922593  3.40885072  3.41646328
-##  [236]  3.42322994  3.42518171  3.43045561  3.44433288  3.44683679
-##  [241]  3.45176483  3.45493510  3.45572534  3.45692773  3.46872509
-##  [246]  3.46915603  3.47014507  3.47630185  3.48389794  3.48578133
-##  [251]  3.51107411  3.52197011  3.52466372  3.52827104  3.53653089
-##  [256]  3.54262115  3.54506378  3.54775906  3.54885824  3.54975516
-##  [261]  3.55328433  3.55378546  3.55555435  3.55791528  3.56418755
-##  [266]  3.56438273  3.56813789  3.57141800  3.57619187  3.58397874
-##  [271]  3.58543951  3.58698435  3.59406462  3.59744640  3.60436499
-##  [276]  3.61435927  3.62350630  3.62353233  3.62466370  3.63803011
-##  [281]  3.66674310  3.67642209  3.68736251  3.69233333  3.69653555
-##  [286]  3.69694585  3.70433119  3.71066210  3.71790662  3.72479496
-##  [291]  3.73528717  3.74127486  3.74591223  3.75544550  3.77521942
-##  [296]  3.78030481  3.80242643  3.80471220  3.81146455  3.82209528
-##  [301]  3.82525251  3.82767416  3.82862239  3.83593564  3.84684008
-##  [306]  3.85671436  3.85821045  3.85942276  3.87017906  3.89001834
-##  [311]  3.89948712  3.90234451  3.90409812  3.90560313  3.91173361
-##  [316]  3.91654190  3.92099596  3.92151647  3.93155854  3.93739377
-##  [321]  3.97112898  3.99295849  3.99425156  3.99548109  3.99638112
-##  [326]  3.99744431  4.00705458  4.00707946  4.01619912  4.02932975
-##  [331]  4.03704756  4.04238719  4.05275283  4.05332015  4.05475086
-##  [336]  4.06664921  4.06830613  4.06882719  4.07217590  4.08208241
-##  [341]  4.08292521  4.08510506  4.09179642  4.09659253  4.10121397
-##  [346]  4.10303121  4.10622202  4.10697794  4.11257515  4.11377373
-##  [351]  4.11513427  4.12654118  4.12655091  4.12906707  4.12939257
-##  [356]  4.13318945  4.13408595  4.15564023  4.15634615  4.16424545
-##  [361]  4.16477202  4.16823885  4.16889546  4.18244446  4.18964645
-##  [366]  4.19526403  4.19655879  4.20340889  4.20760485  4.20832742
-##  [371]  4.22078333  4.23438576  4.23527376  4.23565560  4.23650803
-##  [376]  4.23860036  4.25259888  4.25874269  4.26317280  4.26481473
-##  [381]  4.27031426  4.27512985  4.28430173  4.28514679  4.29827957
-##  [386]  4.32259816  4.32358386  4.32457371  4.32658349  4.32743429
-##  [391]  4.33108466  4.34207305  4.34636671  4.34662752  4.34789658
-##  [396]  4.35894259  4.36102578  4.36660942  4.37532574  4.38024323
-##  [401]  4.38121339  4.40102446  4.41685176  4.41979878  4.42434175
-##  [406]  4.43201734  4.43799126  4.44106707  4.44115559  4.44704485
-##  [411]  4.44990940  4.45762836  4.45890262  4.46934268  4.46991995
-##  [416]  4.47025435  4.48122927  4.48202323  4.48817029  4.48922946
-##  [421]  4.49165638  4.49769579  4.51493934  4.51854601  4.52973466
-##  [426]  4.53146933  4.53149919  4.53463202  4.54695793  4.55508669
-##  [431]  4.56254878  4.56663661  4.57378387  4.58451067  4.58847111
-##  [436]  4.59639282  4.59980697  4.60673534  4.60905789  4.61504301
-##  [441]  4.61806150  4.62459590  4.63338308  4.64758000  4.65224177
-##  [446]  4.65304341  4.65600585  4.66168201  4.67500026  4.67516506
-##  [451]  4.67799508  4.70265372  4.70345265  4.70685622  4.70847941
-##  [456]  4.71388761  4.74119181  4.76850784  4.77051895  4.77115820
-##  [461]  4.77252680  4.77444701  4.77497422  4.79018183  4.79018968
-##  [466]  4.79446611  4.80046300  4.81569087  4.81575594  4.81894041
-##  [471]  4.83107004  4.83123832  4.83393613  4.83998903  4.84585071
-##  [476]  4.84903850  4.86073833  4.87502101  4.87638435  4.87756786
-##  [481]  4.88373626  4.88728360  4.89214204  4.89405787  4.90451339
-##  [486]  4.91369752  4.92190869  4.92288290  4.92747089  4.93797791
-##  [491]  4.94075215  4.94695061  4.94740847  4.95162307  4.96007464
-##  [496]  4.96136657  4.96535037  4.96760974  4.97046844  4.97751333
-##  [501]  4.98085175  4.99470296  5.00115886  5.00149267  5.00158259
-##  [506]  5.00158745  5.00165936  5.00306014  5.02171540  5.02536442
-##  [511]  5.04832040  5.05202632  5.06028539  5.06793385  5.08819224
-##  [516]  5.09578425  5.09955447  5.09991833  5.10716361  5.11658958
-##  [521]  5.11763364  5.11961364  5.12394951  5.12444960  5.12858509
-##  [526]  5.13158843  5.13181407  5.13751886  5.14490187  5.16570482
-##  [531]  5.16769796  5.16804084  5.17022603  5.17186753  5.17212414
-##  [536]  5.18053031  5.18558210  5.18879944  5.19397980  5.20000613
-##  [541]  5.21376261  5.21612566  5.22545078  5.24289205  5.24462016
-##  [546]  5.24643504  5.24759536  5.25761906  5.25823001  5.25938088
-##  [551]  5.26676728  5.27285083  5.27860151  5.28740084  5.29457068
-##  [556]  5.30169650  5.30276966  5.30628510  5.30696047  5.31175614
-##  [561]  5.31705387  5.32469149  5.32707804  5.33166811  5.35125799
-##  [566]  5.36183080  5.36329179  5.36921892  5.37667670  5.38122241
-##  [571]  5.38503573  5.38678659  5.39249869  5.39320824  5.41007412
-##  [576]  5.41281029  5.41310328  5.41598644  5.42692366  5.42897476
-##  [581]  5.43220950  5.43239453  5.44692485  5.45391809  5.45475109
-##  [586]  5.45512988  5.45626967  5.45658473  5.46030279  5.46913038
-##  [591]  5.47119287  5.47142377  5.47412714  5.47699150  5.49527271
-##  [596]  5.50141110  5.50397199  5.50638828  5.50935334  5.53188068
-##  [601]  5.54021819  5.54176409  5.55495248  5.55815108  5.55922243
-##  [606]  5.56775455  5.57756860  5.57788689  5.59157064  5.59249723
-##  [611]  5.59599038  5.60483571  5.61910532  5.61934660  5.61947330
-##  [616]  5.62252555  5.62393763  5.63292726  5.64126280  5.64378246
-##  [621]  5.64418935  5.64581694  5.65499761  5.65886509  5.66893334
-##  [626]  5.66974101  5.67135538  5.67353822  5.67389600  5.67426053
-##  [631]  5.68588850  5.70251902  5.70995780  5.71395251  5.71864692
-##  [636]  5.71894525  5.72014983  5.72134629  5.72145341  5.73021664
-##  [641]  5.74302578  5.75859948  5.76411045  5.76414231  5.76429590
-##  [646]  5.77234813  5.78888508  5.79103745  5.79406141  5.79975372
-##  [651]  5.80402019  5.80682899  5.81045489  5.81762846  5.82242177
-##  [656]  5.82896929  5.83551657  5.86499088  5.86804694  5.87976624
-##  [661]  5.88320002  5.88359736  5.88436989  5.88595765  5.88697255
-##  [666]  5.88807660  5.89236212  5.89490245  5.90212360  5.93829110
-##  [671]  5.94326931  5.94339428  5.94442595  5.94654024  5.95137614
-##  [676]  5.95214215  5.95351019  5.96702451  5.97441216  5.98600034
-##  [681]  5.98901421  5.99438297  6.01853587  6.02475437  6.02613381
-##  [686]  6.02709677  6.04101611  6.05210390  6.05357365  6.05775125
-##  [691]  6.05938023  6.07446499  6.07796684  6.10353725  6.10624567
-##  [696]  6.11520366  6.14507496  6.14603896  6.16086468  6.16523102
-##  [701]  6.16942369  6.16990133  6.17057291  6.17269970  6.19542087
-##  [706]  6.19600045  6.19876142  6.19999074  6.21107111  6.21205764
-##  [711]  6.21593566  6.22019381  6.23036567  6.23296557  6.23303009
-##  [716]  6.23304412  6.23464123  6.24173440  6.25189990  6.25544611
-##  [721]  6.26006287  6.27046079  6.27507763  6.27508896  6.27728154
-##  [726]  6.28639248  6.29000535  6.29037107  6.29550090  6.29871551
-##  [731]  6.29961356  6.30267891  6.30664794  6.31190254  6.31719008
-##  [736]  6.31738287  6.31892224  6.32037380  6.32638679  6.34327533
-##  [741]  6.35735117  6.36825707  6.36845827  6.37507427  6.37971906
-##  [746]  6.39097354  6.39900115  6.40905668  6.43976208  6.44164654
-##  [751]  6.45441652  6.46478424  6.47772568  6.47963619  6.48630168
-##  [756]  6.48982677  6.49619269  6.50215812  6.50712151  6.51902721
-##  [761]  6.52487546  6.52542535  6.52944051  6.53662743  6.54032607
-##  [766]  6.56117494  6.56480011  6.60018168  6.60162238  6.60411550
-##  [771]  6.60794989  6.61208242  6.61336902  6.61814135  6.61923166
-##  [776]  6.62365906  6.62542279  6.63370491  6.63886667  6.64656592
-##  [781]  6.64690635  6.66713260  6.68056656  6.68371204  6.68405422
-##  [786]  6.69642485  6.70354096  6.72512723  6.72573045  6.73521057
-##  [791]  6.73874521  6.74567601  6.74871768  6.75633427  6.76028201
-##  [796]  6.78572952  6.78749435  6.79085872  6.79616051  6.80021936
-##  [801]  6.80381693  6.81822130  6.81868087  6.82842677  6.83828800
-##  [806]  6.86024898  6.86142232  6.86915483  6.93126301  6.93580768
-##  [811]  6.93633675  6.95035666  6.95178986  6.95369397  6.97736580
-##  [816]  6.97965483  6.98549001  6.99076515  7.00183973  7.01112369
-##  [821]  7.01161015  7.01275086  7.01414578  7.03315007  7.03886322
-##  [826]  7.05630445  7.06350639  7.06886493  7.07019086  7.07746506
-##  [831]  7.09154382  7.10429226  7.10840184  7.11548002  7.13823801
-##  [836]  7.14090392  7.14761860  7.14923196  7.15127769  7.16076917
-##  [841]  7.16371713  7.16697661  7.17738151  7.17802146  7.17985254
-##  [846]  7.19044098  7.19349599  7.19819585  7.20140383  7.22883873
-##  [851]  7.23945945  7.23987639  7.26264701  7.26267592  7.27212317
-##  [856]  7.28994888  7.29257998  7.29582151  7.31693643  7.32083444
-##  [861]  7.34430756  7.35000464  7.36039215  7.39221551  7.39264281
-##  [866]  7.39723487  7.41665738  7.42082472  7.44798384  7.44886177
-##  [871]  7.44945414  7.44954675  7.45481561  7.46020464  7.47894851
-##  [876]  7.48353843  7.49570758  7.53411347  7.53909813  7.53998488
-##  [881]  7.57554997  7.58114922  7.61984971  7.62671618  7.65139795
-##  [886]  7.66566312  7.67605448  7.69707164  7.70832101  7.71600679
-##  [891]  7.73102368  7.74094200  7.74304478  7.76807302  7.77211724
-##  [896]  7.78495446  7.79288043  7.81212290  7.83598019  7.85649102
-##  [901]  7.86729254  7.87509724  7.87788007  7.88657576  7.89696957
-##  [906]  7.91617830  7.92415877  7.94961316  7.97741550  7.98446785
-##  [911]  7.98726037  8.03781721  8.04381911  8.05731300  8.06615939
-##  [916]  8.06761469  8.07027013  8.07226758  8.07490989  8.07558420
-##  [921]  8.07709706  8.08670018  8.12821410  8.13082853  8.16972252
-##  [926]  8.18775359  8.20566868  8.22155544  8.26873101  8.26902593
-##  [931]  8.26960015  8.27825964  8.29069156  8.31856615  8.32881527
-##  [936]  8.33169092  8.33826351  8.34562290  8.34566142  8.35794825
-##  [941]  8.36370822  8.36692676  8.39334465  8.44856387  8.45088446
-##  [946]  8.45437278  8.46929982  8.49511606  8.49607315  8.50621234
-##  [951]  8.55974440  8.57313122  8.58173993  8.61380822  8.63419940
-##  [956]  8.63931014  8.66239436  8.66549423  8.68046195  8.69661393
-##  [961]  8.70035349  8.70036895  8.72010199  8.72426012  8.72447737
-##  [966]  8.72945997  8.76080456  8.83479364  8.91256194  8.92470806
-##  [971]  8.93671363  8.95499319  8.96340921  8.97618686  9.04978189
-##  [976]  9.10691878  9.12094570  9.13724931  9.20423392  9.26902495
-##  [981]  9.32813065  9.32850569  9.35824524  9.42105457  9.44436441
-##  [986]  9.47193904  9.53115209  9.56465285  9.56605370  9.61391067
-##  [991]  9.71340391  9.97879979 10.17204450 10.22457224 10.29190296
-##  [996] 10.39817765 10.74717516 10.74761631 10.78792727 11.15592122
+##    [1] -1.46619355 -1.32739195 -0.58986079 -0.20482358 -0.18495353
+##    [6] -0.05840035  0.11289132  0.14858550  0.17874743  0.24242600
+##   [11]  0.44110718  0.47210898  0.64419963  0.76153197  0.83186417
+##   [16]  0.84184540  0.88111055  0.88414099  0.89806386  1.03555566
+##   [21]  1.06029221  1.10336815  1.15107315  1.15828824  1.16096614
+##   [26]  1.17133438  1.17841228  1.29530269  1.31320549  1.32036049
+##   [31]  1.32580605  1.34461503  1.36510004  1.38765892  1.39055539
+##   [36]  1.42869540  1.51543351  1.54131216  1.55675319  1.57146876
+##   [41]  1.59486846  1.60712697  1.61837100  1.62931136  1.65896774
+##   [46]  1.66190781  1.66677077  1.68917978  1.70723719  1.72056601
+##   [51]  1.77713959  1.80120396  1.81167736  1.81907547  1.88770812
+##   [56]  1.89263534  1.90124025  1.90549430  1.92174506  1.93441649
+##   [61]  1.94615418  1.94621897  1.96099694  2.05069909  2.06237944
+##   [66]  2.06810616  2.09247274  2.09314429  2.10041020  2.13359417
+##   [71]  2.14996823  2.16246544  2.18775455  2.19906190  2.22285985
+##   [76]  2.26013561  2.26095372  2.27332623  2.29270633  2.29283695
+##   [81]  2.29295023  2.29990635  2.34617356  2.37636458  2.37919964
+##   [86]  2.39621734  2.41504531  2.42191594  2.43333368  2.44173410
+##   [91]  2.44271525  2.44312776  2.44446082  2.44651398  2.44768838
+##   [96]  2.52275313  2.52916915  2.53608120  2.55482718  2.58846896
+##  [101]  2.59848614  2.62946461  2.66435062  2.68352337  2.68813768
+##  [106]  2.72586363  2.75744731  2.76587923  2.77794580  2.81976832
+##  [111]  2.83987199  2.85314828  2.86845521  2.87426457  2.87673927
+##  [116]  2.88636345  2.90062684  2.91720227  2.91736380  2.91806369
+##  [121]  2.92500431  2.92620484  2.92777947  2.93030782  2.94769620
+##  [126]  2.97042122  2.97642157  3.01560393  3.02933127  3.03581557
+##  [131]  3.04211906  3.04364903  3.05958446  3.06297747  3.06409606
+##  [136]  3.07453703  3.07777227  3.08762295  3.10578293  3.11026281
+##  [141]  3.13516272  3.14104055  3.14460931  3.17314643  3.18693871
+##  [146]  3.20145719  3.20189254  3.20699811  3.20867604  3.21334933
+##  [151]  3.21497013  3.21928615  3.21936197  3.22390302  3.23698600
+##  [156]  3.23866560  3.25062479  3.25722285  3.25876347  3.26196416
+##  [161]  3.26862619  3.26931045  3.26937960  3.27672986  3.28195684
+##  [166]  3.28412258  3.29136870  3.31265366  3.33898513  3.35538662
+##  [171]  3.35555089  3.35593864  3.36529827  3.36925782  3.37765563
+##  [176]  3.37944126  3.38333391  3.38632376  3.39543643  3.40091528
+##  [181]  3.40225930  3.41015885  3.41488977  3.41849433  3.42642593
+##  [186]  3.43124837  3.43487323  3.43865516  3.44341838  3.44553428
+##  [191]  3.44645015  3.46161940  3.46644533  3.47630880  3.47901818
+##  [196]  3.48880242  3.49685429  3.50397334  3.50668276  3.50711457
+##  [201]  3.50800199  3.51790458  3.51974705  3.52528696  3.53075676
+##  [206]  3.53707277  3.54723740  3.55412947  3.56368092  3.56660298
+##  [211]  3.57612460  3.57654949  3.58188224  3.58204689  3.59241197
+##  [216]  3.60344549  3.60854405  3.61048126  3.62076449  3.62474433
+##  [221]  3.63248631  3.64262671  3.65841877  3.66473814  3.66784451
+##  [226]  3.67100177  3.67175506  3.67719315  3.69147093  3.69251768
+##  [231]  3.70694648  3.71524852  3.71749082  3.71989614  3.72175179
+##  [236]  3.72280819  3.72591796  3.73232984  3.73700554  3.74233066
+##  [241]  3.75476051  3.75730887  3.75742333  3.76111911  3.76474259
+##  [246]  3.76623472  3.76983815  3.78495326  3.78963844  3.79072505
+##  [251]  3.79462485  3.79469719  3.79663161  3.80546054  3.82046082
+##  [256]  3.82103119  3.82459962  3.82950085  3.82989933  3.83271315
+##  [261]  3.83367622  3.83418604  3.83830127  3.86413483  3.87642562
+##  [266]  3.87748950  3.87935829  3.88201729  3.88595330  3.88878120
+##  [271]  3.89274053  3.89549134  3.90015809  3.91974044  3.92042647
+##  [276]  3.93892486  3.94062216  3.94777083  3.95093562  3.95424561
+##  [281]  3.95462835  3.97112837  3.97461826  3.97569815  3.98064258
+##  [286]  3.98290076  3.98306410  3.99934764  4.00813639  4.01751094
+##  [291]  4.03777913  4.03782569  4.04086318  4.04803119  4.05727354
+##  [296]  4.05744302  4.07464370  4.07825456  4.07896788  4.08327461
+##  [301]  4.09232709  4.09886586  4.10175241  4.10989004  4.11171858
+##  [306]  4.12598624  4.12633276  4.13460176  4.13585592  4.14080400
+##  [311]  4.14181825  4.14234603  4.14810512  4.15134008  4.15228020
+##  [316]  4.15905565  4.19191771  4.21070143  4.22028808  4.22208243
+##  [321]  4.22335645  4.22680033  4.23072261  4.23218718  4.23363036
+##  [326]  4.25508296  4.25639628  4.25994466  4.26321750  4.27749821
+##  [331]  4.28760754  4.28872814  4.29343548  4.31033704  4.31547755
+##  [336]  4.31972301  4.32457511  4.32519801  4.34992452  4.35295973
+##  [341]  4.36327210  4.36782997  4.36938743  4.37246906  4.38266112
+##  [346]  4.38940140  4.39834428  4.39925324  4.40492351  4.40810115
+##  [351]  4.41753402  4.42349459  4.42506487  4.42938818  4.43711885
+##  [356]  4.44090779  4.44936604  4.45171912  4.45226523  4.45412372
+##  [361]  4.45892033  4.45990934  4.46228459  4.46493105  4.46955051
+##  [366]  4.47838496  4.48618274  4.48651573  4.49173170  4.49295010
+##  [371]  4.49616661  4.50082009  4.50178212  4.50514277  4.50515245
+##  [376]  4.51054607  4.51098826  4.52181545  4.52606036  4.53140300
+##  [381]  4.53238928  4.54762401  4.55782736  4.55784279  4.56274216
+##  [386]  4.56470421  4.56562502  4.57496589  4.57813676  4.58028581
+##  [391]  4.58425260  4.58459758  4.58545079  4.59426895  4.60538936
+##  [396]  4.61234106  4.61627093  4.62122584  4.62129560  4.62696745
+##  [401]  4.63147606  4.63582693  4.63726816  4.64262449  4.66380771
+##  [406]  4.66506075  4.67206907  4.67322595  4.68104783  4.68485577
+##  [411]  4.68594176  4.68709934  4.68999852  4.69502987  4.69787202
+##  [416]  4.71042568  4.71444896  4.71529124  4.72496359  4.73680943
+##  [421]  4.75123226  4.75807809  4.76083705  4.76245670  4.76622134
+##  [426]  4.76955120  4.80110998  4.80633051  4.80761009  4.81412693
+##  [431]  4.81588241  4.81627855  4.82470334  4.82494514  4.83223772
+##  [436]  4.83285140  4.83461420  4.84927126  4.84950565  4.85030011
+##  [441]  4.85293772  4.85634380  4.85874191  4.86926121  4.87130629
+##  [446]  4.87636684  4.88539707  4.88954707  4.89611841  4.89802513
+##  [451]  4.90596841  4.91007439  4.91307661  4.92013205  4.92031938
+##  [456]  4.92188602  4.92687345  4.93562376  4.94816622  4.94819954
+##  [461]  4.95071775  4.95284876  4.95993094  4.96064357  4.96268299
+##  [466]  4.96601729  4.96610226  4.97939194  4.97975596  4.98273638
+##  [471]  4.98723904  4.99553351  5.01070748  5.01613930  5.01666201
+##  [476]  5.01804093  5.02194452  5.02627763  5.03058958  5.03187295
+##  [481]  5.03546585  5.04035354  5.04056453  5.04161548  5.04566342
+##  [486]  5.04842779  5.06124871  5.06289798  5.06384242  5.06957044
+##  [491]  5.07167939  5.07804664  5.08019419  5.10674702  5.11337903
+##  [496]  5.11792825  5.11812112  5.13400872  5.13570953  5.13646376
+##  [501]  5.13750903  5.13884763  5.14131329  5.14141356  5.15309101
+##  [506]  5.16162288  5.16209963  5.16566345  5.16649555  5.16787493
+##  [511]  5.16789598  5.17372718  5.17666013  5.18495173  5.18721748
+##  [516]  5.21083219  5.21174238  5.21597614  5.22960467  5.23266991
+##  [521]  5.23488354  5.25065901  5.25160913  5.25783851  5.26648588
+##  [526]  5.26761103  5.27108749  5.27365418  5.28215198  5.29580992
+##  [531]  5.29999091  5.30303555  5.30867443  5.31112426  5.31879607
+##  [536]  5.32286181  5.33002704  5.34131443  5.34282427  5.34459531
+##  [541]  5.35031649  5.35180327  5.35934987  5.36700516  5.36716110
+##  [546]  5.36799794  5.37105890  5.37685944  5.37732305  5.37962411
+##  [551]  5.39089169  5.39517293  5.39842612  5.39955807  5.40334655
+##  [556]  5.40459224  5.40488812  5.41030114  5.41126526  5.41207903
+##  [561]  5.41581468  5.42060392  5.42816070  5.43408262  5.43897701
+##  [566]  5.44970994  5.45041820  5.45209629  5.45500474  5.45620153
+##  [571]  5.45730227  5.45886339  5.46055889  5.46198774  5.46216815
+##  [576]  5.46272112  5.46560591  5.47656789  5.47697277  5.48183484
+##  [581]  5.48529032  5.51322748  5.51337338  5.51487146  5.51843174
+##  [586]  5.51867535  5.52309271  5.52581108  5.53073787  5.53341154
+##  [591]  5.53979701  5.54520370  5.54534076  5.56075538  5.56636565
+##  [596]  5.57511091  5.58050888  5.58403994  5.58809022  5.59028615
+##  [601]  5.59581917  5.59996707  5.60202121  5.60348746  5.60588868
+##  [606]  5.60985795  5.61502514  5.62121268  5.62218773  5.63889140
+##  [611]  5.64611118  5.65456761  5.65901777  5.65919988  5.66386763
+##  [616]  5.66671817  5.68130654  5.68830354  5.68888188  5.68925065
+##  [621]  5.69214882  5.70354054  5.70630615  5.70772141  5.71110335
+##  [626]  5.71126132  5.72537484  5.72730459  5.73128017  5.73381945
+##  [631]  5.74523414  5.75927470  5.77277695  5.77316779  5.77649764
+##  [636]  5.77936803  5.78448194  5.78488284  5.78717413  5.79339344
+##  [641]  5.79357720  5.79532364  5.79701624  5.80193557  5.82602972
+##  [646]  5.82885698  5.82909145  5.83361078  5.83715605  5.84193673
+##  [651]  5.84337257  5.84741188  5.84930699  5.87109456  5.87266744
+##  [656]  5.87621987  5.88847873  5.89697769  5.90383994  5.90828601
+##  [661]  5.90912932  5.91267804  5.91550963  5.91644521  5.91694381
+##  [666]  5.91988104  5.92467395  5.92678479  5.92767389  5.93035392
+##  [671]  5.93204149  5.93227271  5.93262115  5.93470345  5.93995263
+##  [676]  5.94707866  5.94764980  5.95114386  5.95383813  5.95590923
+##  [681]  5.97495684  5.97564486  5.98052027  5.99342236  5.99510484
+##  [686]  5.99770849  6.00584871  6.00954021  6.02412899  6.02842344
+##  [691]  6.02913642  6.02933357  6.03416218  6.03804932  6.04138238
+##  [696]  6.04954303  6.05160827  6.05179909  6.05344430  6.06170758
+##  [701]  6.06810023  6.06923103  6.07162618  6.07240458  6.07908012
+##  [706]  6.08982701  6.11342246  6.11527111  6.12468839  6.13955994
+##  [711]  6.14189463  6.14560871  6.15463518  6.16916225  6.17238137
+##  [716]  6.17849535  6.18298826  6.19195099  6.20468578  6.20552468
+##  [721]  6.20588354  6.21180434  6.21216054  6.21492199  6.22126075
+##  [726]  6.22171864  6.24038339  6.24754223  6.25503132  6.25679517
+##  [731]  6.26536097  6.26567639  6.26662014  6.27022061  6.27429864
+##  [736]  6.27853455  6.27929076  6.28342255  6.29521486  6.30906453
+##  [741]  6.31220193  6.31240086  6.32168384  6.33378284  6.33516831
+##  [746]  6.34310456  6.34717002  6.34846188  6.35426903  6.35523162
+##  [751]  6.36177297  6.37056556  6.37529435  6.37901256  6.38245332
+##  [756]  6.38723362  6.39151277  6.39473709  6.39681455  6.40075557
+##  [761]  6.40336756  6.40790337  6.41700218  6.42126854  6.42498220
+##  [766]  6.42870997  6.44057410  6.45173728  6.46049663  6.46387493
+##  [771]  6.47344978  6.49509216  6.49586688  6.49679666  6.49868212
+##  [776]  6.49989128  6.50043334  6.50112898  6.50367027  6.51747230
+##  [781]  6.51774432  6.53182870  6.54681408  6.54938351  6.55256104
+##  [786]  6.55872242  6.55876564  6.56746198  6.57866940  6.58856094
+##  [791]  6.61196339  6.62310921  6.63416792  6.63582267  6.64971655
+##  [796]  6.65343292  6.65456495  6.66154522  6.66635287  6.67227564
+##  [801]  6.68527486  6.70594452  6.71976913  6.72775908  6.74844350
+##  [806]  6.74986167  6.75607257  6.75618890  6.79703100  6.80230485
+##  [811]  6.80521180  6.80634229  6.81413413  6.81752665  6.82033301
+##  [816]  6.82204895  6.82305376  6.82536206  6.83875597  6.83902453
+##  [821]  6.84877902  6.85486683  6.86688170  6.88647003  6.88728655
+##  [826]  6.89902094  6.90716422  6.91780555  6.92353433  6.92428189
+##  [831]  6.93692130  6.94790773  6.94882930  6.95686338  6.96204275
+##  [836]  6.96655683  6.97174459  6.97562045  6.97839555  6.98518437
+##  [841]  7.00216984  7.00800989  7.01213539  7.01461442  7.03679792
+##  [846]  7.04123515  7.05747381  7.06918406  7.09026041  7.09141267
+##  [851]  7.10465727  7.10537923  7.11431943  7.11756217  7.11926076
+##  [856]  7.12993409  7.16525500  7.17111035  7.17967956  7.18323541
+##  [861]  7.18485058  7.22865693  7.22886374  7.23377292  7.23565498
+##  [866]  7.23573283  7.23665498  7.25192339  7.27405952  7.27795301
+##  [871]  7.28181245  7.28871997  7.30412253  7.31306972  7.31533196
+##  [876]  7.32138265  7.34006134  7.35838849  7.37834336  7.39894411
+##  [881]  7.40510711  7.43155015  7.47386520  7.48163649  7.49349398
+##  [886]  7.49721868  7.50947345  7.51305451  7.51391150  7.52806282
+##  [891]  7.53316294  7.53526572  7.54231389  7.55159486  7.55703390
+##  [896]  7.56850265  7.57996967  7.58487085  7.58708706  7.60547726
+##  [901]  7.61682769  7.61876728  7.62420931  7.62443584  7.64324804
+##  [906]  7.64592879  7.64783022  7.66317599  7.66804004  7.68339972
+##  [911]  7.71030875  7.71846900  7.72135412  7.73218516  7.74626792
+##  [916]  7.77504669  7.81884955  7.82497900  7.83326724  7.83745476
+##  [921]  7.84821940  7.86876622  7.90774592  7.93263129  7.94098313
+##  [926]  7.94491312  7.94927321  7.96126623  7.97752216  7.99080375
+##  [931]  8.00466737  8.01263267  8.01392145  8.04131347  8.04624882
+##  [936]  8.05700360  8.07298921  8.07326823  8.10120447  8.15529541
+##  [941]  8.15544540  8.16585112  8.17388781  8.19202596  8.19446000
+##  [946]  8.20806796  8.22816355  8.23102422  8.25986800  8.29312073
+##  [951]  8.29605758  8.31305088  8.31493160  8.37498670  8.38309853
+##  [956]  8.48823409  8.49564020  8.55335086  8.56280204  8.56830955
+##  [961]  8.56947346  8.57155081  8.60623052  8.63666090  8.64723961
+##  [966]  8.64758610  8.66094991  8.66225757  8.67697059  8.79293817
+##  [971]  8.81213509  8.82042399  8.85881505  8.88690912  8.95845652
+##  [976]  9.04134540  9.13905045  9.16340073  9.17234049  9.18883786
+##  [981]  9.25260590  9.28642982  9.29428558  9.31359550  9.32554056
+##  [986]  9.46029153  9.47277758  9.58294234  9.59103617  9.66427928
+##  [991]  9.74326934  9.76282910  9.82472312 10.05597514 10.20014809
+##  [996] 10.20934333 10.24207527 10.55461977 10.69985454 10.94221956
 \end{verbatim}
 
 \begin{Shaded}
@@ -6456,7 +6467,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,882353
+## [1] 4,801581
 \end{verbatim}
 \item
   Esta moda estimada pode nem estar no conjunto de dados:
@@ -6508,7 +6519,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   Se o histograma tem todas as barras aproximadamente da mesma altura, dizemos que a distribuição é {\hl{uniforme}}:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-194-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-195-1} \end{center}
 \item
   {\hl{A distribuição uniforme não tem moda}}, já que todos os valores têm aproximadamente a mesma frequência.
 \end{itemize}
@@ -6537,7 +6548,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,991974
+## [1] 5,103691
 \end{verbatim}
 
 \begin{Shaded}
@@ -6547,7 +6558,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,979183
+## [1] 5,136986
 \end{verbatim}
 
 \begin{Shaded}
@@ -6557,7 +6568,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,882353
+## [1] 4,801581
 \end{verbatim}
   \item
     Para a distribuição uniforme do exemplo:
@@ -6569,7 +6580,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5,076746
+## [1] 4,939979
 \end{verbatim}
 
 \begin{Shaded}
@@ -6579,7 +6590,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5,06253
+## [1] 4,735605
 \end{verbatim}
   \end{itemize}
 \item
@@ -7621,7 +7632,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 \item
   Graficamente:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-209-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-210-1} \end{center}
 \item
   Vamos conferir:
 
@@ -7785,7 +7796,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
     \end{comment}
   \end{enumerate}
 \item
-  Se você nunca tiver estudado técnicas de contagem, ou se quiser revisar ou aprender mais, consulte o excelente livro Oliveira Morgado et al. (\protect\hyperlink{ref-oliveira-2004-analis}{2004}).
+  Se você nunca tiver estudado técnicas de contagem, ou se quiser revisar ou aprender mais, consulte o excelente livro Morgado et al. (\protect\hyperlink{ref-morgadoAnaliseCombinatoriaProbabilidade2004}{2004}).
 \end{itemize}
 
 \hypertarget{probabilidade-cluxe1ssica}{%
@@ -8268,7 +8279,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0,575
+## [1] 0,5701
 \end{verbatim}
 \end{itemize}
 
@@ -8610,7 +8621,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 
 
 
-    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-218-1} \end{center}
+    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-219-1} \end{center}
 
   * Com as novas premissas, a probabilidade de coincidência é maior para quase todos os valores de $n$: a linha vermelha está acima da linha azul.
 
@@ -8696,7 +8707,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```
 
       ```
-      ## [1] 0,488381
+      ## [1] 0,48855
       ```
 
 
@@ -8739,7 +8750,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```
 
       ```
-      ## [1] 0,000133
+      ## [1] 0,000115
       ```
 
 
@@ -8786,7 +8797,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```
 
       ```
-      ## [1] 0,020461
+      ## [1] 0,020506
       ```
 
 
@@ -8835,7 +8846,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```
 
       ```
-      ## [1] 0,000076
+      ## [1] 0,000084
       ```
 
 
@@ -9723,8 +9734,8 @@ P(A \mid B) = \frac{P(B \mid A) \cdot P(A)}{P(B)}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-oliveira-2004-analis}{}}%
-Oliveira Morgado, Augusto César de, João Bosco Pitombeira de Carvalho, Paulo Cezar Pinto Carvalho, e Pedro Jesus Fernandez. 2004. \emph{An{á}lise combinat{ó}ria e probabilidade}. Rio de Janeiro: Impa / Vitae.
+\leavevmode\vadjust pre{\hypertarget{ref-morgadoAnaliseCombinatoriaProbabilidade2004}{}}%
+Morgado, Augusto César de Oliveira, João Bosco Pitombeira de Carvalho, Paulo Cezar Pinto Carvalho, e Pedro Jesus Fernandez. 2004. \emph{Análise Combinatória e Probabilidade}. {Rio de Janeiro}: {Impa / Vitae}.
 
 \end{CSLReferences}
 

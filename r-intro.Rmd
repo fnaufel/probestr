@@ -71,3 +71,13 @@ embed_yt('3GEc1oiKDrU')
     library(swirl)
     swirl()
     ```
+
+1. Se, quando você tentar instalar os exercícios, acontecer um erro, desinstale todos os cursos com os comandos
+
+    ```{r eval=FALSE}
+    library(swirl)
+    uninstall_all_courses()
+    ```
+    
+   e tente instalar os exercícios novamente.
+   
