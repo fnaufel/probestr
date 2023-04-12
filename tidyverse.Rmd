@@ -17,12 +17,14 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * [Cada coluna é um vetor]{.hl}:
 
+    ```{r}
+    cores <- tibble(
+      pessoa = c('João', 'Maria', 'Pedro', 'Ana'),
+      'cor favorita' = c('azul', 'rosa', 'preto', 'branco')
+    )
+    ```
+
   ```{r}
-  cores <- tibble(
-    pessoa = c('João', 'Maria', 'Pedro', 'Ana'),
-    'cor favorita' = c('azul', 'rosa', 'preto', 'branco')
-  )
-  
   cores
   ```
 
@@ -30,15 +32,17 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * A função `tribble` permite a entrada de forma mais natural, linha a linha. [Lembre-se de usar `~` antes dos nomes das colunas.]{.hl}
 
+    ```{r}
+    cores <- tribble(
+      ~pessoa, ~'cor favorita',
+       "João",          "azul",
+      "Maria",          "rosa",
+      "Pedro",         "preto",
+        "Ana",        "branco"
+    )
+    ```
+
   ```{r}
-  cores <- tribble(
-    ~pessoa, ~'cor favorita',
-     "João",          "azul",
-    "Maria",          "rosa",
-    "Pedro",         "preto",
-      "Ana",        "branco"
-  )
-  
   cores
   ```
 
@@ -52,25 +56,27 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * Se uma coluna não puder ser armazenada em um vetor, a coluna será uma lista (com vetores como elementos):
 
-  ```{r}
-  cores <- tibble(
-    pessoa = c('João', 'Maria', 'Pedro', 'Ana'),
-    'cor favorita' = list(
-      c('azul', 'roxo'),
-      c('rosa', 'magenta'),
-      NA,
-      'branco'
+    ```{r}
+    cores <- tibble(
+      pessoa = c('João', 'Maria', 'Pedro', 'Ana'),
+      'cor favorita' = list(
+        c('azul', 'roxo'),
+        c('rosa', 'magenta'),
+        NA,
+        'branco'
+      )
     )
-  )
-  
+    ```
+
+  ```{r}
   cores
   ```
 
 * Use `View()` para examinar interativamente o conteúdo de uma coluna-lista:
 
-  ```{r eval=FALSE}
-  cores %>% View()
-  ```
+    ```{r eval=FALSE}
+    cores %>% View()
+    ```
 
 ## Operador de *pipe* (`%>%`)
 
@@ -80,49 +86,49 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * A idéia é facilitar a leitura de [composições de funções]{.hl}. O código
 
-  ```{r eval=FALSE}
-  y <- h(g(f(x)))
-  ```
+    ```{r eval=FALSE}
+    y <- h(g(f(x)))
+    ```
 
   pode ser escrito como
   
-  ```{r eval=FALSE}
-  y <- x %>% f() %>% g() %>% h()
-  ```
+    ```{r eval=FALSE}
+    y <- x %>% f() %>% g() %>% h()
+    ```
 
 * Esta segunda versão é mais fiel à ordem em que as operações acontecem.
 
 * Na verdade, R tem um operador de [atribuição para a direita]{.hl}, mas poucas pessoas recomendam usá-lo:
 
-  ```{r eval=FALSE}
-  x %>% f() %>% g() %>% h() -> y
-  ```
+    ```{r eval=FALSE}
+    x %>% f() %>% g() %>% h() -> y
+    ```
 
 * Se `f`, `g` e `h` forem funções de um argumento só, os parênteses podem ser omitidos:
 
-  ```{r eval=FALSE}
-  y <- x %>% f %>% g %>% h
-  ```
+    ```{r eval=FALSE}
+    y <- x %>% f %>% g %>% h
+    ```
 
 * Se a função `f` tiver outros argumentos, escreva-os normalmente na chamada a `f`:
 
-  ```{r eval=FALSE}
-  y <- x %>% mean(na.rm = TRUE)
-  ```
+    ```{r eval=FALSE}
+    y <- x %>% mean(na.rm = TRUE)
+    ```
 
 * O *pipe* `EXP %>% f(...)` sempre insere o resultado da expressão `EXP` como o [primeiro argumento da função `f`]{.hl}.
 
 * Se você precisar que o resultado da expressão `EXP` seja inserido em outra posição na lista de argumentos de `f`, use um ponto "`.`" para isso:
 
-  ```{r eval=FALSE}
-  x %>% consultar(df, .)
-  ```
+    ```{r eval=FALSE}
+    x %>% consultar(df, .)
+    ```
   
   equivale a
 
-  ```{r eval=FALSE}
-  consultar(df, x)
-  ```
+    ```{r eval=FALSE}
+    consultar(df, x)
+    ```
   
 
 ## Formato *tidy*
@@ -147,10 +153,12 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * Podemos "extrair" estes vetores "aninhados" usando o comando `unnest`, do pacote `tidyr`:
 
+    ```{r}
+    cores <- cores %>% 
+      unnest(`cor favorita`)
+    ```
+    
   ```{r}
-  cores <- cores %>% 
-    unnest(`cor favorita`)
-  
   cores
   ```
 
@@ -166,21 +174,21 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   
   * Para cada uma das $76$ semanas seguintes, a posição da música no *top 100*.
 
-  ```{r}
-  billboard %>% glimpse()
-  ```
+    ```{r}
+    billboard %>% glimpse()
+    ```
 
 * Vamos renomear as colunas:
 
-  ```{r}
-  bb <- billboard %>% 
-    rename(
-      artista = artist,
-      musica = track,
-      entrou = date.entered
-    )
-  ```
-
+    ```{r}
+    bb <- billboard %>% 
+      rename(
+        artista = artist,
+        musica = track,
+        entrou = date.entered
+      )
+    ```
+  
   ```{r}
   bb %>% head()
   ```
@@ -213,18 +221,20 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * A função `pivot_longer`, do pacote `tidyr`, vai fazer o trabalho --- inclusive extraindo os números das semanas dos nomes das colunas:
 
+    ```{r}
+    bb_tidy <- bb %>% 
+      pivot_longer(
+        wk1:wk76,
+        names_to = 'semana',
+        names_prefix = 'wk',
+        names_transform = list(
+          semana = as.integer
+        ),
+        values_to = 'pos'
+      )
+    ```
+    
   ```{r}
-  bb_tidy <- bb %>% 
-    pivot_longer(
-      wk1:wk76,
-      names_to = 'semana',
-      names_prefix = 'wk',
-      names_transform = list(
-        semana = as.integer
-      ),
-      values_to = 'pos'
-    )
-  
   bb_tidy
   ```
 
@@ -232,15 +242,15 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * Na verdade, o número de linhas da tabela original era
 
-  ```{r}
-  bb %>% nrow()
-  ```
+    ```{r}
+    bb %>% nrow()
+    ```
 
 * O número de linhas, depois de `pivot_longer`, ficou:
 
-  ```{r}
-  bb_tidy %>% nrow()
-  ```
+    ```{r}
+    bb_tidy %>% nrow()
+    ```
 
 * Existem linhas onde `pos` tem o valor `NA`. São resultado da organização original dos dados, onde o `NA` indicava que a música não estava no *top* $100$ naquela semana.
 
@@ -248,18 +258,21 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * A função `filter` [mantém]{.hl} as linhas que [satisfazem]{.hl} a condição dada; por isso, a condição é "`pos` não é `NA`":
 
+    ```{r}
+    bb_tidy <- bb_tidy %>% 
+      filter(!is.na(pos))
+    ```
+    
   ```{r}
-  bb_tidy <- bb_tidy %>% 
-    filter(!is.na(pos))
-  
   bb_tidy
+
   ```
 
 * O número de linhas ficou  
 
-  ```{r}
-  bb_tidy %>% nrow()
-  ```
+    ```{r}
+    bb_tidy %>% nrow()
+    ```
 
 
 ### Exercícios
@@ -380,12 +393,12 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   bb_tidy %>% 
     slice(c(1, 1000, 5000))
   ```
-
+  
   ```{r}
   bb_tidy %>% 
     slice_head(n = 4)
   ```
-
+  
   ```{r}
   bb_tidy %>% 
     slice_tail(n = 4)
@@ -397,7 +410,7 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
   bb_tidy %>% 
     slice_min(pos)
   ```
-
+  
   ```{r}
   bb_tidy %>% 
     slice_max(semana)
@@ -527,31 +540,35 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
 
 * Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com `NA`; logo, [a média vai ser sobre a quantidade de semanas em que a música esteve na lista]{.hl}.
 
+    ```{r}
+    media1 <- bb_tidy %>% 
+      group_by(artista, musica) %>% 
+      summarize(media = mean(pos), .groups = 'drop') %>% 
+      arrange(media)
+    ```
+
   ```{r}
-  media1 <- bb_tidy %>% 
-    group_by(artista, musica) %>% 
-    summarize(media = mean(pos), .groups = 'drop') %>% 
-    arrange(media)
-  
   media1
   ```
 
 * E se quisermos [a média sobre o número de semanas desde a entrada da música até a última semana]{.hl} em que a música apareceu na lista?
 
+    ```{r}
+    media2 <- bb_tidy %>% 
+      group_by(artista, musica) %>% 
+      summarize(media = sum(pos)/max(semana), .groups = 'drop') %>% 
+      arrange(media)
+    ```
+    
   ```{r}
-  media2 <- bb_tidy %>% 
-    group_by(artista, musica) %>% 
-    summarize(media = sum(pos)/max(semana), .groups = 'drop') %>% 
-    arrange(media)
-  
   media2
   ```
 
   As primeiras linhas são iguais, mas os resultados são diferentes:
 
-  ```{r}
-  identical(media1, media2)
-  ```
+    ```{r}
+    identical(media1, media2)
+    ```
 
 ## Exercícios
 
@@ -1098,3 +1115,32 @@ Busque mais informações sobre os pacotes que compõem o `tidyverse` [nas refer
      ```
    
    `r fim_resposta()`
+
+
+## Examinando *tibbles* intermediárias
+
+* [O pacote `ViewPipeSteps`](https://github.com/daranzolin/ViewPipeSteps) serve para exibir (no console ou em *tabs* no RStudio) as *tibbles* que são resultados de cada passo em uma sequência de comandos montada com o *pipe* `%>%`.
+
+* Instale o pacote com o comando
+
+  ```{r eval=FALSE}
+  install.packages("ViewPipeSteps")
+  ```
+
+* Carregue o pacote com
+
+  ```{r}
+  library(ViewPipeSteps)
+  ```
+
+* Para exibir, no console, as *tibbles* intermediárias, acrescente `print_pipe_steps(all = TRUE)` após o último passo do *pipe*:
+
+    ```{r}
+    resultado <- bb_tidy %>% 
+      group_by(artista, musica) %>% 
+      summarize(media = sum(pos)/max(semana), .groups = 'drop') %>% 
+      arrange(media) %>% 
+      print_pipe_steps(all = TRUE)
+    ```
+
+* Para exibir as *tibbles* intermediárias em *tabs* do RStudio (como com a função `View()`), você pode usar o *addin* `viewPipeChain`, que também faz parte deste pacote. Veja o exemplo [no site do pacote](https://github.com/daranzolin/ViewPipeSteps).
