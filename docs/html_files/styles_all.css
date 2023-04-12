@@ -155,11 +155,18 @@ h3 > .header-section-number {
   color: #212529;
 }
 
-.level4 > h4, .level5 > h5, .level6 > h6 {
+.level4 > h4 {
+  font-weight: normal;
+  font-style: normal;
+  border-bottom: 2px solid;
+}
+
+.level5 > h5, .level6 > h6 {
   font-weight: normal;
   font-style: normal;
   border-bottom: 0;
 }
+
 
 .level4 > .header-section-number{
   font-style: normal;

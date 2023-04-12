@@ -10,11 +10,393 @@ knit: "bookdown::render_book"
 embed_yt('1kXQDNqm41c')
 ```
 
+
+## Usando o RStudio
+
+Leia uma introdução ao R e ao RStudio no livro [Ciência de Dados com R](https://www.ibpad.com.br/o-que-fazemos/publicacoes/introducao-ciencia-de-dados-com-r).
+
+Ali, você vai encontrar *exemplos* e **exercícios**.
+
+
+## RMarkdown
+
+Para ver uma referência sobre a sintaxe do RMarkdown, vá ao menu `Help` do RStudio, escolha `Cheatsheets` e, a seguir, `R Markdown Cheat Sheet` ou `R Markdown Reference Guide`.
+
+
+## Apresentação
+
+R é várias linguagens em uma:
+
+* R base,
+
+* OO (S3),
+
+* OO (S4),
+
+* Tidyverse (pacote usado para Ciência de Dados e gráficos).
+
+
+## Tudo é vetor
+
+* Usamos a função `c()` (*concatenate*) para criar vetores:
+
+    ```{r}
+    vetor <- c(1, 2, 4, 7, 0, -1)
+    vetor
+    ```
+
+* Em um vetor, todos os elementos precisam ser do mesmo tipo.
+
+* Mesmo que você use `c(c(...), c(...))`, o vetor criado vai ter um único nível. [Não existem vetores aninhados.]{.hl}
+
+    ```{r}
+    v1 <- c(1, 2)
+    v2 <- c(3, 4, 5)
+    v3 <- c(v1, v2)
+    v3
+    ```
+
+* Mais adiante, veremos como criar [listas]{.hl}, que podem ter elementos de tipos diferentes e sublistas aninhadas.
+
+* Outras maneiras de criar vetores:
+
+  * O operador `:` constrói sequências:
+
+    ```{r}
+    1:10
+    ```
+    
+    ```{r}
+    10:1
+    ```
+    
+    ```{r}
+    0.5:10.5
+    ```
+    
+    ```{r}
+    0.5:10
+    ```
+    
+  * A função `seq` permite especificar um incremento diferente de $1$ e $-1$:
+    
+    ```{r}
+    seq(1, 10)
+    ```
+    
+    ```{r}
+    seq(10, 1)
+    ```
+    
+    ```{r}
+    seq(1, 10, 0.5)
+    ```
+
+  * A função `rep` cria vetores com elementos repetidos: 
+    
+    ```{r}
+    rep(1, 10)
+    ```
+    
+    ```{r}
+    rep(c(1, 2), 10)
+    ```
+    
+    ```{r}
+    rep(c(1, 2), each = 10)
+    ```
+    
+    ```{r}
+    rep(c(1, 2), c(3, 4))
+    ```
+
+* O número que aparece na saída, entre colchetes, é o índice do primeiro elemento daquela linha:
+
+    ```{r}
+    rep(1, 1000)
+    ```
+
+* Vetores começam no índice 1!!!!
+
+* Tudo é vetor:
+
+    ```{r}
+    10
+    ```
+    
+    ```{r}
+    is.vector(10)
+    ```
+    
+    ```{r}
+    length(10)
+    ```
+
+* O valor `NA` significa [ausência de informação]{.hl}:
+
+    ```{r}
+    notas <- c(10, 8, NA, 7, 10)
+    notas
+    ```
+
+
+## Operações com vetores
+
+* Adição e outras operações aritméticas::
+
+    ```{r}
+    v3 <- c(10, 20)
+    ```
+    
+    ```{r}
+    v1
+    v2
+    v3
+    ```
+
+  * R [recicla]{.hl} o vetor mais curto, mas [avisa quando o comprimento do maior vetor não é múltiplo inteiro do comprimento do menor vetor]{.hl}.
+
+    ```{r}
+    v1 + v3
+    ```
+    
+    ```{r}
+    v1 + v2
+    ```
+
+    ```{r}
+    v1 <- c(1, 2)
+    v4 <- c(3, 4, 5, 6, 7, 8)
+    v1 + v4
+    v1 - v4
+    v1 * v4
+    v1 / v4
+    ```
+
+* Funções úteis para vetores:
+
+  * Somar todos os elementos:
+
+    ```{r}
+    sum(v4)
+    ```
+  
+  * O valor `NA` se propaga em operações aritméticas:
+  
+    ```{r}
+    notas
+    ```
+    
+    ```{r}
+    sum(notas)
+    ```
+    
+  * Para ignorar os valores `NA`, use o argumento `na.rm`:
+    
+    ```{r}
+    sum(notas, na.rm = TRUE)
+    ```
+    
+  * Média de todos os elementos:
+    
+    ```{r}
+    mean(notas, na.rm = TRUE)
+    ```
+    
+    ```{r}
+    sum(notas, na.rm = TRUE) / 4
+    ```
+
+
+## Indexação
+
+* Com um valor inteiro:
+
+    ```{r}
+    v5 <- 1:50 * 4
+    v5
+    v5[10]
+    ```
+    
+* Com um vetor de inteiros:    
+    
+    ```{r}
+    v5[1:10]
+    ```
+    
+    ```{r}
+    v5[c(2, 10, 13, 30)]
+    ```
+    
+    ```{r}
+    v5[seq(2, 50, 2)]
+    ```
+    
+* [Com um vetor de booleanos, os elementos indexados por `TRUE` são selecionados:]{.hl}
+
+    ```{r}
+    v4
+    ```
+    
+    ```{r}
+    v4[c(TRUE, TRUE, FALSE, FALSE, TRUE, FALSE)]
+    ```
+
+* Uma condição produz um vetor de booleanos:
+    
+    ```{r}
+    v4 > 5
+    ```
+    
+* Logo, podemos indexar com uma condição:
+
+    ```{r}
+    v4[ v4 > 5 ]
+    ```
+    
+    ```{r}
+    v4[ v4 %% 2 != 0 ]
+    ```
+    
+    ```{r}
+    notas[!is.na(notas)]
+    ```
+
+* Para especificar os elementos a [não]{.hl} selecionar, use [índices negativos]{.hl}.
+
+    ```{r}
+    v5
+    ```
+    
+    ```{r}
+    v5[-1]
+    ```
+    
+    ```{r}
+    v5[-c(1, 4, 20)]
+    ```
+
+
 ## Vídeo 2
 
 ```{r echo=FALSE, results='asis', out.extra=center()}
 embed_yt('3GEc1oiKDrU')
 ```
+
+
+## Simular lançamentos de dados
+
+* Vamos criar um dado de $6$ lados. Basta um vetor:
+
+    ```{r criar-dado}
+    (dado <- 1:6)
+    ```
+
+* Para lançar este dado uma vez, usamos `sample`:
+
+    ```{r lancar-1}
+    sample(dado, 1)
+    ```
+
+* Para lançar o dado várias vezes:
+
+    ```{r lancar-n}
+    n <- 6
+    sample(dado, n, replace = TRUE)
+    ```
+
+* Observe que, para permitir que o mesmo valor apareça mais de uma vez, precisamos usar `replace = TRUE` --- a amostragem será feita com reposição.
+
+* Uma função para retornar a soma de 2 dados:
+
+    ```{r soma-2-dados}
+    lancar2 <- function() {
+      
+      dado <- 1:6
+      lancamentos <- sample(dado, size = 2, replace = TRUE)
+      sum(lancamentos)
+      
+    }
+    ```
+    
+    ```{r lancar-2-dados}
+    lancar2()
+    ```
+
+* Vamos generalizar a função:
+
+  * O número de lados do dado é passado como argumento.
+
+  * A quantidade de dados é passada como argumento.
+
+    ```{r lancar-n-dados-k-lados}
+    lancar <- function(n = 2, k = 6) {
+      
+      dado <- 1:k
+      lancamentos <- sample(dado, size = n, replace = TRUE)
+      sum(lancamentos)
+      
+    }
+    ```
+    
+    ```{r lancar-sem-arg}
+    lancar()
+    ```
+    
+    ```{r lancar-4-10}
+    lancar(n = 4, k = 10)
+    ```
+
+* Vamos lançar os $2$ dados $10$ mil vezes, usando a função `replicate`:
+
+    ```{r repl}
+    resultados <- replicate(1e4, lancar())
+    ```
+
+
+## Visualização
+
+* A função `qplot`, do pacote `tidyverse`, produz um gráfico adequado aos argumentos recebidos --- aqui, um histograma:
+
+    ```{r qplot}
+    qplot(resultados, bins = 11)
+    ```
+
+* Em um [capítulo sobre visualização](#viz), você vai aprender a configurar melhor a aparência de gráficos como este.
+
+
+## Dados viciados
+
+* Vamos modificar a função `lancar` para receber um [vetor com as probabilidades dos lados]{.hl}:
+
+    ```{r viciados}
+    lancar <- function(
+      qtde = 2, 
+      lados = 6, 
+      probs = rep(1/lados, lados)
+    ) {
+      
+      dado <- 1:lados
+      resultados <- sample(
+        dado, 
+        size = qtde, 
+        replace = TRUE, 
+        prob = probs
+      )
+      sum(resultados)
+      
+    }
+    ```
+
+* Lançando dados viciados:
+
+    ```{r lancar-viciados}
+    resultados <- replicate(1e4, lancar(probs = c(1/2, rep(1/10, 5))))
+    ```
+    
+    ```{r plot-viciados}
+    qplot(resultados, bins = 11)
+    ```
 
 
 ## Exercícios

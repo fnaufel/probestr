@@ -144,7 +144,7 @@
 \def\languageshorthands#1{}
 
 % A command to save the path to the resources of bd.format (fnaufel)
-\newcommand{\dir}{/ssd/R/x86_64-pc-linux-gnu-library/4.1/fnaufelRmd/rmarkdown/resources}
+\newcommand{\dir}{/ssd/R/x86_64-pc-linux-gnu-library/4.2/fnaufelRmd/rmarkdown/resources}
 
 
 
@@ -373,7 +373,7 @@
 
 \title{Probabilidade e Estatística com R}
 \author{Fernando Náufel}
-\date{(versão de 30/08/2022)}
+\date{(versão de 12/04/2023)}
 
 \begin{document}
 \maketitle
@@ -585,10 +585,835 @@ Se você preferir ler este livro em pdf, ou se quiser imprimi-lo, \href{https://
 
 \begin{center} \url{https://youtu.be/1kXQDNqm41c} \end{center}
 
+\hypertarget{usando-o-rstudio}{%
+\section{Usando o RStudio}\label{usando-o-rstudio}}
+
+Leia uma introdução ao R e ao RStudio no livro \href{https://www.ibpad.com.br/o-que-fazemos/publicacoes/introducao-ciencia-de-dados-com-r}{Ciência de Dados com R}.
+
+Ali, você vai encontrar \emph{exemplos} e \textbf{exercícios}.
+
+\hypertarget{rmarkdown}{%
+\section{RMarkdown}\label{rmarkdown}}
+
+Para ver uma referência sobre a sintaxe do RMarkdown, vá ao menu \texttt{Help} do RStudio, escolha \texttt{Cheatsheets} e, a seguir, \texttt{R\ Markdown\ Cheat\ Sheet} ou \texttt{R\ Markdown\ Reference\ Guide}.
+
+\hypertarget{apresentauxe7uxe3o}{%
+\section{Apresentação}\label{apresentauxe7uxe3o}}
+
+R é várias linguagens em uma:
+
+\begin{itemize}
+\item
+  R base,
+\item
+  OO (S3),
+\item
+  OO (S4),
+\item
+  Tidyverse (pacote usado para Ciência de Dados e gráficos).
+\end{itemize}
+
+\hypertarget{tudo-uxe9-vetor}{%
+\section{Tudo é vetor}\label{tudo-uxe9-vetor}}
+
+\begin{itemize}
+\item
+  Usamos a função \texttt{c()} (\emph{concatenate}) para criar vetores:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{vetor }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{0}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+\NormalTok{vetor}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  1  2  4  7  0 -1
+\end{verbatim}
+\item
+  Em um vetor, todos os elementos precisam ser do mesmo tipo.
+\item
+  Mesmo que você use \texttt{c(c(...),\ c(...))}, o vetor criado vai ter um único nível. {\hl{Não existem vetores aninhados.}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{v2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\NormalTok{v3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(v1, v2)}
+\NormalTok{v3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 4 5
+\end{verbatim}
+\item
+  Mais adiante, veremos como criar {\hl{listas}}, que podem ter elementos de tipos diferentes e sublistas aninhadas.
+\item
+  Outras maneiras de criar vetores:
+
+  \begin{itemize}
+  \item
+    O operador \texttt{:} constrói sequências:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{10}\SpecialCharTok{:}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10  9  8  7  6  5  4  3  2  1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{0.5}\SpecialCharTok{:}\FloatTok{10.5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  0,5  1,5  2,5  3,5  4,5  5,5  6,5  7,5  8,5  9,5 10,5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FloatTok{0.5}\SpecialCharTok{:}\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 0,5 1,5 2,5 3,5 4,5 5,5 6,5 7,5 8,5 9,5
+\end{verbatim}
+  \item
+    A função \texttt{seq} permite especificar um incremento diferente de $1$ e $-1$:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1  2  3  4  5  6  7  8  9 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{seq}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 10  9  8  7  6  5  4  3  2  1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{seq}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{, }\FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  1,0  1,5  2,0  2,5  3,0  3,5  4,0  4,5  5,0  5,5  6,0  6,5  7,0
+## [14]  7,5  8,0  8,5  9,0  9,5 10,0
+\end{verbatim}
+  \item
+    A função \texttt{rep} cria vetores com elementos repetidos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 1 1 1 1 1 1 1 1 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2 1 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\AttributeTok{each =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), }\FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 1 1 2 2 2 2
+\end{verbatim}
+  \end{itemize}
+\item
+  O número que aparece na saída, entre colchetes, é o índice do primeiro elemento daquela linha:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##   [33] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##   [65] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##   [97] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [129] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [161] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [193] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [225] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [257] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [289] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [321] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [353] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [385] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [417] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [449] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [481] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [513] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [545] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [577] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [609] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [641] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [673] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [705] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [737] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [769] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [801] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [833] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [865] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [897] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [929] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [961] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [993] 1 1 1 1 1 1 1 1
+\end{verbatim}
+\item
+  Vetores começam no índice 1!!!!
+\item
+  Tudo é vetor:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{10}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{is.vector}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{length}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1
+\end{verbatim}
+\item
+  O valor \texttt{NA} significa {\hl{ausência de informação}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{notas }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{8}\NormalTok{, }\ConstantTok{NA}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\NormalTok{notas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  8 NA  7 10
+\end{verbatim}
+\end{itemize}
+
+\hypertarget{operauxe7uxf5es-com-vetores}{%
+\section{Operações com vetores}\label{operauxe7uxf5es-com-vetores}}
+
+\begin{itemize}
+\item
+  Adição e outras operações aritméticas::
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 4 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10 20
+\end{verbatim}
+
+  \begin{itemize}
+  \item
+    R {\hl{recicla}} o vetor mais curto, mas {\hl{avisa quando o comprimento do maior vetor não é múltiplo inteiro do comprimento do menor vetor}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\SpecialCharTok{+}\NormalTok{ v3}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 11 22
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\SpecialCharTok{+}\NormalTok{ v2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in v1 + v2: longer object length is not a multiple of shorter
+## object length
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 4 6 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\NormalTok{v4 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{)}
+\NormalTok{v1 }\SpecialCharTok{+}\NormalTok{ v4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  4  6  6  8  8 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\SpecialCharTok{{-}}\NormalTok{ v4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] -2 -2 -4 -4 -6 -6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\SpecialCharTok{*}\NormalTok{ v4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]  3  8  5 12  7 16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v1 }\SpecialCharTok{/}\NormalTok{ v4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0,3333333 0,5000000 0,2000000 0,3333333 0,1428571 0,2500000
+\end{verbatim}
+  \end{itemize}
+\item
+  Funções úteis para vetores:
+
+  \begin{itemize}
+  \item
+    Somar todos os elementos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(v4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 33
+\end{verbatim}
+  \item
+    O valor \texttt{NA} se propaga em operações aritméticas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{notas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  8 NA  7 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(notas)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] NA
+\end{verbatim}
+  \item
+    Para ignorar os valores \texttt{NA}, use o argumento \texttt{na.rm}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(notas, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 35
+\end{verbatim}
+  \item
+    Média de todos os elementos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(notas, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8,75
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sum}\NormalTok{(notas, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{/} \DecValTok{4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 8,75
+\end{verbatim}
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{indexauxe7uxe3o}{%
+\section{Indexação}\label{indexauxe7uxe3o}}
+
+\begin{itemize}
+\item
+  Com um valor inteiro:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5 }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{50} \SpecialCharTok{*} \DecValTok{4}
+\NormalTok{v5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   4   8  12  16  20  24  28  32  36  40  44  48  52  56  60  64
+## [17]  68  72  76  80  84  88  92  96 100 104 108 112 116 120 124 128
+## [33] 132 136 140 144 148 152 156 160 164 168 172 176 180 184 188 192
+## [49] 196 200
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5[}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 40
+\end{verbatim}
+\item
+  Com um vetor de inteiros:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{10}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  4  8 12 16 20 24 28 32 36 40
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5[}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{13}\NormalTok{, }\DecValTok{30}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   8  40  52 120
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5[}\FunctionTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{2}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   8  16  24  32  40  48  56  64  72  80  88  96 104 112 120 128
+## [17] 136 144 152 160 168 176 184 192 200
+\end{verbatim}
+\item
+  {\hl{Com um vetor de booleanos, os elementos indexados por {\mbox{\texttt{TRUE}}} são selecionados:}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 4 5 6 7 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v4[}\FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 4 7
+\end{verbatim}
+\item
+  Uma condição produz um vetor de booleanos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v4 }\SpecialCharTok{\textgreater{}} \DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE
+\end{verbatim}
+\item
+  Logo, podemos indexar com uma condição:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v4[ v4 }\SpecialCharTok{\textgreater{}} \DecValTok{5}\NormalTok{ ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6 7 8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v4[ v4 }\SpecialCharTok{\%\%} \DecValTok{2} \SpecialCharTok{!=} \DecValTok{0}\NormalTok{ ]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 3 5 7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{notas[}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(notas)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10  8  7 10
+\end{verbatim}
+\item
+  Para especificar os elementos a {\hl{não}} selecionar, use {\hl{índices negativos}}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   4   8  12  16  20  24  28  32  36  40  44  48  52  56  60  64
+## [17]  68  72  76  80  84  88  92  96 100 104 108 112 116 120 124 128
+## [33] 132 136 140 144 148 152 156 160 164 168 172 176 180 184 188 192
+## [49] 196 200
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   8  12  16  20  24  28  32  36  40  44  48  52  56  60  64  68
+## [17]  72  76  80  84  88  92  96 100 104 108 112 116 120 124 128 132
+## [33] 136 140 144 148 152 156 160 164 168 172 176 180 184 188 192 196
+## [49] 200
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{v5[}\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{20}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]   8  12  20  24  28  32  36  40  44  48  52  56  60  64  68  72
+## [17]  76  84  88  92  96 100 104 108 112 116 120 124 128 132 136 140
+## [33] 144 148 152 156 160 164 168 172 176 180 184 188 192 196 200
+\end{verbatim}
+\end{itemize}
+
 \hypertarget{vuxeddeo-2}{%
 \section{Vídeo 2}\label{vuxeddeo-2}}
 
 \begin{center} \url{https://youtu.be/3GEc1oiKDrU} \end{center}
+
+\hypertarget{simular-lanuxe7amentos-de-dados}{%
+\section{Simular lançamentos de dados}\label{simular-lanuxe7amentos-de-dados}}
+
+\begin{itemize}
+\item
+  Vamos criar um dado de $6$ lados. Basta um vetor:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(dado }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1 2 3 4 5 6
+\end{verbatim}
+\item
+  Para lançar este dado uma vez, usamos \texttt{sample}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{sample}\NormalTok{(dado, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+\item
+  Para lançar o dado várias vezes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{6}
+\FunctionTok{sample}\NormalTok{(dado, n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 4 4 6 5 1 3
+\end{verbatim}
+\item
+  Observe que, para permitir que o mesmo valor apareça mais de uma vez, precisamos usar \texttt{replace\ =\ TRUE} --- a amostragem será feita com reposição.
+\item
+  Uma função para retornar a soma de 2 dados:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lancar2 }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+
+\NormalTok{  dado }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\DecValTok{6}
+\NormalTok{  lancamentos }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(dado, }\AttributeTok{size =} \DecValTok{2}\NormalTok{, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{sum}\NormalTok{(lancamentos)}
+
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lancar2}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 7
+\end{verbatim}
+\item
+  Vamos generalizar a função:
+
+  \begin{itemize}
+  \item
+    O número de lados do dado é passado como argumento.
+  \item
+    A quantidade de dados é passada como argumento.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lancar }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{n =} \DecValTok{2}\NormalTok{, }\AttributeTok{k =} \DecValTok{6}\NormalTok{) \{}
+
+\NormalTok{  dado }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\NormalTok{k}
+\NormalTok{  lancamentos }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(dado, }\AttributeTok{size =}\NormalTok{ n, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{sum}\NormalTok{(lancamentos)}
+
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lancar}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{lancar}\NormalTok{(}\AttributeTok{n =} \DecValTok{4}\NormalTok{, }\AttributeTok{k =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 19
+\end{verbatim}
+  \end{itemize}
+\item
+  Vamos lançar os $2$ dados $10$ mil vezes, usando a função \texttt{replicate}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resultados }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(}\FloatTok{1e4}\NormalTok{, }\FunctionTok{lancar}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+\end{itemize}
+
+\hypertarget{visualizauxe7uxe3o}{%
+\section{Visualização}\label{visualizauxe7uxe3o}}
+
+\begin{itemize}
+\item
+  A função \texttt{qplot}, do pacote \texttt{tidyverse}, produz um gráfico adequado aos argumentos recebidos --- aqui, um histograma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qplot}\NormalTok{(resultados, }\AttributeTok{bins =} \DecValTok{11}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: `qplot()` was deprecated in ggplot2 3.4.0.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+\end{verbatim}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/qplot-1} \end{center}
+\item
+  Em um \protect\hyperlink{viz}{capítulo sobre visualização}, você vai aprender a configurar melhor a aparência de gráficos como este.
+\end{itemize}
+
+\hypertarget{dados-viciados}{%
+\section{Dados viciados}\label{dados-viciados}}
+
+\begin{itemize}
+\item
+  Vamos modificar a função \texttt{lancar} para receber um {\hl{vetor com as probabilidades dos lados}}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lancar }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}
+  \AttributeTok{qtde =} \DecValTok{2}\NormalTok{, }
+  \AttributeTok{lados =} \DecValTok{6}\NormalTok{, }
+  \AttributeTok{probs =} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{lados, lados)}
+\NormalTok{) \{}
+
+\NormalTok{  dado }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\NormalTok{lados}
+\NormalTok{  resultados }\OtherTok{\textless{}{-}} \FunctionTok{sample}\NormalTok{(}
+\NormalTok{    dado, }
+    \AttributeTok{size =}\NormalTok{ qtde, }
+    \AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }
+    \AttributeTok{prob =}\NormalTok{ probs}
+\NormalTok{  )}
+  \FunctionTok{sum}\NormalTok{(resultados)}
+
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\item
+  Lançando dados viciados:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{resultados }\OtherTok{\textless{}{-}} \FunctionTok{replicate}\NormalTok{(}\FloatTok{1e4}\NormalTok{, }\FunctionTok{lancar}\NormalTok{(}\AttributeTok{probs =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\DecValTok{10}\NormalTok{, }\DecValTok{5}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qplot}\NormalTok{(resultados, }\AttributeTok{bins =} \DecValTok{11}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/plot-viciados-1} \end{center}
+\end{itemize}
 
 \hypertarget{exercuxedcios-2}{%
 \section{Exercícios}\label{exercuxedcios-2}}
@@ -1050,13 +1875,13 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 3 Doors ~ Loser  2000-10-21    76    76    72    69    67    65    55
 ## 5 504 Boyz  Wobbl~ 2000-04-15    57    34    25    17    17    31    36
 ## 6 98^0      Give ~ 2000-08-19    51    39    34    26    26    19     2
-## # ... with 69 more variables: wk8 <dbl>, wk9 <dbl>, wk10 <dbl>,
-## #   wk11 <dbl>, wk12 <dbl>, wk13 <dbl>, wk14 <dbl>, wk15 <dbl>,
-## #   wk16 <dbl>, wk17 <dbl>, wk18 <dbl>, wk19 <dbl>, wk20 <dbl>,
-## #   wk21 <dbl>, wk22 <dbl>, wk23 <dbl>, wk24 <dbl>, wk25 <dbl>,
-## #   wk26 <dbl>, wk27 <dbl>, wk28 <dbl>, wk29 <dbl>, wk30 <dbl>,
-## #   wk31 <dbl>, wk32 <dbl>, wk33 <dbl>, wk34 <dbl>, wk35 <dbl>,
-## #   wk36 <dbl>, wk37 <dbl>, wk38 <dbl>, wk39 <dbl>, wk40 <dbl>, ...
+## # i 69 more variables: wk8 <dbl>, wk9 <dbl>, wk10 <dbl>, wk11 <dbl>,
+## #   wk12 <dbl>, wk13 <dbl>, wk14 <dbl>, wk15 <dbl>, wk16 <dbl>,
+## #   wk17 <dbl>, wk18 <dbl>, wk19 <dbl>, wk20 <dbl>, wk21 <dbl>,
+## #   wk22 <dbl>, wk23 <dbl>, wk24 <dbl>, wk25 <dbl>, wk26 <dbl>,
+## #   wk27 <dbl>, wk28 <dbl>, wk29 <dbl>, wk30 <dbl>, wk31 <dbl>,
+## #   wk32 <dbl>, wk33 <dbl>, wk34 <dbl>, wk35 <dbl>, wk36 <dbl>,
+## #   wk37 <dbl>, wk38 <dbl>, wk39 <dbl>, wk40 <dbl>, wk41 <dbl>, ...
 \end{verbatim}
 \item
   {\hl{O que é uma observação}} neste conjunto de dados?
@@ -1120,7 +1945,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 2 Pac   Baby Don't Cry (Keep... 2000-02-26      4    77
 ## 5 2 Pac   Baby Don't Cry (Keep... 2000-02-26      5    87
 ## 6 2 Pac   Baby Don't Cry (Keep... 2000-02-26      6    94
-## # ... with 24.086 more rows
+## # i 24.086 more rows
 \end{verbatim}
 \item
   O R só mostra, por \emph{default}, as $1000$ primeiras linhas de uma \emph{tibble}.
@@ -1174,7 +1999,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 2 Pac   Baby Don't Cry (Keep... 2000-02-26      4    77
 ## 5 2 Pac   Baby Don't Cry (Keep... 2000-02-26      5    87
 ## 6 2 Pac   Baby Don't Cry (Keep... 2000-02-26      6    94
-## # ... with 5.301 more rows
+## # i 5.301 more rows
 \end{verbatim}
 \item
   O número de linhas ficou
@@ -1226,7 +2051,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4     7    22
 ## 5     8    16
 ## 6     9    10
-## # ... with 44 more rows
+## # i 44 more rows
 \end{verbatim}
 \item
   Vamos criar colunas novas com os valores convertidos para km/h e metros; além disso, uma coluna com a taxa de frenagem:
@@ -1252,7 +2077,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4     7    22       11.2      7.26  1.54
 ## 5     8    16       12.8      5.28  2.42
 ## 6     9    10       14.4      3.3   4.36
-## # ... with 44 more rows
+## # i 44 more rows
 \end{verbatim}
 \item
   Perceba que as colunas antigas continuam lá. {\hl{Se quiser manter apenas as colunas novas, use {\mbox{\texttt{transmute}}}}}:
@@ -1278,7 +2103,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4       11.2      7.26  1.54
 ## 5       12.8      5.28  2.42
 ## 6       14.4      3.3   4.36
-## # ... with 44 more rows
+## # i 44 more rows
 \end{verbatim}
 \item
   Ou use o argumento \texttt{.keep} de \texttt{mutate} para escolher com mais precisão. Veja a ajuda de \texttt{mutate}.
@@ -1310,7 +2135,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 2 Pac  
 ## 5 2 Pac  
 ## 6 2 Pac  
-## # ... with 5.301 more rows
+## # i 5.301 more rows
 \end{verbatim}
 \item
   Para eliminar as repetições:
@@ -1333,7 +2158,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 504 Boyz    
 ## 5 98^0        
 ## 6 A*Teens     
-## # ... with 222 more rows
+## # i 222 more rows
 \end{verbatim}
 \item
   Para ver artistas e músicas:
@@ -1356,7 +2181,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 3 Doors Down Loser                  
 ## 5 504 Boyz     Wobble Wobble          
 ## 6 98^0         Give Me Just One Nig...
-## # ... with 311 more rows
+## # i 311 more rows
 \end{verbatim}
 \item
   Para especificar colunas {\hl{a não mostrar}}, use o sinal de menos ``\texttt{-}'':
@@ -1378,7 +2203,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 2 Pac   Baby Don't Cry (Keep...
 ## 5 2 Pac   Baby Don't Cry (Keep...
 ## 6 2 Pac   Baby Don't Cry (Keep...
-## # ... with 5.301 more rows
+## # i 5.301 more rows
 \end{verbatim}
 \item
   Para {\hl{extrair uma coluna na forma de vetor}} (\texttt{unique} é uma função do R base, aplicável a vetores):
@@ -1533,7 +2358,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Spears, Britney From The Bottom Of M... 2000-01-29      4    52
 ## 5 Spears, Britney From The Bottom Of M... 2000-01-29      5    14
 ## 6 Spears, Britney From The Bottom Of M... 2000-01-29      6    14
-## # ... with 45 more rows
+## # i 45 more rows
 \end{verbatim}
 \item
   Apenas músicas que chegaram à posição $1$, sem mostrar a coluna \texttt{pos}:
@@ -1556,7 +2381,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Aguilera, Christina Come On Over Baby (A... 2000-08-05     13
 ## 5 Aguilera, Christina Come On Over Baby (A... 2000-08-05     14
 ## 6 Aguilera, Christina What A Girl Wants       1999-11-27      8
-## # ... with 49 more rows
+## # i 49 more rows
 \end{verbatim}
 \item
   Apenas músicas que chegaram à posição $1$ em menos de $10$ semanas, mostrando apenas artista e música:
@@ -1653,7 +2478,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Aguilera, Christina Come On Over Baby (A... 2000-08-05     13     1
 ## 5 Aguilera, Christina Come On Over Baby (A... 2000-08-05     14     1
 ## 6 Aguilera, Christina What A Girl Wants       1999-11-27      8     1
-## # ... with 49 more rows
+## # i 49 more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -1681,13 +2506,13 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 
 \begin{verbatim}
 ## # A tibble: 5 x 5
-##   artista         musica                  entrou     semana   pos
-##   <chr>           <chr>                   <date>      <int> <dbl>
-## 1 Ginuwine        None Of Ur Friends B... 1999-12-11      7    48
-## 2 Funkmaster Flex Do You                  2000-11-11      2    92
-## 3 Levert, Gerald  Mr. Too Damn Good       2000-03-18      3    83
-## 4 Vitamin C       The Itch                2000-12-02      8    95
-## 5 Ying Yang Twins Whistle While You Tw... 2000-03-18      9    85
+##   artista       musica           entrou     semana   pos
+##   <chr>         <chr>            <date>      <int> <dbl>
+## 1 Pink          Most Girls       2000-08-12     17     6
+## 2 Limp Bizkit   Re-Arranged      1999-12-04      3    90
+## 3 Gilman, Billy One Voice        2000-06-17      2    86
+## 4 Rimes, LeAnn  I Need You       2000-05-27     11    13
+## 5 Alice Deejay  Better Off Alone 2000-04-08      5    45
 \end{verbatim}
 \item
   Veja a ajuda de \texttt{slice} para saber mais sobre estas funções. Por exemplo:
@@ -1728,7 +2553,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 A Country Boy Can Su...
 ## 5 A Little Gasoline      
 ## 6 A Puro Dolor (Purest...
-## # ... with 310 more rows
+## # i 310 more rows
 \end{verbatim}
 \item
   Por título, sem repetições, em ordem inversa:
@@ -1746,13 +2571,13 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## # A tibble: 316 x 1
 ##   musica                 
 ##   <chr>                  
-## 1 Your Everything        
-## 2 You're A God           
-## 3 You'll Always Be Lov...
-## 4 You Won't Be Lonely ...
-## 5 You Should've Told M...
-## 6 You Sang To Me         
-## # ... with 310 more rows
+## 1 www.memory             
+## 2 Your Everything        
+## 3 You're A God           
+## 4 You'll Always Be Lov...
+## 5 You Won't Be Lonely ...
+## 6 You Should've Told M...
+## # i 310 more rows
 \end{verbatim}
 \end{itemize}
 
@@ -1780,7 +2605,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 N'Sync             74
 ## 5 Sisqo              74
 ## 6 3 Doors Down       73
-## # ... with 222 more rows
+## # i 222 more rows
 \end{verbatim}
 \item
   Quantas semanas cada música ficou nos \emph{top} $100$?
@@ -1802,7 +2627,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Kryptonite             53
 ## 5 With Arms Wide Open    47
 ## 6 I Wanna Know           44
-## # ... with 310 more rows
+## # i 310 more rows
 \end{verbatim}
 \item
   Se houve músicas com o mesmo nome, mas de artistas diferentes, {\hl{o código acima está errado}}. O certo é
@@ -1824,7 +2649,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Kryptonite          3 Doors Down    53
 ## 5 With Arms Wide Open Creed           47
 ## 6 I Wanna Know        Joe             44
-## # ... with 311 more rows
+## # i 311 more rows
 \end{verbatim}
 
   De fato, há uma diferença de uma linha.
@@ -1866,7 +2691,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Creed                    1
 ## 5 Destiny's Child          1
 ## 6 Iglesias, Enrique        1
-## # ... with 222 more rows
+## # i 222 more rows
 \end{verbatim}
 \item
   Qual foi a melhor posição que cada música alcançou?
@@ -1881,8 +2706,8 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 \end{Shaded}
 
 \begin{verbatim}
-## `summarise()` has grouped output by 'artista'. You can override using the
-## `.groups` argument.
+## `summarise()` has grouped output by 'artista'. You can override using
+## the `.groups` argument.
 \end{verbatim}
 
 \begin{verbatim}
@@ -1895,7 +2720,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Carey, Mariah       Thank God I Found Yo...      1
 ## 5 Creed               With Arms Wide Open          1
 ## 6 Destiny's Child     Independent Women Pa...      1
-## # ... with 311 more rows
+## # i 311 more rows
 \end{verbatim}
 \item
   Quando usamos \texttt{summarize}, só o agrupamento {\hl{mais interno}} é desfeito. Isto significa que {\hl{o resultado acima ainda está agrupado por {\mbox{\texttt{artista}}}}}.
@@ -1924,7 +2749,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Madonna                   4
 ## 5 Savage Garden             4
 ## 6 Iglesias, Enrique         3
-## # ... with 9 more rows
+## # i 9 more rows
 \end{verbatim}
 \item
   Perceba que \texttt{count}, que vimos mais acima, faz agrupamentos do mesmo modo:
@@ -1947,7 +2772,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Madonna                 4
 ## 5 Savage Garden           4
 ## 6 Iglesias, Enrique       3
-## # ... with 9 more rows
+## # i 9 more rows
 \end{verbatim}
 \item
   Uma pergunta diferente: quais são os artistas cujas músicas apareceram no \emph{top} $100$ mais tempo depois do lançamento da música?
@@ -1971,7 +2796,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 Hill, Faith           53
 ## 5 Joe                   44
 ## 6 Vertical Horizon      41
-## # ... with 222 more rows
+## # i 222 more rows
 \end{verbatim}
 \item
   Qual a posição média de cada música? Lembre-se de que eliminamos as linhas com \texttt{NA}; logo, {\hl{a média vai ser sobre a quantidade de semanas em que a música esteve na lista}}.
@@ -1997,7 +2822,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 "Elliott, Missy \"Misdemeanor\"" Hot Boyz                 14.3
 ## 5 "Destiny's Child"                Independent Women Pa...  14.8
 ## 6 "Iglesias, Enrique"              Be With You              15.8
-## # ... with 311 more rows
+## # i 311 more rows
 \end{verbatim}
 \item
   E se quisermos {\hl{a média sobre o número de semanas desde a entrada da música até a última semana}} em que a música apareceu na lista?
@@ -2023,7 +2848,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 ## 4 "Elliott, Missy \"Misdemeanor\"" Hot Boyz                 14.3
 ## 5 "Destiny's Child"                Independent Women Pa...  14.8
 ## 6 "Iglesias, Enrique"              Be With You              15.8
-## # ... with 311 more rows
+## # i 311 more rows
 \end{verbatim}
 
   As primeiras linhas são iguais, mas os resultados são diferentes:
@@ -2125,7 +2950,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Abomination       1
   ## 5 Abraxas           1
   ## 6 Absorbing Man     1
-  ## # ... with 709 more rows
+  ## # i 709 more rows
   ```
 
   Precisaríamos [examinar a tabela acima]{.hl}, procurando linhas com $n > 1$. 
@@ -2151,7 +2976,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Batgirl          2
   ## 5 Batman           2
   ## 6 Black Canary     2
-  ## # ... with 11 more rows
+  ## # i 11 more rows
   ```
 
   Vamos mostrar mais dados destes heróis:
@@ -2173,7 +2998,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Atlas DC Comics    God ~ Male  blue  Brown      198 <NA>  bad     126
   ## 5 Atom  DC Comics    <NA>  Male  blue  Red        178 <NA>  good     68
   ## 6 Atom  DC Comics    <NA>  Male  <NA>  <NA>       -99 <NA>  good    -99
-  ## # ... with 30 more rows
+  ## # i 30 more rows
   ```
 
   Em alguns casos, são editoras diferentes (como para Angel e Atlas). 
@@ -2207,7 +3032,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Dark Horse Comics    18
   ## 5 <NA>                 15
   ## 6 George Lucas         14
-  ## # ... with 19 more rows
+  ## # i 19 more rows
   ```
 
 
@@ -2281,9 +3106,9 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 
   ```
   ## # A tibble: 0 x 10
-  ## # ... with 10 variables: nome <chr>, sexo <chr>, olhos <chr>,
-  ## #   raça <chr>, cabelos <chr>, altura <dbl>, editora <chr>,
-  ## #   pele <chr>, lado <chr>, peso <dbl>
+  ## # i 10 variables: nome <chr>, sexo <chr>, olhos <chr>, raça <chr>,
+  ## #   cabelos <chr>, altura <dbl>, editora <chr>, pele <chr>,
+  ## #   lado <chr>, peso <dbl>
   ```
 
   Na verdade, a chamada a `case_when()`, da maneira como fiz, já substituiu os `NA` por 'Outras'. Entenda por quê.
@@ -2351,7 +3176,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Box IV     <NA>  brown <NA>  Brown ~    -99 Marvel  <NA>  good    -99
   ## 5 Captain U~ <NA>  <NA>  God ~ <NA>       -99 Marvel  <NA>  good    -99
   ## 6 Cecilia R~ <NA>  brown <NA>  Brown      170 Marvel  <NA>  good     62
-  ## # ... with 23 more rows
+  ## # i 23 more rows
   ```
 
 
@@ -2375,9 +3200,9 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
 
   ```
   ## # A tibble: 0 x 10
-  ## # ... with 10 variables: nome <chr>, sexo <chr>, olhos <chr>,
-  ## #   raça <chr>, cabelos <chr>, altura <dbl>, editora <chr>,
-  ## #   pele <chr>, lado <chr>, peso <dbl>
+  ## # i 10 variables: nome <chr>, sexo <chr>, olhos <chr>, raça <chr>,
+  ## #   cabelos <chr>, altura <dbl>, editora <chr>, pele <chr>,
+  ## #   lado <chr>, peso <dbl>
   ```
 
 
@@ -2653,7 +3478,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Firelord      Desconhecido    193
   ## 5 Wolfsbane     Female          366
   ## 6 Rey           Female          297
-  ## # ... with 5 more rows
+  ## # i 5 more rows
   ```
 
   Como houve empates, foram mostrados $4$ de sexo desconhecido e $4$ do sexo feminino.
@@ -2686,7 +3511,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Female       blue     76
   ## 5 Female       green    43
   ## 6 Female       <NA>     41
-  ## # ... with 3 more rows
+  ## # i 3 more rows
   ```
 
 
@@ -2714,7 +3539,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 DC      <NA>        1
   ## 5 Marvel  bad       115
   ## 6 Marvel  good      259
-  ## # ... with 5 more rows
+  ## # i 5 more rows
   ```
 
   ou
@@ -2727,8 +3552,8 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ```
 
   ```
-  ## `summarise()` has grouped output by 'editora'. You can override using the
-  ## `.groups` argument.
+  ## `summarise()` has grouped output by 'editora'. You can override using
+  ## the `.groups` argument.
   ```
 
   ```
@@ -2741,7 +3566,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 DC      <NA>        1
   ## 5 Marvel  bad       115
   ## 6 Marvel  good      259
-  ## # ... with 5 more rows
+  ## # i 5 more rows
   ```
 
 
@@ -2781,7 +3606,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Android       9
   ## 5 Animal        4
   ## 6 Asgardian     5
-  ## # ... with 56 more rows
+  ## # i 56 more rows
   ```
 
   ou 
@@ -2803,7 +3628,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
   ## 4 Android       9
   ## 5 Animal        4
   ## 6 Asgardian     5
-  ## # ... with 56 more rows
+  ## # i 56 more rows
   ```
 
 
@@ -2860,7 +3685,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Bizarro        1
     ## 5 Bolovaxian     1
     ## 6 Clone          1
-    ## # ... with 41 more rows
+    ## # i 41 more rows
     ```
 
   * Maneira repetitiva, manual:
@@ -2903,7 +3728,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Eternal       
     ## 5 Flora Colossus
     ## 6 Frost Giant   
-    ## # ... with 11 more rows
+    ## # i 11 more rows
     ```
 
     Exclusivas da DC:
@@ -2926,7 +3751,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Czarnian       
     ## 5 Gorilla        
     ## 6 Human-Vuldarian
-    ## # ... with 11 more rows
+    ## # i 11 more rows
     ```
 
     Exclusivas de outras editoras:
@@ -2949,7 +3774,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Human / Clone     
     ## 5 Human-Vulcan      
     ## 6 Icthyo Sapien     
-    ## # ... with 7 more rows
+    ## # i 7 more rows
     ```
 
   * Mesma maneira, mas usando uma função:
@@ -2989,7 +3814,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Eternal       
     ## 5 Flora Colossus
     ## 6 Frost Giant   
-    ## # ... with 11 more rows
+    ## # i 11 more rows
     ```
 
 
@@ -3007,7 +3832,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Czarnian       
     ## 5 Gorilla        
     ## 6 Human-Vuldarian
-    ## # ... with 11 more rows
+    ## # i 11 more rows
     ```
 
 
@@ -3025,7 +3850,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Human / Clone     
     ## 5 Human-Vulcan      
     ## 6 Icthyo Sapien     
-    ## # ... with 7 more rows
+    ## # i 7 more rows
     ```
 
   * Maneira complicada, usando `join`:
@@ -3053,7 +3878,7 @@ Busque mais informações sobre os pacotes que compõem o \texttt{tidyverse} \pr
     ## 4 Czarnian        DC     
     ## 5 Gorilla         DC     
     ## 6 Human-Vuldarian DC     
-    ## # ... with 41 more rows
+    ## # i 41 more rows
     ```
 
 
@@ -3242,8 +4067,9 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4 Greater short-t~ Blar~ omni  Sori~ lc                  14.9       2.3
 ## 5 Cow              Bos   herbi Arti~ domesticated         4         0.7
 ## 6 Three-toed sloth Brad~ herbi Pilo~ <NA>                14.4       2.2
-## # ... with 77 more rows, and 4 more variables: sleep_cycle <dbl>,
-## #   awake <dbl>, brainwt <dbl>, bodywt <dbl>
+## # i 77 more rows
+## # i 4 more variables: sleep_cycle <dbl>, awake <dbl>, brainwt <dbl>,
+## #   bodywt <dbl>
 \end{verbatim}
 \item
   Vamos examinar a estrutura --- usando R base:
@@ -3311,8 +4137,8 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4 Greater short-t~ Blar~ omni  Sori~ lc                  14.9       2.3
 ## 5 Cow              Bos   herbi Arti~ domesticated         4         0.7
 ## 6 Three-toed sloth Brad~ herbi Pilo~ <NA>                14.4       2.2
-## # ... with 4 more variables: sleep_cycle <dbl>, awake <dbl>,
-## #   brainwt <dbl>, bodywt <dbl>
+## # i 4 more variables: sleep_cycle <dbl>, awake <dbl>, brainwt <dbl>,
+## #   bodywt <dbl>
 \end{verbatim}
 \item
   Para examinar o \emph{data frame} interativamente:
@@ -3332,19 +4158,19 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
   \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1928}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3976}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2771}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1325}}@{}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2000}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4125}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2625}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1250}}@{}}
   \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
-  Variável
+  Variable
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Estatísticas / Valores
+  Stats / Values
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Freqs (\% de Válidos)
+  Freqs (\% of Valid)
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Faltante
+  Missing
   \end{minipage} \\
   \midrule()
   \endhead
@@ -3362,7 +4188,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   8. Big brown bat\\
   9. Bottle-nosed dolphin\\
   10. Brazilian tapir\\
-  {[} 73 outros {]}\strut
+  {[} 73 others {]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   1 ( 1,2\%)\\
   1 ( 1,2\%)\\
@@ -3393,7 +4219,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   8. Blarina\\
   9. Bos\\
   10. Bradypus\\
-  {[} 67 outros {]}\strut
+  {[} 67 others {]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   3 ( 3,6\%)\\
   3 ( 3,6\%)\\
@@ -3441,7 +4267,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   8. Perissodactyla\\
   9. Chiroptera\\
   10. Cingulata\\
-  {[} 9 outros {]}\strut
+  {[} 9 others {]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   22 (26,5\%)\\
   12 (14,5\%)\\
@@ -3483,11 +4309,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   sleep\_total\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 10,4 (4,5)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 10,4 (4,5)\\
+  min \textless{} med \textless{} max:\\
   1,9 \textless{} 10,1 \textless{} 19,9\\
-  IQE (CV) : 5,9 (0,4)\strut
-  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 5,9 (0,4)\strut
+  \end{minipage} & 65 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   0\\
   (0,0\%)\strut
   \end{minipage} \\
@@ -3495,11 +4321,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   sleep\_rem\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 1,9 (1,3)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 1,9 (1,3)\\
+  min \textless{} med \textless{} max:\\
   0,1 \textless{} 1,5 \textless{} 6,6\\
-  IQE (CV) : 1,5 (0,7)\strut
-  \end{minipage} & 32 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 1,5 (0,7)\strut
+  \end{minipage} & 32 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   22\\
   (26,5\%)\strut
   \end{minipage} \\
@@ -3507,11 +4333,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   sleep\_cycle\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 0,4 (0,4)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 0,4 (0,4)\\
+  min \textless{} med \textless{} max:\\
   0,1 \textless{} 0,3 \textless{} 1,5\\
-  IQE (CV) : 0,4 (0,8)\strut
-  \end{minipage} & 22 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 0,4 (0,8)\strut
+  \end{minipage} & 22 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   51\\
   (61,4\%)\strut
   \end{minipage} \\
@@ -3519,11 +4345,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   awake\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 13,6 (4,5)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 13,6 (4,5)\\
+  min \textless{} med \textless{} max:\\
   4,1 \textless{} 13,9 \textless{} 22,1\\
-  IQE (CV) : 5,9 (0,3)\strut
-  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 5,9 (0,3)\strut
+  \end{minipage} & 65 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   0\\
   (0,0\%)\strut
   \end{minipage} \\
@@ -3531,11 +4357,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   brainwt\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 0,3 (1)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 0,3 (1)\\
+  min \textless{} med \textless{} max:\\
   0 \textless{} 0 \textless{} 5,7\\
-  IQE (CV) : 0,1 (3,5)\strut
-  \end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 0,1 (3,5)\strut
+  \end{minipage} & 53 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   27\\
   (32,5\%)\strut
   \end{minipage} \\
@@ -3543,11 +4369,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   bodywt\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 166,1 (786,8)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 166,1 (786,8)\\
+  min \textless{} med \textless{} max:\\
   0 \textless{} 1,7 \textless{} 6654\\
-  IQE (CV) : 41,6 (4,7)\strut
-  \end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 41,6 (4,7)\strut
+  \end{minipage} & 82 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   0\\
   (0,0\%)\strut
   \end{minipage} \\
@@ -3594,7 +4420,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4 Phalanger      
 ## 5 Rock hyrax     
 ## 6 Mole rat       
-## # ... with 1 more row
+## # i 1 more row
 \end{verbatim}
 \item
   OK. Vamos manter a coluna \texttt{vore} também, apesar dos \texttt{NA}. Quando formos usar esta variável, tomaremos cuidado.
@@ -3620,7 +4446,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4 Deer mouse                  0.021
 ## 5 House mouse                 0.022
 ## 6 Big brown bat               0.023
-## # ... with 29 more rows
+## # i 29 more rows
 \end{verbatim}
 \item
   Ah, sem problema. A função \texttt{dfSummary} arredondou estes pesos para 0. Os valores de verdade ainda estão na \emph{tibble}.
@@ -3646,19 +4472,19 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
   \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1829}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4024}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2805}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1341}}@{}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1899}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4177}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2658}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1266}}@{}}
   \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
-  Variável
+  Variable
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Estatísticas / Valores
+  Stats / Values
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Freqs (\% de Válidos)
+  Freqs (\% of Valid)
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Faltante
+  Missing
   \end{minipage} \\
   \midrule()
   \endhead
@@ -3676,7 +4502,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   8. Big brown bat\\
   9. Bottle-nosed dolphin\\
   10. Brazilian tapir\\
-  {[} 73 outros {]}\strut
+  {[} 73 others {]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   1 ( 1,2\%)\\
   1 ( 1,2\%)\\
@@ -3707,7 +4533,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   8. Perissodactyla\\
   9. Chiroptera\\
   10. Cingulata\\
-  {[} 9 outros {]}\strut
+  {[} 9 others {]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   22 (26,5\%)\\
   12 (14,5\%)\\
@@ -3738,7 +4564,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   8. Blarina\\
   9. Bos\\
   10. Bradypus\\
-  {[} 67 outros {]}\strut
+  {[} 67 others {]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
   3 ( 3,6\%)\\
   3 ( 3,6\%)\\
@@ -3776,11 +4602,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   bodywt\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 166,1 (786,8)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 166,1 (786,8)\\
+  min \textless{} med \textless{} max:\\
   0 \textless{} 1,7 \textless{} 6654\\
-  IQE (CV) : 41,6 (4,7)\strut
-  \end{minipage} & 82 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 41,6 (4,7)\strut
+  \end{minipage} & 82 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   0\\
   (0,0\%)\strut
   \end{minipage} \\
@@ -3788,11 +4614,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   brainwt\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 0,3 (1)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 0,3 (1)\\
+  min \textless{} med \textless{} max:\\
   0 \textless{} 0 \textless{} 5,7\\
-  IQE (CV) : 0,1 (3,5)\strut
-  \end{minipage} & 53 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 0,1 (3,5)\strut
+  \end{minipage} & 53 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   27\\
   (32,5\%)\strut
   \end{minipage} \\
@@ -3800,11 +4626,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   awake\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 13,6 (4,5)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 13,6 (4,5)\\
+  min \textless{} med \textless{} max:\\
   4,1 \textless{} 13,9 \textless{} 22,1\\
-  IQE (CV) : 5,9 (0,3)\strut
-  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 5,9 (0,3)\strut
+  \end{minipage} & 65 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   0\\
   (0,0\%)\strut
   \end{minipage} \\
@@ -3812,11 +4638,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
   sleep\_total\\
   {[}numeric{]}\strut
   \end{minipage} & \begin{minipage}[t]{\linewidth}\raggedright
-  Média (dp) : 10,4 (4,5)\\
-  mín \textless{} mediana \textless{} máx:\\
+  Mean (sd) : 10,4 (4,5)\\
+  min \textless{} med \textless{} max:\\
   1,9 \textless{} 10,1 \textless{} 19,9\\
-  IQE (CV) : 5,9 (0,4)\strut
-  \end{minipage} & 65 valores distintos & \begin{minipage}[t]{\linewidth}\raggedright
+  IQR (CV) : 5,9 (0,4)\strut
+  \end{minipage} & 65 distinct values & \begin{minipage}[t]{\linewidth}\raggedright
   0\\
   (0,0\%)\strut
   \end{minipage} \\
@@ -3939,7 +4765,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 7 rows containing missing values (geom_point).
+## Warning: Removed 7 rows containing missing values (`geom_point()`).
 \end{verbatim}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/sono-peso-plot-3-1} \end{center}
@@ -4066,7 +4892,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 27 rows containing missing values (geom_point).
+## Warning: Removed 27 rows containing missing values (`geom_point()`).
 \end{verbatim}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-1} \end{center}
@@ -4115,7 +4941,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 18 rows containing missing values (geom_point).
+## Warning: Removed 18 rows containing missing values (`geom_point()`).
 \end{verbatim}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-2-1} \end{center}
@@ -4139,7 +4965,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 18 rows containing missing values (geom_point).
+## Warning: Removed 18 rows containing missing values (`geom_point()`).
 \end{verbatim}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-3-1} \end{center}
@@ -4181,7 +5007,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 18 rows containing missing values (geom_point).
+## Warning: Removed 18 rows containing missing values (`geom_point()`).
 \end{verbatim}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/cerebro-corpo-4-1} \end{center}
@@ -4202,10 +5028,10 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 18 rows containing missing values (geom_point).
+## Warning: Removed 18 rows containing missing values (`geom_point()`).
 \end{verbatim}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-121-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-163-1} \end{center}
 \item
   Observe como usamos o gráfico já salvo na variável \texttt{grafico} e simplesmente acrescentamos a nova escala. Este tipo de ``montagem'' de gráficos \texttt{ggplot2} é bem conveniente, para evitar repetição de código.
 \item
@@ -4223,10 +5049,10 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 18 rows containing missing values (geom_point).
+## Warning: Removed 18 rows containing missing values (`geom_point()`).
 \end{verbatim}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-122-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-164-1} \end{center}
 \item
   Agora podemos finalmente comentar sobre a informação que o gráfico mostra sobre os dados:
 
@@ -4251,18 +5077,32 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## `geom_smooth()` using formula 'y ~ x'
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 \end{verbatim}
 
 \begin{verbatim}
-## Warning: Removed 18 rows containing non-finite values (stat_smooth).
+## `geom_smooth()` using formula = 'y ~ x'
 \end{verbatim}
 
 \begin{verbatim}
-## Warning: Removed 18 rows containing missing values (geom_point).
+## Warning: Removed 18 rows containing non-finite values
+## (`stat_smooth()`).
 \end{verbatim}
 
-    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-123-1} \end{center}
+\begin{verbatim}
+## Warning: The following aesthetics were dropped during statistical transformation: size, colour
+## i This can happen when ggplot fails to infer the correct grouping structure in the data.
+## i Did you forget to specify a `group` aesthetic or to convert a numerical variable into a factor?
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 18 rows containing missing values (`geom_point()`).
+\end{verbatim}
+
+    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-165-1} \end{center}
   \item
     Todos os carnívoros têm peso corporal maior que $1$kg e peso cerebral maior ou igual a $10$g.
   \item
@@ -4370,7 +5210,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4 [6,8)             5
 ## 5 [8,10)           17
 ## 6 [10,12)          14
-## # ... with 4 more rows
+## # i 4 more rows
 \end{verbatim}
 \end{itemize}
 
@@ -4563,11 +5403,11 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O \texttt{ggplot2} tem um tema \emph{default}, chamado \texttt{theme\_gray}, que gera \protect\hyperlink{grafico4}{o \emph{scatterplot} de um exemplo anterior} deste capítulo do seguinte modo:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-126-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-168-1} \end{center}
 \item
   Para este material, escolhi o tema \texttt{theme\_linedraw}, que usa linhas pretas sobre fundo branco:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-127-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-169-1} \end{center}
 \item
   Para deixar os gráficos mais leves e facilitar a leitura, fiz as seguintes alterações no tema:
 
@@ -4586,7 +5426,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   O resultado é
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-128-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-170-1} \end{center}
 \item
   Os meus comandos para alterar o tema são
 
@@ -4839,7 +5679,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4 Greater short-tailed shrew omni  Soricomorpha        14.9
 ## 5 Cow                        herbi Artiodactyla         4  
 ## 6 Three-toed sloth           herbi Pilosa              14.4
-## # ... with 77 more rows
+## # i 77 more rows
 \end{verbatim}
 \end{itemize}
 
@@ -5175,7 +6015,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 ## 4 Star-nosed mole            omni  Soricomorpha        10.3
 ## 5 African giant pouched rat  omni  Rodentia             8.3
 ## 6 Lesser short-tailed shrew  omni  Soricomorpha         9.1
-## # ... with 14 more rows
+## # i 14 more rows
 \end{verbatim}
 \item
   Vamos extrair o vetor de horas de sono:
@@ -5247,7 +6087,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 
 \begin{verbatim}
 ## # A tibble: 0 x 4
-## # ... with 4 variables: name <chr>, vore <chr>, order <chr>,
+## # i 4 variables: name <chr>, vore <chr>, order <chr>,
 ## #   sleep_total <dbl>
 \end{verbatim}
 
@@ -5294,7 +6134,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-162-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-204-1} \end{center}
 \item
   A {\hl{caixa}} vai do valor do {\hl{primeiro quartil}} (embaixo) até o {\hl{terceiro quartil}} (em cima).
 \item
@@ -5315,7 +6155,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-163-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-205-1} \end{center}
 \item
   No \emph{boxplot} de onívoros, {\hl{os \emph{outliers} aparecem como pontos isolados,}} acima da caixa, além dos alcances do bigode superior (aliás, onde está bigode superior?).
 \item
@@ -5363,7 +6203,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-164-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-206-1} \end{center}
 \item
   {\hl{Quando a caixa é longa,}} o IQR é grande, e {\hl{os valores estão muito espalhados;}} é o caso dos herbívoros e insetívoros.
 \item
@@ -5439,7 +6279,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 ## 4 Black Brown Male 
 ## 5 Black Brown Male 
 ## 6 Black Brown Male 
-## # ... with 586 more rows
+## # i 586 more rows
 \end{verbatim}
 \item
   O \texttt{ggplot2} e os outros pacotes do \texttt{tidyverse} foram projetados para trabalhar com \emph{data frames} neste formato, {\hl{com uma observação (um indivíduo, um elemento) por linha.}} É o chamado {\hl{formato \emph{tidy}.}}
@@ -5485,19 +6325,19 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Shaded}
 
   \begin{longtable}[]{@{}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1918}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3425}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3151}}
-    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1507}}@{}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1944}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2361}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2917}}
+    >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1389}}@{}}
   \toprule()
   \begin{minipage}[b]{\linewidth}\raggedright
-  Variável
+  Variable
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Estatísticas / Valores
+  Stats / Values
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Freqs (\% de Válidos)
+  Freqs (\% of Valid)
   \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-  Faltante
+  Missing
   \end{minipage} \\
   \midrule()
   \endhead
@@ -5570,7 +6410,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-170-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-212-1} \end{center}
 
   \begin{rmdimportant}
 
@@ -5625,7 +6465,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-171-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-213-1} \end{center}
 \item
   A posição $x$ e a altura de cada barra são estéticas: {\hl{a posição $x$ representa a cor dos cabelos}}, e {\hl{a altura representa a frequência daquela cor}}.
 \item
@@ -5643,7 +6483,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-172-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-214-1} \end{center}
 \item
   Se a cor dos homens incomoda você, altere a escala que especifica o preenchimento (\texttt{scale\_fill\_discrete}):
 
@@ -5660,7 +6500,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-173-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-215-1} \end{center}
 \item
   {\hl{Podemos fazer um gráfico de barras horizontais com {\mbox{\texttt{coord\_flip}}}.}} Isto geralmente é útil quando os rótulos das barras são longos:
 
@@ -5678,7 +6518,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-174-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-216-1} \end{center}
 \item
   Você consegue dizer se há mais homens ou mulheres com cabelos pretos? E castanhos? E ruivos?
 \item
@@ -5699,7 +6539,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-175-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-217-1} \end{center}
 \item
   Agora vamos examinar a relação entre as cores dos olhos e as cores dos cabelos:
 
@@ -5718,7 +6558,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-176-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-218-1} \end{center}
 \item
   Ou, com barras lado a lado:
 
@@ -5737,7 +6577,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-177-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-219-1} \end{center}
 \item
   Observações e perguntas:
 
@@ -5766,7 +6606,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-178-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-220-1} \end{center}
 \end{itemize}
 
 \begin{itemize}
@@ -5791,7 +6631,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-179-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-221-1} \end{center}
 \end{itemize}
 
 \hypertarget{data-frame-juxe1-contendo-os-totais}{%
@@ -5824,7 +6664,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 ## 4 homem castanhos verdes        3
 ## 5 homem louros    avelã        25
 ## 6 homem louros    azuis        50
-## # ... with 26 more rows
+## # i 26 more rows
 \end{verbatim}
 \item
   Para $4$ cores de cabelo, $4$ cores de olhos, e $2$ sexos, são $32$ combinações possíveis.
@@ -5842,7 +6682,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-181-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-223-1} \end{center}
 \item
   Com \texttt{geom\_col}, {\hl{precisamos passar a estética $y$}} (no nosso exemplo, a variável \texttt{n}, que contém as frequências).
 \item
@@ -5860,7 +6700,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-182-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-224-1} \end{center}
 \end{itemize}
 
 \hypertarget{gruxe1ficos-de-linha-e-suxe9ries-temporais}{%
@@ -5916,7 +6756,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 ## 4  1958  68484  35218  6662   2845    2691   1663      836
 ## 5  1959  71799  37598  6856   3000    2868   1769      911
 ## 6  1960  76036  40341  8220   3145    3054   1905     1008
-## # ... with 1 more row
+## # i 1 more row
 \end{verbatim}
 \item
   Esta \emph{tibble} {\hl{não está no formato \emph{tidy}}}. Queremos que cada linha corresponda a uma observação, contendo
@@ -5955,7 +6795,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 ## 4  1951 S.Amer   1815
 ## 5  1951 Oceania  1646
 ## 6  1951 Africa     89
-## # ... with 43 more rows
+## # i 43 more rows
 \end{verbatim}
 \item
   Confira: antes, tínhamos $7$ anos, com $7$ quantidades por ano, uma quantidade por região. Eram $49$ quantidades. Agora temos uma \emph{tibble} de $49$ linhas.
@@ -5977,7 +6817,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-186-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-228-1} \end{center}
 \item
   Embora a legenda associe uma cor a cada região, {\hl{a leitura seria mais fácil se a ordem das regiões na legenda coincidisse com a posição das linhas na borda direita da grade}}:
 
@@ -6002,7 +6842,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-187-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-229-1} \end{center}
 \item
   Parece que está faltando uma linha, mas o que acontece é que as quantidades da América do Sul e da Oceania são bem parecidas:
 
@@ -6023,7 +6863,7 @@ A {\hl{média é pouco robusta}}, muito sensível a \emph{outliers}.
 \end{Highlighting}
 \end{Shaded}
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-188-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-230-1} \end{center}
 \item
   Estamos tratando estes dados como simples números, mas, na verdade, {\hl{este conjunto de dados é uma série temporal (\emph{time series})}}.
 \item
@@ -6216,7 +7056,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   \protect\hypertarget{dados-normais}{}{} O histograma dos nossos dados é
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-193-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-235-1} \end{center}
 \item
   Vamos calcular a moda com a função \texttt{mfv} (\emph{most frequent value}), do pacote \texttt{modeest}:
 
@@ -6244,206 +7084,206 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-##    [1] -1.46619355 -1.32739195 -0.58986079 -0.20482358 -0.18495353
-##    [6] -0.05840035  0.11289132  0.14858550  0.17874743  0.24242600
-##   [11]  0.44110718  0.47210898  0.64419963  0.76153197  0.83186417
-##   [16]  0.84184540  0.88111055  0.88414099  0.89806386  1.03555566
-##   [21]  1.06029221  1.10336815  1.15107315  1.15828824  1.16096614
-##   [26]  1.17133438  1.17841228  1.29530269  1.31320549  1.32036049
-##   [31]  1.32580605  1.34461503  1.36510004  1.38765892  1.39055539
-##   [36]  1.42869540  1.51543351  1.54131216  1.55675319  1.57146876
-##   [41]  1.59486846  1.60712697  1.61837100  1.62931136  1.65896774
-##   [46]  1.66190781  1.66677077  1.68917978  1.70723719  1.72056601
-##   [51]  1.77713959  1.80120396  1.81167736  1.81907547  1.88770812
-##   [56]  1.89263534  1.90124025  1.90549430  1.92174506  1.93441649
-##   [61]  1.94615418  1.94621897  1.96099694  2.05069909  2.06237944
-##   [66]  2.06810616  2.09247274  2.09314429  2.10041020  2.13359417
-##   [71]  2.14996823  2.16246544  2.18775455  2.19906190  2.22285985
-##   [76]  2.26013561  2.26095372  2.27332623  2.29270633  2.29283695
-##   [81]  2.29295023  2.29990635  2.34617356  2.37636458  2.37919964
-##   [86]  2.39621734  2.41504531  2.42191594  2.43333368  2.44173410
-##   [91]  2.44271525  2.44312776  2.44446082  2.44651398  2.44768838
-##   [96]  2.52275313  2.52916915  2.53608120  2.55482718  2.58846896
-##  [101]  2.59848614  2.62946461  2.66435062  2.68352337  2.68813768
-##  [106]  2.72586363  2.75744731  2.76587923  2.77794580  2.81976832
-##  [111]  2.83987199  2.85314828  2.86845521  2.87426457  2.87673927
-##  [116]  2.88636345  2.90062684  2.91720227  2.91736380  2.91806369
-##  [121]  2.92500431  2.92620484  2.92777947  2.93030782  2.94769620
-##  [126]  2.97042122  2.97642157  3.01560393  3.02933127  3.03581557
-##  [131]  3.04211906  3.04364903  3.05958446  3.06297747  3.06409606
-##  [136]  3.07453703  3.07777227  3.08762295  3.10578293  3.11026281
-##  [141]  3.13516272  3.14104055  3.14460931  3.17314643  3.18693871
-##  [146]  3.20145719  3.20189254  3.20699811  3.20867604  3.21334933
-##  [151]  3.21497013  3.21928615  3.21936197  3.22390302  3.23698600
-##  [156]  3.23866560  3.25062479  3.25722285  3.25876347  3.26196416
-##  [161]  3.26862619  3.26931045  3.26937960  3.27672986  3.28195684
-##  [166]  3.28412258  3.29136870  3.31265366  3.33898513  3.35538662
-##  [171]  3.35555089  3.35593864  3.36529827  3.36925782  3.37765563
-##  [176]  3.37944126  3.38333391  3.38632376  3.39543643  3.40091528
-##  [181]  3.40225930  3.41015885  3.41488977  3.41849433  3.42642593
-##  [186]  3.43124837  3.43487323  3.43865516  3.44341838  3.44553428
-##  [191]  3.44645015  3.46161940  3.46644533  3.47630880  3.47901818
-##  [196]  3.48880242  3.49685429  3.50397334  3.50668276  3.50711457
-##  [201]  3.50800199  3.51790458  3.51974705  3.52528696  3.53075676
-##  [206]  3.53707277  3.54723740  3.55412947  3.56368092  3.56660298
-##  [211]  3.57612460  3.57654949  3.58188224  3.58204689  3.59241197
-##  [216]  3.60344549  3.60854405  3.61048126  3.62076449  3.62474433
-##  [221]  3.63248631  3.64262671  3.65841877  3.66473814  3.66784451
-##  [226]  3.67100177  3.67175506  3.67719315  3.69147093  3.69251768
-##  [231]  3.70694648  3.71524852  3.71749082  3.71989614  3.72175179
-##  [236]  3.72280819  3.72591796  3.73232984  3.73700554  3.74233066
-##  [241]  3.75476051  3.75730887  3.75742333  3.76111911  3.76474259
-##  [246]  3.76623472  3.76983815  3.78495326  3.78963844  3.79072505
-##  [251]  3.79462485  3.79469719  3.79663161  3.80546054  3.82046082
-##  [256]  3.82103119  3.82459962  3.82950085  3.82989933  3.83271315
-##  [261]  3.83367622  3.83418604  3.83830127  3.86413483  3.87642562
-##  [266]  3.87748950  3.87935829  3.88201729  3.88595330  3.88878120
-##  [271]  3.89274053  3.89549134  3.90015809  3.91974044  3.92042647
-##  [276]  3.93892486  3.94062216  3.94777083  3.95093562  3.95424561
-##  [281]  3.95462835  3.97112837  3.97461826  3.97569815  3.98064258
-##  [286]  3.98290076  3.98306410  3.99934764  4.00813639  4.01751094
-##  [291]  4.03777913  4.03782569  4.04086318  4.04803119  4.05727354
-##  [296]  4.05744302  4.07464370  4.07825456  4.07896788  4.08327461
-##  [301]  4.09232709  4.09886586  4.10175241  4.10989004  4.11171858
-##  [306]  4.12598624  4.12633276  4.13460176  4.13585592  4.14080400
-##  [311]  4.14181825  4.14234603  4.14810512  4.15134008  4.15228020
-##  [316]  4.15905565  4.19191771  4.21070143  4.22028808  4.22208243
-##  [321]  4.22335645  4.22680033  4.23072261  4.23218718  4.23363036
-##  [326]  4.25508296  4.25639628  4.25994466  4.26321750  4.27749821
-##  [331]  4.28760754  4.28872814  4.29343548  4.31033704  4.31547755
-##  [336]  4.31972301  4.32457511  4.32519801  4.34992452  4.35295973
-##  [341]  4.36327210  4.36782997  4.36938743  4.37246906  4.38266112
-##  [346]  4.38940140  4.39834428  4.39925324  4.40492351  4.40810115
-##  [351]  4.41753402  4.42349459  4.42506487  4.42938818  4.43711885
-##  [356]  4.44090779  4.44936604  4.45171912  4.45226523  4.45412372
-##  [361]  4.45892033  4.45990934  4.46228459  4.46493105  4.46955051
-##  [366]  4.47838496  4.48618274  4.48651573  4.49173170  4.49295010
-##  [371]  4.49616661  4.50082009  4.50178212  4.50514277  4.50515245
-##  [376]  4.51054607  4.51098826  4.52181545  4.52606036  4.53140300
-##  [381]  4.53238928  4.54762401  4.55782736  4.55784279  4.56274216
-##  [386]  4.56470421  4.56562502  4.57496589  4.57813676  4.58028581
-##  [391]  4.58425260  4.58459758  4.58545079  4.59426895  4.60538936
-##  [396]  4.61234106  4.61627093  4.62122584  4.62129560  4.62696745
-##  [401]  4.63147606  4.63582693  4.63726816  4.64262449  4.66380771
-##  [406]  4.66506075  4.67206907  4.67322595  4.68104783  4.68485577
-##  [411]  4.68594176  4.68709934  4.68999852  4.69502987  4.69787202
-##  [416]  4.71042568  4.71444896  4.71529124  4.72496359  4.73680943
-##  [421]  4.75123226  4.75807809  4.76083705  4.76245670  4.76622134
-##  [426]  4.76955120  4.80110998  4.80633051  4.80761009  4.81412693
-##  [431]  4.81588241  4.81627855  4.82470334  4.82494514  4.83223772
-##  [436]  4.83285140  4.83461420  4.84927126  4.84950565  4.85030011
-##  [441]  4.85293772  4.85634380  4.85874191  4.86926121  4.87130629
-##  [446]  4.87636684  4.88539707  4.88954707  4.89611841  4.89802513
-##  [451]  4.90596841  4.91007439  4.91307661  4.92013205  4.92031938
-##  [456]  4.92188602  4.92687345  4.93562376  4.94816622  4.94819954
-##  [461]  4.95071775  4.95284876  4.95993094  4.96064357  4.96268299
-##  [466]  4.96601729  4.96610226  4.97939194  4.97975596  4.98273638
-##  [471]  4.98723904  4.99553351  5.01070748  5.01613930  5.01666201
-##  [476]  5.01804093  5.02194452  5.02627763  5.03058958  5.03187295
-##  [481]  5.03546585  5.04035354  5.04056453  5.04161548  5.04566342
-##  [486]  5.04842779  5.06124871  5.06289798  5.06384242  5.06957044
-##  [491]  5.07167939  5.07804664  5.08019419  5.10674702  5.11337903
-##  [496]  5.11792825  5.11812112  5.13400872  5.13570953  5.13646376
-##  [501]  5.13750903  5.13884763  5.14131329  5.14141356  5.15309101
-##  [506]  5.16162288  5.16209963  5.16566345  5.16649555  5.16787493
-##  [511]  5.16789598  5.17372718  5.17666013  5.18495173  5.18721748
-##  [516]  5.21083219  5.21174238  5.21597614  5.22960467  5.23266991
-##  [521]  5.23488354  5.25065901  5.25160913  5.25783851  5.26648588
-##  [526]  5.26761103  5.27108749  5.27365418  5.28215198  5.29580992
-##  [531]  5.29999091  5.30303555  5.30867443  5.31112426  5.31879607
-##  [536]  5.32286181  5.33002704  5.34131443  5.34282427  5.34459531
-##  [541]  5.35031649  5.35180327  5.35934987  5.36700516  5.36716110
-##  [546]  5.36799794  5.37105890  5.37685944  5.37732305  5.37962411
-##  [551]  5.39089169  5.39517293  5.39842612  5.39955807  5.40334655
-##  [556]  5.40459224  5.40488812  5.41030114  5.41126526  5.41207903
-##  [561]  5.41581468  5.42060392  5.42816070  5.43408262  5.43897701
-##  [566]  5.44970994  5.45041820  5.45209629  5.45500474  5.45620153
-##  [571]  5.45730227  5.45886339  5.46055889  5.46198774  5.46216815
-##  [576]  5.46272112  5.46560591  5.47656789  5.47697277  5.48183484
-##  [581]  5.48529032  5.51322748  5.51337338  5.51487146  5.51843174
-##  [586]  5.51867535  5.52309271  5.52581108  5.53073787  5.53341154
-##  [591]  5.53979701  5.54520370  5.54534076  5.56075538  5.56636565
-##  [596]  5.57511091  5.58050888  5.58403994  5.58809022  5.59028615
-##  [601]  5.59581917  5.59996707  5.60202121  5.60348746  5.60588868
-##  [606]  5.60985795  5.61502514  5.62121268  5.62218773  5.63889140
-##  [611]  5.64611118  5.65456761  5.65901777  5.65919988  5.66386763
-##  [616]  5.66671817  5.68130654  5.68830354  5.68888188  5.68925065
-##  [621]  5.69214882  5.70354054  5.70630615  5.70772141  5.71110335
-##  [626]  5.71126132  5.72537484  5.72730459  5.73128017  5.73381945
-##  [631]  5.74523414  5.75927470  5.77277695  5.77316779  5.77649764
-##  [636]  5.77936803  5.78448194  5.78488284  5.78717413  5.79339344
-##  [641]  5.79357720  5.79532364  5.79701624  5.80193557  5.82602972
-##  [646]  5.82885698  5.82909145  5.83361078  5.83715605  5.84193673
-##  [651]  5.84337257  5.84741188  5.84930699  5.87109456  5.87266744
-##  [656]  5.87621987  5.88847873  5.89697769  5.90383994  5.90828601
-##  [661]  5.90912932  5.91267804  5.91550963  5.91644521  5.91694381
-##  [666]  5.91988104  5.92467395  5.92678479  5.92767389  5.93035392
-##  [671]  5.93204149  5.93227271  5.93262115  5.93470345  5.93995263
-##  [676]  5.94707866  5.94764980  5.95114386  5.95383813  5.95590923
-##  [681]  5.97495684  5.97564486  5.98052027  5.99342236  5.99510484
-##  [686]  5.99770849  6.00584871  6.00954021  6.02412899  6.02842344
-##  [691]  6.02913642  6.02933357  6.03416218  6.03804932  6.04138238
-##  [696]  6.04954303  6.05160827  6.05179909  6.05344430  6.06170758
-##  [701]  6.06810023  6.06923103  6.07162618  6.07240458  6.07908012
-##  [706]  6.08982701  6.11342246  6.11527111  6.12468839  6.13955994
-##  [711]  6.14189463  6.14560871  6.15463518  6.16916225  6.17238137
-##  [716]  6.17849535  6.18298826  6.19195099  6.20468578  6.20552468
-##  [721]  6.20588354  6.21180434  6.21216054  6.21492199  6.22126075
-##  [726]  6.22171864  6.24038339  6.24754223  6.25503132  6.25679517
-##  [731]  6.26536097  6.26567639  6.26662014  6.27022061  6.27429864
-##  [736]  6.27853455  6.27929076  6.28342255  6.29521486  6.30906453
-##  [741]  6.31220193  6.31240086  6.32168384  6.33378284  6.33516831
-##  [746]  6.34310456  6.34717002  6.34846188  6.35426903  6.35523162
-##  [751]  6.36177297  6.37056556  6.37529435  6.37901256  6.38245332
-##  [756]  6.38723362  6.39151277  6.39473709  6.39681455  6.40075557
-##  [761]  6.40336756  6.40790337  6.41700218  6.42126854  6.42498220
-##  [766]  6.42870997  6.44057410  6.45173728  6.46049663  6.46387493
-##  [771]  6.47344978  6.49509216  6.49586688  6.49679666  6.49868212
-##  [776]  6.49989128  6.50043334  6.50112898  6.50367027  6.51747230
-##  [781]  6.51774432  6.53182870  6.54681408  6.54938351  6.55256104
-##  [786]  6.55872242  6.55876564  6.56746198  6.57866940  6.58856094
-##  [791]  6.61196339  6.62310921  6.63416792  6.63582267  6.64971655
-##  [796]  6.65343292  6.65456495  6.66154522  6.66635287  6.67227564
-##  [801]  6.68527486  6.70594452  6.71976913  6.72775908  6.74844350
-##  [806]  6.74986167  6.75607257  6.75618890  6.79703100  6.80230485
-##  [811]  6.80521180  6.80634229  6.81413413  6.81752665  6.82033301
-##  [816]  6.82204895  6.82305376  6.82536206  6.83875597  6.83902453
-##  [821]  6.84877902  6.85486683  6.86688170  6.88647003  6.88728655
-##  [826]  6.89902094  6.90716422  6.91780555  6.92353433  6.92428189
-##  [831]  6.93692130  6.94790773  6.94882930  6.95686338  6.96204275
-##  [836]  6.96655683  6.97174459  6.97562045  6.97839555  6.98518437
-##  [841]  7.00216984  7.00800989  7.01213539  7.01461442  7.03679792
-##  [846]  7.04123515  7.05747381  7.06918406  7.09026041  7.09141267
-##  [851]  7.10465727  7.10537923  7.11431943  7.11756217  7.11926076
-##  [856]  7.12993409  7.16525500  7.17111035  7.17967956  7.18323541
-##  [861]  7.18485058  7.22865693  7.22886374  7.23377292  7.23565498
-##  [866]  7.23573283  7.23665498  7.25192339  7.27405952  7.27795301
-##  [871]  7.28181245  7.28871997  7.30412253  7.31306972  7.31533196
-##  [876]  7.32138265  7.34006134  7.35838849  7.37834336  7.39894411
-##  [881]  7.40510711  7.43155015  7.47386520  7.48163649  7.49349398
-##  [886]  7.49721868  7.50947345  7.51305451  7.51391150  7.52806282
-##  [891]  7.53316294  7.53526572  7.54231389  7.55159486  7.55703390
-##  [896]  7.56850265  7.57996967  7.58487085  7.58708706  7.60547726
-##  [901]  7.61682769  7.61876728  7.62420931  7.62443584  7.64324804
-##  [906]  7.64592879  7.64783022  7.66317599  7.66804004  7.68339972
-##  [911]  7.71030875  7.71846900  7.72135412  7.73218516  7.74626792
-##  [916]  7.77504669  7.81884955  7.82497900  7.83326724  7.83745476
-##  [921]  7.84821940  7.86876622  7.90774592  7.93263129  7.94098313
-##  [926]  7.94491312  7.94927321  7.96126623  7.97752216  7.99080375
-##  [931]  8.00466737  8.01263267  8.01392145  8.04131347  8.04624882
-##  [936]  8.05700360  8.07298921  8.07326823  8.10120447  8.15529541
-##  [941]  8.15544540  8.16585112  8.17388781  8.19202596  8.19446000
-##  [946]  8.20806796  8.22816355  8.23102422  8.25986800  8.29312073
-##  [951]  8.29605758  8.31305088  8.31493160  8.37498670  8.38309853
-##  [956]  8.48823409  8.49564020  8.55335086  8.56280204  8.56830955
-##  [961]  8.56947346  8.57155081  8.60623052  8.63666090  8.64723961
-##  [966]  8.64758610  8.66094991  8.66225757  8.67697059  8.79293817
-##  [971]  8.81213509  8.82042399  8.85881505  8.88690912  8.95845652
-##  [976]  9.04134540  9.13905045  9.16340073  9.17234049  9.18883786
-##  [981]  9.25260590  9.28642982  9.29428558  9.31359550  9.32554056
-##  [986]  9.46029153  9.47277758  9.58294234  9.59103617  9.66427928
-##  [991]  9.74326934  9.76282910  9.82472312 10.05597514 10.20014809
-##  [996] 10.20934333 10.24207527 10.55461977 10.69985454 10.94221956
+##    [1] -0.80922609 -0.80258999 -0.71827976 -0.39386167 -0.21553485
+##    [6] -0.10717526 -0.05776152  0.05569488  0.09121222  0.17251727
+##   [11]  0.32123036  0.32706333  0.40677898  0.43299911  0.43303696
+##   [16]  0.50842297  0.61931701  0.62005312  0.65107613  0.67524314
+##   [21]  0.69017031  0.73805464  0.74249712  0.94615070  0.95411089
+##   [26]  1.04024551  1.14834040  1.16028394  1.16602762  1.17213743
+##   [31]  1.24247589  1.27250686  1.29004815  1.32779021  1.34124392
+##   [36]  1.35223146  1.36773233  1.37084979  1.39003856  1.41721708
+##   [41]  1.45873930  1.47545255  1.47748843  1.49933283  1.50282454
+##   [46]  1.50401100  1.53028685  1.55436067  1.61174752  1.63775301
+##   [51]  1.67715832  1.71405499  1.72925301  1.74431126  1.75033026
+##   [56]  1.75478492  1.78352879  1.81774919  1.82390926  1.82506417
+##   [61]  1.84233050  1.87267416  1.87802172  1.91796020  1.92322285
+##   [66]  1.94775273  1.95744202  1.96393526  1.97668628  1.98554365
+##   [71]  1.99321028  2.01150542  2.01177590  2.02479737  2.04480941
+##   [76]  2.11888796  2.12433773  2.12914110  2.14597621  2.16024702
+##   [81]  2.17072280  2.17314625  2.18593753  2.19337512  2.20756769
+##   [86]  2.20784180  2.23030766  2.24717822  2.27206422  2.28068457
+##   [91]  2.31667546  2.32353431  2.32449335  2.35136766  2.35599332
+##   [96]  2.37510783  2.37511880  2.40644018  2.41329505  2.42684467
+##  [101]  2.43147813  2.43339521  2.48499272  2.50562897  2.51153237
+##  [106]  2.52264668  2.54695295  2.54881874  2.55729702  2.57403244
+##  [111]  2.58465168  2.60141299  2.60997401  2.61175372  2.63093882
+##  [116]  2.65609616  2.67376554  2.67559921  2.67600887  2.67672276
+##  [121]  2.67762203  2.67893440  2.70219123  2.71040865  2.72595589
+##  [126]  2.72828509  2.72851752  2.73167706  2.77419003  2.77492488
+##  [131]  2.77622941  2.79309181  2.79999310  2.80708108  2.80710208
+##  [136]  2.81610415  2.82194880  2.82598732  2.84047299  2.84957169
+##  [141]  2.85570843  2.89604226  2.90033044  2.90417481  2.91134072
+##  [146]  2.91285976  2.91385235  2.92454548  2.94378062  2.96332378
+##  [151]  2.96623643  2.96774173  2.98126125  2.98801597  2.99563417
+##  [156]  3.00062363  3.01806596  3.01915015  3.02571338  3.02944012
+##  [161]  3.03361141  3.03843305  3.03916482  3.04042787  3.04337155
+##  [166]  3.04629351  3.06847514  3.08536493  3.10317023  3.10652365
+##  [171]  3.10691266  3.11105175  3.11465380  3.11670752  3.11764621
+##  [176]  3.11790308  3.14696303  3.14849062  3.15508552  3.15610440
+##  [181]  3.16262192  3.16849655  3.17522593  3.17761549  3.17875567
+##  [186]  3.17886112  3.17929491  3.18876041  3.18892336  3.19976225
+##  [191]  3.20643039  3.22150698  3.22298875  3.22964822  3.23027562
+##  [196]  3.24532558  3.25616781  3.25769748  3.26796510  3.29742513
+##  [201]  3.29761282  3.30217129  3.30237415  3.30442855  3.30945971
+##  [206]  3.31608540  3.31998556  3.32150715  3.32885788  3.32924575
+##  [211]  3.33654428  3.35833997  3.36917606  3.37699643  3.38855827
+##  [216]  3.39451218  3.40053920  3.40753809  3.42494366  3.42725680
+##  [221]  3.42746463  3.44306714  3.44697712  3.46058045  3.46624689
+##  [226]  3.46652443  3.47223858  3.47388151  3.48346139  3.48757813
+##  [231]  3.49341626  3.49469819  3.51340218  3.51522040  3.52500050
+##  [236]  3.53774784  3.54479943  3.56013343  3.57313630  3.58153542
+##  [241]  3.59459321  3.59630609  3.60189539  3.60476190  3.60901154
+##  [246]  3.61050478  3.61085385  3.61846254  3.63303725  3.64631600
+##  [251]  3.65208828  3.65954252  3.66397542  3.66527872  3.66717915
+##  [256]  3.66840410  3.67981954  3.68086292  3.68226698  3.68323248
+##  [261]  3.68467466  3.70769878  3.71640056  3.71643554  3.74779049
+##  [266]  3.75025971  3.75171308  3.75462395  3.75747918  3.76006437
+##  [271]  3.76655270  3.77082366  3.78265099  3.79551251  3.79768386
+##  [276]  3.80274968  3.80486746  3.80498224  3.80649915  3.81278648
+##  [281]  3.81456487  3.83236208  3.84753604  3.85761422  3.86076710
+##  [286]  3.88213636  3.90985510  3.91139634  3.91446906  3.91515625
+##  [291]  3.91634364  3.91825821  3.93540169  3.94357100  3.95097666
+##  [296]  3.95243638  3.95420400  3.95479745  3.96240119  3.96586888
+##  [301]  3.96687332  3.96870634  3.98163656  3.98585998  3.98739835
+##  [306]  3.98786412  3.98818265  3.99210634  4.00387249  4.00742604
+##  [311]  4.03020006  4.03063069  4.03078003  4.04064762  4.04454695
+##  [316]  4.04923405  4.04980515  4.06680304  4.07036926  4.07187004
+##  [321]  4.09712420  4.10958756  4.10964447  4.11028207  4.11255319
+##  [326]  4.11343607  4.12051820  4.12756299  4.12928829  4.13645193
+##  [331]  4.14023942  4.14942045  4.15578373  4.15828747  4.16332060
+##  [336]  4.17138546  4.17316198  4.19079590  4.19477805  4.19508301
+##  [341]  4.20642080  4.20689950  4.20723861  4.22895056  4.22949403
+##  [346]  4.24663996  4.25874138  4.28074380  4.28296562  4.29620497
+##  [351]  4.29671456  4.29714096  4.30170581  4.30196759  4.31367106
+##  [356]  4.31768119  4.32589111  4.34181975  4.34208401  4.34469710
+##  [361]  4.34680403  4.35595550  4.36064453  4.36069804  4.37121352
+##  [366]  4.39975024  4.40158751  4.40539936  4.41434043  4.42010406
+##  [371]  4.43389924  4.43786213  4.44492947  4.45019327  4.45721403
+##  [376]  4.45922818  4.46493448  4.46714443  4.47077721  4.49281466
+##  [381]  4.49359094  4.49366862  4.49380496  4.49819145  4.50053853
+##  [386]  4.50275146  4.50620367  4.50960098  4.50992824  4.51133676
+##  [391]  4.51280913  4.51656572  4.51922774  4.52264933  4.52536482
+##  [396]  4.53076268  4.53129997  4.53514246  4.53669637  4.53759295
+##  [401]  4.54141418  4.54564022  4.55365262  4.56094396  4.56202392
+##  [406]  4.56302698  4.57868363  4.58061245  4.58338545  4.58371868
+##  [411]  4.58612037  4.58677082  4.59031205  4.60395331  4.60883631
+##  [416]  4.60950746  4.61162878  4.62856715  4.64266497  4.65540578
+##  [421]  4.66122518  4.66434066  4.66979850  4.67228923  4.67379032
+##  [426]  4.67452646  4.67780709  4.68495031  4.69201583  4.70200650
+##  [431]  4.70366500  4.71001207  4.71359541  4.71474285  4.71927211
+##  [436]  4.72063858  4.72730409  4.73102424  4.73203884  4.73349187
+##  [441]  4.73435072  4.73649889  4.73716790  4.73744689  4.74095586
+##  [446]  4.74160544  4.74521354  4.74751372  4.75498303  4.75628887
+##  [451]  4.76455419  4.76567932  4.76950656  4.76991722  4.80002030
+##  [456]  4.80600150  4.82266575  4.83740037  4.83935769  4.84097627
+##  [461]  4.84100908  4.84322102  4.84833501  4.85026623  4.85090950
+##  [466]  4.85251842  4.85368012  4.85862726  4.85924710  4.87134943
+##  [471]  4.87709823  4.88317504  4.88584774  4.89357448  4.90533311
+##  [476]  4.91313720  4.92021729  4.92730492  4.93121673  4.93167469
+##  [481]  4.93538616  4.94276819  4.94571591  4.95001489  4.95024493
+##  [486]  4.95381454  4.95816924  4.96718212  4.97541664  4.97972246
+##  [491]  4.98002023  4.98398992  4.98718795  4.99202563  4.99657145
+##  [496]  5.00180740  5.00562948  5.01140258  5.01233100  5.01345593
+##  [501]  5.01409983  5.01937362  5.01965106  5.02109865  5.02899828
+##  [506]  5.02914083  5.03386725  5.03461522  5.03609009  5.03655894
+##  [511]  5.03682412  5.03924931  5.04626692  5.05537508  5.05641115
+##  [516]  5.06083942  5.06152300  5.06339776  5.06500684  5.09081780
+##  [521]  5.09173665  5.09717691  5.09935755  5.10551998  5.10727289
+##  [526]  5.11629305  5.13027193  5.13834471  5.14261037  5.14393677
+##  [531]  5.14580233  5.14622456  5.14634111  5.14694758  5.15535497
+##  [536]  5.15986327  5.17770002  5.18674620  5.18737395  5.19319164
+##  [541]  5.19415890  5.19981207  5.20842292  5.21385308  5.21782560
+##  [546]  5.21883991  5.21971429  5.22741253  5.22923448  5.23210511
+##  [551]  5.24131092  5.25873760  5.26618501  5.27229759  5.27407914
+##  [556]  5.27778470  5.28321003  5.29829040  5.31565255  5.31612488
+##  [561]  5.31859962  5.32635788  5.32981259  5.33518670  5.34595036
+##  [566]  5.36962920  5.37180364  5.37372950  5.38084363  5.39033091
+##  [571]  5.39653506  5.39671580  5.40049381  5.40450935  5.41454229
+##  [576]  5.42096805  5.42418499  5.45487709  5.47360987  5.47481417
+##  [581]  5.47493175  5.47650692  5.47930932  5.48372981  5.48504558
+##  [586]  5.48729813  5.49755911  5.50060676  5.50151774  5.50486208
+##  [591]  5.50932414  5.50976893  5.51550758  5.51762994  5.52136925
+##  [596]  5.52145348  5.52262087  5.52339126  5.52443301  5.52744093
+##  [601]  5.53781381  5.53854681  5.57094440  5.57233138  5.57649928
+##  [606]  5.57909865  5.57967670  5.58760709  5.58939758  5.59230796
+##  [611]  5.59441091  5.59619274  5.60184175  5.60356115  5.60654545
+##  [616]  5.61145072  5.61202079  5.61518512  5.61899325  5.61923845
+##  [621]  5.62359296  5.62833344  5.63759812  5.64241386  5.65169759
+##  [626]  5.65174568  5.65369297  5.66093656  5.66209202  5.67081696
+##  [631]  5.67805649  5.69273039  5.69706820  5.70410449  5.70447638
+##  [636]  5.70952919  5.71604650  5.72046371  5.74651650  5.74919828
+##  [641]  5.75049510  5.75838033  5.76860254  5.79112952  5.79544541
+##  [646]  5.80479034  5.81252518  5.81501599  5.81851069  5.82277485
+##  [651]  5.82531089  5.82659402  5.83304841  5.84972693  5.85196635
+##  [656]  5.85879568  5.86353960  5.86742687  5.86937644  5.87528802
+##  [661]  5.88768821  5.89849463  5.90171083  5.91173794  5.91416369
+##  [666]  5.91538462  5.92143548  5.93031256  5.93034222  5.93119974
+##  [671]  5.93387015  5.93861762  5.94230594  5.95702631  5.95751510
+##  [676]  5.96096284  5.96218172  5.96421330  5.96908571  5.97270271
+##  [681]  5.97862597  5.97966574  5.98022527  5.99362275  6.00099826
+##  [686]  6.00166185  6.01682706  6.02190514  6.02779383  6.02831680
+##  [691]  6.03458323  6.05249365  6.05777361  6.05813661  6.05967697
+##  [696]  6.06210914  6.07825350  6.07896047  6.08301990  6.09546528
+##  [701]  6.10051436  6.10318990  6.10607155  6.11482127  6.13069701
+##  [706]  6.13175873  6.13541616  6.13715321  6.13773638  6.14420241
+##  [711]  6.14509802  6.14739865  6.14837854  6.14902412  6.15010913
+##  [716]  6.15169385  6.16041830  6.16053354  6.17592789  6.17899253
+##  [721]  6.18218637  6.18465903  6.18499534  6.18531355  6.19837808
+##  [726]  6.21191005  6.21301975  6.21623842  6.22376403  6.22683817
+##  [731]  6.22925145  6.23246246  6.24286969  6.24367015  6.24422694
+##  [736]  6.24591195  6.25245577  6.25548508  6.25881818  6.25933198
+##  [741]  6.26130549  6.26540146  6.26692973  6.26886260  6.28577392
+##  [746]  6.29157726  6.29574412  6.30041869  6.31062773  6.32081305
+##  [751]  6.32536743  6.33248694  6.33687435  6.33697354  6.34304040
+##  [756]  6.34419714  6.34534545  6.35804221  6.36201056  6.36867528
+##  [761]  6.37496590  6.37611009  6.38058619  6.38318283  6.39196011
+##  [766]  6.39641067  6.40561364  6.40998839  6.41252482  6.43312962
+##  [771]  6.43457179  6.43466635  6.43557123  6.43561688  6.45305641
+##  [776]  6.46135046  6.46911389  6.49156082  6.50547407  6.50938913
+##  [781]  6.51008873  6.51535257  6.53090562  6.53186535  6.53763428
+##  [786]  6.55002735  6.55327471  6.55894749  6.56508493  6.56966322
+##  [791]  6.57850507  6.57939596  6.61410428  6.62349418  6.63102519
+##  [796]  6.63318523  6.63978901  6.65157416  6.65737058  6.66261916
+##  [801]  6.67010563  6.68726537  6.68970413  6.69539658  6.69879675
+##  [806]  6.70194097  6.70798465  6.71389015  6.71700132  6.71741400
+##  [811]  6.71790242  6.72118185  6.72216993  6.73167912  6.73606129
+##  [816]  6.73774723  6.74599832  6.74942125  6.75709402  6.76750527
+##  [821]  6.79121503  6.79130975  6.81374066  6.81919895  6.82242065
+##  [826]  6.82442602  6.82650740  6.82703474  6.83173041  6.84020650
+##  [831]  6.87237619  6.87250918  6.89000254  6.90711202  6.92575014
+##  [836]  6.92790848  6.93959421  6.94276826  6.94480364  6.95272534
+##  [841]  6.95706796  6.96962505  7.01342154  7.03240223  7.04116464
+##  [846]  7.05060598  7.05400200  7.05742253  7.05849197  7.06891198
+##  [851]  7.07068246  7.07337273  7.07601317  7.08491846  7.09170916
+##  [856]  7.09516855  7.11384273  7.14412108  7.14832211  7.15187713
+##  [861]  7.15348568  7.16853044  7.18619268  7.19002160  7.19417801
+##  [866]  7.20812778  7.21776439  7.22850582  7.23676716  7.23769247
+##  [871]  7.24109641  7.25217205  7.27354569  7.29453004  7.30807186
+##  [876]  7.31697472  7.32426909  7.32617141  7.32995561  7.34218421
+##  [881]  7.34936251  7.35326155  7.35499696  7.35619152  7.37603224
+##  [886]  7.39087543  7.39116606  7.39414547  7.41332355  7.42493363
+##  [891]  7.43532215  7.43713775  7.43771255  7.46372514  7.47811503
+##  [896]  7.48182669  7.48528557  7.52850633  7.56305710  7.57558589
+##  [901]  7.57589405  7.59093356  7.60160036  7.60866138  7.63061883
+##  [906]  7.63444822  7.63500871  7.63625570  7.66062112  7.66508681
+##  [911]  7.66685174  7.67161997  7.67389751  7.68757126  7.70439596
+##  [916]  7.71299364  7.72049011  7.72790117  7.74561019  7.75991298
+##  [921]  7.78390841  7.80561470  7.81132165  7.81381246  7.82509967
+##  [926]  7.82834430  7.90653564  7.90730185  7.90997680  7.92807223
+##  [931]  7.96227246  7.97074059  7.97755315  7.97966753  8.00375107
+##  [936]  8.01047459  8.02256299  8.04022738  8.04879045  8.07286514
+##  [941]  8.07737084  8.09627481  8.10797367  8.11562695  8.12395430
+##  [946]  8.13420568  8.15199927  8.19260754  8.21686036  8.25751264
+##  [951]  8.28832777  8.32570503  8.40397511  8.41482072  8.44645933
+##  [956]  8.44739712  8.48336938  8.55706388  8.57377872  8.59951125
+##  [961]  8.62839205  8.66026552  8.67021092  8.67560746  8.68803031
+##  [966]  8.70841270  8.71733685  8.72819527  8.73609205  8.74450179
+##  [971]  8.75744416  8.76423177  8.82021241  8.90530043  8.92955254
+##  [976]  8.93916310  8.94065115  9.07568079  9.09442004  9.12837671
+##  [981]  9.19019459  9.23483453  9.31546958  9.38495449  9.44062331
+##  [986]  9.46288896  9.49920796  9.55315175  9.60524752  9.74526311
+##  [991]  9.77837369  9.80299022  9.82628115  9.85694031  9.86452022
+##  [996] 10.03916296 10.08646130 10.15474621 10.18118721 10.37651700
 \end{verbatim}
 
 \begin{Shaded}
@@ -6467,7 +7307,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,801581
+## [1] 5,065487
 \end{verbatim}
 \item
   Esta moda estimada pode nem estar no conjunto de dados:
@@ -6519,7 +7359,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \item
   Se o histograma tem todas as barras aproximadamente da mesma altura, dizemos que a distribuição é {\hl{uniforme}}:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-195-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-237-1} \end{center}
 \item
   {\hl{A distribuição uniforme não tem moda}}, já que todos os valores têm aproximadamente a mesma frequência.
 \end{itemize}
@@ -6548,7 +7388,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5,103691
+## [1] 5,002558
 \end{verbatim}
 
 \begin{Shaded}
@@ -6558,7 +7398,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 5,136986
+## [1] 5,013778
 \end{verbatim}
 
 \begin{Shaded}
@@ -6568,7 +7408,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,801581
+## [1] 5,065487
 \end{verbatim}
   \item
     Para a distribuição uniforme do exemplo:
@@ -6580,7 +7420,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,939979
+## [1] 5,102304
 \end{verbatim}
 
 \begin{Shaded}
@@ -6590,7 +7430,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 4,735605
+## [1] 5,060293
 \end{verbatim}
   \end{itemize}
 \item
@@ -6735,7 +7575,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 \end{Shaded}
 
 \begin{verbatim}
-## Warning: Removed 3 rows containing non-finite values (stat_bin).
+## Warning: Removed 3 rows containing non-finite values (`stat_bin()`).
 \end{verbatim}
 
   \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/ceos-log-hist-1} \end{center}
@@ -6968,7 +7808,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4   1.9   90.4
 ## 5   1.85  85.0
 ## 6   1.72  86.4
-## # ... with 6 more rows
+## # i 6 more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -7021,7 +7861,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4   1.9   90.4   0.0813  5.92 
 ## 5   1.85  85.0   0.0312  0.525
 ## 6   1.72  86.4  -0.0938  1.88 
-## # ... with 6 more rows
+## # i 6 more rows
 \end{verbatim}
 \item
   Vamos calcular o desvio médio das alturas e o desvio médio dos pesos:
@@ -7069,7 +7909,7 @@ Busque mais informações sobre os pacotes \texttt{tidyverse} e \texttt{ggplot2}
 ## 4   1.9   90.4   0.0813  5.92   0.00660   35.1  
 ## 5   1.85  85.0   0.0312  0.525  0.000977   0.276
 ## 6   1.72  86.4  -0.0938  1.88   0.00879    3.52 
-## # ... with 6 more rows
+## # i 6 more rows
 \end{verbatim}
 \item
   Agora temos os {\hl{desvios quadrados}}, que são todos {\hl{positivos}}.
@@ -7498,7 +8338,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 ## 4   1.9               0.944
 ## 5   1.85              0.363
 ## 6   1.72             -1.09 
-## # ... with 6 more rows
+## # i 6 more rows
 \end{verbatim}
 
 \begin{Shaded}
@@ -7632,7 +8472,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 \item
   Graficamente:
 
-  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-210-1} \end{center}
+  \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-252-1} \end{center}
 \item
   Vamos conferir:
 
@@ -8279,7 +9119,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0,5701
+## [1] 0,5666
 \end{verbatim}
 \end{itemize}
 
@@ -8621,7 +9461,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
 
 
 
-    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-219-1} \end{center}
+    \begin{center}\includegraphics[width=1\linewidth]{_main_files/figure-latex/unnamed-chunk-261-1} \end{center}
 
   * Com as novas premissas, a probabilidade de coincidência é maior para quase todos os valores de $n$: a linha vermelha está acima da linha azul.
 
@@ -8702,12 +9542,26 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```r
       nsim <- 1e6
       maos <- rerun(nsim, mao())
+      ```
 
+      ```
+      ## Warning: `rerun()` was deprecated in purrr 1.0.0.
+      ## i Please use `map()` instead.
+      ##   # Previously
+      ##   rerun(1000000, mao())
+      ## 
+      ##   # Now
+      ##   map(1:1000000, ~ mao())
+      ## This warning is displayed once every 8 hours.
+      ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+      ```
+
+      ```r
       mean(!map_lgl(maos, tem_as))
       ```
 
       ```
-      ## [1] 0,48855
+      ## [1] 0,488225
       ```
 
 
@@ -8750,7 +9604,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```
 
       ```
-      ## [1] 0,000115
+      ## [1] 0,000125
       ```
 
 
@@ -8797,7 +9651,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```
 
       ```
-      ## [1] 0,020506
+      ## [1] 0,020403
       ```
 
 
@@ -8846,7 +9700,7 @@ Para dados apenas intervalares, o uso do CV pode levar a conclusões absurdas, c
       ```
 
       ```
-      ## [1] 0,000084
+      ## [1] 0,000067
       ```
 
 
