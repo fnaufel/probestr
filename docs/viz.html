@@ -18,9 +18,9 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.5/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.5/font.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.5.9000/font.css" rel="stylesheet">
 <script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -55,6 +55,7 @@
 <li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
 <li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
 <li><a class="" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
 <li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
 </ul>
 
@@ -280,20 +281,20 @@
 <p>Podemos produzir um sumário dos dados usando o pacote <em>summarytools</em> (que já foi carregado neste documento):</p>
 <div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/summarytools/man/dfSummary.html">dfSummary</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table table-sm">
+<table class="table table-sm">
 <colgroup>
-<col width="15%">
-<col width="31%">
-<col width="20%">
-<col width="23%">
-<col width="9%">
+<col width="14%">
+<col width="30%">
+<col width="21%">
+<col width="22%">
+<col width="10%">
 </colgroup>
 <thead><tr class="header">
-<th>Variable</th>
-<th>Stats / Values</th>
-<th>Freqs (% of Valid)</th>
-<th>Graph</th>
-<th>Missing</th>
+<th>Variável</th>
+<th>Estatísticas / Valores</th>
+<th>Freqs (% de Válidos)</th>
+<th>Grafo</th>
+<th>Faltante</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -309,7 +310,7 @@
 8. Big brown bat<br>
 9. Bottle-nosed dolphin<br>
 10. Brazilian tapir<br>
-[ 73 others ]</td>
+[ 73 outros ]</td>
 <td>1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
@@ -338,7 +339,7 @@
 8. Blarina<br>
 9. Bos<br>
 10. Bradypus<br>
-[ 67 others ]</td>
+[ 67 outros ]</td>
 <td>3 ( 3,6%)<br>
 3 ( 3,6%)<br>
 2 ( 2,4%)<br>
@@ -382,7 +383,7 @@
 8. Perissodactyla<br>
 9. Chiroptera<br>
 10. Cingulata<br>
-[ 9 others ]</td>
+[ 9 outros ]</td>
 <td>22 (26,5%)<br>
 12 (14,5%)<br>
 12 (14,5%)<br>
@@ -420,11 +421,11 @@
 <tr class="even">
 <td>sleep_total<br>
 [numeric]</td>
-<td>Mean (sd) : 10,4 (4,5)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 10,4 (4,5)<br>
+mín &lt; mediana &lt; máx:<br>
 1,9 &lt; 10,1 &lt; 19,9<br>
-IQR (CV) : 5,9 (0,4)</td>
-<td>65 distinct values</td>
+IQE (CV) : 5,9 (0,4)</td>
+<td>65 valores distintos</td>
 <td><img src="dfimg/ds0006.png"></td>
 <td>0<br>
 (0,0%)</td>
@@ -432,11 +433,11 @@ IQR (CV) : 5,9 (0,4)</td>
 <tr class="odd">
 <td>sleep_rem<br>
 [numeric]</td>
-<td>Mean (sd) : 1,9 (1,3)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 1,9 (1,3)<br>
+mín &lt; mediana &lt; máx:<br>
 0,1 &lt; 1,5 &lt; 6,6<br>
-IQR (CV) : 1,5 (0,7)</td>
-<td>32 distinct values</td>
+IQE (CV) : 1,5 (0,7)</td>
+<td>32 valores distintos</td>
 <td><img src="dfimg/ds0007.png"></td>
 <td>22<br>
 (26,5%)</td>
@@ -444,11 +445,11 @@ IQR (CV) : 1,5 (0,7)</td>
 <tr class="even">
 <td>sleep_cycle<br>
 [numeric]</td>
-<td>Mean (sd) : 0,4 (0,4)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 0,4 (0,4)<br>
+mín &lt; mediana &lt; máx:<br>
 0,1 &lt; 0,3 &lt; 1,5<br>
-IQR (CV) : 0,4 (0,8)</td>
-<td>22 distinct values</td>
+IQE (CV) : 0,4 (0,8)</td>
+<td>22 valores distintos</td>
 <td><img src="dfimg/ds0008.png"></td>
 <td>51<br>
 (61,4%)</td>
@@ -456,11 +457,11 @@ IQR (CV) : 0,4 (0,8)</td>
 <tr class="odd">
 <td>awake<br>
 [numeric]</td>
-<td>Mean (sd) : 13,6 (4,5)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 13,6 (4,5)<br>
+mín &lt; mediana &lt; máx:<br>
 4,1 &lt; 13,9 &lt; 22,1<br>
-IQR (CV) : 5,9 (0,3)</td>
-<td>65 distinct values</td>
+IQE (CV) : 5,9 (0,3)</td>
+<td>65 valores distintos</td>
 <td><img src="dfimg/ds0009.png"></td>
 <td>0<br>
 (0,0%)</td>
@@ -468,11 +469,11 @@ IQR (CV) : 5,9 (0,3)</td>
 <tr class="even">
 <td>brainwt<br>
 [numeric]</td>
-<td>Mean (sd) : 0,3 (1)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 0,3 (1)<br>
+mín &lt; mediana &lt; máx:<br>
 0 &lt; 0 &lt; 5,7<br>
-IQR (CV) : 0,1 (3,5)</td>
-<td>53 distinct values</td>
+IQE (CV) : 0,1 (3,5)</td>
+<td>53 valores distintos</td>
 <td><img src="dfimg/ds0010.png"></td>
 <td>27<br>
 (32,5%)</td>
@@ -480,11 +481,11 @@ IQR (CV) : 0,1 (3,5)</td>
 <tr class="odd">
 <td>bodywt<br>
 [numeric]</td>
-<td>Mean (sd) : 166,1 (786,8)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 166,1 (786,8)<br>
+mín &lt; mediana &lt; máx:<br>
 0 &lt; 1,7 &lt; 6654<br>
-IQR (CV) : 41,6 (4,7)</td>
-<td>82 distinct values</td>
+IQE (CV) : 41,6 (4,7)</td>
+<td>82 valores distintos</td>
 <td><img src="dfimg/ds0011.png"></td>
 <td>0<br>
 (0,0%)</td>
@@ -544,20 +545,20 @@ IQR (CV) : 41,6 (4,7)</td>
 <p>Vamos ver o sumário:</p>
 <div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/summarytools/man/dfSummary.html">dfSummary</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table class="table table-sm">
+<table style="width:100%;" class="table table-sm">
 <colgroup>
 <col width="14%">
-<col width="32%">
-<col width="20%">
-<col width="23%">
-<col width="9%">
+<col width="31%">
+<col width="21%">
+<col width="22%">
+<col width="10%">
 </colgroup>
 <thead><tr class="header">
-<th>Variable</th>
-<th>Stats / Values</th>
-<th>Freqs (% of Valid)</th>
-<th>Graph</th>
-<th>Missing</th>
+<th>Variável</th>
+<th>Estatísticas / Valores</th>
+<th>Freqs (% de Válidos)</th>
+<th>Grafo</th>
+<th>Faltante</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -573,7 +574,7 @@ IQR (CV) : 41,6 (4,7)</td>
 8. Big brown bat<br>
 9. Bottle-nosed dolphin<br>
 10. Brazilian tapir<br>
-[ 73 others ]</td>
+[ 73 outros ]</td>
 <td>1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
@@ -602,7 +603,7 @@ IQR (CV) : 41,6 (4,7)</td>
 8. Perissodactyla<br>
 9. Chiroptera<br>
 10. Cingulata<br>
-[ 9 others ]</td>
+[ 9 outros ]</td>
 <td>22 (26,5%)<br>
 12 (14,5%)<br>
 12 (14,5%)<br>
@@ -631,7 +632,7 @@ IQR (CV) : 41,6 (4,7)</td>
 8. Blarina<br>
 9. Bos<br>
 10. Bradypus<br>
-[ 67 others ]</td>
+[ 67 outros ]</td>
 <td>3 ( 3,6%)<br>
 3 ( 3,6%)<br>
 2 ( 2,4%)<br>
@@ -665,11 +666,11 @@ IQR (CV) : 41,6 (4,7)</td>
 <tr class="odd">
 <td>bodywt<br>
 [numeric]</td>
-<td>Mean (sd) : 166,1 (786,8)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 166,1 (786,8)<br>
+mín &lt; mediana &lt; máx:<br>
 0 &lt; 1,7 &lt; 6654<br>
-IQR (CV) : 41,6 (4,7)</td>
-<td>82 distinct values</td>
+IQE (CV) : 41,6 (4,7)</td>
+<td>82 valores distintos</td>
 <td><img src="dfimg/ds0016.png"></td>
 <td>0<br>
 (0,0%)</td>
@@ -677,11 +678,11 @@ IQR (CV) : 41,6 (4,7)</td>
 <tr class="even">
 <td>brainwt<br>
 [numeric]</td>
-<td>Mean (sd) : 0,3 (1)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 0,3 (1)<br>
+mín &lt; mediana &lt; máx:<br>
 0 &lt; 0 &lt; 5,7<br>
-IQR (CV) : 0,1 (3,5)</td>
-<td>53 distinct values</td>
+IQE (CV) : 0,1 (3,5)</td>
+<td>53 valores distintos</td>
 <td><img src="dfimg/ds0017.png"></td>
 <td>27<br>
 (32,5%)</td>
@@ -689,11 +690,11 @@ IQR (CV) : 0,1 (3,5)</td>
 <tr class="odd">
 <td>awake<br>
 [numeric]</td>
-<td>Mean (sd) : 13,6 (4,5)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 13,6 (4,5)<br>
+mín &lt; mediana &lt; máx:<br>
 4,1 &lt; 13,9 &lt; 22,1<br>
-IQR (CV) : 5,9 (0,3)</td>
-<td>65 distinct values</td>
+IQE (CV) : 5,9 (0,3)</td>
+<td>65 valores distintos</td>
 <td><img src="dfimg/ds0018.png"></td>
 <td>0<br>
 (0,0%)</td>
@@ -701,11 +702,11 @@ IQR (CV) : 5,9 (0,3)</td>
 <tr class="even">
 <td>sleep_total<br>
 [numeric]</td>
-<td>Mean (sd) : 10,4 (4,5)<br>
-min &lt; med &lt; max:<br>
+<td>Média (dp) : 10,4 (4,5)<br>
+mín &lt; mediana &lt; máx:<br>
 1,9 &lt; 10,1 &lt; 19,9<br>
-IQR (CV) : 5,9 (0,4)</td>
-<td>65 distinct values</td>
+IQE (CV) : 5,9 (0,4)</td>
+<td>65 valores distintos</td>
 <td><img src="dfimg/ds0019.png"></td>
 <td>0<br>
 (0,0%)</td>
@@ -1017,16 +1018,12 @@ IQR (CV) : 5,9 (0,4)</td>
 <pre><code>## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
 ## ℹ Please use `linewidth` instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning
-## was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <pre><code>## `geom_smooth()` using formula = 'y ~ x'</code></pre>
 <pre><code>## Warning: Removed 18 rows containing non-finite values (`stat_smooth()`).</code></pre>
-<pre><code>## Warning: The following aesthetics were dropped during statistical
-## transformation: size, colour
-## ℹ This can happen when ggplot fails to infer the correct grouping
-##   structure in the data.
-## ℹ Did you forget to specify a `group` aesthetic or to convert a
-##   numerical variable into a factor?</code></pre>
+<pre><code>## Warning: The following aesthetics were dropped during statistical transformation: size, colour
+## ℹ This can happen when ggplot fails to infer the correct grouping structure in the data.
+## ℹ Did you forget to specify a `group` aesthetic or to convert a numerical variable into a factor?</code></pre>
 <pre><code>## Warning: Removed 18 rows containing missing values (`geom_point()`).</code></pre>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-176-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
@@ -1659,7 +1656,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 12/04/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 12/05/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

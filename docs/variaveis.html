@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Capítulo 8 Variáveis aleatórias | Probabilidade e Estatística com R</title>
+<meta name="author" content="Fernando Náufel">
+<meta name="description" content="8.1 Vídeo    8.2 O que é uma variável aleatória? Uma variável aleatória é uma maneira de associar a cada resultado do espaço amostral um número real. Dependendo do conjunto de números, a variável...">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta property="og:title" content="Capítulo 8 Variáveis aleatórias | Probabilidade e Estatística com R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
+<meta property="og:description" content="8.1 Vídeo    8.2 O que é uma variável aleatória? Uma variável aleatória é uma maneira de associar a cada resultado do espaço amostral um número real. Dependendo do conjunto de números, a variável...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Capítulo 8 Variáveis aleatórias | Probabilidade e Estatística com R">
+<meta name="twitter:description" content="8.1 Vídeo    8.2 O que é uma variável aleatória? Uma variável aleatória é uma maneira de associar a cada resultado do espaço amostral um número real. Dependendo do conjunto de números, a variável...">
+<meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.5.9000/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
+<link rel="stylesheet" href="html_files/styles_book.css">
+<link rel="stylesheet" href="html_files/webex.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Ir para conteúdo principal</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Probabilidade e Estatística com R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar sumário</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+</form>
+
+      <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Apresentação</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O Que É Estatística?</a></li>
+<li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
+<li><a class="" href="introdu%C3%A7%C3%A3o-ao-tidyverse.html"><span class="header-section-number">3</span> Introdução ao tidyverse</a></li>
+<li><a class="" href="viz.html"><span class="header-section-number">4</span> Visualização com ggplot2</a></li>
+<li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
+<li><a class="" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="active" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
+<li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/fnaufel/probestr">Ver código-fonte do livro <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="variaveis" class="section level1" number="8">
+<h1>
+<span class="header-section-number">Capítulo 8</span> Variáveis aleatórias<a class="anchor" aria-label="anchor" href="#variaveis"><i class="fas fa-link"></i></a>
+</h1>
+<div id="vídeo-3" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Vídeo<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-3"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/8PI-rfsgNdE" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="o-que-é-uma-variável-aleatória" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> O que é uma variável aleatória?<a class="anchor" aria-label="anchor" href="#o-que-%C3%A9-uma-vari%C3%A1vel-aleat%C3%B3ria"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Uma variável aleatória é uma maneira de <span class="hl">associar a cada resultado do espaço amostral um número real</span>.</p></li>
+<li><p>Dependendo do conjunto de números, a variável aleatória pode ser <span class="hl">discreta</span> ou <span class="hl">contínua</span>.</p></li>
+<li><p>Falamos sobre a <span class="hl">probabilidade</span> de uma variável aleatória assumir um valor (ou uma faixa de valores).</p></li>
+</ul>
+</div>
+<div id="exemplos-1" class="section level2" number="8.3">
+<h2>
+<span class="header-section-number">8.3</span> Exemplos<a class="anchor" aria-label="anchor" href="#exemplos-1"><i class="fas fa-link"></i></a>
+</h2>
+<div id="lançar-dois-dados" class="section level3" number="8.3.1">
+<h3>
+<span class="header-section-number">8.3.1</span> Lançar dois dados<a class="anchor" aria-label="anchor" href="#lan%C3%A7ar-dois-dados"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Definimos <span class="math inline">\(X = \text{soma dos resultados dos dois dados}\)</span>.</p></li>
+<li><p>Esta é uma variável aleatória <span class="hl">discreta</span>, com <span class="math inline">\(11\)</span> valores possíveis.</p></li>
+<li><p>A tabela com todos os valores possíveis de <span class="math inline">\(X\)</span> e suas probabilidades é chamada de <span class="hl">distribuição de probabilidade</span>:</p></li>
+</ul>
+<div id="dhqdnacojl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dhqdnacojl table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#dhqdnacojl thead, #dhqdnacojl tbody, #dhqdnacojl tfoot, #dhqdnacojl tr, #dhqdnacojl td, #dhqdnacojl th {
+  border-style: none;
+}
+
+#dhqdnacojl p {
+  margin: 0;
+  padding: 0;
+}
+
+#dhqdnacojl .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dhqdnacojl .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dhqdnacojl .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dhqdnacojl .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#dhqdnacojl .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#dhqdnacojl .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#dhqdnacojl .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#dhqdnacojl .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#dhqdnacojl .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#dhqdnacojl .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#dhqdnacojl .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#dhqdnacojl .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dhqdnacojl .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dhqdnacojl .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#dhqdnacojl .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dhqdnacojl .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#dhqdnacojl .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#dhqdnacojl .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#dhqdnacojl .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dhqdnacojl .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#dhqdnacojl .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dhqdnacojl .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#dhqdnacojl .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dhqdnacojl .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#dhqdnacojl .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#dhqdnacojl .gt_left {
+  text-align: left;
+}
+
+#dhqdnacojl .gt_center {
+  text-align: center;
+}
+
+#dhqdnacojl .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dhqdnacojl .gt_font_normal {
+  font-weight: normal;
+}
+
+#dhqdnacojl .gt_font_bold {
+  font-weight: bold;
+}
+
+#dhqdnacojl .gt_font_italic {
+  font-style: italic;
+}
+
+#dhqdnacojl .gt_super {
+  font-size: 65%;
+}
+
+#dhqdnacojl .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#dhqdnacojl .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#dhqdnacojl .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#dhqdnacojl .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#dhqdnacojl .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#dhqdnacojl .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#dhqdnacojl .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="x">x</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="P(X = x)">P(X = x)</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="x" class="gt_row gt_right">2</td>
+<td headers="P(X = x)" class="gt_row gt_right">1/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">3</td>
+<td headers="P(X = x)" class="gt_row gt_right">2/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">4</td>
+<td headers="P(X = x)" class="gt_row gt_right">3/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">5</td>
+<td headers="P(X = x)" class="gt_row gt_right">4/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">6</td>
+<td headers="P(X = x)" class="gt_row gt_right">5/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">7</td>
+<td headers="P(X = x)" class="gt_row gt_right">6/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">8</td>
+<td headers="P(X = x)" class="gt_row gt_right">5/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">9</td>
+<td headers="P(X = x)" class="gt_row gt_right">4/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">10</td>
+<td headers="P(X = x)" class="gt_row gt_right">3/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">11</td>
+<td headers="P(X = x)" class="gt_row gt_right">2/36</td>
+</tr>
+<tr>
+<td headers="x" class="gt_row gt_right">12</td>
+<td headers="P(X = x)" class="gt_row gt_right">1/36</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<ul>
+<li>
+<p>Graficamente:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/dados-plot-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Suponha que a distribuição de probabilidade de <span class="math inline">\(X\)</span> esteja na seguinte <em>tibble</em>:</p>
+<div class="sourceCode" id="cb566"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">dados_distr</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## Rows: 11
+## Columns: 3
+## $ x          &lt;int&gt; 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+## $ `P(X = x)` &lt;chr&gt; "1/36", "2/36", "3/36", "4/36", "5/36", "6/36", "5/36", "4/36", …
+## $ num        &lt;dbl&gt; 0,02777778, 0,05555556, 0,08333333, 0,11111111, 0,13888889, 0,16…</code></pre>
+<p>A coluna <code>num</code> tem os valores numéricos das probabilidades.</p>
+</li>
+<li>
+<p>Qual a probabilidade de conseguir <span class="hl"><span class="math inline">\(10\)</span> ou mais</span>?</p>
+<p>Basta somar as probabilidades de <span class="math inline">\(X=10\)</span>, <span class="math inline">\(X=11\)</span> e <span class="math inline">\(X=12\)</span>:</p>
+<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,1666667</code></pre>
+</li>
+<li>
+<p>Qual a probabilidade de conseguir entre <span class="math inline">\(6\)</span> e <span class="math inline">\(8\)</span>, inclusive?</p>
+<div class="sourceCode" id="cb570"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">6</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">8</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,4444444</code></pre>
+</li>
+</ul>
+</div>
+<div id="altura-de-um-homem-adulto" class="section level3" number="8.3.2">
+<h3>
+<span class="header-section-number">8.3.2</span> Altura de um homem adulto<a class="anchor" aria-label="anchor" href="#altura-de-um-homem-adulto"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Definimos <span class="math inline">\(X = \text{estatura em metros de um homem brasileiro adulto, escolhido ao acaso}\)</span>.</p></li>
+<li><p>Esta é uma variável aleatória <span class="hl">contínua</span>, com um número <span class="hl">infinito não-enumerável</span> de valores.</p></li>
+<li><p>Segundo o <a href="https://pdf4pro.com/view/levantamento-do-perfil-antropom-201-trico-10652c.html">Levantamento do Perfil Antropométrico da População Brasileira Usuária do Transporte Aéreo Nacional</a>, em <span class="math inline">\(2009\)</span>, a estatura média do homem brasileiro adulto era de <span class="math inline">\(1{,}73\)</span>m, com desvio-padrão de <span class="math inline">\(0{,}07\)</span>m.</p></li>
+<li>
+<p>Vamos simular uma amostra de muitos homens desta população:</p>
+<div class="sourceCode" id="cb572"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">media</span> <span class="op">&lt;-</span> <span class="fl">1.73</span></span>
+<span><span class="va">desvio</span> <span class="op">&lt;-</span> <span class="fl">0.07</span></span>
+<span><span class="va">homens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  altura <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1e5</span>, mean <span class="op">=</span> <span class="va">media</span>, sd <span class="op">=</span> <span class="va">desvio</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Eis um histograma com as <span class="hl">percentagens</span>:</p>
+<div class="sourceCode" id="cb573"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">homens_plot</span> <span class="op">&lt;-</span> <span class="va">homens</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">altura</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1.4</span>, <span class="fl">2</span>, <span class="fl">0.01</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1.4</span>, <span class="fl">2.0</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>      title <span class="op">=</span> <span class="st">'Altura de um homem brasileiro adulto'</span>,</span>
+<span>      x <span class="op">=</span> <span class="st">'metros'</span>,</span>
+<span>      y <span class="op">=</span> <span class="st">'%'</span></span>
+<span>    <span class="op">)</span></span>
+<span></span>
+<span><span class="va">homens_plot</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/homens-plot-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Agora, <span class="hl">sobrepomos o gráfico de uma distribuição normal</span> com a mesma média e o mesmo desvio-padrão que a distribuição das alturas:</p>
+<div class="sourceCode" id="cb574"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">homens_normal</span> <span class="op">&lt;-</span> <span class="va">homens_plot</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span></span>
+<span>    fun <span class="op">=</span> <span class="va">dnorm</span>, </span>
+<span>    args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
+<span>      <span class="st">'mean'</span> <span class="op">=</span> <span class="va">media</span>,</span>
+<span>      <span class="st">'sd'</span> <span class="op">=</span> <span class="va">desvio</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    geom <span class="op">=</span> <span class="st">'line'</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">'red'</span>,</span>
+<span>    linewidth <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'com N('</span>, <span class="va">media</span>, <span class="st">', '</span>, <span class="va">desvio</span>,<span class="st">') em vermelho'</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">homens_normal</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/homens-normal-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>A curva vermelha no gráfico é a <span class="hl">função de densidade de probabilidade</span> da distribuição normal, dada por</p>
+<p><span class="math display">\[
+\text{fdp}(x) = {\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}
+\]</span></p>
+<div class="rmdimportant">
+<p>Em uma distribuição contínua, <span class="hl">não faz sentido perguntar o valor de <span class="math inline">\(P(X = x)\)</span></span>. Como <span class="math inline">\(X\)</span> pode assumir uma quantidade infinita não-enumerável de valores, esta probabilidade é igual a zero!</p>
+<p>Com uma distribuição contínua, <span class="hl">vamos sempre perguntar sobre faixas de valores</span>.</p>
+</div>
+</li>
+<li>
+<p>Qual a probabilidade de um homem ter mais de <span class="math inline">\(1{,}80\)</span>m?</p>
+<ul>
+<li>
+<p>Na amostra:</p>
+<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span> <span class="op">&gt;</span> <span class="fl">1.80</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,15894</code></pre>
+</li>
+<li>
+<p>Na distribuição teórica:</p>
+<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.80</span>, mean <span class="op">=</span> <span class="va">media</span>, sd <span class="op">=</span> <span class="va">desvio</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,1586553</code></pre>
+</li>
+<li>
+<p>No gráfico:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/maior180-plot-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</li>
+<li>
+<p>Qual a probabilidade de um homem ter entre <span class="math inline">\(1{,}60\)</span>m e <span class="math inline">\(1{,}70\)</span>m?</p>
+<ul>
+<li>
+<p>Na amostra:</p>
+<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span> <span class="op">&gt;</span> <span class="fl">1.60</span> <span class="op">&amp;</span> <span class="va">homens</span><span class="op">$</span><span class="va">altura</span> <span class="op">&lt;</span> <span class="fl">1.70</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,30317</code></pre>
+</li>
+<li>
+<p>Na distribuição teórica:</p>
+<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.70</span>, mean <span class="op">=</span> <span class="va">media</span>, sd <span class="op">=</span> <span class="va">desvio</span><span class="op">)</span> <span class="op">-</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.60</span>, mean <span class="op">=</span> <span class="va">media</span>, sd <span class="op">=</span> <span class="va">desvio</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,3024722</code></pre>
+</li>
+<li>
+<p>No gráfico :</p>
+<div class="inline-figure"><img src="_main_files/figure-html/entre-plot-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="valor-esperado" class="section level2" number="8.4">
+<h2>
+<span class="header-section-number">8.4</span> Valor esperado<a class="anchor" aria-label="anchor" href="#valor-esperado"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>O <span class="hl">valor esperado</span> (ou <span class="hl">esperança matemática</span>) de uma variável aleatória é a <span class="hl">média ponderada dos valores possíveis da variável</span>, considerando as probabilidades (ou, no caso contínuo, a densidade de probabilidade) como pesos.</p></li>
+<li>
+<p>No caso <span class="hl">discreto</span>:</p>
+<p><span class="math display">\[
+\mu = E(X) = \sum_i x_i \cdot P(X = x_i)
+\]</span></p>
+</li>
+<li>
+<p>No caso <span class="hl">contínuo</span>:</p>
+<p><span class="math display">\[
+\mu = E(X) = \int_{-\infty}^{+\infty} x \cdot \text{fdp}(x) \text{d}x
+\]</span></p>
+</li>
+</ul>
+<div id="lançar-dois-dados-1" class="section level3" number="8.4.1">
+<h3>
+<span class="header-section-number">8.4.1</span> Lançar dois dados<a class="anchor" aria-label="anchor" href="#lan%C3%A7ar-dois-dados-1"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>Lembrando que a <em>tibble</em> <code>dados_distr</code> contém a distribuição de probabilidades do valor da soma de dois dados, o valor esperado é</p>
+<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>E <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="va">num</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 7</code></pre>
+</li>
+</ul>
+</div>
+<div id="lançar-um-dado" class="section level3" number="8.4.2">
+<h3>
+<span class="header-section-number">8.4.2</span> Lançar um dado<a class="anchor" aria-label="anchor" href="#lan%C3%A7ar-um-dado"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>O valor esperado do valor obtido em um lançamento de um dado não-viciado (onde cada valor tem a probabilidade <span class="math inline">\(1/6\)</span>) é</p>
+<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lado</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">6</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">lado</span> <span class="op">*</span> <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3,5</code></pre>
+</li>
+</ul>
+</div>
+<div id="altura-de-um-homem-adulto-1" class="section level3" number="8.4.3">
+<h3>
+<span class="header-section-number">8.4.3</span> Altura de um homem adulto<a class="anchor" aria-label="anchor" href="#altura-de-um-homem-adulto-1"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>Estimamos o valor esperado da população simplesmente calculando a média da amostra:</p>
+<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 1,729861</code></pre>
+</li>
+<li>
+<p>Se a variável aleatória <span class="math inline">\(X\)</span> é normalmente distribuída, com média <span class="math inline">\(\mu\)</span> e desvio-padrão <span class="math inline">\(\sigma\)</span>, i.e., <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma)\)</span>, então o valor esperado <span class="math inline">\(E(X)\)</span> é igual a <span class="math inline">\(mu\)</span>, que é o valor da integral</p>
+<p><span class="math display">\[
+\int_{-\infty}^{+\infty} {\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}} \text{d}x
+\]</span></p>
+</li>
+</ul>
+</div>
+</div>
+<div id="propriedades-do-valor-esperado" class="section level2" number="8.5">
+<h2>
+<span class="header-section-number">8.5</span> Propriedades do valor esperado<a class="anchor" aria-label="anchor" href="#propriedades-do-valor-esperado"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li><p>Vamos ver como o valor esperado se comporta.</p></li>
+<li>
+<p>O valor esperado de uma constante é ela mesma:</p>
+<p><span class="math display">\[
+E(c) = c
+\]</span></p>
+</li>
+<li>
+<p>Somar uma constante à variável <span class="math inline">\(X\)</span> altera <span class="math inline">\(E(X)\)</span> pelo valor da constante:</p>
+<p><span class="math display">\[
+E(X \pm c) = E(X) \pm c
+\]</span></p>
+</li>
+<li>
+<p>Multiplicar a variável <span class="math inline">\(X\)</span> por uma constante multiplica <span class="math inline">\(E(X)\)</span> pelo valor da constante:</p>
+<p><span class="math display">\[
+E(c \cdot X) = c \cdot E(X)
+\]</span></p>
+</li>
+<li>
+<p>O valor esperado da soma (resp. diferença) de duas variáveis aleatórias é a soma (resp. diferença) dos valores esperados:</p>
+<p><span class="math display">\[
+E(X \pm Y) = E(X) \pm E(Y)
+\]</span></p>
+</li>
+<li>
+<p>O valor esperado de uma função <span class="math inline">\(f(X)\)</span> de uma variável aleatória <span class="math inline">\(X\)</span> é</p>
+<ul>
+<li>
+<p>Caso discreto:</p>
+<p><span class="math display">\[
+E(f(X)) = \sum_i f(x_i) \cdot P(X = x_i)
+\]</span></p>
+</li>
+<li>
+<p>Caso contínuo:</p>
+<p><span class="math display">\[
+E(f(X)) = \int_{-\infty}^{+\infty} f(x) \cdot \text{fdp}(x) \text{d}x
+\]</span></p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="variância-1" class="section level2" number="8.6">
+<h2>
+<span class="header-section-number">8.6</span> Variância<a class="anchor" aria-label="anchor" href="#vari%C3%A2ncia-1"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<p>A <span class="hl">variância</span> de uma variável aleatória <span class="math inline">\(X\)</span> é <span class="hl">a média ponderada dos desvios quadrados</span>, com as probabilidades como peso.</p>
+<ul>
+<li>
+<p>Caso <span class="hl">discreto</span>:</p>
+<p><span class="math display">\[
+\sigma^2(X) = \sum_i (x_i - \mu)^2 \cdot P(X = x_i)
+\]</span></p>
+</li>
+<li>
+<p>Caso <span class="hl">contínuo</span>:</p>
+<p><span class="math display">\[
+\sigma^2(X) = \int_{-\infty}^{+\infty} (x - \mu)^2 \cdot \text{fdp}(x) \text{d}x
+\]</span></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Em qualquer caso,</p>
+<p><span class="math display">\[
+\begin{aligned}
+  \sigma^2(X) &amp;= E[(X - \mu)^2]\\
+              &amp;= E(X^2) - [E(X)]^2
+\end{aligned}
+\]</span></p>
+</li>
+<li><p>Faça as contas, partindo de <span class="math inline">\(E[(X - \mu)^2]\)</span> e usando as propriedades do valor esperado para chegar a <span class="math inline">\(E(X^2) - [E(X)]^2\)</span>.</p></li>
+</ul>
+<div id="lançar-dois-dados-2" class="section level3" number="8.6.1">
+<h3>
+<span class="header-section-number">8.6.1</span> Lançar dois dados<a class="anchor" aria-label="anchor" href="#lan%C3%A7ar-dois-dados-2"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>A variância é</p>
+<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>s2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fl">7</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">num</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">s2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 5,833333</code></pre>
+</li>
+</ul>
+</div>
+<div id="lançar-um-dado-1" class="section level3" number="8.6.2">
+<h3>
+<span class="header-section-number">8.6.2</span> Lançar um dado<a class="anchor" aria-label="anchor" href="#lan%C3%A7ar-um-dado-1"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>A variância é</p>
+<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lado</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">6</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">lado</span> <span class="op">-</span> <span class="fl">3.5</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2,916667</code></pre>
+</li>
+</ul>
+</div>
+<div id="altura-de-um-homem-adulto-2" class="section level3" number="8.6.3">
+<h3>
+<span class="header-section-number">8.6.3</span> Altura de um homem adulto<a class="anchor" aria-label="anchor" href="#altura-de-um-homem-adulto-2"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>Estimando pela variância da amostra:</p>
+<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,004921803</code></pre>
+</li>
+<li><p>Se <span class="math inline">\(X\)</span> é normalmente distribuída com média <span class="math inline">\(\mu\)</span> e desvio-padrão <span class="math inline">\(\sigma\)</span>, i.e., <span class="math inline">\(X \sim \mathcal{N}(\mu, \sigma)\)</span>, então <span class="math inline">\(\sigma^2(X) = \sigma^2\)</span>. De acordo com o estudo, <span class="math inline">\(\sigma^2 = 0.07^2 = 0{,}0049\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<div id="propriedades-da-variância" class="section level2" number="8.7">
+<h2>
+<span class="header-section-number">8.7</span> Propriedades da variância<a class="anchor" aria-label="anchor" href="#propriedades-da-vari%C3%A2ncia"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<p>A variância de uma constante é zero:</p>
+<p><span class="math display">\[
+\sigma^2(c) = 0
+\]</span></p>
+</li>
+<li>
+<p>Somar uma constante à variável <span class="math inline">\(X\)</span> <span class="hl">não altera</span> a variância:</p>
+<p><span class="math display">\[
+\sigma^2(X \pm c) = \sigma^2(X)
+\]</span></p>
+</li>
+<li>
+<p>Multiplicar a variável <span class="math inline">\(X\)</span> por uma constante multiplica a variância pelo <span class="hl">quadrado</span> da constante:</p>
+<p><span class="math display">\[
+\sigma^2(c \cdot X) = c^2 \cdot \sigma^2(X)
+\]</span></p>
+</li>
+<li>
+<p>A variância da <span class="hl">soma ou diferença</span> de duas variáveis aleatórias é a <span class="hl">soma</span> das variâncias das variáveis:</p>
+<p><span class="math display">\[
+\sigma^2(X \pm Y) = \sigma^2(X) + \sigma^2(Y)
+\]</span></p>
+<div class="rmdimportant">
+<p>Por que a <span class="hl">variância da diferença</span> é a <span class="hl">soma das variâncias</span>?</p>
+<p>Variância significa <span class="hl">incerteza</span>.</p>
+<p>Considere o seguinte exemplo para entender por que <span class="math inline">\(\sigma^2(X - Y) = \sigma^2(X) + \sigma^2(Y)\)</span>:</p>
+<ul>
+<li><p>Você compra uma caixa de <span class="math inline">\(500\)</span>g de cereal no mercado. Como o peso não é exato, considere que <span class="math inline">\(X\)</span> é a variável aleatória que representa o peso do cereal na caixa, com <span class="math inline">\(\mu_X = 500\)</span>g e uma variância qualquer <span class="math inline">\(\sigma^2_X\)</span> (que corresponde à <span class="hl">incerteza do processo de embalagem do cereal</span> na fábrica).</p></li>
+<li><p>Você decide comer <span class="math inline">\(100\text{g}\)</span> de cereal, despejando parte do conteúdo na caixa em uma tigela. Como sua capacidade de medir <span class="math inline">\(100\text{g}\)</span> não é exata, considere que <span class="math inline">\(Y\)</span> é a variável aleatória que representa o peso do cereal na tigela, com <span class="math inline">\(\mu_Y = 100\text{g}\)</span> e uma variância qualquer <span class="math inline">\(\sigma^2_Y\)</span> (que corresponde à <span class="hl">incerteza do seu processo de pesar</span> <span class="math inline">\(100\text{g}\)</span>).</p></li>
+<li>
+<p>Considere a variável aleatória <span class="math inline">\(Z = X - Y\)</span>, que representa a quantidade de cereal que sobrou na caixa.</p>
+<ul>
+<li><p>Certamente a média <span class="math inline">\(\mu_Z = \mu_X - \mu_Y = 400\text{g}\)</span>.</p></li>
+<li><p>E a variância <span class="math inline">\(\sigma^2_Z\)</span>?</p></li>
+<li><p>O fato de <span class="math inline">\(Z\)</span> ser o resultado da subtração de duas variáveis aleatórias diminui a incerteza?</p></li>
+<li><p>Ou a composição de incertezas aumenta a incerteza?</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="mais-exemplos" class="section level2" number="8.8">
+<h2>
+<span class="header-section-number">8.8</span> Mais exemplos<a class="anchor" aria-label="anchor" href="#mais-exemplos"><i class="fas fa-link"></i></a>
+</h2>
+<div id="seguradora" class="section level3" number="8.8.1">
+<h3>
+<span class="header-section-number">8.8.1</span> Seguradora<a class="anchor" aria-label="anchor" href="#seguradora"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Você tem uma seguradora, com <span class="math inline">\(1.000\)</span> segurados, cada um deles pagando <span class="math inline">\(50\)</span> dinheiros por ano.</p></li>
+<li><p>Por ano, <span class="math inline">\(1\)</span> dos <span class="math inline">\(1.000\)</span> segurados morre. Neste caso, sua seguradora deve pagar <span class="math inline">\(10.000\)</span> dinheiros.</p></li>
+<li><p>Por ano, <span class="math inline">\(2\)</span> dos <span class="math inline">\(1.000\)</span> segurados ficam inválidos. Neste caso, sua seguradora deve pagar <span class="math inline">\(5.000\)</span> dinheiros.</p></li>
+<li>
+<p><span class="hl">Quanto sua seguradora espera ter de lucro (ou prejuízo) por segurado, por ano?</span></p>
+<ul>
+<li>
+<p><span class="hl">Chamando de <span class="math inline">\(X\)</span> a variável aleatória que representa o dinheiro pago pela seguradora por apólice, por ano</span>, temos</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(X = 10000) &amp;= 1/1000\\
+P(X = 5000)  &amp;= 2/1000\\
+P(X = 0)     &amp;= 997/1000
+\end{aligned}
+\]</span></p>
+</li>
+<li><p>Daí,</p></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+E(X) &amp;= 10000 \cdot \frac{1}{1000} \;+\; 5000 \cdot \frac{2}{1000} \;+\; 0 \cdot \frac{997}{1000} \\
+      &amp;= 20
+\end{aligned}
+\]</span></p>
+<ul>
+<li>Como cada segurado paga <span class="math inline">\(50\)</span> dinheiros por ano, sua seguradora lucra, em média, <span class="math inline">\(30\)</span> dinheiros por apólice, por ano.</li>
+</ul>
+</li>
+<li>
+<p>E o desvio-padrão?</p>
+<ul>
+<li>
+<p>Calculando a variância antes:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma^2(X) &amp;= (10000 - 20)^2 \cdot \frac{1}{1000} \;+\; (5000 -20)^2 \cdot \frac{2}{1000} \;+\; (0 - 20)^2 \cdot \frac{997}{1000} \\
+      &amp;= 9980^2 \cdot \frac{1}{1000} \;+\; 4980^2 \cdot \frac{2}{1000} \;+\; (- 20)^2 \cdot \frac{997}{1000} \\
+      &amp;= 149600
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>O desvio-padrão é a raiz quadrada de <span class="math inline">\(\sigma^2\)</span>:</p>
+<p><span class="math display">\[
+\sigma = 386{,}78
+\]</span></p>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="gerador-de-números-aleatórios" class="section level3" number="8.8.2">
+<h3>
+<span class="header-section-number">8.8.2</span> Gerador de números aleatórios<a class="anchor" aria-label="anchor" href="#gerador-de-n%C3%BAmeros-aleat%C3%B3rios"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Você programa um gerador de números aleatórios <span class="math inline">\(x \in [1, 3] \subset \mathbb{R}\)</span>.</p></li>
+<li><p>Considere <span class="math inline">\(X\)</span> a variável aleatória que representa os números gerados.</p></li>
+<li>
+<p><span class="math inline">\(X\)</span> é uma variável aleatória contínua, com fdp</p>
+<p><span class="math display">\[
+f(x) =
+  \begin{cases}\displaystyle
+    \frac{1}{2} &amp; \text{se } x \in [1, 3] \\
+    \,0 &amp; \text{se } x \not\in [1, 3]
+  \end{cases}
+\]</span></p>
+<p>cujo gráfico é</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unif-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Isto significa que a densidade de probabilidade está distribuída uniformemente no intervalo <span class="math inline">\([1, 3]\)</span>.</p></li>
+<li>
+<p>Vamos calcular o valor esperado <span class="math inline">\(E(X)\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X)
+  &amp;= \int_{-\infty}^{+ \infty} x \cdot f(x) \text{d}x \\
+  &amp;= \int_{1}^{3} x \cdot \frac{1}{2} \text{d}x \\
+  &amp;= \frac12 \cdot \left.\frac{x^2}{2} \right|_1^3 \\
+  &amp;= 2
+\end{aligned}
+\]</span></p>
+</li>
+<li><p>Ou seja, a média dos números gerados, depois de muitas execuções, vai ser <span class="math inline">\(2\)</span>.</p></li>
+<li><p>Vamos calcular a variância <span class="math inline">\(\sigma^2(X)\)</span>:</p></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma^2(X)
+  &amp;= \int_{-\infty}^{+ \infty} (x - 2)^2 \cdot f(x) \text{d}x \\
+  &amp;= \int_{1}^{3} (x-2)^2 \cdot \frac{1}{2} \text{d}x \\
+  &amp;= \frac13
+\end{aligned}
+\]</span></p>
+<ul>
+<li><p>Isto vai dar um desvio-padrão <span class="math inline">\(\sigma = \sqrt{\sigma^2} = \frac{\sqrt{3}}{3} \approx 0{,}58\)</span>.</p></li>
+<li>
+<p>Mas R tem este gerador! Vamos gerar muitos valores e calcular a média e o desvio-padrão:</p>
+<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">valores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1e6</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 2,000145</code></pre>
+<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,5774866</code></pre>
+</li>
+<li>
+<p>Como exercício, verifique que, para qualquer variável aleatória contínua <span class="math inline">\(X\)</span> distribuída uniformemente entre <span class="math inline">\(a\)</span> e <span class="math inline">\(b\)</span>, i.e., com fdp</p>
+<p><span class="math display">\[
+f(x) =
+  \begin{cases}\displaystyle
+    \frac{1}{b - a} &amp; \text{se } x \in [a, b] \\
+    \,0 &amp; \text{se } x \not\in [a, b]
+  \end{cases}
+\]</span></p>
+<p>ocorre que</p>
+<ul>
+<li><p><span class="math inline">\(E(X) = \frac{a+b}{2}\)</span>, e</p></li>
+<li><p><span class="math inline">\(\sigma^2(X) = \frac{(a - b)^2}{12}\)</span>.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  if (t = document.getElementById("webex-total_correct")) {
+    var correct = document.getElementsByClassName("webex-correct").length;
+    var solvemes = document.getElementsByClassName("webex-solveme").length;
+    var radiogroups = document.getElementsByClassName("webex-radiogroup").length;
+    var selects = document.getElementsByClassName("webex-select").length;
+
+    t.innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+init_exercises = function() {
+  console.log("onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+  }
+
+  update_total_correct();
+}
+
+$(init_exercises)
+
+</script><div class="chapter-nav">
+<div class="prev"><a href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></div>
+<div class="next"><a href="refer%C3%AAncias.html">Referências</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#variaveis"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
+<li><a class="nav-link" href="#v%C3%ADdeo-3"><span class="header-section-number">8.1</span> Vídeo</a></li>
+<li><a class="nav-link" href="#o-que-%C3%A9-uma-vari%C3%A1vel-aleat%C3%B3ria"><span class="header-section-number">8.2</span> O que é uma variável aleatória?</a></li>
+<li>
+<a class="nav-link" href="#exemplos-1"><span class="header-section-number">8.3</span> Exemplos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#lan%C3%A7ar-dois-dados"><span class="header-section-number">8.3.1</span> Lançar dois dados</a></li>
+<li><a class="nav-link" href="#altura-de-um-homem-adulto"><span class="header-section-number">8.3.2</span> Altura de um homem adulto</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#valor-esperado"><span class="header-section-number">8.4</span> Valor esperado</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#lan%C3%A7ar-dois-dados-1"><span class="header-section-number">8.4.1</span> Lançar dois dados</a></li>
+<li><a class="nav-link" href="#lan%C3%A7ar-um-dado"><span class="header-section-number">8.4.2</span> Lançar um dado</a></li>
+<li><a class="nav-link" href="#altura-de-um-homem-adulto-1"><span class="header-section-number">8.4.3</span> Altura de um homem adulto</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#propriedades-do-valor-esperado"><span class="header-section-number">8.5</span> Propriedades do valor esperado</a></li>
+<li>
+<a class="nav-link" href="#vari%C3%A2ncia-1"><span class="header-section-number">8.6</span> Variância</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#lan%C3%A7ar-dois-dados-2"><span class="header-section-number">8.6.1</span> Lançar dois dados</a></li>
+<li><a class="nav-link" href="#lan%C3%A7ar-um-dado-1"><span class="header-section-number">8.6.2</span> Lançar um dado</a></li>
+<li><a class="nav-link" href="#altura-de-um-homem-adulto-2"><span class="header-section-number">8.6.3</span> Altura de um homem adulto</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#propriedades-da-vari%C3%A2ncia"><span class="header-section-number">8.7</span> Propriedades da variância</a></li>
+<li>
+<a class="nav-link" href="#mais-exemplos"><span class="header-section-number">8.8</span> Mais exemplos</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#seguradora"><span class="header-section-number">8.8.1</span> Seguradora</a></li>
+<li><a class="nav-link" href="#gerador-de-n%C3%BAmeros-aleat%C3%B3rios"><span class="header-section-number">8.8.2</span> Gerador de números aleatórios</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/fnaufel/probestr/blob/master/variaveis.Rmd">Ver código-fonte <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/fnaufel/probestr/edit/master/variaveis.Rmd">Editar esta página <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 12/05/2023)</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Criado com o <a class="text-light" href="https://bookdown.org">pacote bookdown</a> do R.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

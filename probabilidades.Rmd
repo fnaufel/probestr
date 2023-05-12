@@ -233,7 +233,7 @@ embed_yt('hJfyzRzEs44')
 * A [[lei dos grandes números]{.hl}](https://pt.wikipedia.org/wiki/Lei_dos_grandes_n%C3%BAmeros) é um resultado matemático que diz, essencialmente, que, [quando o número $n$ de repetições de um experimento tende a infinito, a frequência relativa de um evento tende à sua probabilidade real]{.hl}.
 
 
-  ::: {.rmdcaution}
+  ::: {.rmdcaution latex=1}
   
   Um [erro comum]{.hl} é achar que, se houve poucas caras nos lançamentos mais recentes, então a probabilidade de o resultado ser cara no próximo lançamento é maior, para que a proporção de caras fique mais perto de $0{,}5$.
   
@@ -252,9 +252,9 @@ embed_yt('hJfyzRzEs44')
 
 * Por exemplo, você aposta com um amigo que
 
-  * Se o seu time de basquete^[Considere que, no basquete, o empate é impossível.] vencer o próximo jogo contra o dele, você pagará $\$3$ para ele.
+  * Se o seu time de basquete^[Considere que, no basquete, o empate é impossível.] vencer o próximo jogo contra o dele, ele pagará $\$3$ para você.
   
-  * Se o time dele vencer o próximo jogo contra o seu, ele pagará $\$1$ para você. 
+  * Se o time dele vencer o próximo jogo contra o seu, você pagará $\$1$ para ele. 
   
 * Se você considera justa esta aposta, então [você crê que a probabilidade de o time dele vencer é $3$ vezes maior do que a probabilidade de o seu time vencer]{.hl}. 
 
@@ -695,8 +695,8 @@ grafico +
       ) +
       labs(
         subtitle = paste(
-          '(teóricas com premissas originais: azul;', 
-          'simulações com novas premissas: vermelho)'
+          '(teóricas, premissas originais: azul;', 
+          'simulações, novas premissas: vermelho)'
         )
       )
     ```
@@ -1280,7 +1280,7 @@ embed_yt('NVP-MwtGp0Q')
     tit_tab['Sim', '1'] / tit_tab['Sim', 'Total']
     ```
 
-  ::: {.rmdimportant}
+  ::: {.rmdimportant latex=1}
   
   Este é um exemplo de que $P(A \mid B)$ pode ser [diferente]{.hl} de $P(B \mid A)$.
   

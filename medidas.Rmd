@@ -2,7 +2,7 @@
 knit: "bookdown::render_book"
 ---
 
-# Medidas
+# Medidas {#medidas}
 
 ## Vídeo
 

@@ -33,5 +33,6 @@ rmd_files: [
   "viz-02.Rmd",
   "medidas.Rmd",
   "probabilidades.Rmd",
+  "variaveis.Rmd",
   "refs.Rmd"
 ]

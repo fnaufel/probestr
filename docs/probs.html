@@ -18,9 +18,9 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.5/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.5/font.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.5.9000/font.css" rel="stylesheet">
 <script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -55,6 +55,7 @@
 <li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
 <li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
 <li><a class="active" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
 <li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
 </ul>
 
@@ -273,8 +274,8 @@ P(A) = \frac{\text{Qtde de ocorrências de } A}{\text{Qtde total de repetições
 <li>
 <p>Por exemplo, você aposta com um amigo que</p>
 <ul>
-<li><p>Se o seu time de basquete<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Considere que, no basquete, o empate é impossível.&lt;/p&gt;"><sup>8</sup></a> vencer o próximo jogo contra o dele, você pagará <span class="math inline">\(\$3\)</span> para ele.</p></li>
-<li><p>Se o time dele vencer o próximo jogo contra o seu, ele pagará <span class="math inline">\(\$1\)</span> para você.</p></li>
+<li><p>Se o seu time de basquete<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Considere que, no basquete, o empate é impossível.&lt;/p&gt;"><sup>8</sup></a> vencer o próximo jogo contra o dele, ele pagará <span class="math inline">\(\$3\)</span> para você.</p></li>
+<li><p>Se o time dele vencer o próximo jogo contra o seu, você pagará <span class="math inline">\(\$1\)</span> para ele.</p></li>
 </ul>
 </li>
 <li><p>Se você considera justa esta aposta, então <span class="hl">você crê que a probabilidade de o time dele vencer é <span class="math inline">\(3\)</span> vezes maior do que a probabilidade de o seu time vencer</span>.</p></li>
@@ -559,7 +560,7 @@ P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">simular</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">nsalas</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 0,5732</code></pre>
+<pre><code>## [1] 0,5715</code></pre>
 </li>
 </ul>
 </div>
@@ -717,8 +718,8 @@ Resposta
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
 <span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span></span>
-<span>      <span class="st">'(teóricas com premissas originais: azul;'</span>, </span>
-<span>      <span class="st">'simulações com novas premissas: vermelho)'</span></span>
+<span>      <span class="st">'(teóricas, premissas originais: azul;'</span>, </span>
+<span>      <span class="st">'simulações, novas premissas: vermelho)'</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/premissas-real-1.png" width="100%" style="display: block; margin: auto;"></div>
@@ -1922,7 +1923,7 @@ $(init_exercises)
 
 </script><div class="chapter-nav">
 <div class="prev"><a href="medidas.html"><span class="header-section-number">6</span> Medidas</a></div>
-<div class="next"><a href="refer%C3%AAncias.html">Referências</a></div>
+<div class="next"><a href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
       <ul class="nav navbar-nav">
@@ -1991,7 +1992,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 12/04/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 12/05/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
