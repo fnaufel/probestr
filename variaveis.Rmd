@@ -11,7 +11,7 @@ library(gt)
 
 ## Vídeo
 
-```{r echo=FALSE, results='asis', out.extra=center()}
+```{r echo=FALSE, out.extra=center(), results='asis'}
 embed_yt('8PI-rfsgNdE')
 ```
 

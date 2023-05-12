@@ -34,5 +34,6 @@ rmd_files: [
   "medidas.Rmd",
   "probabilidades.Rmd",
   "variaveis.Rmd",
+  "distribs-discretas.Rmd",
   "refs.Rmd"
 ]
