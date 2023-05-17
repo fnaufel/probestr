@@ -30,6 +30,10 @@ grafico <- function (
 }
 ```
 
+```{r echo=FALSE}
+library(gt)
+```
+
 
 # Distribuições discretas {#discretas}
 
@@ -44,13 +48,14 @@ embed_yt('jKSRgZdlTEM')
 
 ### Exemplo: um dado
 
-* Cada resultado de $1$ a $6$ tem a mesma probabilidade de ocorrer.
+* Cada resultado de $1$ a $6$ tem a [mesma probabilidade]{.hl} de ocorrer.
 
-* Variável aleatória $X$ 
+* A variável aleatória $X$ representa o número que resulta de um lançamento.
 
-* Suporte $\{ 1, 2,3 ,4 ,5 , 6 \}$
+* O [suporte]{.hl} (conjunto de valores possíveis) de $X$ é o conjunto $\{ 1, 2, 3, 4, 5, 6 \}$.
 
-* Distribuição: $\text{Unif}(X \mid n=6)$:
+* A distribuição de probabilidade de $X$ é [uniforme discreta]{.hl} com $6$ valores, escrita como $\text{UnifDiscr}(X \mid n=6)$:
+
   $$
   P(X = x) = \begin{cases}
         1/6 &\text{se } x \in \{1, 2, 3, 4, 5, 6\} \\
@@ -58,13 +63,15 @@ embed_yt('jKSRgZdlTEM')
       \end{cases}
   $$
 
+
 ### No geral
 
-* $\text{Unif}(X = x \mid n)$
+* Com $n$ valores possíveis, a distribuição é $\text{UnifDiscr}(X = x \mid n)$.
 
-* $n \in \mathbb{N}^+$
+* $n \in \mathbb{N}^+$.
 
-* Distribuição: $\text{Unif}(X \mid n)$:
+* Probabilidades:
+
   $$
   P(X = x) = \begin{cases}
         1/n &\text{se } x \in \{1, \ldots, n\} \\
@@ -72,103 +79,109 @@ embed_yt('jKSRgZdlTEM')
       \end{cases}
   $$
 
-* Valor esperado:
+* [Valor esperado]{.hl}:
+
   $$
-  \begin{align*}
+  \begin{aligned}
   E(X) &= \frac{1}{n} \cdot (1 + \cdots + n)\\ 
        &= \frac{1}{n} \cdot \frac{n(n+1)}{2}\\ 
        &= \frac{n+1}{2}
-  \end{align*}
+  \end{aligned}
   $$
 
-* Variância:
-$$
-\begin{align}
-\sigma^2(X) &= \sum \left[(x_i - \mu)^2 \cdot \frac1n \right]
-                & \text{(definição de variância)}\\
-            &= \frac1n \sum (x_i - \mu)^2 \\
-            &= \frac1n \left[ \sum (x_i^2 -2\mu x_i + \mu^2) \right] \\
-            &= \frac1n \left[ \sum x_i^2 - 2\mu \sum x_i + n\mu^2 \right] \\
-            &= \frac1n \sum x_i^2 - 2\mu \frac{\sum x_i}{n} + \frac{n\mu^2}{n}  
-                 & \left(\text{mas}\quad \frac{\sum x_i}{n} = \mu\right)\\
-            &= \frac1n \sum x_i^2 - 2\mu^2 + \mu^2\\
-            &= \frac1n \sum x_i^2 - \mu^2  
-                & \left(\text{vamos usar a fórmula para } \sum x_i^2 \right)\\
-            &= \frac1n \cdot \frac{n(n+1)(2n+1))}{6} - \mu^2  
-                & \text{(vamos substituir } \mu \text{ pela fórmula)}\\
-            &= \frac1n \cdot \frac{n(n+1)(2n+1))}{6} - \left(\frac{n+1}{2}\right)^2  
-                & \text{(o resto é contarada)}\\
-            &= (n+1) \left( \frac{2n+1}{6} - \frac{n+1}{4}\right) \\
-            &= (n+1) \left( \frac{4n + 2 -3n - 3}{12}\right) \\
-            &= \frac{(n+1)(n-1)}{12} \\
-            &= \frac{n^2 - 1}{12}
-\end{align}
-$$
+* [Variância]{.hl}:
+
+  $$
+  \begin{aligned}
+  \sigma^2(X) &= \sum \left[(x_i - \mu)^2 \cdot \frac1n \right]
+                  & \text{(definição de variância)}\\
+              &= \frac1n \sum (x_i - \mu)^2 \\
+              &= \frac1n \left[ \sum (x_i^2 -2\mu x_i + \mu^2) \right] \\
+              &= \frac1n \left[ \sum x_i^2 - 2\mu \sum x_i + n\mu^2 \right] \\
+              &= \frac1n \sum x_i^2 - 2\mu \frac{\sum x_i}{n} + \frac{n\mu^2}{n}  
+                   & \left(\text{mas}\quad \frac{\sum x_i}{n} = \mu\right)\\
+              &= \frac1n \sum x_i^2 - 2\mu^2 + \mu^2\\
+              &= \frac1n \sum x_i^2 - \mu^2  
+                  & \left(\text{vamos usar a fórmula para } \sum x_i^2 \right)\\
+              &= \frac1n \cdot \frac{n(n+1)(2n+1))}{6} - \mu^2  
+                  & \text{(vamos substituir } \mu \text{ pela fórmula)}\\
+              &= \frac1n \cdot \frac{n(n+1)(2n+1))}{6} - \left(\frac{n+1}{2}\right)^2  
+                  & \text{(o resto é contarada)}\\
+              &= (n+1) \left( \frac{2n+1}{6} - \frac{n+1}{4}\right) \\
+              &= (n+1) \left( \frac{4n + 2 -3n - 3}{12}\right) \\
+              &= \frac{(n+1)(n-1)}{12} \\
+              &= \frac{n^2 - 1}{12}
+  \end{aligned}
+  $$
+
 
 ### Em R
 
-::: {.rmdimportant}
-
-As funções `dunif`, `punif`, `qunif` e `runif` trabalham com a distribuição uniforme *contínua*. Não servem para a distribuição uniforme *discreta*.
-
+::: {.rmdimportant latex=1}
+  
+  As funções `dunif`, `punif`, `qunif` e `runif` trabalham com a distribuição uniforme [contínua]{.hl}. [Não servem para a distribuição uniforme discreta]{.hl}.
+  
 :::
 
 * Para definir os valores possíveis da variável aleatória $X$, use um vetor.
 
-```{r dado}
-x <- 1:6
-```
+    ```{r dado}
+    x <- 1:6
+    ```
 
 * Todas as probabilidades são iguais a $\frac1n$:
 
-```{r probs-unif}
-probs <- 1 / length(x)
-```
+    ```{r probs-unif}
+    probs <- 1 / length(x)
+    ```
 
 * Distribuição:
 
-```{r distr-unif-vetor}
-distr <- tibble(
-  X = x,
-  p = probs
-)
-
-distr %>% gt()
-```
+    ```{r distr-unif-vetor}
+    distr <- tibble(
+      X = x,
+      p = probs
+    )
+    
+    distr %>% gt()
+    ```
 
 * Exemplo: $P(X \leq 2)$:
 
-```{r p-x-leq-3}
-distr %>% 
-  filter(X <=2) %>% 
-  pull(p) %>% 
-  sum()
-```
+    ```{r p-x-leq-3}
+    distr %>% 
+      filter(X <=2) %>% 
+      pull(p) %>% 
+      sum()
+    ```
 
 * Gráfico:
 
-```{r plot-uniforme, echo=FALSE}
-grafico(
-  distr, 
-  paste('Uniforme de', 1, 'a', nrow(distr)), 
-  scale_x_continuous(breaks = 1:nrow(distr))
-)
-```
+    ```{r plot-uniforme, echo=FALSE}
+    grafico(
+      distr, 
+      paste('Uniforme de', 1, 'a', nrow(distr)), 
+      scale_x_continuous(breaks = 1:nrow(distr))
+    )
+    ```
 
-* Para gerar amostras, use `sample`, que, por *default*, trabalha com a distribuição  uniforme discreta. Simulando dez lançamentos de um dado:
+* Para gerar amostras, use `sample`, que, por *default*, trabalha com a distribuição uniforme discreta. 
 
-```{r sample-unif}
-sample(1:6, size = 10, replace = TRUE)
-```
+* Simulando dez lançamentos de um dado:
+
+    ```{r sample-unif}
+    sample(1:6, size = 10, replace = TRUE)
+    ```
 
 
 ## Distribuição de Bernoulli
 
 ### Exemplo: uma moeda
 
-* Dois resultados possíveis: coroa ou cara.
+* O experimento tem [exatamente dois resultados possíveis]{.hl}: coroa ou cara.
 
-* Variável aleatória
+* [A variável aleatória $X$ representa numericamente os dois resultados possíveis]{.hl}. É comum usar $0$ para um resultado, $1$ para o o outro.
+
   $$
   X = \begin{cases}
         0 &\text{se coroa} \\
@@ -176,86 +189,114 @@ sample(1:6, size = 10, replace = TRUE)
       \end{cases}
   $$
   
-* Parâmetro: $p$ é a probabilidade de sucesso (cara).
+* O [suporte]{.hl} é o conjunto $\{0, 1\}$.
 
-* Distribuição: $\text{Bernoulli}(X \mid p = 0{,}5)$ para uma moeda justa:
+* Vamos chamar de $p$ a probabilidade de cara (o caso $X = 1$, comumente chamado de [sucesso]{.hl})^[Aqui, chamar cara de sucesso é uma escolha totalmente arbitrária.].
+
+* Para uma moeda justa, a distribuição de $X$ é a [distribuição de Bernoulli]{.hl} com $p=0{,}5$, escrita como $\text{Bernoulli}(X \mid p = 0{,}5)$:
+
   $$
-  \begin{align*}
+  \begin{aligned}
     P(X = 0) &= 1 - 0{,}5 \\
     P(X = 1) &= 0{,}5 
-  \end{align*}
-  $$
-  também escrita como
-  $$
-    P(X = x) = 0{,}5^x \cdot (1 - 0{,}5)^{1 - x}
+  \end{aligned}
   $$
 
-* Cada valor do parâmetro $p$ dá uma distribuição diferente.
+* Podemos escrever $P(X=x)$ de forma mais compacta:
 
-* Gráfico com um valor específico de $p$:
+  $$
+  P(X = x) = 0{,}5^x \cdot (1 - 0{,}5)^{1 - x}
+  $$
 
-```{r bernoulli, echo=FALSE}
-prob_sucesso <- .8
+* [Cada valor do parâmetro $p$ dá uma distribuição de Bernoulli diferente]{.hl}.
 
-distr <- tibble(
-  X = 0:1,
-  p = c(1 - prob_sucesso, prob_sucesso)
-)
+* Gráfico com $p = 0{,}8$ (uma moeda muito viciada, para a qual a probabilidade de cara é de $80\%$):
 
-grafico(
-  distr, 
-  paste('Bernoulli( X | p = ', prob_sucesso, ')'),
-  scale_x_continuous(
-      breaks = 0:1, 
-      limits = c(-.5, 1.5)
-  )
-)
-
-```
+    ```{r bernoulli, echo=FALSE}
+    prob_sucesso <- .8
+    
+    distr <- tibble(
+      X = 0:1,
+      p = c(1 - prob_sucesso, prob_sucesso)
+    )
+    
+    grafico(
+      distr, 
+      paste('Bernoulli( X | p = ', prob_sucesso, ')'),
+      scale_x_continuous(
+          breaks = 0:1, 
+          limits = c(-.5, 1.5)
+      )
+    )
+    
+    ```
   
 ### No geral
 
-* $\text{Bernoulli}(X = x \mid p)$
+* Para probabilidade de sucesso $p$, a distribuição é escrita como $\text{Bernoulli}(X = x \mid p)$.
 
-* $x \in \{0, 1\}$
+* $x \in \{0, 1\}$.
 
-* $p \in [0, 1]$
+* $p \in [0, 1]$.
 
-* Valor esperado:
-$$
-\begin{align*}
-E(X) &= 0 \cdot (1 - p) \;+\: 1 \cdot p \\
-     &= p
-\end{align*}
-$$
+* Probabilidades:
 
-* Variância:
-$$
-\begin{align*}
-\sigma^2(X) &= (0 - p)^2 \cdot (1 - p) \;+\: (1 - p)^2 \cdot p \\
-     &= p^2 - p^3 + p - 2p^2 + p^3 \\
-     &= -p^2 + p \\
-     &= p(1 - p)
-\end{align*}
-$$
+  $$
+  P(X = x) = p^x \cdot (1 - p)^{1 - x}
+  $$
+
+* É comum chamar de $q$ a [probabilidade de fracasso]{.hl}. Ou seja,
+
+  $$
+  q = 1 - p
+  $$
+
+* As probabilidades ficam
+
+  $$
+  P(X = x) = p^x \cdot q^{1 - x}
+  $$
+
+* [Valor esperado]{.hl}:
+
+  $$
+  \begin{aligned}
+  E(X) &= 0 \cdot (1 - p) \;+\: 1 \cdot p \\
+       &= p
+  \end{aligned}
+  $$
+
+* [Variância]{.hl}:
+
+  $$
+  \begin{aligned}
+  \sigma^2(X) &= (0 - p)^2 \cdot (1 - p) \;+\: (1 - p)^2 \cdot p \\
+       &= p^2 - p^3 + p - 2p^2 + p^3 \\
+       &= -p^2 + p \\
+       &= p(1 - p) \\
+       &= pq
+  \end{aligned}
+  $$
+
 
 ### Em R
 
-::: {.rmdimportant}
+::: {.rmdimportant latex=1}
 
-A distribuição de Bernoulli é um caso especial ($n = 1$) da distribuição *binomial*, que nós vamos ver abaixo.
+Em R, [a distribuição de Bernoulli é um caso especial ($n = 1$) da distribuição binomial]{.hl}, que nós vamos ver mais adiante neste capítulo.
 
 :::
 
-* Se você não quiser usar a distribuição binomial, pode usar um vetor de valores e um vetor de probabilidades (ambos de tamanho $2$), e usar `sample` com o argumento `prob`. 
+* Se você não quiser usar as funções da distribuição binomial, pode definir [um vetor com os dois valores possíveis]{.hl} e [um vetor com as duas probabilidades]{.hl}, e então usar `sample` com o argumento `prob`. 
 
-* Por exemplo, para simular $10$ lançamentos de uma moeda viciada:
+* Por exemplo, para simular $10$ lançamentos de uma moeda viciada, onde $p = 0{,}8$:
 
-```{r moeda-viciada}
-moeda <- 0:1
-probs <- c(.2, .8)
-sample(moeda, size = 10, prob = probs, replace = TRUE)
-```
+    ```{r moeda-viciada}
+    moeda <- 0:1
+    probs <- c(.2, .8)
+    sample(moeda, size = 10, prob = probs, replace = TRUE)
+    ```
+
 
 ## Distribuição geométrica
 
@@ -263,79 +304,100 @@ sample(moeda, size = 10, prob = probs, replace = TRUE)
 
 * Cada e-mail tem probabilidade $0{,}1$ de não ser *spam*, e $0{,}9$ de ser *spam*. 
 
-* Considere que cada e-mail é *independente* de cada outro.
+* Considere que [cada e-mail é independente de cada outro]{.hl}.
 
-* Você abre sua *inbox* (sem filtro *antispam*) e começa a abrir as mensagens sequencialmente.
+* Você abre sua *inbox* (sem filtro *antispam*) e começa a ler as mensagens sequencialmente.
 
-* A variável aleatória $X$ é o número de mensagens *spam* que você precisa abrir até chegar à primeira mensagem que não é *spam*.
+* [A variável aleatória $X$ representa o número de mensagens *spam* que você precisa abrir até chegar à primeira mensagem que não é *spam*]{.hl}.
 
-* Suporte $\{0, 1, 2, 3, \ldots \}$
+* O [suporte]{.hl} é $\{0, 1, 2, 3, \ldots \}$ (nossa primeira distribuição com suporte [infinito]{.hl}!).^[Mas como o conjunto é [enumerável]{.hl}, a variável aleatória $X$ é [discreta]{.hl}.]
 
-* Parâmetro: $p$ é a probabilidade de sucesso (não *spam*).
+* Vamos chamar de $p$ a probabilidade de [sucesso (a mensagem não ser *spam*)]{.hl}.
 
-* Distribuição: $\text{Geom}(X \mid p = 0{,}1)$.
+* A distribuição de $X$ é a [distribuição geométrica]{.hl} com $p = 0{,}1$, escrita como $\text{Geom}(X \mid p = 0{,}1)$.
 
-* Qual a probabilidade de que a primeira mensagem não-*spam* seja a décima? 
+* Qual a probabilidade de que a primeira mensagem não-*spam* seja a décima, por exemplo? 
 
-$$
-\begin{align*}
-\text{Geom}(X = 9 \mid p = 0{,}1)  &= 0{,}9^9 \cdot 0{,}1 \\
-                        &\approx 0{,}39 
-\end{align*}
-$$
+  $$
+  \begin{aligned}
+  \text{Geom}(X = 9 \mid p = 0{,}1)  &= 0{,}9^9 \cdot 0{,}1 \\
+                          &\approx 0{,}39 
+  \end{aligned}
+  $$
 
 * Gráfico:
 
-```{r geom-plot, echo=FALSE}
-p_nao_spam <- .1
-x <- 0:50
+    ```{r geom-plot, echo=FALSE}
+    p_nao_spam <- .1
+    x <- 0:50
+    
+    spam <- tibble(
+      X = x,
+      p = dgeom(X, p_nao_spam)
+    )
+    
+    grafico(spam, paste('Geom( X | p = ', p_nao_spam, ')'))
+    ```
 
-spam <- tibble(
-  X = x,
-  p = dgeom(X, p_nao_spam)
-)
-
-grafico(spam, paste('Geom( X | p = ', p_nao_spam, ')'))
-```
+* [Cada valor de $p$ dá uma distribuição geométrica diferente]{.hl}.
 
 
 ### No geral
 
-* $X$ conta a quantidade de *provas de Bernoulli* que têm resultado fracasso antes do primeiro sucesso.
+* Para probabilidade de sucesso $p$, a distribuição é escrita como $\text{Geom}(X=x \mid p)$.
+
+* $x \in \{0, 1, 2, 3, \ldots \}$.
+
+* $p \in [0, 1]$.
+
+* [$X$ conta a quantidade de provas de Bernoulli que têm resultado fracasso antes do primeiro sucesso]{.hl}.
 
 * As provas de Bernoulli são independentes e têm probabilidade fixa de sucesso $p$.
 
-* $\text{Geom}(X = x \mid p) = (1-p)^x \cdot p$
+* Probabilidades:
 
-* $x \in \{0, 1, 2, \ldots\}$
+  $$
+  \text{Geom}(X = x \mid p) = (1-p)^x \cdot p
+  $$
 
-* Valor esperado:
+* [Valor esperado]{.hl}:
 
-  Vamos chamar $1 - p$ de $q$. Então, $P(X = x) = q^x \cdot p$. Daí,
+  Vamos chamar $1 - p$ de $q$. 
+  
+  Então, $P(X = x) = q^x \cdot p$. 
+  
+  Daí,
   
   $$
-  \begin{align*}
+  \begin{aligned}
   E(X) &= 0p + 1qp + 2q^2p + 3q^3p + \cdots \\
        &= 0(1-q) + 1q(1-q) + 2q^2(1-q) + 3q^3(1-q) + \cdots \\
        &= q - q^2 + 2q^2 - 2q^3 + 3q^3 - 3q^4 + \cdots \\
        &= q + q^2 + q^3 + \cdots \\
        &= \frac{q}{1-q} \\
-       &= \frac{1-p}{p}
-  \end{align*}
+       &= \frac{1-p}{p} \\
+       &= \frac qp
+  \end{aligned}
   $$
 
-  No exemplo dos e-mails, $E(X) = \frac{1-p}{p} = \frac{0{,}9}{0{,}1} = `r 0.9/0.1`$.
+  No exemplo dos e-mails, 
   
-* Variância:
+  $$
+  E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = `r 0.9/0.1`
+  $$
+  
+* [Variância]{.hl}:
 
   $$
-  \sigma^2(X) = \frac{1-p}{p^2}
+  \sigma^2(X) = \frac{1-p}{p^2} = \frac q{p^2}
   $$
+
+* Exercício: derive esta fórmula da variância.
 
 
 ### Em R
 
-#### Função de distribuição de probabilidade: $\text{Geom}(X = x \mid p)$ 
+#### Função de distribuição de probabilidade: [$\text{Geom}(X = x \mid p)$]{.hl} {-}
 
 ```{r grafico-dgeom, echo=FALSE}
 x <- 0:20
@@ -361,30 +423,32 @@ grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
   
 ```
 
-* `dgeom(x, prob)`
+* Para calcular $\text{Geom}(X=x \mid p)$, use `dgeom(x, prob=p)`.
 
-* Tanto `x` quanto `prob` podem ser vetores.
+* Tanto `x` quanto `prob` [podem ser vetores]{.hl}.
 
-* No exemplo do *spam*, probabilidades de $X$ ser $0, 1, 2, \ldots, 10$:
+* No exemplo do *spam*, vamos computar as probabilidades de $X$ ser $0, 1, 2, \ldots, 10$:
 
-```{r dgeom-1-a-10}
-dgeom(x = 0:10, prob = .1)
-```
+    ```{r dgeom-1-a-10}
+    dgeom(x = 0:10, prob = .1)
+    ```
 
-* Se a probabilidade de *spam* for $0{,}1; 0{,}2; 0{,}3; \ldots; 0{,}9; 1{,}0$, qual a probabilidade de ter que abrir $10$ mensagens *spam* antes de chegar à primeira mensagem não-*spam*?
+* Vamos computar $\text{Geom}(X=10 \mid p)$ para vários valores de $p$:
 
-```{r dgeom-varios-p}
-dgeom(10, prob = seq(0.1, 1.0, 0.1))
-```
+    ```{r dgeom-varios-p}
+    dgeom(10, prob = seq(0.1, 1.0, 0.1))
+    ```
 
-* Mas cuidado: se os dois argumentos forem vetores, o resultado é um vetor com o comprimento do maior argumento, com os valores de `x` pareados um a um com os valores de `prob` (lembrando que R recicla o vetor mais curto):
+* [Mas cuidado]{.hl}: se os dois argumentos forem vetores, o resultado é um vetor com o comprimento do maior argumento, [com os valores de `x` pareados um a um com os valores de `prob`]{.hl} (lembrando que R recicla o vetor mais curto):
 
-```{r dgeom-dois-vetores}
-dgeom(c(10, 11, 12), c(0.1, 0.2))
-```
-Os valores acima são, respectivamente, $P(X = 10 \mid p = 0{,}1)$, $P(X = 11 \mid p = 0{,}2)$ e $P(X = 12 \mid p = 0{,}1)$.
+    ```{r dgeom-dois-vetores}
+    dgeom(c(10, 11, 12), c(0.1, 0.2))
+    ```
 
-#### Função de distribuição acumulada: $\text{Geom}(X \leq q \mid p)$
+  Os valores acima são, respectivamente, $P(X = 10 \mid p = 0{,}1)$, $P(X = 11 \mid p = 0{,}2)$ e $P(X = 12 \mid p = 0{,}1)$.
+
+
+#### Função de distribuição acumulada: [$\text{Geom}(X \leq q \mid p)$]{.hl} {-}
 
 ```{r grafico-pgeom, echo=FALSE}
 x <- 0:20
@@ -410,93 +474,93 @@ grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
   
 ```
 
-* `pgeom(q, prob, lower.tail = TRUE)`
+* Para calcular $\text{Geom}(X \leq q \mid p)$, use `pgeom(q, prob=p)`.
 
-* Se você passar `lower.tail = FALSE`, a probabilidade calculada é $P(X > q \mid \text{prob})$.
+* Se você passar, como argumento, `lower.tail = FALSE`, a probabilidade calculada é $P(X > q \mid p)$ (a probabilidade acumulada [à direita]{.hl} do valor $q$).
 
-```{r grafico-pgeom-upper, echo=FALSE}
-x <- 0:20
-p_sucesso <- .1
+    ```{r grafico-pgeom-upper, echo=FALSE}
+    x <- 0:20
+    p_sucesso <- .1
+    
+    tabela <- tibble(
+      X = x,
+      p = dgeom(X, p_sucesso)
+    )
+    
+    grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
+      geom_col(
+        data = tabela %>% filter(X > 9),
+        aes(X, p),
+        color = 'red',
+        fill = 'red',
+        width = .1
+      ) +
+      labs(
+        subtitle = paste(
+          'Em vermelho, pgeom(9, 0.1, lower.tail = FALSE) =', 
+          pgeom(9, .1, lower.tail = FALSE) %>% round(3))
+      )
+    ```
 
-tabela <- tibble(
-  X = x,
-  p = dgeom(X, p_sucesso)
-)
+* Tanto `q` quanto `prob` [podem ser vetores]{.hl}.
 
-grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
-  geom_col(
-    data = tabela %>% filter(X > 9),
-    aes(X, p),
-    color = 'red',
-    fill = 'red',
-    width = .1
-  ) +
-  labs(
-    subtitle = paste(
-      'Em vermelho, pgeom(9, 0.1, lower.tail = FALSE) =', 
-      pgeom(9, .1, lower.tail = FALSE) %>% round(3))
-  )
+* No exemplo do *spam*, vamos computar a probabilidade de precisar abrir *no máximo* $10$ mensagens *spam* para então abrir a primeira mensagem não-*spam*:
+
+    ```{r geom-leq-10}
+    pgeom(q = 10, prob = .1)
+    ```
+
+  Na verdade, isto é o mesmo que somar as probabilidades de $X = 0$, $X = 1$, etc., até $X = 10$:
   
+    ```{r geom-sum-10}
+    sum(dgeom(0:10, .1))
+    ```
   
-```
+* Um exemplo mais realista: cada vez que você joga $6$ números na Mega-Sena, a probabilidade de você acertar a sena é de $1$ em $50.063.860$, segundo http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena.^[Esta probabilidade é computada usando a [distribuição hipergeométrica]{.hl}, que não vamos cobrir neste curso. [Veja mais informações aqui](https://pt.wikipedia.org/wiki/Distribui%C3%A7%C3%A3o_hipergeom%C3%A9trica).]
 
-* Tanto `q` quanto `prob` podem ser vetores.
+* Qual a probabilidade de você [acertar a sena]{.hl} em alguma das primeiras $1.000$ vezes que você jogar? $10.000$ vezes? $100.000$ vezes (o que equivale a [cerca de $`r round((1e5 / 2) / 52, 0) %>% fm(0)`$ anos, jogando $2$ vezes por semana)]{.hl}?
 
-* No exemplo do *spam*, a probabilidade de precisar abrir *no máximo* $10$ mensagens *spam* para então abrir a primeira mensagem não-*spam* é
+    ```{r loteria}
+    p <- 1/50063860
+    pgeom(c(1e3, 1e4, 1e5), p)
+    ```
 
-  ```{r geom-leq-10}
-  pgeom(q = 10, prob = .1)
-  ```
+* Qual a [probabilidade de você jogar duas vezes por semana, durante $100$ anos, sem acertar a sena]{.hl}? Considerando $52$ semanas por ano:
 
-  que, na verdade, é o mesmo que somar as probabilidades de $X = 0$, $X = 1$, etc., até $X = 10$:
+    ```{r loteria2}
+    vezes <- 2 * 52 * 100
+    vezes
+    pgeom(vezes, p, lower.tail = FALSE)
+    ```
   
-  ```{r geom-sum-10}
-  sum(dgeom(0:10, .1))
-  ```
+* O problema é que, com uma [probabilidade de sucesso tão baixa]{.hl}, a distribuição geométrica começa em um valor baixo e decresce muito lentamente. 
+
+* O gráfico abaixo vai até $X = 1$ milhão. A área da faixa vermelha é a probabilidade de você acertar a sena jogando no máximo $10$ mil vezes. Esta probabilidade é $`r pgeom(1e4, p) %>% fm(11)`$. 
   
-* Um exemplo mais realista: cada vez que você joga $6$ números na Mega-Sena, a probabilidade de você acertar a sena é de $1$ em $50.063.860$, segundo http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena. 
-
-  Qual a probabilidade de você acertar a sena em alguma das primeiras $1.000$ vezes que você jogar? $10.000$ vezes? $100.000$ vezes (o que equivale a $`r round((1e5 / 2) / 52, 1) %>% fm()`$ anos, jogando $2$ vezes por semana)?
-
-  ```{r loteria}
-  p <- 1/50063860
-  pgeom(c(1e3, 1e4, 1e5), p)
-  ```
-
-  Qual a probabilidade de você jogar duas vezes por semana, durante $100$ anos, sem acertar a sena? Considerando $52$ semanas por ano:
-
-  ```{r loteria2}
-  vezes <- 2 * 52 * 100
-  vezes
-  pgeom(vezes, p, lower.tail = FALSE)
-  ```
+* Isto equivale a dizer que a [probabilidade de você precisar de mais de $10$ mil jogos para acertar a sena]{.hl} é de $1 - `r pgeom(1e4, p) %>% fm(11)` = `r fm(1 - pgeom(1e4, p), 11)`$, que é a área em azul no gráfico, [mais a área restante à direita, de $1$ milhão até o infinito]{.hl}, que não aparece no gráfico!
   
-  O problema é que, com uma probabilidade de sucesso tão baixa, a distribuição geométrica começa em um valor baixo e decresce muito lentamente. O gráfico abaixo vai até $X = 1$ milhão. A área da faixa vermelha é a probabilidade de você acertar a sena jogando no máximo $10$ mil vezes. Esta probabilidade é $`r pgeom(1e4, p) %>% fm()`$. 
-  
-  Isto equivale a dizer que a probabilidade de você precisar de mais de $10$ mil jogos para acertar a sena é de $1 - `r pgeom(1e4, p) %>% fm()` = `r fm(1 - pgeom(1e4, p))`$, que é a área em azul no gráfico, *mais a área restante à direita, de $1$ milhão até o infinito*, que não aparece no gráfico!
-  
-```{r loteria-plot , echo=FALSE}
-x <- seq(0, vezes*100, 1000)
-p_sucesso <- p
-
-tabela <- tibble(
-  X = x,
-  p = dgeom(X, p_sucesso)
-)
-
-grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
-  geom_col(
-    data = tabela %>% filter(X <= 10000),
-    aes(X, p),
-    color = 'red',
-    fill = 'red',
-    width = .1
-  ) +
-  scale_x_continuous(labels = fm)
-```
+    ```{r loteria-plot , echo=FALSE}
+    x <- seq(0, vezes*100, 1000)
+    p_sucesso <- p
+    
+    tabela <- tibble(
+      X = x,
+      p = dgeom(X, p_sucesso)
+    )
+    
+    grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
+      geom_col(
+        data = tabela %>% filter(X <= 10000),
+        aes(X, p),
+        color = 'red',
+        fill = 'red',
+        width = .1
+      ) +
+      scale_x_continuous(labels = fm)
+    ```
   
 
-#### Função quantil: dado um valor de $\text{Geom}(X \leq x \mid p)$, então $x = ?$
+#### Função quantil: [dado um valor de $\text{Geom}(X \leq x \mid p)$, então $x ={} ?$]{.hl} {-}
 
 ```{r grafico-qgeom, echo=FALSE}
 x <- 0:20
@@ -535,149 +599,171 @@ grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
     ),
     color = 'red'
   )
-  
-  
 ```
 
-* `qgeom(p, prob, lower.tail = TRUE)`
+* O objetivo é achar $x$ tal que $\text{Geom}(X \leq x \mid p) = m$.
 
-* Se você passar `lower.tail = FALSE`, o quantil calculado é $q$ tal que $P(X > q \mid \text{prob}) = p$:
+* Em palavras: [achar o valor $x$ à esquerda do qual --- incluindo $x$ --- existe a probabilidade acumulada de $m$]{.hl}.
 
-```{r grafico-qgeom2, echo=FALSE}
-x <- 0:20
-p_sucesso <- .1
+* Para isto, use `qgeom(m, prob=p)`.
 
-tabela <- tibble(
-  X = x,
-  p = dgeom(X, p_sucesso)
-)
+* Se você passar, como argumento, `lower.tail = FALSE`, o valor calculado é $x$ tal que $P(X > x \mid p) = m$ (o [valor à direita do qual --- excluindo $x$ ---]{.hl} existe a probabilidade acumulada de $m$):
 
-grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
-  geom_col(
-    data = tabela %>% filter(X > 9),
-    aes(X, p),
-    color = 'red',
-    fill = 'red',
-    width = .1
-  ) +
-  labs(
-    subtitle = paste(
-      'A área em vermelho é', 
-      pgeom(9, 0.1, lower.tail = FALSE) %>% round(3)
+    ```{r grafico-qgeom2, echo=FALSE}
+    x <- 0:20
+    p_sucesso <- .1
+    
+    tabela <- tibble(
+      X = x,
+      p = dgeom(X, p_sucesso)
     )
-  ) +
-  geom_text(
-    mapping = aes(9, -.01, label = 'qgeom(0.349, 0.1, lower.tail = FALSE) = 9'),
-    color = 'red',
-    size = 5
-  ) +
-  geom_segment(
-    mapping = aes(
-      x = 9, 
-      y = -.005, 
-      xend = 9, 
-      yend = -.001
-    ),
-    color = 'red'
-  )
-  
-  
-```
+    
+    grafico(tabela, paste('Geom( X | p = ', p_sucesso, ')')) +
+      geom_col(
+        data = tabela %>% filter(X > 9),
+        aes(X, p),
+        color = 'red',
+        fill = 'red',
+        width = .1
+      ) +
+      labs(
+        subtitle = paste(
+          'A área em vermelho é', 
+          pgeom(9, 0.1, lower.tail = FALSE) %>% round(3)
+        )
+      ) +
+      geom_text(
+        mapping = aes(9, -.01, label = 'qgeom(0.349, 0.1, lower.tail = FALSE) = 9'),
+        color = 'red',
+        size = 5
+      ) +
+      geom_segment(
+        mapping = aes(
+          x = 9, 
+          y = -.005, 
+          xend = 9, 
+          yend = -.001
+        ),
+        color = 'red'
+      )
+    ```
 
 * Quantas vezes você precisa apostar $6$ números na Mega-Sena para ter $50$% de chance de acertar a sena alguma vez?
 
-```{r quantas-megasena}
-p <- 1/50063860
-qgeom(.5, p)
-```
+    ```{r quantas-megasena}
+    p <- 1/50063860
+    qgeom(.5, p)
+    ```
 
-* Isto equivale a $`r round(qgeom(.5, p) / (2 * 52)) %>% fm()`$ anos, jogando duas vezes por semana, toda semana.
-
-#### Geração de números aleatórios
-
-* `rgeom(n, prob)` retorna um vetor de `n` valores sorteados de uma distribuição $\text{Geom}(X \mid \text{prob})$.
-
-* Voltando ao exemplo do *spam*. Vamos simular muitos experimentos. Os resultados são os valores de $X$, i.e., as quantidades de mensagens *spam* que precisaram ser abertas antes de chegar à primeira mensagem não-spam:
-
-```{r spam-sim}
-amostra <- rgeom(1000, .1)
-head(amostra)
-```
-
-* O valor esperado é $\frac{1-p}{p} = 9$. Vamos comparar com a média da amostra gerada:
-
-```{r e-spam}
-mean(amostra)
-```
-
-* A variância é $\frac{1-p}{p^2} = `r .9 / .1^2`$. Vamos comparar com a variância da amostra:
-
-```{r v-spam}
-var(amostra)
-```
+* Isto equivale a [$`r round(qgeom(.5, p) / (2 * 52)) %>% fm()`$ anos, jogando duas vezes por semana, toda semana]{.hl}.
 
 
-* Vamos simular $100$ mil pessoas jogando na Mega-Sena e ver se alguma acertou a sena antes de jogar mil vezes:
+#### Função para [gerar números aleatórios]{.hl} {-}
 
-```{r megasena-sim}
-p <- 1/50063860
-resultados <- rgeom(1e5, p)
-resultados[resultados <= 1e3]
-```
+* Para gerar um vetor com $n$ valores aleatórios a partir de uma distribuição $\text{Geom}(X \mid p)$, use `rgeom(n, prob=p)`.
 
-* Qual a média da nossa amostra? O valor esperado é $`r fm((1 - p) / p)`$.
+* Voltando ao exemplo do *spam*, vamos simular muitos experimentos. 
 
-```{r e-megasena}
-mean(resultados)
-```
+* Os resultados são os valores de $X$, i.e., as quantidades de mensagens *spam* que precisaram ser abertas antes de chegarmos à primeira mensagem não-*spam*:
+
+    ```{r spam-sim}
+    amostra <- rgeom(1000, .1)
+    head(amostra)
+    ```
+
+* O [valor esperado teórico]{.hl} é $\frac{1-p}{p} = 9$. Vamos comparar com a média da amostra gerada:
+
+    ```{r e-spam}
+    mean(amostra)
+    ```
+
+* A [variância teórica]{.hl} é $\frac{1-p}{p^2} = `r (.9 / .1^2) %>% fm(0)`$. Vamos comparar com a variância da amostra gerada:
+
+    ```{r v-spam}
+    var(amostra)
+    ```
+
+* Exercício: por que a diferença tão grande entre o valor teórico e a variância da amostra? 
+
+* Vamos simular $100$ mil pessoas jogando na Mega-Sena e ver se [alguma acertou a sena antes de jogar mil vezes]{.hl}:
+
+    ```{r megasena-sim}
+    p <- 1/50063860
+    resultados <- rgeom(1e5, p)
+    resultados[resultados <= 1e3]
+    ```
+
+* Qual a média da nossa amostra? O valor esperado teórico é $`r fm((1 - p) / p)`$.
+
+    ```{r e-megasena}
+    mean(resultados)
+    ```
 
 * E a mediana?
 
-```{r mediana-megasena}
-median(resultados)
-```
+    ```{r mediana-megasena}
+    median(resultados)
+    ```
 
 * E o máximo?
 
-```{r max-megasena}
-max(resultados)
-```
+    ```{r max-megasena}
+    max(resultados)
+    ```
 
 * E o mínimo?
 
-```{r min-megasena}
-min(resultados)
-```
+    ```{r min-megasena}
+    min(resultados)
+    ```
 
 * Gráfico da nossa amostra:
 
-```{r megasena-amostra-plot, echo=FALSE}
-resultados %>% 
-  as_tibble() %>% 
-  ggplot() +
-    geom_histogram(aes(x = value), binwidth = 1e6) +
-    labs(
-      title = 'Simulação: 100 mil pessoas jogando na Mega-Sena',
-      x = 'Qtde de jogos até acertar a sena',
-      y = 'Pessoas'
-    )
-```
+    ```{r megasena-amostra-plot, echo=FALSE}
+    resultados %>% 
+      as_tibble() %>% 
+      ggplot() +
+        geom_histogram(aes(x = value), binwidth = 1e6) +
+        scale_x_continuous(
+          labels = label_number(
+            decimal.mark=',',
+            big.mark='.'
+          )
+        ) +
+        labs(
+          title = 'Simulação: 100 mil pessoas jogando na Mega-Sena',
+          x = 'Qtde de jogos até acertar a sena',
+          y = 'Pessoas'
+        )
+    ```
 
-* Os sortudos:
+* Pode parecer que muitas pessoas acertaram a sena jogando poucos jogos, mas as aparências enganam: [cada barra do histograma acima corresponde a $1$ milhão de jogos]{.hl}.
 
-```{r megasena-amostra-plot-sortudos, echo=FALSE}
-resultados %>% 
-  as_tibble() %>% 
-  filter(value <= 1e4) %>% 
-  ggplot() +
-    geom_histogram(aes(x = value), breaks = seq(0, 1e4, 1e3)) +
-    labs(
-      title = 'Simulação: 100 mil pessoas jogando na Mega-Sena',
-      subtitle = 'mostrando só os que acertaram a sena em 10 mil tentativas ou menos',
-      x = 'Qtde de jogos até acertar a sena',
-      y = 'Pessoas'
-    )
-```
+* Os sortudos que ganharam antes de jogar $10$ mil jogos:
+
+    ```{r megasena-amostra-plot-sortudos, echo=FALSE}
+    resultados %>% 
+      as_tibble() %>% 
+      filter(value <= 1e4) %>% 
+      ggplot() +
+        geom_histogram(aes(x = value), breaks = seq(0, 1e4, 1e3)) +
+        scale_x_continuous(
+          breaks = seq(0, 1e4, 1e3),
+          labels = label_number(
+            decimal.mark=',',
+            big.mark='.'
+          )
+        ) +
+        scale_y_continuous(
+          breaks = function(limits){ 0:limits[2] }
+        ) +
+        labs(
+          title = 'Simulação: 100 mil pessoas jogando na Mega-Sena',
+          subtitle = 'mostrando só os que acertaram a sena em 10 mil tentativas ou menos',
+          x = 'Qtde de jogos até acertar a sena',
+          y = 'Pessoas'
+        )
+    ```
 
 
 ## Vídeo 2
@@ -718,11 +804,11 @@ embed_yt('F6OEoEaYrCw')
   * O resultado é
 
 $$
-\begin{align*}
+\begin{aligned}
 \text{Binom}(X = 5 \mid n = 10,\; p = 0{,}3) 
   &= {10 \choose 4} \cdot (0{,}3)^4 \cdot (1 - 0{,}3)^6 \\
   &= `r dbinom(4, 10, 0.3) %>% fm()`
-\end{align*}
+\end{aligned}
 $$
 
 * Gráfico:
@@ -759,12 +845,12 @@ grafico(
   * Na verdade, $X$ é a soma de $n$ variáveis aleatórias independentes $X_1, \ldots, X_n$, cada uma delas com distribuição de Bernoulli com probabilidade de sucesso $p$ (e valor esperado $p$):
   
 $$
-  \begin{align*}
+  \begin{aligned}
     E(X) &= E(X_1 + \cdots + X_n) \\ 
          &= E(X_1) + \cdots + E(X_n) \\
          &= p + \cdots + p \\
          &= np
-  \end{align*}
+  \end{aligned}
 $$
   
 * Variância:
@@ -772,18 +858,18 @@ $$
   * Como as variáveis $X_1, \ldots, X_n$ são independentes, a variância da soma é a soma das variâncias:
 
 $$
-  \begin{align*}
+  \begin{aligned}
     \sigma^2(X) &= \sigma^2(X_1 + \cdots + X_n) \\ 
          &= \sigma^2(X_1) + \cdots + \sigma^2(X_n) \\
          &= p(1-p) + \cdots + p(1-p) \\
          &= np(1-p)
-  \end{align*}
+  \end{aligned}
 $$
 
 
 ### Em R
 
-#### Função de distribuição de probabilidade: $\text{Binom}(X = x \mid n, p)$ 
+#### Função de distribuição de probabilidade: $\text{Binom}(X = x \mid n, p)$ {-}
 
 ```{r grafico-dbinom, echo=FALSE}
 n <- 10
@@ -852,7 +938,7 @@ dbinom(0, n, p_sucesso)
 
 
 
-#### Função de distribuição acumulada: $\text{Binom}(X \leq q \mid n, p)$
+#### Função de distribuição acumulada: $\text{Binom}(X \leq q \mid n, p)$ {-}
 
 ```{r grafico-pbinom, echo=FALSE}
 n <- 10
@@ -886,7 +972,7 @@ grafico(
 
 * `pbinom(q, size, prob, lower.tail = TRUE)`
 
-* Se você passar `lower.tail = FALSE`, a probabilidade calculada é $P(X>q \mid \text{size}, \text{prob})$.
+* Se você passar `lower.tail = FALSE`, a probabilidade calculada é $P(X>q \mid \text{size}, p)$.
 
 ```{r grafico-pbinom-right, echo=FALSE}
 n <- 10
@@ -918,7 +1004,7 @@ grafico(
   )
 ```
 
-#### Função quantil: dado um valor de $\text{Binom}(X \leq x \mid n, p)$, então $x = ?$
+#### Função quantil: dado um valor de $\text{Binom}(X \leq x \mid n, p)$, então $x = ?$ {-}
 
 ```{r grafico-qbinom, echo=FALSE}
 n <- 10
@@ -967,7 +1053,7 @@ grafico(
 
 * `qbinom(p, size, prob)`
 
-* Se você passar `lower.tail = FALSE`, o quantil calculado é $q$ tal que $P(X > q \mid \text{size}, \text{prob}) = p$:
+* Se você passar `lower.tail = FALSE`, o valor calculado é $x$ tal que $P(X > x \mid \text{size}, p) = m$:
 
 ```{r grafico-qbinom-right, echo=FALSE}
 n <- 10
@@ -1014,7 +1100,7 @@ grafico(
 
 ```
 
-#### Geração de números aleatórios
+#### Geração de números aleatórios {-}
 
 * `rbinom(n, size, prob)` retorna um vetor de `n` valores sorteados de uma distribuição $\text{Binom}(X \mid \text{size}, \text{prob})$.
 
@@ -1066,23 +1152,23 @@ length(ganhadores)
 * Com estas condições, e chamando o número médio de $\lambda = 4$, a probabilidade de que $10$ clientes cheguem ao caixa em um período de um minuto é dada por
 
 $$
-\begin{align*}
+\begin{aligned}
 P(X = 10) &= \text{Poisson}(X = 10 \mid \lambda = 4) \\
           &= \frac{\lambda^{10}}{10!}e^{-\lambda} \\
           &= \frac{4^{10}}{10!}e^{-4} \\
           &= `r dpois(10, 4) %>% fm()`
-\end{align*}
+\end{aligned}
 $$
 
 * A probabilidade de que o caixa fique vazio durante um minuto inteiro é
 
 $$
-\begin{align*}
+\begin{aligned}
 P(X = 10) &= \text{Poisson}(X = 0 \mid \lambda = 4) \\
           &= \frac{\lambda^{0}}{0!}e^{-\lambda} \\
           &= \frac{4^{0}}{0!}e^{-4} \\
           &= `r dpois(0, 4) %>% fm()`
-\end{align*}
+\end{aligned}
 $$
 
 * O gráfico (até $X = 20$) é
@@ -1123,7 +1209,7 @@ tabela %>%
 
 ### Em R
 
-#### Exercício
+#### Exercício {-}
 
 Seguindo o estilo das explicações sobre a [distribuição geométrica](#em-r-2) e a [distribuição binomial](#em-r-3):
 

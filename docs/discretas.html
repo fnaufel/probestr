@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Capítulo 9 Distribuições discretas | Probabilidade e Estatística com R</title>
+<meta name="author" content="Fernando Náufel">
+<meta name="description" content="9.1 Vídeo 1    9.2 Distribuição uniforme discreta  9.2.1 Exemplo: um dado Cada resultado de \(1\) a \(6\) tem a mesma probabilidade de ocorrer. A variável aleatória \(X\) representa o número que...">
+<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta property="og:title" content="Capítulo 9 Distribuições discretas | Probabilidade e Estatística com R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
+<meta property="og:description" content="9.1 Vídeo 1    9.2 Distribuição uniforme discreta  9.2.1 Exemplo: um dado Cada resultado de \(1\) a \(6\) tem a mesma probabilidade de ocorrer. A variável aleatória \(X\) representa o número que...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Capítulo 9 Distribuições discretas | Probabilidade e Estatística com R">
+<meta name="twitter:description" content="9.1 Vídeo 1    9.2 Distribuição uniforme discreta  9.2.1 Exemplo: um dado Cada resultado de \(1\) a \(6\) tem a mesma probabilidade de ocorrer. A variável aleatória \(X\) representa o número que...">
+<meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.5.9000/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.5.9000/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
+<link rel="stylesheet" href="html_files/styles_book.css">
+<link rel="stylesheet" href="html_files/webex.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Ir para conteúdo principal</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Probabilidade e Estatística com R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar sumário</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+</form>
+
+      <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Apresentação</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O Que É Estatística?</a></li>
+<li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
+<li><a class="" href="introdu%C3%A7%C3%A3o-ao-tidyverse.html"><span class="header-section-number">3</span> Introdução ao tidyverse</a></li>
+<li><a class="" href="viz.html"><span class="header-section-number">4</span> Visualização com ggplot2</a></li>
+<li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
+<li><a class="" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
+<li><a class="active" href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></li>
+<li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/fnaufel/probestr">Ver código-fonte do livro <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="discretas" class="section level1" number="9">
+<h1>
+<span class="header-section-number">Capítulo 9</span> Distribuições discretas<a class="anchor" aria-label="anchor" href="#discretas"><i class="fas fa-link"></i></a>
+</h1>
+<div id="vídeo-1-5" class="section level2" number="9.1">
+<h2>
+<span class="header-section-number">9.1</span> Vídeo 1<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-1-5"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/jKSRgZdlTEM" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="distribuição-uniforme-discreta" class="section level2" number="9.2">
+<h2>
+<span class="header-section-number">9.2</span> Distribuição uniforme discreta<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%A3o-uniforme-discreta"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exemplo-um-dado" class="section level3" number="9.2.1">
+<h3>
+<span class="header-section-number">9.2.1</span> Exemplo: um dado<a class="anchor" aria-label="anchor" href="#exemplo-um-dado"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Cada resultado de <span class="math inline">\(1\)</span> a <span class="math inline">\(6\)</span> tem a <span class="hl">mesma probabilidade</span> de ocorrer.</p></li>
+<li><p>A variável aleatória <span class="math inline">\(X\)</span> representa o número que resulta de um lançamento.</p></li>
+<li><p>O <span class="hl">suporte</span> (conjunto de valores possíveis) de <span class="math inline">\(X\)</span> é o conjunto <span class="math inline">\(\{ 1, 2, 3, 4, 5, 6 \}\)</span>.</p></li>
+<li>
+<p>A distribuição de probabilidade de <span class="math inline">\(X\)</span> é <span class="hl">uniforme discreta</span> com <span class="math inline">\(6\)</span> valores, escrita como <span class="math inline">\(\text{UnifDiscr}(X \mid n=6)\)</span>:</p>
+<p><span class="math display">\[
+P(X = x) = \begin{cases}
+      1/6 &amp;\text{se } x \in \{1, 2, 3, 4, 5, 6\} \\
+      0   &amp;\text{senão}
+    \end{cases}
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="no-geral-1" class="section level3" number="9.2.2">
+<h3>
+<span class="header-section-number">9.2.2</span> No geral<a class="anchor" aria-label="anchor" href="#no-geral-1"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Com <span class="math inline">\(n\)</span> valores possíveis, a distribuição é <span class="math inline">\(\text{UnifDiscr}(X = x \mid n)\)</span>.</p></li>
+<li><p><span class="math inline">\(n \in \mathbb{N}^+\)</span>.</p></li>
+<li>
+<p>Probabilidades:</p>
+<p><span class="math display">\[
+P(X = x) = \begin{cases}
+      1/n &amp;\text{se } x \in \{1, \ldots, n\} \\
+      0   &amp;\text{senão}
+    \end{cases}
+\]</span></p>
+</li>
+<li>
+<p><span class="hl">Valor esperado</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X) &amp;= \frac{1}{n} \cdot (1 + \cdots + n)\\
+     &amp;= \frac{1}{n} \cdot \frac{n(n+1)}{2}\\
+     &amp;= \frac{n+1}{2}
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p><span class="hl">Variância</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma^2(X) &amp;= \sum \left[(x_i - \mu)^2 \cdot \frac1n \right]
+                &amp; \text{(definição de variância)}\\
+            &amp;= \frac1n \sum (x_i - \mu)^2 \\
+            &amp;= \frac1n \left[ \sum (x_i^2 -2\mu x_i + \mu^2) \right] \\
+            &amp;= \frac1n \left[ \sum x_i^2 - 2\mu \sum x_i + n\mu^2 \right] \\
+            &amp;= \frac1n \sum x_i^2 - 2\mu \frac{\sum x_i}{n} + \frac{n\mu^2}{n}  
+                 &amp; \left(\text{mas}\quad \frac{\sum x_i}{n} = \mu\right)\\
+            &amp;= \frac1n \sum x_i^2 - 2\mu^2 + \mu^2\\
+            &amp;= \frac1n \sum x_i^2 - \mu^2  
+                &amp; \left(\text{vamos usar a fórmula para } \sum x_i^2 \right)\\
+            &amp;= \frac1n \cdot \frac{n(n+1)(2n+1))}{6} - \mu^2  
+                &amp; \text{(vamos substituir } \mu \text{ pela fórmula)}\\
+            &amp;= \frac1n \cdot \frac{n(n+1)(2n+1))}{6} - \left(\frac{n+1}{2}\right)^2  
+                &amp; \text{(o resto é contarada)}\\
+            &amp;= (n+1) \left( \frac{2n+1}{6} - \frac{n+1}{4}\right) \\
+            &amp;= (n+1) \left( \frac{4n + 2 -3n - 3}{12}\right) \\
+            &amp;= \frac{(n+1)(n-1)}{12} \\
+            &amp;= \frac{n^2 - 1}{12}
+\end{aligned}
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="em-r" class="section level3" number="9.2.3">
+<h3>
+<span class="header-section-number">9.2.3</span> Em R<a class="anchor" aria-label="anchor" href="#em-r"><i class="fas fa-link"></i></a>
+</h3>
+<div class="rmdimportant">
+<p>As funções <code>dunif</code>, <code>punif</code>, <code>qunif</code> e <code>runif</code> trabalham com a distribuição uniforme <span class="hl">contínua</span>. <span class="hl">Não servem para a distribuição uniforme discreta</span>.</p>
+</div>
+<ul>
+<li>
+<p>Para definir os valores possíveis da variável aleatória <span class="math inline">\(X\)</span>, use um vetor.</p>
+<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span></code></pre></div>
+</li>
+<li>
+<p>Todas as probabilidades são iguais a <span class="math inline">\(\frac1n\)</span>:</p>
+<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Distribuição:</p>
+<div class="sourceCode" id="cb601"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">distr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<span>  X <span class="op">=</span> <span class="va">x</span>,</span>
+<span>  p <span class="op">=</span> <span class="va">probs</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://gt.rstudio.com/reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div id="ffjbmleesc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ffjbmleesc table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#ffjbmleesc thead, #ffjbmleesc tbody, #ffjbmleesc tfoot, #ffjbmleesc tr, #ffjbmleesc td, #ffjbmleesc th {
+  border-style: none;
+}
+
+#ffjbmleesc p {
+  margin: 0;
+  padding: 0;
+}
+
+#ffjbmleesc .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#ffjbmleesc .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#ffjbmleesc .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#ffjbmleesc .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#ffjbmleesc .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#ffjbmleesc .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#ffjbmleesc .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#ffjbmleesc .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#ffjbmleesc .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#ffjbmleesc .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#ffjbmleesc .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#ffjbmleesc .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#ffjbmleesc .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#ffjbmleesc .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#ffjbmleesc .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffjbmleesc .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#ffjbmleesc .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#ffjbmleesc .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#ffjbmleesc .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffjbmleesc .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#ffjbmleesc .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffjbmleesc .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#ffjbmleesc .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffjbmleesc .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#ffjbmleesc .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#ffjbmleesc .gt_left {
+  text-align: left;
+}
+
+#ffjbmleesc .gt_center {
+  text-align: center;
+}
+
+#ffjbmleesc .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#ffjbmleesc .gt_font_normal {
+  font-weight: normal;
+}
+
+#ffjbmleesc .gt_font_bold {
+  font-weight: bold;
+}
+
+#ffjbmleesc .gt_font_italic {
+  font-style: italic;
+}
+
+#ffjbmleesc .gt_super {
+  font-size: 65%;
+}
+
+#ffjbmleesc .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#ffjbmleesc .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#ffjbmleesc .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#ffjbmleesc .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#ffjbmleesc .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#ffjbmleesc .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#ffjbmleesc .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead><tr class="gt_col_headings">
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="X">X</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="p">p</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="X" class="gt_row gt_right">1</td>
+<td headers="p" class="gt_row gt_right">0,1666667</td>
+</tr>
+<tr>
+<td headers="X" class="gt_row gt_right">2</td>
+<td headers="p" class="gt_row gt_right">0,1666667</td>
+</tr>
+<tr>
+<td headers="X" class="gt_row gt_right">3</td>
+<td headers="p" class="gt_row gt_right">0,1666667</td>
+</tr>
+<tr>
+<td headers="X" class="gt_row gt_right">4</td>
+<td headers="p" class="gt_row gt_right">0,1666667</td>
+</tr>
+<tr>
+<td headers="X" class="gt_row gt_right">5</td>
+<td headers="p" class="gt_row gt_right">0,1666667</td>
+</tr>
+<tr>
+<td headers="X" class="gt_row gt_right">6</td>
+<td headers="p" class="gt_row gt_right">0,1666667</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</li>
+<li>
+<p>Exemplo: <span class="math inline">\(P(X \leq 2)\)</span>:</p>
+<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">X</span> <span class="op">&lt;=</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,3333333</code></pre>
+</li>
+<li>
+<p>Gráfico:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/plot-uniforme-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Para gerar amostras, use <code>sample</code>, que, por <em>default</em>, trabalha com a distribuição uniforme discreta.</p></li>
+<li>
+<p>Simulando dez lançamentos de um dado:</p>
+<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, size <span class="op">=</span> <span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] 1 4 6 5 2 5 4 5 6 2</code></pre>
+</li>
+</ul>
+</div>
+</div>
+<div id="distribuição-de-bernoulli" class="section level2" number="9.3">
+<h2>
+<span class="header-section-number">9.3</span> Distribuição de Bernoulli<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%A3o-de-bernoulli"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exemplo-uma-moeda" class="section level3" number="9.3.1">
+<h3>
+<span class="header-section-number">9.3.1</span> Exemplo: uma moeda<a class="anchor" aria-label="anchor" href="#exemplo-uma-moeda"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>O experimento tem <span class="hl">exatamente dois resultados possíveis</span>: coroa ou cara.</p></li>
+<li>
+<p><span class="hl">A variável aleatória <span class="math inline">\(X\)</span> representa numericamente os dois resultados possíveis</span>. É comum usar <span class="math inline">\(0\)</span> para um resultado, <span class="math inline">\(1\)</span> para o o outro.</p>
+<p><span class="math display">\[
+X = \begin{cases}
+      0 &amp;\text{se coroa} \\
+      1 &amp;\text{se cara}
+    \end{cases}
+\]</span></p>
+</li>
+<li><p>O <span class="hl">suporte</span> é o conjunto <span class="math inline">\(\{0, 1\}\)</span>.</p></li>
+<li><p>Vamos chamar de <span class="math inline">\(p\)</span> a probabilidade de cara (o caso <span class="math inline">\(X = 1\)</span>, comumente chamado de <span class="hl">sucesso</span>)<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Aqui, chamar cara de sucesso é uma escolha totalmente arbitrária.&lt;/p&gt;"><sup>9</sup></a>.</p></li>
+<li>
+<p>Para uma moeda justa, a distribuição de <span class="math inline">\(X\)</span> é a <span class="hl">distribuição de Bernoulli</span> com <span class="math inline">\(p=0{,}5\)</span>, escrita como <span class="math inline">\(\text{Bernoulli}(X \mid p = 0{,}5)\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+  P(X = 0) &amp;= 1 - 0{,}5 \\
+  P(X = 1) &amp;= 0{,}5
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>Podemos escrever <span class="math inline">\(P(X=x)\)</span> de forma mais compacta:</p>
+<p><span class="math display">\[
+P(X = x) = 0{,}5^x \cdot (1 - 0{,}5)^{1 - x}
+\]</span></p>
+</li>
+<li><p><span class="hl">Cada valor do parâmetro <span class="math inline">\(p\)</span> dá uma distribuição de Bernoulli diferente</span>.</p></li>
+<li>
+<p>Gráfico com <span class="math inline">\(p = 0{,}8\)</span> (uma moeda muito viciada, para a qual a probabilidade de cara é de <span class="math inline">\(80\%\)</span>):</p>
+<div class="inline-figure"><img src="_main_files/figure-html/bernoulli-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="no-geral-2" class="section level3" number="9.3.2">
+<h3>
+<span class="header-section-number">9.3.2</span> No geral<a class="anchor" aria-label="anchor" href="#no-geral-2"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Para probabilidade de sucesso <span class="math inline">\(p\)</span>, a distribuição é escrita como <span class="math inline">\(\text{Bernoulli}(X = x \mid p)\)</span>.</p></li>
+<li><p><span class="math inline">\(x \in \{0, 1\}\)</span>.</p></li>
+<li><p><span class="math inline">\(p \in [0, 1]\)</span>.</p></li>
+<li>
+<p>Probabilidades:</p>
+<p><span class="math display">\[
+P(X = x) = p^x \cdot (1 - p)^{1 - x}
+\]</span></p>
+</li>
+<li>
+<p>É comum chamar de <span class="math inline">\(q\)</span> a <span class="hl">probabilidade de fracasso</span>. Ou seja,</p>
+<p><span class="math display">\[
+q = 1 - p
+\]</span></p>
+</li>
+<li>
+<p>As probabilidades ficam</p>
+<p><span class="math display">\[
+P(X = x) = p^x \cdot q^{1 - x}
+\]</span></p>
+</li>
+<li>
+<p><span class="hl">Valor esperado</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X) &amp;= 0 \cdot (1 - p) \;+\: 1 \cdot p \\
+     &amp;= p
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p><span class="hl">Variância</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma^2(X) &amp;= (0 - p)^2 \cdot (1 - p) \;+\: (1 - p)^2 \cdot p \\
+     &amp;= p^2 - p^3 + p - 2p^2 + p^3 \\
+     &amp;= -p^2 + p \\
+     &amp;= p(1 - p) \\
+     &amp;= pq
+\end{aligned}
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="em-r-1" class="section level3" number="9.3.3">
+<h3>
+<span class="header-section-number">9.3.3</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="rmdimportant">
+<p>Em R, <span class="hl">a distribuição de Bernoulli é um caso especial (<span class="math inline">\(n = 1\)</span>) da distribuição binomial</span>, que nós vamos ver mais adiante neste capítulo.</p>
+</div>
+<ul>
+<li><p>Se você não quiser usar as funções da distribuição binomial, pode definir <span class="hl">um vetor com os dois valores possíveis</span> e <span class="hl">um vetor com as duas probabilidades</span>, e então usar <code>sample</code> com o argumento <code>prob</code>.</p></li>
+<li>
+<p>Por exemplo, para simular <span class="math inline">\(10\)</span> lançamentos de uma moeda viciada, onde <span class="math inline">\(p = 0{,}8\)</span>:</p>
+<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">moeda</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span></span>
+<span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.2</span>, <span class="fl">.8</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">moeda</span>, size <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="va">probs</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1</code></pre>
+</li>
+</ul>
+</div>
+</div>
+<div id="distribuição-geométrica" class="section level2" number="9.4">
+<h2>
+<span class="header-section-number">9.4</span> Distribuição geométrica<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%A3o-geom%C3%A9trica"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exemplo-spam" class="section level3" number="9.4.1">
+<h3>
+<span class="header-section-number">9.4.1</span> Exemplo: <em>spam</em><a class="anchor" aria-label="anchor" href="#exemplo-spam"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Cada e-mail tem probabilidade <span class="math inline">\(0{,}1\)</span> de não ser <em>spam</em>, e <span class="math inline">\(0{,}9\)</span> de ser <em>spam</em>.</p></li>
+<li><p>Considere que <span class="hl">cada e-mail é independente de cada outro</span>.</p></li>
+<li><p>Você abre sua <em>inbox</em> (sem filtro <em>antispam</em>) e começa a ler as mensagens sequencialmente.</p></li>
+<li><p><span class="hl">A variável aleatória <span class="math inline">\(X\)</span> representa o número de mensagens <em>spam</em> que você precisa abrir até chegar à primeira mensagem que não é <em>spam</em></span>.</p></li>
+<li><p>O <span class="hl">suporte</span> é <span class="math inline">\(\{0, 1, 2, 3, \ldots \}\)</span> (nossa primeira distribuição com suporte <span class="hl">infinito</span>!).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Mas como o conjunto é &lt;span class="hl"&gt;enumerável&lt;/span&gt;, a variável aleatória &lt;span class="math inline"&gt;\(X\)&lt;/span&gt; é &lt;span class="hl"&gt;discreta&lt;/span&gt;.&lt;/p&gt;'><sup>10</sup></a></p></li>
+<li><p>Vamos chamar de <span class="math inline">\(p\)</span> a probabilidade de <span class="hl">sucesso (a mensagem não ser <em>spam</em>)</span>.</p></li>
+<li><p>A distribuição de <span class="math inline">\(X\)</span> é a <span class="hl">distribuição geométrica</span> com <span class="math inline">\(p = 0{,}1\)</span>, escrita como <span class="math inline">\(\text{Geom}(X \mid p = 0{,}1)\)</span>.</p></li>
+<li>
+<p>Qual a probabilidade de que a primeira mensagem não-<em>spam</em> seja a décima, por exemplo?</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Geom}(X = 9 \mid p = 0{,}1)  &amp;= 0{,}9^9 \cdot 0{,}1 \\
+                        &amp;\approx 0{,}39
+\end{aligned}
+\]</span></p>
+</li>
+<li>
+<p>Gráfico:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/geom-plot-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p><span class="hl">Cada valor de <span class="math inline">\(p\)</span> dá uma distribuição geométrica diferente</span>.</p></li>
+</ul>
+</div>
+<div id="no-geral-3" class="section level3" number="9.4.2">
+<h3>
+<span class="header-section-number">9.4.2</span> No geral<a class="anchor" aria-label="anchor" href="#no-geral-3"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Para probabilidade de sucesso <span class="math inline">\(p\)</span>, a distribuição é escrita como <span class="math inline">\(\text{Geom}(X=x \mid p)\)</span>.</p></li>
+<li><p><span class="math inline">\(x \in \{0, 1, 2, 3, \ldots \}\)</span>.</p></li>
+<li><p><span class="math inline">\(p \in [0, 1]\)</span>.</p></li>
+<li><p><span class="hl"><span class="math inline">\(X\)</span> conta a quantidade de provas de Bernoulli que têm resultado fracasso antes do primeiro sucesso</span>.</p></li>
+<li><p>As provas de Bernoulli são independentes e têm probabilidade fixa de sucesso <span class="math inline">\(p\)</span>.</p></li>
+<li>
+<p>Probabilidades:</p>
+<p><span class="math display">\[
+\text{Geom}(X = x \mid p) = (1-p)^x \cdot p
+\]</span></p>
+</li>
+<li>
+<p><span class="hl">Valor esperado</span>:</p>
+<p>Vamos chamar <span class="math inline">\(1 - p\)</span> de <span class="math inline">\(q\)</span>.</p>
+<p>Então, <span class="math inline">\(P(X = x) = q^x \cdot p\)</span>.</p>
+<p>Daí,</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X) &amp;= 0p + 1qp + 2q^2p + 3q^3p + \cdots \\
+     &amp;= 0(1-q) + 1q(1-q) + 2q^2(1-q) + 3q^3(1-q) + \cdots \\
+     &amp;= q - q^2 + 2q^2 - 2q^3 + 3q^3 - 3q^4 + \cdots \\
+     &amp;= q + q^2 + q^3 + \cdots \\
+     &amp;= \frac{q}{1-q} \\
+     &amp;= \frac{1-p}{p} \\
+     &amp;= \frac qp
+\end{aligned}
+\]</span></p>
+<p>No exemplo dos e-mails,</p>
+<p><span class="math display">\[
+E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
+\]</span></p>
+</li>
+<li>
+<p><span class="hl">Variância</span>:</p>
+<p><span class="math display">\[
+\sigma^2(X) = \frac{1-p}{p^2} = \frac q{p^2}
+\]</span></p>
+</li>
+<li><p>Exercício: derive esta fórmula da variância.</p></li>
+</ul>
+</div>
+<div id="em-r-2" class="section level3" number="9.4.3">
+<h3>
+<span class="header-section-number">9.4.3</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-2"><i class="fas fa-link"></i></a>
+</h3>
+<div id="função-de-distribuição-de-probabilidade-textgeomx-x-mid-p" class="section level4 unnumbered">
+<h4>Função de distribuição de probabilidade: <span class="hl"><span class="math inline">\(\text{Geom}(X = x \mid p)\)</span></span><a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%A3o-de-distribui%C3%A7%C3%A3o-de-probabilidade-textgeomx-x-mid-p"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-dgeom-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li><p>Para calcular <span class="math inline">\(\text{Geom}(X=x \mid p)\)</span>, use <code>dgeom(x, prob=p)</code>.</p></li>
+<li><p>Tanto <code>x</code> quanto <code>prob</code> <span class="hl">podem ser vetores</span>.</p></li>
+<li>
+<p>No exemplo do <em>spam</em>, vamos computar as probabilidades de <span class="math inline">\(X\)</span> ser <span class="math inline">\(0, 1, 2, \ldots, 10\)</span>:</p>
+<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">10</span>, prob <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] 0,10000000 0,09000000 0,08100000 0,07290000 0,06561000 0,05904900 0,05314410
+##  [8] 0,04782969 0,04304672 0,03874205 0,03486784</code></pre>
+</li>
+<li>
+<p>Vamos computar <span class="math inline">\(\text{Geom}(X=10 \mid p)\)</span> para vários valores de <span class="math inline">\(p\)</span>:</p>
+<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span><span class="fl">10</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##  [1] 0,03486784401 0,02147483648 0,00847425747 0,00241864704 0,00048828125
+##  [6] 0,00006291456 0,00000413343 0,00000008192 0,00000000009 0,00000000000</code></pre>
+</li>
+<li>
+<p><span class="hl">Mas cuidado</span>: se os dois argumentos forem vetores, o resultado é um vetor com o comprimento do maior argumento, <span class="hl">com os valores de <code>x</code> pareados um a um com os valores de <code>prob</code></span> (lembrando que R recicla o vetor mais curto):</p>
+<div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,03486784 0,01717987 0,02824295</code></pre>
+<p>Os valores acima são, respectivamente, <span class="math inline">\(P(X = 10 \mid p = 0{,}1)\)</span>, <span class="math inline">\(P(X = 11 \mid p = 0{,}2)\)</span> e <span class="math inline">\(P(X = 12 \mid p = 0{,}1)\)</span>.</p>
+</li>
+</ul>
+</div>
+<div id="função-de-distribuição-acumulada-textgeomx-leq-q-mid-p" class="section level4 unnumbered">
+<h4>Função de distribuição acumulada: <span class="hl"><span class="math inline">\(\text{Geom}(X \leq q \mid p)\)</span></span><a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%A3o-de-distribui%C3%A7%C3%A3o-acumulada-textgeomx-leq-q-mid-p"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-pgeom-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li><p>Para calcular <span class="math inline">\(\text{Geom}(X \leq q \mid p)\)</span>, use <code>pgeom(q, prob=p)</code>.</p></li>
+<li>
+<p>Se você passar, como argumento, <code>lower.tail = FALSE</code>, a probabilidade calculada é <span class="math inline">\(P(X &gt; q \mid p)\)</span> (a probabilidade acumulada <span class="hl">à direita</span> do valor <span class="math inline">\(q\)</span>).</p>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-pgeom-upper-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Tanto <code>q</code> quanto <code>prob</code> <span class="hl">podem ser vetores</span>.</p></li>
+<li>
+<p>No exemplo do <em>spam</em>, vamos computar a probabilidade de precisar abrir <em>no máximo</em> <span class="math inline">\(10\)</span> mensagens <em>spam</em> para então abrir a primeira mensagem não-<em>spam</em>:</p>
+<div class="sourceCode" id="cb614"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">pgeom</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,6861894</code></pre>
+<p>Na verdade, isto é o mesmo que somar as probabilidades de <span class="math inline">\(X = 0\)</span>, <span class="math inline">\(X = 1\)</span>, etc., até <span class="math inline">\(X = 10\)</span>:</p>
+<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,6861894</code></pre>
+</li>
+<li><p>Um exemplo mais realista: cada vez que você joga <span class="math inline">\(6\)</span> números na Mega-Sena, a probabilidade de você acertar a sena é de <span class="math inline">\(1\)</span> em <span class="math inline">\(50.063.860\)</span>, segundo <a href="http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena" class="uri">http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Esta probabilidade é computada usando a &lt;span class="hl"&gt;distribuição hipergeométrica&lt;/span&gt;, que não vamos cobrir neste curso. &lt;a href="https://pt.wikipedia.org/wiki/Distribui%C3%A7%C3%A3o_hipergeom%C3%A9trica"&gt;Veja mais informações aqui&lt;/a&gt;.&lt;/p&gt;'><sup>11</sup></a></p></li>
+<li>
+<p>Qual a probabilidade de você <span class="hl">acertar a sena</span> em alguma das primeiras <span class="math inline">\(1.000\)</span> vezes que você jogar? <span class="math inline">\(10.000\)</span> vezes? <span class="math inline">\(100.000\)</span> vezes (o que equivale a <span class="hl">cerca de <span class="math inline">\(962\)</span> anos, jogando <span class="math inline">\(2\)</span> vezes por semana)</span>?</p>
+<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">pgeom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e3</span>, <span class="fl">1e4</span>, <span class="fl">1e5</span><span class="op">)</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,00001999426 0,00019974491 0,00199547524</code></pre>
+</li>
+<li>
+<p>Qual a <span class="hl">probabilidade de você jogar duas vezes por semana, durante <span class="math inline">\(100\)</span> anos, sem acertar a sena</span>? Considerando <span class="math inline">\(52\)</span> semanas por ano:</p>
+<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">vezes</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">52</span> <span class="op">*</span> <span class="fl">100</span></span>
+<span><span class="va">vezes</span></span></code></pre></div>
+<pre><code>## [1] 10400</code></pre>
+<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">pgeom</a></span><span class="op">(</span><span class="va">vezes</span>, <span class="va">p</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,9997923</code></pre>
+</li>
+<li><p>O problema é que, com uma <span class="hl">probabilidade de sucesso tão baixa</span>, a distribuição geométrica começa em um valor baixo e decresce muito lentamente.</p></li>
+<li><p>O gráfico abaixo vai até <span class="math inline">\(X = 1\)</span> milhão. A área da faixa vermelha é a probabilidade de você acertar a sena jogando no máximo <span class="math inline">\(10\)</span> mil vezes. Esta probabilidade é <span class="math inline">\(0{,}00019974491\)</span>.</p></li>
+<li>
+<p>Isto equivale a dizer que a <span class="hl">probabilidade de você precisar de mais de <span class="math inline">\(10\)</span> mil jogos para acertar a sena</span> é de <span class="math inline">\(1 - 0{,}00019974491 = 0{,}99980025509\)</span>, que é a área em azul no gráfico, <span class="hl">mais a área restante à direita, de <span class="math inline">\(1\)</span> milhão até o infinito</span>, que não aparece no gráfico!</p>
+<div class="inline-figure"><img src="_main_files/figure-html/loteria-plot%20-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="função-quantil-dado-um-valor-de-textgeomx-leq-x-mid-p-então-x" class="section level4 unnumbered">
+<h4>Função quantil: <span class="hl">dado um valor de <span class="math inline">\(\text{Geom}(X \leq x \mid p)\)</span>, então <span class="math inline">\(x ={} ?\)</span></span><a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%A3o-quantil-dado-um-valor-de-textgeomx-leq-x-mid-p-ent%C3%A3o-x"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-qgeom-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li><p>O objetivo é achar <span class="math inline">\(x\)</span> tal que <span class="math inline">\(\text{Geom}(X \leq x \mid p) = m\)</span>.</p></li>
+<li><p>Em palavras: <span class="hl">achar o valor <span class="math inline">\(x\)</span> à esquerda do qual — incluindo <span class="math inline">\(x\)</span> — existe a probabilidade acumulada de <span class="math inline">\(m\)</span></span>.</p></li>
+<li><p>Para isto, use <code>qgeom(m, prob=p)</code>.</p></li>
+<li>
+<p>Se você passar, como argumento, <code>lower.tail = FALSE</code>, o valor calculado é <span class="math inline">\(x\)</span> tal que <span class="math inline">\(P(X &gt; x \mid p) = m\)</span> (o <span class="hl">valor à direita do qual — excluindo <span class="math inline">\(x\)</span> —</span> existe a probabilidade acumulada de <span class="math inline">\(m\)</span>):</p>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-qgeom2-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Quantas vezes você precisa apostar <span class="math inline">\(6\)</span> números na Mega-Sena para ter <span class="math inline">\(50\)</span>% de chance de acertar a sena alguma vez?</p>
+<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">qgeom</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 34701623</code></pre>
+</li>
+<li><p>Isto equivale a <span class="hl"><span class="math inline">\(333.669\)</span> anos, jogando duas vezes por semana, toda semana</span>.</p></li>
+</ul>
+</div>
+<div id="função-para-gerar-números-aleatórios" class="section level4 unnumbered">
+<h4>Função para <span class="hl">gerar números aleatórios</span><a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%A3o-para-gerar-n%C3%BAmeros-aleat%C3%B3rios"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Para gerar um vetor com <span class="math inline">\(n\)</span> valores aleatórios a partir de uma distribuição <span class="math inline">\(\text{Geom}(X \mid p)\)</span>, use <code>rgeom(n, prob=p)</code>.</p></li>
+<li><p>Voltando ao exemplo do <em>spam</em>, vamos simular muitos experimentos.</p></li>
+<li>
+<p>Os resultados são os valores de <span class="math inline">\(X\)</span>, i.e., as quantidades de mensagens <em>spam</em> que precisaram ser abertas antes de chegarmos à primeira mensagem não-<em>spam</em>:</p>
+<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">amostra</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">rgeom</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">.1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 14 14 22 17  6  4</code></pre>
+</li>
+<li>
+<p>O <span class="hl">valor esperado teórico</span> é <span class="math inline">\(\frac{1-p}{p} = 9\)</span>. Vamos comparar com a média da amostra gerada:</p>
+<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 8,582</code></pre>
+</li>
+<li>
+<p>A <span class="hl">variância teórica</span> é <span class="math inline">\(\frac{1-p}{p^2} = 90\)</span>. Vamos comparar com a variância da amostra gerada:</p>
+<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 84,06334</code></pre>
+</li>
+<li><p>Exercício: por que a diferença tão grande entre o valor teórico e a variância da amostra?</p></li>
+<li>
+<p>Vamos simular <span class="math inline">\(100\)</span> mil pessoas jogando na Mega-Sena e ver se <span class="hl">alguma acertou a sena antes de jogar mil vezes</span>:</p>
+<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
+<span><span class="va">resultados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">rgeom</a></span><span class="op">(</span><span class="fl">1e5</span>, <span class="va">p</span><span class="op">)</span></span>
+<span><span class="va">resultados</span><span class="op">[</span><span class="va">resultados</span> <span class="op">&lt;=</span> <span class="fl">1e3</span><span class="op">]</span></span></code></pre></div>
+<pre><code>## [1] 296 114  40 832</code></pre>
+</li>
+<li>
+<p>Qual a média da nossa amostra? O valor esperado teórico é <span class="math inline">\(50.063.859\)</span>.</p>
+<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 49804900</code></pre>
+</li>
+<li>
+<p>E a mediana?</p>
+<div class="sourceCode" id="cb636"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 34516450</code></pre>
+</li>
+<li>
+<p>E o máximo?</p>
+<div class="sourceCode" id="cb638"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 577032115</code></pre>
+</li>
+<li>
+<p>E o mínimo?</p>
+<div class="sourceCode" id="cb640"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 40</code></pre>
+</li>
+<li>
+<p>Gráfico da nossa amostra:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/megasena-amostra-plot-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Pode parecer que muitas pessoas acertaram a sena jogando poucos jogos, mas as aparências enganam: <span class="hl">cada barra do histograma acima corresponde a <span class="math inline">\(1\)</span> milhão de jogos</span>.</p></li>
+<li>
+<p>Os sortudos que ganharam antes de jogar <span class="math inline">\(10\)</span> mil jogos:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/megasena-amostra-plot-sortudos-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="vídeo-2-4" class="section level2" number="9.5">
+<h2>
+<span class="header-section-number">9.5</span> Vídeo 2<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-2-4"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/F6OEoEaYrCw" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="distribuição-binomial" class="section level2" number="9.6">
+<h2>
+<span class="header-section-number">9.6</span> Distribuição binomial<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%A3o-binomial"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exemplo-spam-novamente" class="section level3" number="9.6.1">
+<h3>
+<span class="header-section-number">9.6.1</span> Exemplo: <em>spam</em> novamente<a class="anchor" aria-label="anchor" href="#exemplo-spam-novamente"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Vamos mudar para um mundo onde a probabilidade de uma mensagem qualquer <em>não</em> ser <em>spam</em> é <span class="math inline">\(p = 0{,}3\)</span> .</p></li>
+<li><p>Agora, vamos mudar o experimento: ao recebermos <span class="math inline">\(n = 10\)</span> mensagens, quantas não são <em>spam</em>?</p></li>
+<li><p>A variável aleatória <span class="math inline">\(X\)</span> é o número de sucessos (não <em>spam</em>) em <span class="math inline">\(n = 10\)</span> mensagens.</p></li>
+<li><p>Suporte <span class="math inline">\(\{ 0, 1, 2, \ldots, 10 \}\)</span></p></li>
+<li>
+<p>Parâmetros:</p>
+<ul>
+<li><p><span class="math inline">\(p\)</span> é a probabilidade de sucesso (não <em>spam</em>).</p></li>
+<li><p><span class="math inline">\(n\)</span> é o número total de mensagens.</p></li>
+</ul>
+</li>
+<li><p>Distribuição: <span class="math inline">\(\text{Binom}(X \mid n = 10, p = 0{,}3)\)</span>.</p></li>
+<li>
+<p>Qual a probabilidade de haver <span class="math inline">\(4\)</span> mensagens não <em>spam</em>? As mensagens são independentes. O resultado vai envolver:</p>
+<ul>
+<li><p>A probabilidade de <span class="math inline">\(4\)</span> mensagens não serem <em>spam</em>: <span class="math inline">\((0{,}3)^4\)</span>.</p></li>
+<li><p>A probabilidade de <span class="math inline">\(6\)</span> mensagens serem <em>spam</em>: <span class="math inline">\((1 - 0{,}3)^6\)</span>.</p></li>
+<li><p>A quantidade de ordenações diferentes destas <span class="math inline">\(10\)</span> mensagens: <span class="math inline">\({10 \choose 4} = \frac{10!}{4!6!} = 210\)</span>.</p></li>
+<li><p>O resultado é</p></li>
+</ul>
+</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Binom}(X = 5 \mid n = 10,\; p = 0{,}3)
+  &amp;= {10 \choose 4} \cdot (0{,}3)^4 \cdot (1 - 0{,}3)^6 \\
+  &amp;= 0{,}20
+\end{aligned}
+\]</span></p>
+<ul>
+<li>Gráfico:</li>
+</ul>
+<div class="inline-figure"><img src="_main_files/figure-html/binom-plot-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="no-geral-4" class="section level3" number="9.6.2">
+<h3>
+<span class="header-section-number">9.6.2</span> No geral<a class="anchor" aria-label="anchor" href="#no-geral-4"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p><span class="math inline">\(X\)</span> conta a quantidade de sucessos em um número fixo <span class="math inline">\(n\)</span> de provas de Bernoulli.</p></li>
+<li><p>As provas de Bernoulli são independentes e têm probabilidade fixa de sucesso <span class="math inline">\(p\)</span>.</p></li>
+<li><p><span class="math inline">\(\text{Binom}(X = x \mid n, p) = {n \choose x} \cdot p^x \cdot (1 - p)^{n - x}\)</span></p></li>
+<li><p><span class="math inline">\(x \in \{ 0, 1, 2, \ldots, n\}\)</span></p></li>
+<li>
+<p>Valor esperado:</p>
+<ul>
+<li>Na verdade, <span class="math inline">\(X\)</span> é a soma de <span class="math inline">\(n\)</span> variáveis aleatórias independentes <span class="math inline">\(X_1, \ldots, X_n\)</span>, cada uma delas com distribuição de Bernoulli com probabilidade de sucesso <span class="math inline">\(p\)</span> (e valor esperado <span class="math inline">\(p\)</span>):</li>
+</ul>
+</li>
+</ul>
+<p><span class="math display">\[
+  \begin{aligned}
+    E(X) &amp;= E(X_1 + \cdots + X_n) \\
+         &amp;= E(X_1) + \cdots + E(X_n) \\
+         &amp;= p + \cdots + p \\
+         &amp;= np
+  \end{aligned}
+\]</span></p>
+<ul>
+<li>
+<p>Variância:</p>
+<ul>
+<li>Como as variáveis <span class="math inline">\(X_1, \ldots, X_n\)</span> são independentes, a variância da soma é a soma das variâncias:</li>
+</ul>
+</li>
+</ul>
+<p><span class="math display">\[
+  \begin{aligned}
+    \sigma^2(X) &amp;= \sigma^2(X_1 + \cdots + X_n) \\
+         &amp;= \sigma^2(X_1) + \cdots + \sigma^2(X_n) \\
+         &amp;= p(1-p) + \cdots + p(1-p) \\
+         &amp;= np(1-p)
+  \end{aligned}
+\]</span></p>
+</div>
+<div id="em-r-3" class="section level3" number="9.6.3">
+<h3>
+<span class="header-section-number">9.6.3</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-3"><i class="fas fa-link"></i></a>
+</h3>
+<div id="função-de-distribuição-de-probabilidade-textbinomx-x-mid-n-p" class="section level4 unnumbered">
+<h4>Função de distribuição de probabilidade: <span class="math inline">\(\text{Binom}(X = x \mid n, p)\)</span><a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%A3o-de-distribui%C3%A7%C3%A3o-de-probabilidade-textbinomx-x-mid-n-p"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-dbinom-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li><p><code>dbinom(x, size, prob)</code></p></li>
+<li><p>Voltando à Mega-Sena: para uma única pessoa, jogar é uma prova de Bernoulli, com probabilidade de sucesso de <span class="math inline">\(1/50.063.860 = 0{,}00\)</span>. Se você jogar <span class="math inline">\(6\)</span> números <span class="math inline">\(10\)</span> mil vezes — duas vezes por semana, durante quase <span class="math inline">\(100\)</span> anos — sua probabilidade de ganhar pelo menos uma vez é</p></li>
+</ul>
+<div class="sourceCode" id="cb642"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
+<span><span class="va">vezes</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">pbinom</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">vezes</span>, <span class="va">p</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,00000001994436</code></pre>
+<ul>
+<li>O gráfico desta distribuição é</li>
+</ul>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-sena-binom-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li>A probabilidade de jogar <span class="math inline">\(10\)</span> mil vezes e obter zero sucessos é</li>
+</ul>
+<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">n</span>, <span class="va">p_sucesso</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,9998003</code></pre>
+</div>
+<div id="função-de-distribuição-acumulada-textbinomx-leq-q-mid-n-p" class="section level4 unnumbered">
+<h4>Função de distribuição acumulada: <span class="math inline">\(\text{Binom}(X \leq q \mid n, p)\)</span><a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%A3o-de-distribui%C3%A7%C3%A3o-acumulada-textbinomx-leq-q-mid-n-p"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-pbinom-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li><p><code>pbinom(q, size, prob, lower.tail = TRUE)</code></p></li>
+<li><p>Se você passar <code>lower.tail = FALSE</code>, a probabilidade calculada é <span class="math inline">\(P(X&gt;q \mid \text{size}, p)\)</span>.</p></li>
+</ul>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-pbinom-right-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="função-quantil-dado-um-valor-de-textbinomx-leq-x-mid-n-p-então-x" class="section level4 unnumbered">
+<h4>Função quantil: dado um valor de <span class="math inline">\(\text{Binom}(X \leq x \mid n, p)\)</span>, então <span class="math inline">\(x = ?\)</span><a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%A3o-quantil-dado-um-valor-de-textbinomx-leq-x-mid-n-p-ent%C3%A3o-x"><i class="fas fa-link"></i></a>
+</h4>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-qbinom-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li><p><code>qbinom(p, size, prob)</code></p></li>
+<li><p>Se você passar <code>lower.tail = FALSE</code>, o valor calculado é <span class="math inline">\(x\)</span> tal que <span class="math inline">\(P(X &gt; x \mid \text{size}, p) = m\)</span>:</p></li>
+</ul>
+<div class="inline-figure"><img src="_main_files/figure-html/grafico-qbinom-right-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="geração-de-números-aleatórios" class="section level4 unnumbered">
+<h4>Geração de números aleatórios<a class="anchor" aria-label="anchor" href="#gera%C3%A7%C3%A3o-de-n%C3%BAmeros-aleat%C3%B3rios"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p><code>rbinom(n, size, prob)</code> retorna um vetor de <code>n</code> valores sorteados de uma distribuição <span class="math inline">\(\text{Binom}(X \mid \text{size}, \text{prob})\)</span>.</p></li>
+<li><p>Vamos simular <span class="math inline">\(100\)</span> vezes o experimento de abrir <span class="math inline">\(10\)</span> mensagens e contar quantas delas não são <em>spam</em>:</p></li>
+</ul>
+<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">amostra</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span>, <span class="fl">.3</span><span class="op">)</span></span>
+<span><span class="va">amostra</span></span></code></pre></div>
+<pre><code>##   [1] 1 5 1 3 4 3 3 5 3 2 4 1 3 3 2 0 4 4 2 3 2 4 4 1 3 3 3 2 1 2 5 6 3 2 1 4 3 1 2 2
+##  [41] 3 5 6 4 3 5 5 3 5 1 4 4 2 3 1 2 2 3 3 3 1 1 2 2 2 2 3 5 5 2 2 4 6 3 5 4 4 5 3 4
+##  [81] 2 5 4 2 4 6 1 2 4 3 2 2 2 0 3 4 2 2 5 3</code></pre>
+<ul>
+<li>Média:</li>
+</ul>
+<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<ul>
+<li>Finalmente, vamos simular <span class="math inline">\(100\)</span> mil pessoas, cada uma jogando <span class="math inline">\(10\)</span> mil jogos da Mega-Sena e ver quantas ganharam pelo menos uma vez:</li>
+</ul>
+<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
+<span><span class="va">size</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
+<span></span>
+<span><span class="va">resultados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">size</span>, <span class="va">p</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">resultados</span>, <span class="fl">1000</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##    [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##   [40] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##   [79] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [118] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [157] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [196] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [235] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [274] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [313] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [352] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [391] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [430] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [469] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [508] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [547] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [586] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [625] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [664] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [703] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [742] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [781] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [820] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [859] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [898] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [937] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [976] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
+<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ganhadores</span> <span class="op">&lt;-</span> <span class="va">resultados</span><span class="op">[</span><span class="va">resultados</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span></span>
+<span><span class="va">ganhadores</span></span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
+<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ganhadores</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 14</code></pre>
+</div>
+</div>
+</div>
+<div id="distribuição-de-poisson" class="section level2" number="9.7">
+<h2>
+<span class="header-section-number">9.7</span> Distribuição de Poisson<a class="anchor" aria-label="anchor" href="#distribui%C3%A7%C3%A3o-de-poisson"><i class="fas fa-link"></i></a>
+</h2>
+<div id="exemplo-5" class="section level3" number="9.7.1">
+<h3>
+<span class="header-section-number">9.7.1</span> Exemplo<a class="anchor" aria-label="anchor" href="#exemplo-5"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Em um caixa de um pequeno mercado, o número de clientes que chegam por minuto é, em média, <span class="math inline">\(4\)</span>.</p></li>
+<li><p>Vamos representar este número pela variável aleatória <span class="math inline">\(X\)</span>, com suporte <span class="math inline">\(\{ 0, 1, 2, 3, \ldots \}\)</span>.</p></li>
+<li><p>As chegadas dos clientes são independentes umas das outras.</p></li>
+<li><p>Se você dividir o tempo em intervalos menores do que um minuto, a média se mantém: <span class="math inline">\(2\)</span> clientes a cada <span class="math inline">\(30\)</span> segundos, <span class="math inline">\(1\)</span> cliente a cada <span class="math inline">\(15\)</span> segundos etc.</p></li>
+<li><p>Clientes diferentes não chegam ao caixa no mesmo instante.</p></li>
+<li><p>Com estas condições, e chamando o número médio de <span class="math inline">\(\lambda = 4\)</span>, a probabilidade de que <span class="math inline">\(10\)</span> clientes cheguem ao caixa em um período de um minuto é dada por</p></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+P(X = 10) &amp;= \text{Poisson}(X = 10 \mid \lambda = 4) \\
+          &amp;= \frac{\lambda^{10}}{10!}e^{-\lambda} \\
+          &amp;= \frac{4^{10}}{10!}e^{-4} \\
+          &amp;= 0{,}01
+\end{aligned}
+\]</span></p>
+<ul>
+<li>A probabilidade de que o caixa fique vazio durante um minuto inteiro é</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+P(X = 10) &amp;= \text{Poisson}(X = 0 \mid \lambda = 4) \\
+          &amp;= \frac{\lambda^{0}}{0!}e^{-\lambda} \\
+          &amp;= \frac{4^{0}}{0!}e^{-4} \\
+          &amp;= 0{,}02
+\end{aligned}
+\]</span></p>
+<ul>
+<li>O gráfico (até <span class="math inline">\(X = 20\)</span>) é</li>
+</ul>
+<div class="inline-figure"><img src="_main_files/figure-html/pois-mercado-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="no-geral-5" class="section level3" number="9.7.2">
+<h3>
+<span class="header-section-number">9.7.2</span> No geral<a class="anchor" aria-label="anchor" href="#no-geral-5"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>A distribuição de Poisson é um bom modelo para situações em que a variável aleatória <span class="math inline">\(X\)</span> conta o número de ocorrências de algum fenômeno em um intervalo de tempo fixo (ou em uma área ou volume de espaço):</p>
+<ul>
+<li><p>Carros passando em um cruzamento em uma hora,</p></li>
+<li><p>Chamadas telefônicas chegando por minuto a uma central,</p></li>
+<li><p>Partículas alfa emitidas por minuto por <span class="math inline">\(1\)</span>Kg de um material radioativo,</p></li>
+<li><p>Casos de uma doença detectados em cada Km<span class="math inline">\(^2\)</span> de uma cidade,</p></li>
+<li><p>Erros de impressão por página em livros produzidos por uma editora.</p></li>
+</ul>
+</li>
+<li><p>Teoricamente, <span class="math inline">\(P(X=x)\)</span> é maior que zero para qualquer <span class="math inline">\(x\)</span> natural; no mundo real, existem valores máximos que estas variáveis aleatórias podem assumir. Ainda assim, esta distribuição é uma boa aproximação. Por exemplo, a probabilidade de <span class="math inline">\(40\)</span> ou mais clientes chegarem ao nosso caixa de mercado em um minuto é de <span class="math inline">\(0{,}00\)</span>.</p></li>
+<li><p>O valor esperado <span class="math inline">\(E(X)\)</span> e a variância <span class="math inline">\(\sigma^2(X)\)</span> são iguais a <span class="math inline">\(\lambda\)</span>.</p></li>
+</ul>
+</div>
+<div id="em-r-4" class="section level3" number="9.7.3">
+<h3>
+<span class="header-section-number">9.7.3</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-4"><i class="fas fa-link"></i></a>
+</h3>
+<div id="exercício-3" class="section level4 unnumbered">
+<h4>Exercício<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcio-3"><i class="fas fa-link"></i></a>
+</h4>
+<p>Seguindo o estilo das explicações sobre a <a href="discretas.html#em-r-2">distribuição geométrica</a> e a <a href="discretas.html#em-r-3">distribuição binomial</a>:</p>
+<ol style="list-style-type: decimal">
+<li><p>Gere gráficos com exemplos do uso de <code>dpois</code>.</p></li>
+<li><p>Gere gráficos com exemplos do uso de <code>ppois</code>.</p></li>
+<li><p>Gere gráficos com exemplos do uso de <code>qpois</code>.</p></li>
+<li>
+<p>Faça uma simulação usando <code>rpois</code>. Detalhe o exemplo do nosso pequeno mercado, que atende <span class="math inline">\(4\)</span> clientes por minuto:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Gere uma amostra de números correspondendo a <span class="math inline">\(1\)</span> hora de funcionamento do caixa.</p></li>
+<li><p>Escreva uma função em R para processar esta amostra e retornar um vetor com a quantidade de clientes na fila ao final de cada minuto (de <span class="math inline">\(1\)</span> a <span class="math inline">\(60\)</span>). Lembre-se de que o caixa processa <span class="math inline">\(4\)</span> clientes por minuto.</p></li>
+<li><p>Agora gere uma amostra de números correspondendo a <span class="math inline">\(1\)</span> hora de funcionamento do caixa, com uma média de <span class="math inline">\(5\)</span> clientes chegando por minuto.</p></li>
+<li><p>Use a função que você escreveu para processar esta amostra e retornar um vetor com a quantidade de clientes na fila a cada minuto (de <span class="math inline">\(1\)</span> a <span class="math inline">\(60\)</span>), <em>supondo que o caixa ainda processa só <span class="math inline">\(4\)</span> clientes por minuto</em>.</p></li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+<div id="aproximação-da-binomial-pela-poisson" class="section level3" number="9.7.4">
+<h3>
+<span class="header-section-number">9.7.4</span> Aproximação da Binomial pela Poisson<a class="anchor" aria-label="anchor" href="#aproxima%C3%A7%C3%A3o-da-binomial-pela-poisson"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Um fabricante de carros descobre que <span class="math inline">\(1\)</span> em cada <span class="math inline">\(2.500\)</span> carros que ele produz tem um defeito.</p></li>
+<li><p>Qual a probabilidade de achar <span class="math inline">\(4\)</span> carros com defeito em uma amostra de <span class="math inline">\(6.000\)</span> carros?</p></li>
+<li><p>Vamos usar <span class="math inline">\(\text{Binom}\left(X \;\middle\vert\;n = 6.000, p = \frac{1}{2.500}\right)\)</span>:</p></li>
+</ul>
+<div class="sourceCode" id="cb656"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2500</span></span>
+<span><span class="va">size</span> <span class="op">&lt;-</span> <span class="fl">6000</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">size</span>, <span class="va">prob</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,1254235</code></pre>
+<ul>
+<li><p>Mas, e se modelarmos o problema com Poisson em vez da Binomial?</p></li>
+<li><p>Uma das condições para usar Poisson é que a média seja constante. Para <span class="math inline">\(6.000\)</span> carros, a média de defeitos é <span class="math inline">\(\frac{6.000}{2.500} = 2{,}40\)</span>.</p></li>
+<li><p>Vamos usar, então, <span class="math inline">\(\text{Poisson}\left(X \;\middle\vert\; \lambda = 2{,}40 \right)\)</span>:</p></li>
+</ul>
+<div class="sourceCode" id="cb658"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">6000</span><span class="op">/</span><span class="fl">2500</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">dpois</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,1254085</code></pre>
+<ul>
+<li>Gráfico:</li>
+</ul>
+<div class="inline-figure"><img src="_main_files/figure-html/pois-binom-aprox-1.png" width="100%" style="display: block; margin: auto;"></div>
+<ul>
+<li><p>Para valores grandes de <span class="math inline">\(n~(6.000)\)</span> e pequenos de <span class="math inline">\(p~(1/2.500)\)</span>, a Binomial pode ser aproximada pela Poisson — desde que você calcule a média <span class="math inline">\(\lambda\)</span>, como fizemos.</p></li>
+<li><p>A vantagem é que, diferente da Binomial, a Poisson não exige o cálculo do valor de <span class="math inline">\(n \choose x\)</span>, que pode ser inviável mesmo com um computador.</p></li>
+</ul>
+<div class="rmdimportant">
+<p>Por quê?</p>
+<p>O exemplo da quantidade de emissões de partículas alfa por minuto por uma massa fixa de material radioativo mostra uma relação fundamental entre as duas distribuições:</p>
+<ul>
+<li><p>Do ponto de vista de Poisson, sabemos a média de emissões por minuto do material, sem levar em consideração o comportamento de cada átomo.</p></li>
+<li><p>Do ponto de vista da Binomial, o material é composto por um número enorme de átomos (<span class="math inline">\(n\)</span> é grande!), cada átomo com uma probabilidade fixa e muito baixa (<span class="math inline">\(p\)</span> pequeno!) de emitir uma partícula alfa no período de um minuto.</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="funções-para-distribuições-em-r" class="section level2" number="9.8">
+<h2>
+<span class="header-section-number">9.8</span> Funções para distribuições em R<a class="anchor" aria-label="anchor" href="#fun%C3%A7%C3%B5es-para-distribui%C3%A7%C3%B5es-em-r"><i class="fas fa-link"></i></a>
+</h2>
+<p>A esta altura, você já entendeu como funcionam as funções do R para distribuições discretas de probabilidade. Para uma distribuição de nome <code>DISTRIB</code>, as funções são as seguintes (<code>...</code> representam os parâmetros da distribuição):</p>
+<ul>
+<li><p><code>dDISTRIB(x, ...)</code>: retorna a probabilidade <span class="math inline">\(P(X = x)\)</span>.</p></li>
+<li><p><code>pDISTRIB(q, ...)</code>: retorna a probabilidade <span class="math inline">\(P(X \leq q)\)</span> — ou a probabilidade <span class="math inline">\(P(X &gt; q)\)</span> se <code>lower.tail = FALSE</code>.</p></li>
+<li><p><code>qDISTRIB(p, ...)</code>: retorna o maior valor <span class="math inline">\(q\)</span> tal que <span class="math inline">\(P(X = q) \leq p\)</span> — ou o menor valor <span class="math inline">\(q\)</span> tal que <span class="math inline">\(P(X = q) &gt; p\)</span> se <code>lower.tail = FALSE</code>.</p></li>
+<li><p><code>rDISTRIB(n, ...)</code>: retorna um vetor com <span class="math inline">\(n\)</span> valores sorteados de acordo com a distribuição.</p></li>
+</ul>
+</div>
+<div id="jardim-zoológico-de-distribuições" class="section level2" number="9.9">
+<h2>
+<span class="header-section-number">9.9</span> Jardim zoológico de distribuições<a class="anchor" aria-label="anchor" href="#jardim-zool%C3%B3gico-de-distribui%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h2>
+<p>Para sua diversão: <a href="https://ben18785.shinyapps.io/distribution-zoo/" class="uri">https://ben18785.shinyapps.io/distribution-zoo/</a></p>
+
+</div>
+</div>
+
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  if (t = document.getElementById("webex-total_correct")) {
+    var correct = document.getElementsByClassName("webex-correct").length;
+    var solvemes = document.getElementsByClassName("webex-solveme").length;
+    var radiogroups = document.getElementsByClassName("webex-radiogroup").length;
+    var selects = document.getElementsByClassName("webex-select").length;
+
+    t.innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+init_exercises = function() {
+  console.log("onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+  }
+
+  update_total_correct();
+}
+
+$(init_exercises)
+
+</script><div class="chapter-nav">
+<div class="prev"><a href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></div>
+<div class="next"><a href="refer%C3%AAncias.html">Referências</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#discretas"><span class="header-section-number">9</span> Distribuições discretas</a></li>
+<li><a class="nav-link" href="#v%C3%ADdeo-1-5"><span class="header-section-number">9.1</span> Vídeo 1</a></li>
+<li>
+<a class="nav-link" href="#distribui%C3%A7%C3%A3o-uniforme-discreta"><span class="header-section-number">9.2</span> Distribuição uniforme discreta</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exemplo-um-dado"><span class="header-section-number">9.2.1</span> Exemplo: um dado</a></li>
+<li><a class="nav-link" href="#no-geral-1"><span class="header-section-number">9.2.2</span> No geral</a></li>
+<li><a class="nav-link" href="#em-r"><span class="header-section-number">9.2.3</span> Em R</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#distribui%C3%A7%C3%A3o-de-bernoulli"><span class="header-section-number">9.3</span> Distribuição de Bernoulli</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exemplo-uma-moeda"><span class="header-section-number">9.3.1</span> Exemplo: uma moeda</a></li>
+<li><a class="nav-link" href="#no-geral-2"><span class="header-section-number">9.3.2</span> No geral</a></li>
+<li><a class="nav-link" href="#em-r-1"><span class="header-section-number">9.3.3</span> Em R</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#distribui%C3%A7%C3%A3o-geom%C3%A9trica"><span class="header-section-number">9.4</span> Distribuição geométrica</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exemplo-spam"><span class="header-section-number">9.4.1</span> Exemplo: spam</a></li>
+<li><a class="nav-link" href="#no-geral-3"><span class="header-section-number">9.4.2</span> No geral</a></li>
+<li><a class="nav-link" href="#em-r-2"><span class="header-section-number">9.4.3</span> Em R</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#v%C3%ADdeo-2-4"><span class="header-section-number">9.5</span> Vídeo 2</a></li>
+<li>
+<a class="nav-link" href="#distribui%C3%A7%C3%A3o-binomial"><span class="header-section-number">9.6</span> Distribuição binomial</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exemplo-spam-novamente"><span class="header-section-number">9.6.1</span> Exemplo: spam novamente</a></li>
+<li><a class="nav-link" href="#no-geral-4"><span class="header-section-number">9.6.2</span> No geral</a></li>
+<li><a class="nav-link" href="#em-r-3"><span class="header-section-number">9.6.3</span> Em R</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#distribui%C3%A7%C3%A3o-de-poisson"><span class="header-section-number">9.7</span> Distribuição de Poisson</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#exemplo-5"><span class="header-section-number">9.7.1</span> Exemplo</a></li>
+<li><a class="nav-link" href="#no-geral-5"><span class="header-section-number">9.7.2</span> No geral</a></li>
+<li><a class="nav-link" href="#em-r-4"><span class="header-section-number">9.7.3</span> Em R</a></li>
+<li><a class="nav-link" href="#aproxima%C3%A7%C3%A3o-da-binomial-pela-poisson"><span class="header-section-number">9.7.4</span> Aproximação da Binomial pela Poisson</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#fun%C3%A7%C3%B5es-para-distribui%C3%A7%C3%B5es-em-r"><span class="header-section-number">9.8</span> Funções para distribuições em R</a></li>
+<li><a class="nav-link" href="#jardim-zool%C3%B3gico-de-distribui%C3%A7%C3%B5es"><span class="header-section-number">9.9</span> Jardim zoológico de distribuições</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/fnaufel/probestr/blob/master/distribs-discretas.Rmd">Ver código-fonte <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/fnaufel/probestr/edit/master/distribs-discretas.Rmd">Editar esta página <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 17/05/2023)</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Criado com o <a class="text-light" href="https://bookdown.org">pacote bookdown</a> do R.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

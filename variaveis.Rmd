@@ -213,7 +213,7 @@ dados_distr %>%
     pnorm(1.60, mean = media, sd = desvio)
     ```
 
-  * No gráfico  :
+  * No gráfico:
   
     ```{r entre-plot, echo=FALSE}
     homens_normal +
@@ -278,10 +278,10 @@ dados_distr %>%
     mean(homens$altura)
     ```
 
-* Se a variável aleatória $X$ é normalmente distribuída, com média $\mu$ e desvio-padrão $\sigma$, i.e., $X \sim \mathcal{N}(\mu, \sigma)$, então o valor esperado $E(X)$ é igual a $mu$, que é o valor da integral
+* Se a variável aleatória $X$ é normalmente distribuída, com média $\mu$ e desvio-padrão $\sigma$, i.e., $X \sim \mathcal{N}(\mu, \sigma)$, então o valor esperado $E(X)$ é igual a $\mu$, que é o valor da integral
 
   $$
-  \int_{-\infty}^{+\infty} {\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}} \text{d}x
+  \int_{-\infty}^{+\infty} x \cdot{\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}} \text{d}x
   $$
 
 
