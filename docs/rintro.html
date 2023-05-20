@@ -406,14 +406,14 @@
 <p>Para lançar este dado uma vez, usamos <code>sample</code>:</p>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">dado</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 6</code></pre>
+<pre><code>## [1] 1</code></pre>
 </li>
 <li>
 <p>Para lançar o dado várias vezes:</p>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">dado</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 5 6 6 3 2 2</code></pre>
+<pre><code>## [1] 5 1 2 5 6 1</code></pre>
 </li>
 <li><p>Observe que, para permitir que o mesmo valor apareça mais de uma vez, precisamos usar <code>replace = TRUE</code> — a amostragem será feita com reposição.</p></li>
 <li>
@@ -428,7 +428,7 @@
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lancar2</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 9</code></pre>
+<pre><code>## [1] 7</code></pre>
 </li>
 <li>
 <p>Vamos generalizar a função:</p>
@@ -446,10 +446,10 @@
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lancar</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 10</code></pre>
+<pre><code>## [1] 3</code></pre>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lancar</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span>, k <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 11</code></pre>
+<pre><code>## [1] 18</code></pre>
 </li>
 </ul>
 </li>
@@ -775,7 +775,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 17/05/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 20/05/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

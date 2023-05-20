@@ -475,13 +475,14 @@ knitr::include_graphics('images/countries-1.png')
   
   * []{#grafico4} Podemos fazer o `ggplot2` traçar uma reta de regressão com a geometria `geom_smooth`. Vamos falar mais sobre correlação [em um capítulo futuro](#correlacao). 
   
-    ```{r}
+    ```{r warning, warning=FALSE}
     grafico4 <- grafico3 +
       geom_smooth(
         aes(group = 1), 
         show.legend = FALSE,
         method = 'lm', 
-        se = FALSE
+        se = FALSE,
+        linewidth = 1
       )
     
     grafico4
