@@ -807,7 +807,7 @@ embed_yt('F6OEoEaYrCw')
 
     $$
     \begin{aligned}
-    \text{Binom}(X = 5 \mid n = 10,\; p = 0{,}3) 
+    \text{Binom}(X = 4 \mid n = 10,\; p = 0{,}3) 
       &= {10 \choose 4} \cdot (0{,}3)^4 \cdot (1 - 0{,}3)^6 \\
       &= `r dbinom(4, 10, 0.3) %>% fm()`
     \end{aligned}
@@ -981,7 +981,7 @@ grafico(
       ) +
       labs(
         subtitle = paste(
-          'Em vermelho, pbinom(4, 0.3, lower.tail = FALSE) =', 
+          'Em vermelho, pbinom(4, 10, 0.3, lower.tail = FALSE) =', 
           pbinom(4, n, p_sucesso, lower.tail = FALSE ) %>% round(3)
         )
       )
@@ -1194,9 +1194,9 @@ grafico(
   
 * Teoricamente, $P(X=x)$ é maior que zero para qualquer $x$ natural.
 
-* No mundo real, existem valores máximos que estas variáveis aleatórias podem assumir. Ainda assim, esta distribuição é uma boa aproximação. 
+* No mundo real, existem valores máximos que estas variáveis aleatórias podem assumir. Ainda assim, esta distribuição é uma boa aproximação para os valores que podem surgir na prática. Os valores não-realistas têm probabilidade muito baixa. 
 
-* Por exemplo, a probabilidade de $40$ ou mais clientes chegarem ao nosso caixa de mercado em um minuto é de $`r ppois(39, 4, lower.tail = FALSE) %>% fm(26)`$.
+* Por exemplo, a probabilidade de [$40$ ou mais]{.hl} clientes chegarem ao nosso caixa de mercado em um minuto é de $`r ppois(39, 4, lower.tail = FALSE) %>% fm(26)`$.
 
 * A probabilidade de $X$ assumir o valor $x$ quando a quantidade média de ocorrências por intervalo é $\lambda$ é igual a
 

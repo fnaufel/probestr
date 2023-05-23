@@ -1,0 +1,868 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Distribuições contínuas
+
+## Vídeo
+
+```{r echo=FALSE, out.extra=center(), results='asis'}
+embed_yt('TrmDPVYTpHc')
+```
+
+
+## Distribuição uniforme
+
+### Exemplo: gerador de números aleatórios
+
+- Um programa para gerar números [reais]{.hl} aleatórios no intervalo $[0, 10]$.
+
+- A probabilidade é distribuída [uniformemente]{.hl} neste intervalo.
+
+- A variável aleatória $X$ representa os números gerados.
+
+::: {.rmdimportant latex=1}
+
+[$P(X = x) = 0!$]{.hl}
+
+Como $X$ é uma variável aleatória contínua, as probabilidades
+$P(X = 1)$, $P(X = 3{,}1416)$, ou qualquer outra probabilidade pontual
+$P(X = x)$, [são iguais a zero]{.hl}!
+:::
+
+- A fdp (função de densidade de probabilidade) de $X$ é 
+
+  $$
+    f(x) = 
+      \begin{cases}
+        \frac{1}{10} & \text{se } x \in [0, 10] \\
+        0 & \text{se } x \not\in [0, 10]
+      \end{cases}
+  $$ 
+  
+  cujo gráfico é
+
+    ```{r echo=FALSE}
+    ggplot() +
+      stat_function(
+        fun = dunif,
+        args = c(-0.05, 10),
+        xlim = c(-1, 11),
+        geom = 'step',
+        color = 'blue',
+        linewidth = 1
+      ) +
+      scale_x_continuous(
+        breaks = 0:10
+      ) +
+      labs(
+        y = NULL,
+        x = 'X'
+      )
+    ```
+
+
+::: {.rmdimportant latex=1}
+
+[Densidade não é probabilidade]{.hl}!
+
+Perceba que a [probabilidade]{.hl} $P(X = 5)$ é $0$, mas a [densidade]{.hl} $f(5)$ é $1/10$.
+
+:::
+
+- A probabilidade de um número gerado estar [entre $5$ e $7$]{.hl} é de 
+
+  $$
+    P(5 < X < 7) = P(5 \leq X \leq 7) = \int_5^7 f(x)\;\text{d}x = \int_5^7 \frac{1}{10}\;\text{d}x = \frac{1}{5}
+  $$
+
+- O [valor esperado]{.hl} de $X$ é 
+
+  $$
+  E(X) = \int_{-\infty}^{\infty} xf(x)\;\text{d}x = \int_{0}^{10} \frac{1}{10}x\;\text{d}x = 5
+  $$
+
+- A [variância]{.hl} de $X$ é 
+
+  $$
+    \sigma^2(X) 
+      = \int_{-\infty}^{+ \infty} (x - 5)^2 \cdot f(x)\;\text{d}x 
+      = \int_{0}^{10} (x-5)^2 \cdot \frac{1}{10}\;\text{d}x 
+      = \frac{25}{3}
+      = `r fm(25/3)`
+  $$
+
+- **Exercício:** calcule $\sigma^2(X)$ usando a fórmula $\sigma^2(X) = E(X^2) - [E(X)]^2$.
+
+
+### No geral
+
+- Escrevemos $X \sim \text{Unif} (a, b)$.
+
+- Os extremos do intervalo são $a, b \in \mathbb{R}, a < b$.
+
+- O [suporte]{.hl} é o intervalo $[a, b]$.
+
+- A [função de densidade de probabilidade]{.hl} é 
+
+  $$
+    f(x \mid a, b) = 
+      \begin{cases}
+        \frac{1}{b - a} & \text{se } x \in [a, b] \\
+        0 & \text{se } x \not\in [a, b]
+      \end{cases}
+  $$
+
+* [Valor esperado]{.hl}:
+
+  $$E(X) = \frac{a+b}{2}$$
+
+* [Variância]{.hl}: 
+
+  $$\sigma^2(X) = \frac{(a - b)^2}{12}$$
+
+
+### Em R
+
+#### Função de densidade de probabilidade: [$f(x \mid a, b)$]{.hl} {-}
+
+* `dunif(x, min = a, max = b)`.
+
+* No exemplo do gerador de números aleatórios em $[0, 10]$, todos os valores no intervalo têm a mesma densidade: $\frac{1}{10}$. Valores fora do intervalo têm densidade $0$:
+
+    ```{r dunif}
+    dunif(
+      c(-1, 1, 2, 10, 11), 
+      min = 0,
+      max = 10
+    )
+    ```
+
+
+#### Função de probabilidade acumulada: [$\text{Unif}(X \leq q \mid a, b)$]{.hl} {-}
+
+* `punif(q, min = a, max = b)`.
+
+* No exemplo do gerador de números aleatórios no intervalo $[0, 10]$, qual a probabilidade de obter um número [menor que $4$]{.hl}?
+
+    ```{r punif1}
+    punif(4, min = 0, max = 10)
+    ```
+
+* E um número [maior que $4$]{.hl}?
+
+    ```{r punif2}
+    punif(4, min = 0, max = 10, lower.tail = FALSE)
+    ```
+
+#### Função quantil: [dado um valor de $\text{Unif}(X \leq x \mid a, b)$, então $x = ?$]{.hl} {-}
+
+* O objetivo é achar $x$ tal que $\text{Unif}(X \leq x \mid a, b) = m$.
+
+* `qunif(p, min = a, max = b)`.
+
+* No exemplo do gerador de números aleatórios no intervalo $[0, 10]$, qual o número $x$ tal que existe uma probabilidade de $80\%$ de que um número [menor ou igual a $x$]{.hl} seja gerado?
+
+    ```{r qunif1}
+    qunif(.8, min = 0, max = 10)
+    ```
+
+* E qual o número $x$ tal que existe uma probabilidade de $80\%$ de que um número [maior ou igual a $x$]{.hl} seja gerado?
+
+    ```{r qunif2}
+    qunif(.8, min = 0, max = 10, lower.tail = FALSE)
+    ```
+
+#### Função para [gerar números aleatórios]{.hl} {-}
+
+* `runif(n, min = a, max = b)`
+
+* Os números gerados são de ponto flutuante:
+
+    ```{r runif}
+    runif(10, min = 0, max = 10)
+    ```
+
+* **Exercício:** e se você quiser gerar apenas números inteiros no intervalo dado?
+
+* **Exercício:** os extremos do intervalo (`min` e `max`) podem ser gerados?
+
+
+## Distribuição normal
+
+### Exemplo
+
+* Segundo o [Levantamento do Perfil Antropométrico da População Brasileira Usuária do Transporte Aéreo Nacional](https://pdf4pro.com/view/levantamento-do-perfil-antropom-201-trico-10652c.html), em 2009, a estatura do homem brasileiro adulto era distribuída normalmente, com média $1{,}73$m e desvio-padrão $0{,}07$m.
+
+* Segundo [este livro](https://www.pearson.com/us/higher-education/product/De-Veaux-Stats-Data-and-Models-Plus-NEW-My-Lab-Statistics-with-Pearson-e-Text-Access-Card-Package-4th-Edition/9780133956498.html), a estatura do homem holandês é distribuída normalmente, com média $1{,}84$m e desvio-padrão $0{,}08$m.
+
+    ```{r specs}
+    mu_brasil <- 1.73
+    sigma_brasil <- .07
+    
+    mu_holanda <- 1.84
+    sigma_holanda <- .08
+    ```
+
+* Gráfico:
+
+    ```{r altura, echo=FALSE}
+    limites <- c(1.4, 2.2)
+    breaks <- seq(1.4, 2.2, .1)
+    
+    grafico_base <- 
+      ggplot() +
+        scale_x_continuous(breaks = breaks) +
+        scale_y_continuous(breaks = 0:5) +
+        labs(
+          y = NULL,
+          x = 'altura (m)',
+          color = NULL
+        ) 
+    
+    normal <- function(mu, sigma, nome, faixa, cor = NULL) {
+      
+      if (is.null(cor)) {
+        stat_function(
+          mapping = aes(color = nome),
+          fun = dnorm,
+          args = c(mean = mu, sd = sigma),
+          xlim = faixa
+        )
+      }
+      else {
+        stat_function(
+          mapping = aes(color = nome),
+          fun = dnorm,
+          args = c(mean = mu, sd = sigma),
+          xlim = faixa,
+          geom = 'area',
+          fill = cor,
+          alpha = 0.5,
+          outline.type = 'upper',
+          show.legend = FALSE
+        )
+      }
+      
+    }
+    
+    curva_brasil <- function(faixa = limites, cor = NULL) {
+    
+      normal(
+        mu_brasil,
+        sigma_brasil,
+        'Brasil',
+        faixa,
+        cor
+      )
+    
+    }
+    
+    curva_holanda <- function(faixa = limites, cor = NULL) {
+    
+      normal(
+        mu_holanda,
+        sigma_holanda,
+        'Holanda',
+        faixa,
+        cor
+      )
+    
+    }
+    
+    grafico_base + 
+      curva_holanda() +
+      curva_brasil()
+    ```
+
+* **Exercício:** o que são os números no eixo vertical?
+
+* Por que a curva do Brasil é mais alta?
+
+
+### No geral
+
+* Escrevemos $X \sim \mathcal{N}(\mu, \sigma)$.
+
+* O [valor esperado]{.hl} é $\mu \in \mathbb{R}$.
+
+* O [desvio-padrão]{.hl} é $\sigma \in \mathbb{R}_{\geq 0}$.
+
+* O [suporte]{.hl} é o intervalo$(-\infty, \infty)$.
+
+* A [função de densidade de probabilidade]{.hl} é:
+
+  $$
+  f(x \mid \mu, \sigma) = 
+  \frac{1}{\sigma \sqrt{2\pi}} 
+    e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2} 
+  $$
+
+
+### Em R
+
+#### Função de densidade de probabilidade: [$f(x \mid \mu, \sigma)$]{.hl} {-}
+
+* `dnorm(x, mean = μ, sd = σ)`.
+
+
+#### Função de probabilidade acumulada: [$\text{Norm}(X \leq q \mid \mu, \sigma)$]{.hl} {-}
+
+* `pnorm(q, mean = μ, sd = σ)`.
+
+* Qual a probabilidade de um homem [brasileiro]{.hl} ter [entre $1{,}80$m e $1{,}90$m de altura]{.hl}?
+
+* Gráfico:
+
+    ```{r entre-180-e-190-br, echo=FALSE}
+    grafico_base +
+      curva_brasil() +
+      curva_brasil(faixa = c(1.8, 1.9), cor = 'red')
+    ```
+
+* Menos que $1{,}80$m:
+
+    ```{r menos-q-180}
+    pnorm(1.80, mu_brasil, sigma_brasil)
+    ```
+
+* Menos que $1{,}90$m:
+
+    ```{r menos-q-190}
+    pnorm(1.90, mu_brasil, sigma_brasil)
+    ```
+
+* Entre $1{,}80$m e $1{,}90$m:
+
+    ```{r entre-180-190}
+    pnorm(1.90, mu_brasil, sigma_brasil) - 
+      pnorm(1.80, mu_brasil, sigma_brasil)
+    ```
+
+* Qual a probabilidade de um homem [holandês]{.hl} ter [entre $1{,}80$m e $1{,}90$m de altura]{.hl}?
+
+* Gráfico:
+
+    ```{r entre-180-e-190-ho, echo=FALSE}
+    grafico_base +
+      curva_holanda() +
+      curva_holanda(faixa = c(1.8, 1.9), cor = 'red')
+    ```
+
+* Menos que $1{,}80$m:
+
+    ```{r menos-q-180-h}
+    pnorm(1.80, mu_holanda, sigma_holanda)
+    ```
+
+* Menos que $1{,}90$m:
+
+    ```{r menos-q-190-h}
+    pnorm(1.90, mu_holanda, sigma_holanda)
+    ```
+
+* Entre $1{,}80$m e $1{,}90$m:
+
+    ```{r entre-180-190-h}
+    pnorm(1.90, mu_holanda, sigma_holanda) - 
+      pnorm(1.80, mu_holanda, sigma_holanda)
+    ```
+
+#### Função quantil: dado um valor de [$\text{Norm}(X \leq x \mid \mu, \sigma)$, então $x = ?$]{.hl} {-}
+
+* `qnorm(p, mean = μ, sd = σ)`.
+
+* Quais as [alturas mínima e máxima]{.hl} dos homens que estão [nos $50\%$ da população em torno da média]{.hl}?
+
+* Gráfico:
+
+    ```{r intervalo-50-br, echo=FALSE, message=FALSE}
+    quantis <- c(
+      qnorm(.25, mu_brasil, sigma_brasil),
+      qnorm(.75, mu_brasil, sigma_brasil)
+    )
+    
+    grafico_base +
+      curva_brasil() +
+      curva_brasil(
+        faixa = quantis, 
+        cor = 'red'
+      ) +
+      scale_x_continuous(breaks = quantis, labels = rep('??', 2))
+    ```
+
+* O limite [inferior]{.hl} é o valor à [esquerda]{.hl} do qual existem [$25\%$]{.hl} de probabilidade:
+
+    ```{r q-25-br}
+    qnorm(.25, mu_brasil, sigma_brasil)
+    ```
+
+* O limite [superior]{.hl} é o valor à [esquerda]{.hl} do qual existem [$75\%$]{.hl} de probabilidade:
+
+    ```{r q-75-br}
+    qnorm(.75, mu_brasil, sigma_brasil)
+    ```
+
+* Ou, equivalentemente, o valor à [direita]{.hl} do qual existem [$25\%$]{.hl} de probabilidade:
+
+    ```{r q-25-br-dir}
+    qnorm(.25, mu_brasil, sigma_brasil, lower.tail = FALSE)
+    ```
+
+* As alturas mínima e máxima dos homens que estão nos $50\%$ da população em torno da média são $`r qnorm(.25, mu_brasil, sigma_brasil) %>% round(2) %>% fm()`$m e $`r qnorm(.75, mu_brasil, sigma_brasil) %>% round(2) %>% fm()`$m.
+
+
+#### Função para [gerar números aleatórios]{.hl} {-}
+
+* `rnorm(n, mean = μ, sd = σ)`.
+
+* Qual é a [probabilidade de um homem holandês]{.hl} escolhido ao acaso ser [mais baixo]{.hl} do que [um homem brasileiro]{.hl} escolhido ao acaso?
+
+* Vamos responder fazendo uma simulação. 
+
+* Vamos repetir muitas vezes o experimento de escolher um holandês ao acaso e um brasileiro ao acaso:
+
+    ```{r amostras}
+    n <- 1e6
+    holandeses <- rnorm(n, mu_holanda, sigma_holanda)
+    brasileiros <- rnorm(n, mu_brasil, sigma_brasil)
+    ```
+
+* Qual a proporção de vezes em que o holandês é mais baixo?
+
+    ```{r h-mais-baixo}
+    mean(holandeses < brasileiros)
+    ```
+
+* Segundo nossa simulação, esta é a resposta.
+
+
+### *QQplots*
+
+* Como saber se um conjunto de dados numéricos segue a distribuição normal?
+
+* Vamos gerar dados aproximadamente normais (média $0$, desvio padrão $1$):
+
+```{r amostra-normal}
+valores <- rnorm(1000)
+head(valores)
+```
+
+* Histograma:
+
+```{r hist-normal}
+valores %>% 
+  as_tibble() %>% 
+  ggplot() +
+    geom_histogram(aes(x = value), bins = 10) +
+    labs(
+      x = 'valor',
+      y = NULL
+    )
+```
+
+* Para estes dados, os quartis são
+
+```{r quartis}
+quantile(valores)
+```
+
+* Na distribuição $\mathcal{N}(0, 1)$ teórica, os quartis seriam
+
+```{r quartis-teoricos}
+qnorm(c(0, .25, .5, .75, 1))
+```
+
+* O gráfico QQ (quantil-quantil) mostra os quantis da amostra no eixo $y$ e os quantis teóricos no eixo $x$. A reta vermelha serve para referência; se as duas distribuições fossem idênticas, todos os pontos estariam sobre a reta.
+
+```{r qq-valores}
+valores %>% 
+  as_tibble() %>% 
+  ggplot(aes(sample = value)) +
+    geom_qq(alpha = .3) +
+    labs(
+      y = 'amostra',
+      x = 'N(0, 1)'
+    ) +
+    geom_abline(color = 'red')
+```
+
+* Um exemplo concreto: pesos de $15$ mulheres com idades entre $30$ e $39$ anos:
+
+```{r pesos}
+pesos <- women %>% 
+  select(weight) %>% 
+  transmute(peso = weight * .4535924)
+```
+
+* Histograma:
+
+```{r hist-pesos}
+pesos %>% 
+  ggplot() +
+    geom_histogram(aes(x = peso), bins = 6) +
+    labs(y = NULL)
+```
+
+* O gráfico quantil-quantil fica
+
+```{r pesos-qq}
+pesos %>% 
+  ggplot(aes(sample = peso)) +
+    geom_qq() +
+    labs(
+      y = 'pesos',
+      x = 'N(0, 1)'
+    )
+```
+
+* Quanto mais próximos de uma reta com inclinação de $45$ graus os pontos ficarem, mais próximos da distribuição normal os dados estão.
+
+* Podemos usar, como distribuição teórica no eixo $x$, a distribuição normal com média e desvio padrão iguais à média e ao desvio padrão dos dados:
+
+```{r pesos-qq-nao-padrao}
+m <- mean(pesos$peso)
+s <- sd(pesos$peso)
+
+pesos %>% 
+  ggplot(aes(sample = peso)) +
+    geom_qq(
+      dparams = list(
+        mean = m,
+        sd = s
+      )
+    ) +
+    geom_abline(color = 'red') +
+    labs(
+      y = 'pesos',
+      x = paste0('N(', m %>% round(2), ' ; ', s %>% round(2), ')')
+    )
+```
+
+* Ou podemos padronizar os dados no eixo $y$, fazendo com que a média deles seja $0$ e o desvio padrão deles seja $1$. 
+
+* Para fazer isso manualmente, basta subtrair a média e dividir pelo desvio padrão:
+
+```{r padronizar-manual}
+pesos %>% 
+  mutate(peso = (peso - mean(peso)) / sd(peso)) %>% 
+  kbl(
+    format.args = list(big.mark = '.')
+  ) %>% 
+  kable_paper(
+    c('striped', 'hover'),
+    full_width = FALSE
+  )
+```
+
+* Ou podemos usar a função `scale`, que faz o mesmo:
+
+```{r padronizar-scale}
+pesos %>% 
+  mutate(peso = scale(peso)) %>% 
+  kbl(
+    format.args = list(big.mark = '.')
+  ) %>% 
+  kable_paper(
+    c('striped', 'hover'),
+    full_width = FALSE
+  )
+```
+
+```{r pesos-qq-padrao}
+pesos %>% 
+  mutate(peso = scale(peso)) %>% 
+  ggplot(aes(sample = peso)) +
+    geom_qq() +
+    labs(
+      y = 'pesos\n(padronizados)',
+      x = 'N(0, 1)'
+    ) +
+    geom_abline(color = 'red')
+```
+
+* Um exemplo de dados não normais:
+
+```{r nao-normais}
+dados <- rexp(100, rate = .1)
+m <- mean(dados)
+s <- sd(dados)
+```
+
+
+* Histograma:
+
+```{r hist-nao-normal}
+dados %>% 
+  as_tibble() %>% 
+  ggplot() +
+    geom_histogram(aes(x = value), bins = 20) +
+    labs(
+      x = 'valor',
+      y = NULL
+    )
+```
+
+* QQ:
+
+```{r qq-nao-normal}
+dados %>% 
+  as_tibble() %>% 
+  ggplot(aes(sample = value)) +
+    geom_qq(
+      dparams = list(
+        mean = m,
+        sd = s
+      )
+    ) +
+    geom_abline(color = 'red') +
+    labs(
+      y = 'dados',
+      x = paste0('N(', m %>% round(2), ' ; ', s %>% round(2), ')')
+    )
+```
+
+* **Exercício**: gere um gráfico quantil-quantil para estes dados, usando a distribuição exponencial com média $10$ como distribuição teórica no eixo $x$.
+
+
+### Aproximação da binomial pela normal
+
+* Exemplo: 
+
+  * Uma organização vai receber sangue de $32$ mil doadores escolhidos ao acaso. 
+  
+  * A probabilidade de um doador ter sangue tipo O- é $p = 0{,}06$.
+  
+  * Qual a probabilidade de a organização conseguir no mínimo $1.850$ doadores com sangue do tipo O-?
+
+* Cada doador é uma prova de Bernoulli, com probabilidade de sucesso $p = 0{,}06$. Supondo que os doadores são independentes (por exemplo, não são todos parentes) e usando a distribuição binomial, a resposta é 
+$$
+\text{Binom}(X \geq 1850 \mid n = 32000, p = 0.06)
+$$
+
+* Em R
+
+```{r o-binom}
+pbinom(
+  q = 1849,
+  size = 32000,
+  prob = 0.06,
+  lower.tail = FALSE
+)
+```
+
+* Este resultado é o valor da longa e trabalhosa expressão
+$$
+{32000 \choose 1850} 0{,}06^{1850} 0{,}94^{30150} + 
+{32000 \choose 1851} 0{,}06^{1851} 0{,}94^{30149} + \cdots +
+{32000 \choose 32000} 0{,}06^{32000} 0{,}94^{0}
+$$
+
+* Felizmente, podemos usar a distribuição normal para achar uma aproximação:
+
+  * A média da distribuição binomial é $np = 32.000 \cdot 0{,}06 = 1920$.
+  
+  * O desvio padrão da distribuição binomial é $\sqrt{np(1-p)} \approx 42{,}48$.
+  
+  * Usando uma normal com esta média e este desvio padrão, temos
+  
+```{r 0-normal}
+pnorm(
+  q = 1849,
+  mean = 1920,
+  sd = 42.48,
+  lower.tail = FALSE
+)
+```
+
+* As distribuições são mesmo parecidas:
+
+```{r normal-binom-func, echo=FALSE}
+normal_binom <- function(n, p, limites = NULL) {
+
+  mu <- n * p
+  sigma <- sqrt(mu * (1-p))
+  if (is.null(limites))
+    limites <- c(mu - 4 * sigma, mu + 4 * sigma)
+
+  ggplot() +
+    stat_function(
+      mapping = aes(color = 'normal'),
+      fun = dnorm,
+      args = list(mean = mu, sd = sigma),
+      xlim = limites
+    ) +
+    geom_col(
+      data = tibble(
+        valor = round(limites[1]):round(limites[2]),
+        probab = dbinom(valor, n, p)
+      ),
+      mapping = aes(x = valor, y = probab, fill = 'binom'),
+    ) +
+    scale_fill_manual(
+      values = c('#FF000050', 'blue'),
+      aesthetics = c('fill', 'color'), 
+      guide = 'legend'
+    ) +
+    guides(color = 'none') +
+    labs(
+      y = NULL,
+      fill = NULL,
+      title = paste0(
+        'Comparação entre Binom(',
+        n,
+        ' ; ',
+        p,
+        ')  e  N(',
+        round(mu, 2),
+        ' ; ',
+        round(sigma, 2),
+        ')'
+      )
+    )
+  
+}
+```
+
+```{r normal-binom-plot, echo=FALSE}
+n <- 32000
+p <- .06
+
+normal_binom(n, p)
+```
+
+* Mas nem toda binomial se parece com uma normal:
+
+```{r normal-binomial-plot-ruim}
+n <- 5
+p <- .1
+normal_binom(n, p, limites = c(-2, 5)) + 
+  scale_x_continuous(breaks = -2:5)
+```
+
+* Neste exemplo, quanto da probabilidade da normal está em valores abaixo de $-0.5$ (valores que não fazem sentido para a binomial!)?
+
+```{r normal-negativa}
+pnorm(-.5, n * p, sqrt(n * p * (1 - p)))
+```
+
+* Como resolver isto?
+
+* Lembrando que $99{,}7\%$ da probabilidade da distribuição normal está a $3$ desvios padrão de distância da média, podemos exigir que a distribuição binomial esteja dentro destes limites. 
+
+* Então, a normal deve ser $\mathcal{N}(\mu, \sigma)$ tal que o intervalo de $\mu - 3\sigma$ até $\mu + 3\sigma$ só tenha valores positivos.
+
+* Ou seja, queremos $$\mu - 3\sigma > 0$$
+
+* O que equivale a $$\mu > 3\sigma$$
+
+* Como a normal é calculada a partir de $\text{Binom}(X \mid n, p)$, isto equivale a 
+  $$
+  np > 3 \sqrt{np(1-p)}
+  $$
+  
+* Elevando os dois lados ao quadrado: $$n^2p^2 > 9np(1-p)$$
+
+* Dividindo ambos os lados por $np$ (que é positivo): $$np > 9(1-p)$$
+
+* Como $(1-p) \leq 1$, podemos nos satisfazer com $$np > 9$$
+
+* **Conclusão:** 
+
+  * Para aproximar a binomial $\text{Binom}(X \mid n, p)$ por uma normal, exigimos que $np$ seja pelo menos $10$. 
+  
+  * Como a normal é simétrica, também exigimos que $n(1-p)$ também seja pelo menos $10$.
+  
+  * Em outras palavras, o número esperado de sucessos e o número esperado de fracassos precisam ser, ambos, maiores ou iguais a $10$.
+  
+
+### Correção de continuidade
+
+* E se, no exemplo dos doadores de sangue, quiséssemos calcular a probabilidade de a organização obter *exatamente* $1.850$ doadores com sangue O-?
+
+```{r exato-binom}
+dbinom(1850, 32000, .06)
+```
+
+* Usando a aproximação normal, como calcularíamos esta probabilidade? Como a normal é uma distribuição contínua, $P(X = 1850)$ é igual a zero (como qualquer probabilidade pontual)!
+
+* A solução é calcular $P(1849{,}5 \leq X \leq 1850{,}5)$:
+
+```{r probs-corr-cont}
+probs <- pnorm(
+  c(1849.5, 1850.5), 
+  mean = 32000 * 0.06,  
+  sd = sqrt(32000 * 0.06 * (1 - 0.06))
+)
+
+probs[2] - probs[1]
+```
+
+* Trabalhando com uma distribuição $\text{Binom}(X \mid n = 20, p = 0{,}5)$, isto fica claro no gráfico. Cada barra centrada no valor $x$ compreende uma região de $x - 0{,}5$ até $x + 0{,}5$:
+
+```{r correcao-cont, echo=FALSE}
+normal_binom(20, .5, c(0, 20)) + scale_x_continuous(breaks = 0:20)
+```
+
+
+
+## Exponencial
+
+### Exemplo
+
+* Lembre-se de que a distribuição de Poisson modela o número de ocorrências de um fenômeno que tem uma média de $\lambda$ ocorrências por período de tempo.
+
+* Imagine que o números de visitas por minuto à sua página web é $\lambda = 4$.
+
+* Então, o *tempo* entre visitas é uma variável aleatória contínua $X$, que pode ser modelada pela distribuição exponencial com média $1/\lambda = 1/4 = 0{,}25$.
+
+* Qual a  probabilidade de que o tempo entre uma visita e a próxima seja menor do que $0{,}33$ minuto?
+$$
+\begin{aligned}
+  P(X \leq 0{,}33 \mid \lambda = 4) 
+    &= \int_0^{0{,}33} \lambda e^{-\lambda \cdot 0{,}33} dx \\
+    &= 1 - e^{-\lambda \cdot 0{,}33} \\
+    &= 1 - e^{-`r 4 * .33`} \\
+    &\approx `r round(1 - exp(-4 * .33), 2)`
+\end{aligned}
+$$
+
+### No geral
+
+* $X \sim \text{Exp}(\lambda)$
+
+* Média: $1/\lambda$
+
+* Desvio padrão: $1/\lambda^2$
+
+* Suporte: $[0, \infty)$
+
+* Fdp:
+$$
+f(x \mid \lambda) = \lambda e^{-\lambda x}
+$$
+
+
+### Em R
+
+* Densidade: `dexp(x, rate = 1)`
+
+* Probabilidade acumulada: `pexp(q, rate = 1, lower.tail = TRUE)`
+
+* Quantil: `qexp(p, rate = 1, lower.tail = TRUE)`
+
+* Geração de números aleatórios: `rexp(n, rate = 1)`
+
+
+## Outras distribuições contínuas importantes
+
+* Distribuição $t$ de Student
+
+* Distribuição $\chi^2$
+
+* Distribuição $F$
+
+
+## Jardim zoológico de distribuições
+
+Para sua diversão: https://ben18785.shinyapps.io/distribution-zoo/

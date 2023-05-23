@@ -35,5 +35,6 @@ rmd_files: [
   "probabilidades.Rmd",
   "variaveis.Rmd",
   "distribs-discretas.Rmd",
+  "distribs-continuas.Rmd",
   "refs.Rmd"
 ]
