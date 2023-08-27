@@ -7,7 +7,7 @@
 <title>Capítulo 4 Visualização com ggplot2 | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  4.1 Vídeo 1    4.2 Componentes de um gráfico ggplot2  4.2.1 Geometrias e mapeamentos estéticos...">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
 <meta property="og:title" content="Capítulo 4 Visualização com ggplot2 | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5.9000/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.5.9000/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.5.9000/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -284,12 +284,12 @@
 <p>Podemos produzir um sumário dos dados usando o pacote <em>summarytools</em> (que já foi carregado neste documento):</p>
 <div class="sourceCode" id="cb263"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/summarytools/man/dfSummary.html">dfSummary</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table class="table table-sm">
+<table style="width:97%;" class="table table-sm">
 <colgroup>
 <col width="14%">
 <col width="30%">
+<col width="20%">
 <col width="21%">
-<col width="22%">
 <col width="10%">
 </colgroup>
 <thead><tr class="header">
@@ -325,7 +325,7 @@
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 73 (88,0%)</td>
-<td><img src="dfimg/ds0001.png"></td>
+<td><img src="dfimg/ds0023.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -354,7 +354,7 @@
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 67 (80,7%)</td>
-<td><img src="dfimg/ds0002.png"></td>
+<td><img src="dfimg/ds0024.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -369,7 +369,7 @@
 32 (42,1%)<br>
 5 ( 6,6%)<br>
 20 (26,3%)</td>
-<td><img src="dfimg/ds0003.png"></td>
+<td><img src="dfimg/ds0025.png"></td>
 <td>7<br>
 (8,4%)</td>
 </tr>
@@ -398,7 +398,7 @@
 2 ( 2,4%)<br>
 2 ( 2,4%)<br>
 13 (15,7%)</td>
-<td><img src="dfimg/ds0004.png"></td>
+<td><img src="dfimg/ds0026.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -417,7 +417,7 @@
 27 (50,0%)<br>
 4 ( 7,4%)<br>
 7 (13,0%)</td>
-<td><img src="dfimg/ds0005.png"></td>
+<td><img src="dfimg/ds0027.png"></td>
 <td>29<br>
 (34,9%)</td>
 </tr>
@@ -429,7 +429,7 @@ mín &lt; mediana &lt; máx:<br>
 1,9 &lt; 10,1 &lt; 19,9<br>
 IQE (CV) : 5,9 (0,4)</td>
 <td>65 valores distintos</td>
-<td><img src="dfimg/ds0006.png"></td>
+<td><img src="dfimg/ds0028.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -441,7 +441,7 @@ mín &lt; mediana &lt; máx:<br>
 0,1 &lt; 1,5 &lt; 6,6<br>
 IQE (CV) : 1,5 (0,7)</td>
 <td>32 valores distintos</td>
-<td><img src="dfimg/ds0007.png"></td>
+<td><img src="dfimg/ds0029.png"></td>
 <td>22<br>
 (26,5%)</td>
 </tr>
@@ -453,7 +453,7 @@ mín &lt; mediana &lt; máx:<br>
 0,1 &lt; 0,3 &lt; 1,5<br>
 IQE (CV) : 0,4 (0,8)</td>
 <td>22 valores distintos</td>
-<td><img src="dfimg/ds0008.png"></td>
+<td><img src="dfimg/ds0030.png"></td>
 <td>51<br>
 (61,4%)</td>
 </tr>
@@ -465,7 +465,7 @@ mín &lt; mediana &lt; máx:<br>
 4,1 &lt; 13,9 &lt; 22,1<br>
 IQE (CV) : 5,9 (0,3)</td>
 <td>65 valores distintos</td>
-<td><img src="dfimg/ds0009.png"></td>
+<td><img src="dfimg/ds0031.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -477,7 +477,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 0 &lt; 5,7<br>
 IQE (CV) : 0,1 (3,5)</td>
 <td>53 valores distintos</td>
-<td><img src="dfimg/ds0010.png"></td>
+<td><img src="dfimg/ds0032.png"></td>
 <td>27<br>
 (32,5%)</td>
 </tr>
@@ -489,7 +489,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 1,7 &lt; 6654<br>
 IQE (CV) : 41,6 (4,7)</td>
 <td>82 valores distintos</td>
-<td><img src="dfimg/ds0011.png"></td>
+<td><img src="dfimg/ds0033.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -548,10 +548,10 @@ IQE (CV) : 41,6 (4,7)</td>
 <p>Vamos ver o sumário:</p>
 <div class="sourceCode" id="cb267"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sono</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/summarytools/man/dfSummary.html">dfSummary</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table table-sm">
+<table style="width:97%;" class="table table-sm">
 <colgroup>
-<col width="14%">
-<col width="31%">
+<col width="13%">
+<col width="30%">
 <col width="21%">
 <col width="22%">
 <col width="10%">
@@ -589,7 +589,7 @@ IQE (CV) : 41,6 (4,7)</td>
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 73 (88,0%)</td>
-<td><img src="dfimg/ds0012.png"></td>
+<td><img src="dfimg/ds0034.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -618,7 +618,7 @@ IQE (CV) : 41,6 (4,7)</td>
 2 ( 2,4%)<br>
 2 ( 2,4%)<br>
 13 (15,7%)</td>
-<td><img src="dfimg/ds0013.png"></td>
+<td><img src="dfimg/ds0035.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -647,7 +647,7 @@ IQE (CV) : 41,6 (4,7)</td>
 1 ( 1,2%)<br>
 1 ( 1,2%)<br>
 67 (80,7%)</td>
-<td><img src="dfimg/ds0014.png"></td>
+<td><img src="dfimg/ds0036.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -662,7 +662,7 @@ IQE (CV) : 41,6 (4,7)</td>
 32 (42,1%)<br>
 5 ( 6,6%)<br>
 20 (26,3%)</td>
-<td><img src="dfimg/ds0015.png"></td>
+<td><img src="dfimg/ds0037.png"></td>
 <td>7<br>
 (8,4%)</td>
 </tr>
@@ -674,7 +674,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 1,7 &lt; 6654<br>
 IQE (CV) : 41,6 (4,7)</td>
 <td>82 valores distintos</td>
-<td><img src="dfimg/ds0016.png"></td>
+<td><img src="dfimg/ds0038.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -686,7 +686,7 @@ mín &lt; mediana &lt; máx:<br>
 0 &lt; 0 &lt; 5,7<br>
 IQE (CV) : 0,1 (3,5)</td>
 <td>53 valores distintos</td>
-<td><img src="dfimg/ds0017.png"></td>
+<td><img src="dfimg/ds0039.png"></td>
 <td>27<br>
 (32,5%)</td>
 </tr>
@@ -698,7 +698,7 @@ mín &lt; mediana &lt; máx:<br>
 4,1 &lt; 13,9 &lt; 22,1<br>
 IQE (CV) : 5,9 (0,3)</td>
 <td>65 valores distintos</td>
-<td><img src="dfimg/ds0018.png"></td>
+<td><img src="dfimg/ds0040.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -710,7 +710,7 @@ mín &lt; mediana &lt; máx:<br>
 1,9 &lt; 10,1 &lt; 19,9<br>
 IQE (CV) : 5,9 (0,4)</td>
 <td>65 valores distintos</td>
-<td><img src="dfimg/ds0019.png"></td>
+<td><img src="dfimg/ds0041.png"></td>
 <td>0<br>
 (0,0%)</td>
 </tr>
@@ -1651,7 +1651,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 23/05/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 27/08/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

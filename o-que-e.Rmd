@@ -11,6 +11,11 @@ knit: "bookdown::render_book"
 embed_yt('6Q_XSoLCIpc')
 ```
 
+### Slides
+
+[Clique para baixar (pdf).](slides/01-intro.pdf)
+
+
 ## Exercícios
 
 1. Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de todos os homens da sua turma de Estatística.
@@ -64,6 +69,11 @@ embed_yt('6Q_XSoLCIpc')
 ```{r echo=FALSE, results='asis', out.extra=center()}
 embed_yt('492VASxlDRo')
 ```
+
+### Slides
+
+[Clique para baixar (pdf).](slides/02-intro.pdf)
+
 
 ## Exercícios
 

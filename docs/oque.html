@@ -6,22 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Capítulo 1 O Que É Estatística? | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
-<meta name="description" content="1.1 Vídeo 1    1.2 Exercícios  Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de todos os homens da sua turma de...">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="description" content="1.1 Vídeo 1   1.1.1 Slides Clique para baixar (pdf).   1.2 Exercícios  Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
 <meta property="og:title" content="Capítulo 1 O Que É Estatística? | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
-<meta property="og:description" content="1.1 Vídeo 1    1.2 Exercícios  Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de todos os homens da sua turma de...">
+<meta property="og:description" content="1.1 Vídeo 1   1.1.1 Slides Clique para baixar (pdf).   1.2 Exercícios  Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Capítulo 1 O Que É Estatística? | Probabilidade e Estatística com R">
-<meta name="twitter:description" content="1.1 Vídeo 1    1.2 Exercícios  Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de todos os homens da sua turma de...">
+<meta name="twitter:description" content="1.1 Vídeo 1   1.1.1 Slides Clique para baixar (pdf).   1.2 Exercícios  Você está interessado em estimar a altura de todos os homens da sua faculdade. Para isso, você decide medir as alturas de...">
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5.9000/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.5.9000/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.5.9000/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -77,6 +77,12 @@
 </h2>
 <iframe src="https://www.youtube.com/embed/6Q_XSoLCIpc" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
 </iframe>
+<div id="slides" class="section level3" number="1.1.1">
+<h3>
+<span class="header-section-number">1.1.1</span> Slides<a class="anchor" aria-label="anchor" href="#slides"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="slides/01-intro.pdf">Clique para baixar (pdf).</a></p>
+</div>
 </div>
 <div id="exercícios" class="section level2" number="1.2">
 <h2>
@@ -133,6 +139,12 @@ Qual a relação entre esta história e a necessidade de duplo cegamento?</p>
 </h2>
 <iframe src="https://www.youtube.com/embed/492VASxlDRo" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
 </iframe>
+<div id="slides-1" class="section level3" number="1.3.1">
+<h3>
+<span class="header-section-number">1.3.1</span> Slides<a class="anchor" aria-label="anchor" href="#slides-1"><i class="fas fa-link"></i></a>
+</h3>
+<p><a href="slides/02-intro.pdf">Clique para baixar (pdf).</a></p>
+</div>
 </div>
 <div id="exercícios-1" class="section level2" number="1.4">
 <h2>
@@ -328,9 +340,13 @@ $(init_exercises)
     <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#oque"><span class="header-section-number">1</span> O Que É Estatística?</a></li>
-<li><a class="nav-link" href="#v%C3%ADdeo-1"><span class="header-section-number">1.1</span> Vídeo 1</a></li>
+<li>
+<a class="nav-link" href="#v%C3%ADdeo-1"><span class="header-section-number">1.1</span> Vídeo 1</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#slides"><span class="header-section-number">1.1.1</span> Slides</a></li></ul>
+</li>
 <li><a class="nav-link" href="#exerc%C3%ADcios"><span class="header-section-number">1.2</span> Exercícios</a></li>
-<li><a class="nav-link" href="#niveis-de-dados"><span class="header-section-number">1.3</span> Vídeo 2</a></li>
+<li>
+<a class="nav-link" href="#niveis-de-dados"><span class="header-section-number">1.3</span> Vídeo 2</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#slides-1"><span class="header-section-number">1.3.1</span> Slides</a></li></ul>
+</li>
 <li><a class="nav-link" href="#exerc%C3%ADcios-1"><span class="header-section-number">1.4</span> Exercícios</a></li>
 </ul>
 
@@ -349,7 +365,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 23/05/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 27/08/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

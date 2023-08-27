@@ -7,7 +7,7 @@
 <title>Capítulo 3 Introdução ao tidyverse | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="Busque mais informações sobre os pacotes que compõem o tidyverse nas referências recomendadas.  3.1 Criando uma tibble Uma tibble é uma tabela retangular. Cada coluna é um vetor: cores &lt;- tibble( ...">
-<meta name="generator" content="bookdown 0.33 with bs4_book()">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
 <meta property="og:title" content="Capítulo 3 Introdução ao tidyverse | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.5.9000/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.5.9000/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.5.9000/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.4.2/transition.js"></script><script src="libs/bs3compat-0.4.2/tabs.js"></script><script src="libs/bs3compat-0.4.2/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -749,7 +749,7 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_sample</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Jackson, Alan","2":"It Must Be Love","3":"2000-06-24","4":"16","5":"64"},{"1":"Da Brat","2":"That's What I'm Look...","3":"2000-02-26","4":"18","5":"100"},{"1":"Houston, Whitney","2":"My Love Is Your Love","3":"1999-09-04","4":"15","5":"5"},{"1":"Amber","2":"Sexual","3":"1999-07-17","4":"27","5":"58"},{"1":"Red Hot Chili Peppers","2":"Otherside","3":"2000-02-12","4":"19","5":"19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["artista"],"name":[1],"type":["chr"],"align":["left"]},{"label":["musica"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entrou"],"name":[3],"type":["date"],"align":["right"]},{"label":["semana"],"name":[4],"type":["int"],"align":["right"]},{"label":["pos"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"Lonestar","2":"What About Now","3":"2000-06-10","4":"7","5":"47"},{"1":"Blink-182","2":"All The Small Things","3":"1999-12-04","4":"12","5":"6"},{"1":"Destiny's Child","2":"Jumpin' Jumpin'","3":"2000-05-13","4":"25","5":"6"},{"1":"Nelly","2":"(Hot S**t) Country G...","3":"2000-04-29","4":"4","5":"76"},{"1":"Destiny's Child","2":"Jumpin' Jumpin'","3":"2000-05-13","4":"17","5":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </li>
@@ -1878,7 +1878,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 23/05/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 27/08/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
