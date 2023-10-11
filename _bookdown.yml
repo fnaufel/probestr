@@ -36,5 +36,6 @@ rmd_files: [
   "variaveis.Rmd",
   "distribs-discretas.Rmd",
   "distribs-continuas.Rmd",
+  "tcl.Rmd",
   "refs.Rmd"
 ]

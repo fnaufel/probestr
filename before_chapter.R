@@ -7,6 +7,7 @@ source(
 
 library(patchwork)
 library(scales)
+library(glue)
 
 # For interactive exercises
 # See https://github.com/fnaufel/exercises

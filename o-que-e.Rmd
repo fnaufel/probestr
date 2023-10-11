@@ -3,7 +3,7 @@ knit: "bookdown::render_book"
 ---
 
 
-# O Que É Estatística? {#oque}
+# O que é estatística? {#oque}
 
 ## Vídeo 1
 

@@ -377,8 +377,10 @@ embed_yt('hJfyzRzEs44')
 
 * Veja a figura abaixo:
 
-  ???
-  
+    ```{r echo=FALSE, out.width='30%'}
+    knitr::include_graphics('images/Venn-4.svg.png')
+    ```
+
 * Imagine que a probabilidade de um evento é proporcional à sua área nesta figura.
 
 * Se você somar a área de $A$ com a área de $B$, você vai estar [contando duas vezes]{.hl} a área comum aos dois (a área que corresponde a $A \cap B$).

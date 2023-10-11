@@ -90,7 +90,7 @@ embed_yt('C96MOP4YlaY')
 
 * Por incrível que pareça, [é complicado definir a moda de forma a conseguir resultados interessantes]{.hl}.
 
-* [Por exemplo]{.hl}, vamos definir um conjunto de $1000$ valores numéricos distribuídos normalmente^[Mais sobre a distribuição normal no capítulo ???.], com média igual a $5$ e desvio-padrão^[Mais sobre o desvio-padrão daqui a pouco.] igual a $2$:
+* [Por exemplo]{.hl}, vamos definir um conjunto de $1000$ valores numéricos distribuídos normalmente^[Mais sobre a distribuição normal no [capítulo sobre distribuições contínuas](distribuições-contínuas.html).], com média igual a $5$ e desvio-padrão^[Mais sobre o desvio-padrão [daqui a pouco](#desvio-padrão).] igual a $2$:
 
     ```{r}
     normal <- rnorm(1000, mean = 5, sd = 2)
@@ -337,7 +337,7 @@ embed_yt('C96MOP4YlaY')
 
 ### Exercícios
 
-* Quais são os registros com $\log_{10} \text{valor} < 0$?
+* Quais são os registros com $(\log_{10} \text{valor}) < 0$?
 
 * Faça um *boxplot* dos logaritmos das receitas.
 

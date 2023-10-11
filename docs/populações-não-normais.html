@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Capítulo 12 Populações não-normais | Probabilidade e Estatística com R</title>
+<meta name="author" content="Fernando Náufel">
+<meta name="description" content="12.1 Uniforme  Dados: tamanho_populacao &lt;- 1e5 tamanho_amostra &lt;- 100 qtde_amostras &lt;- 1e4  Definimos uma população com valores entre \(0\) e \(1\): uniforme &lt;- runif(tamanho_populacao)  Vamos...">
+<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta property="og:title" content="Capítulo 12 Populações não-normais | Probabilidade e Estatística com R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
+<meta property="og:description" content="12.1 Uniforme  Dados: tamanho_populacao &lt;- 1e5 tamanho_amostra &lt;- 100 qtde_amostras &lt;- 1e4  Definimos uma população com valores entre \(0\) e \(1\): uniforme &lt;- runif(tamanho_populacao)  Vamos...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Capítulo 12 Populações não-normais | Probabilidade e Estatística com R">
+<meta name="twitter:description" content="12.1 Uniforme  Dados: tamanho_populacao &lt;- 1e5 tamanho_amostra &lt;- 100 qtde_amostras &lt;- 1e4  Definimos uma população com valores entre \(0\) e \(1\): uniforme &lt;- runif(tamanho_populacao)  Vamos...">
+<meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
+<link rel="stylesheet" href="html_files/styles_book.css">
+<link rel="stylesheet" href="html_files/webex.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Ir para conteúdo principal</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Probabilidade e Estatística com R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar sumário</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+</form>
+
+      <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Apresentação</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O que é estatística?</a></li>
+<li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
+<li><a class="" href="introdu%C3%A7%C3%A3o-ao-tidyverse.html"><span class="header-section-number">3</span> Introdução ao tidyverse</a></li>
+<li><a class="" href="viz.html"><span class="header-section-number">4</span> Visualização com ggplot2</a></li>
+<li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
+<li><a class="" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
+<li><a class="" href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></li>
+<li><a class="" href="distribui%C3%A7%C3%B5es-cont%C3%ADnuas.html"><span class="header-section-number">10</span> Distribuições contínuas</a></li>
+<li><a class="" href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></li>
+<li><a class="active" href="popula%C3%A7%C3%B5es-n%C3%A3o-normais.html"><span class="header-section-number">12</span> Populações não-normais</a></li>
+<li><a class="" href="uma-popula%C3%A7%C3%A3o-normal.html"><span class="header-section-number">13</span> Uma população normal</a></li>
+<li><a class="" href="o-que-isto-significa-o-tcl.html"><span class="header-section-number">14</span> O que isto significa? O TCL</a></li>
+<li><a class="" href="propor%C3%A7%C3%B5es.html"><span class="header-section-number">15</span> Proporções</a></li>
+<li><a class="" href="condi%C3%A7%C3%B5es-para-usar-o-tcl-na-pr%C3%A1tica.html"><span class="header-section-number">16</span> Condições para usar o TCL na prática</a></li>
+<li><a class="" href="mais-exemplos-dv.html"><span class="header-section-number">17</span> Mais exemplos 12</a></li>
+<li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/fnaufel/probestr">Ver código-fonte do livro <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="populações-não-normais" class="section level1" number="12">
+<h1>
+<span class="header-section-number">Capítulo 12</span> Populações não-normais<a class="anchor" aria-label="anchor" href="#popula%C3%A7%C3%B5es-n%C3%A3o-normais"><i class="fas fa-link"></i></a>
+</h1>
+<div id="uniforme" class="section level2" number="12.1">
+<h2>
+<span class="header-section-number">12.1</span> Uniforme<a class="anchor" aria-label="anchor" href="#uniforme"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<p>Dados:</p>
+<div class="sourceCode" id="cb717"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
+<span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span></code></pre></div>
+</li>
+<li>
+<p>Definimos uma população com valores entre <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>:</p>
+<div class="sourceCode" id="cb718"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">uniforme</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">tamanho_populacao</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Vamos retirar muitas amostras desta população e calcular a média de cada amostra.</p>
+<ul>
+<li>
+<p>Por exemplo, três amostras e suas respectivas médias:</p>
+<div class="sourceCode" id="cb719"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">uniforme</span>, <span class="va">tamanho_amostra</span><span class="op">)</span></span>
+<span><span class="va">a1</span></span></code></pre></div>
+<pre><code>##   [1] 0,869329581 0,209982300 0,496638928 0,499368979 0,186657457 0,344342385
+##   [7] 0,116801439 0,189941214 0,772423104 0,778783751 0,093156450 0,047591340
+##  [13] 0,899949302 0,226315399 0,552560914 0,525825123 0,029640391 0,561917409
+##  [19] 0,559809882 0,859597950 0,804871507 0,146827935 0,058951598 0,280102798
+##  [25] 0,285028522 0,519327860 0,433106976 0,333304451 0,476584831 0,954638124
+##  [31] 0,780591801 0,101339978 0,314654316 0,990242735 0,844954866 0,967392699
+##  [37] 0,405311205 0,171424852 0,213557780 0,055929760 0,622402403 0,135257883
+##  [43] 0,290075190 0,202630254 0,594905346 0,901837959 0,236021807 0,759908866
+##  [49] 0,113728049 0,299836375 0,761246537 0,939895977 0,143753349 0,440195605
+##  [55] 0,819540306 0,645228428 0,774125327 0,687840871 0,914238179 0,447603248
+##  [61] 0,193711443 0,703450752 0,631015757 0,495302198 0,729789897 0,950673754
+##  [67] 0,571333267 0,932531156 0,021805045 0,393015711 0,560980635 0,593482739
+##  [73] 0,435080813 0,404940347 0,863593709 0,845344782 0,248668870 0,745614397
+##  [79] 0,500851495 0,714276091 0,571823950 0,664567435 0,483944942 0,451380692
+##  [85] 0,974769468 0,182308296 0,618412335 0,784412536 0,429907971 0,524626410
+##  [91] 0,839356654 0,009628747 0,982638869 0,460771559 0,447391513 0,701077975
+##  [97] 0,419461402 0,022708026 0,071822650 0,268530721</code></pre>
+<div class="sourceCode" id="cb721"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,5013405</code></pre>
+<div class="sourceCode" id="cb723"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">uniforme</span>, <span class="va">tamanho_amostra</span><span class="op">)</span></span>
+<span><span class="va">a2</span></span></code></pre></div>
+<pre><code>##   [1] 0,537127257 0,714157724 0,758129320 0,607783146 0,191654072 0,558148076
+##   [7] 0,153129519 0,968886300 0,560464972 0,078813070 0,847052889 0,435220801
+##  [13] 0,429718401 0,675571424 0,064212858 0,555145596 0,983912982 0,017477169
+##  [19] 0,739916454 0,159267699 0,646231567 0,767586507 0,459140804 0,794855330
+##  [25] 0,474957738 0,391580225 0,807984830 0,722808217 0,306649534 0,904464052
+##  [31] 0,280691341 0,612927329 0,193282636 0,751671237 0,066252671 0,672371127
+##  [37] 0,906193240 0,801269493 0,956015212 0,053552623 0,814222519 0,287908558
+##  [43] 0,282878551 0,817179111 0,913337606 0,688490601 0,023302804 0,801148736
+##  [49] 0,920262174 0,384750240 0,562533689 0,627294533 0,890178173 0,002385939
+##  [55] 0,959085852 0,881101963 0,070349924 0,324673084 0,567032631 0,483372909
+##  [61] 0,779220516 0,059368621 0,608695943 0,664166924 0,870103676 0,590112060
+##  [67] 0,815081495 0,359841079 0,455165238 0,727277773 0,940016040 0,687818256
+##  [73] 0,521265980 0,804189556 0,699634301 0,712968478 0,941152321 0,136708336
+##  [79] 0,891254095 0,377979213 0,835787549 0,257772818 0,895569389 0,506121808
+##  [85] 0,633335854 0,540881501 0,690710838 0,014458583 0,677491209 0,612267448
+##  [91] 0,941688599 0,347645721 0,032504889 0,003996033 0,697600042 0,229145339
+##  [97] 0,873270965 0,310203195 0,757048784 0,455766988</code></pre>
+<div class="sourceCode" id="cb725"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,5586305</code></pre>
+<div class="sourceCode" id="cb727"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">a3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">uniforme</span>, <span class="va">tamanho_amostra</span><span class="op">)</span></span>
+<span><span class="va">a3</span></span></code></pre></div>
+<pre><code>##   [1] 0,37304029 0,60533056 0,67742812 0,78079738 0,16619780 0,80176380 0,84082814
+##   [8] 0,75545430 0,34654105 0,66697578 0,87747161 0,56437873 0,22576855 0,52757542
+##  [15] 0,15433794 0,07798435 0,03805315 0,84833770 0,68201463 0,88777552 0,05874217
+##  [22] 0,53917469 0,06612466 0,52500553 0,82302671 0,30956999 0,99802753 0,48249254
+##  [29] 0,16667167 0,71622572 0,77946385 0,15810985 0,96864575 0,85040020 0,94900362
+##  [36] 0,95843226 0,04596898 0,52233577 0,55952978 0,75270363 0,71364222 0,49835529
+##  [43] 0,50404666 0,10957463 0,14820706 0,90270814 0,12726159 0,93155567 0,02479344
+##  [50] 0,21812856 0,50801571 0,57523798 0,93646581 0,56547527 0,25987711 0,95085959
+##  [57] 0,05043098 0,46683682 0,51838925 0,06147510 0,19338896 0,99457904 0,76212994
+##  [64] 0,67796055 0,36979235 0,86383912 0,64535102 0,92774725 0,63143062 0,80798963
+##  [71] 0,48495490 0,46092112 0,22269385 0,34606527 0,83653930 0,85864444 0,31877899
+##  [78] 0,24316776 0,76869982 0,47943708 0,63683160 0,57907865 0,29393781 0,39491851
+##  [85] 0,36160928 0,03643693 0,38048180 0,43833383 0,31232725 0,81037264 0,43365283
+##  [92] 0,54855347 0,25296780 0,06554264 0,33923681 0,90978174 0,54939680 0,36144745
+##  [99] 0,05036426 0,55322867</code></pre>
+<div class="sourceCode" id="cb729"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a3</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,5140166</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Teremos, então, um conjunto de médias amostrais.</p>
+<ul>
+<li>
+<p>No nosso exemplo menor, com <span class="math inline">\(3\)</span> amostras:</p>
+<div class="sourceCode" id="cb731"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">medias</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">medias</span></span></code></pre></div>
+<pre><code>## [1] 0,5013405 0,5586305 0,5140166</code></pre>
+</li>
+</ul>
+</li>
+<li><p>Qual é a distribuição destas médias amostrais?</p></li>
+<li>
+<p>Qual é a média desta distribuição de médias amostrais?</p>
+<ul>
+<li>
+<p>No nosso exemplo menor, com <span class="math inline">\(3\)</span> amostras:</p>
+<div class="sourceCode" id="cb733"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">medias</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,5246626</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Qual é o desvio padrão desta distribuição de médias amostrais?</p>
+<ul>
+<li>
+<p>No nosso exemplo menor, com <span class="math inline">\(3\)</span> amostras:</p>
+<div class="sourceCode" id="cb735"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">medias</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,03009216</code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p>Vamos ver as respostas para o exemplo completo: <span class="math inline">\(10.000\)</span> amostras de <span class="math inline">\(100\)</span> elementos cada:</p>
+<pre><code>## Média da população         = 0,499
+## Desvio padrão da população = 0,288</code></pre>
+<pre><code>## Warning: `rerun()` was deprecated in purrr 1.0.0.
+## ℹ Please use `map()` instead.
+##   # Previously
+##   rerun(10000, tirar_amostra(populacao, tamanho_amostra))
+## 
+##   # Now
+##   map(1:10000, ~ tirar_amostra(populacao, tamanho_amostra))
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+<pre><code>## Quantidade de amostras     = 10000
+## Tamanho da amostra         = 100
+## 
+## Média das médias amostrais = 0,499
+## D.P. das médias amostrais  = 0,029</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/demo-unif-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>A distribuição da população era uniforme, mas a distribuição <span class="hl">das médias amostrais</span> parece normal!</p></li>
+<li><p>A média da distribuição das médias amostrais é próxima da média populacional.</p></li>
+<li>
+<p>E o desvio padrão das médias amostrais é função do desvio padrão da população. Na verdade, este desvio padrão é</p>
+<p><span class="math display">\[
+\frac{\sigma}{\sqrt{100}}
+\]</span></p>
+<p>onde <span class="math inline">\(\sigma = 0{,}29\)</span> é o desvio padrão da população, e <span class="math inline">\(100\)</span> é o tamanho de cada amostra.</p>
+</li>
+</ul>
+<div id="terminologia" class="section level3 unnumbered rmdimportant">
+<h3>Terminologia<a class="anchor" aria-label="anchor" href="#terminologia"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>A distribuição das médias amostrais (o gráfico à direita no exemplo acima) é chamada de <span class="hl">distribuição amostral das médias</span>.</p></li>
+<li><p>O desvio padrão da distribuição amostral é chamado de <span class="hl">erro padrão</span>, embora não haja nenhuma idéia de erro aqui.</p></li>
+<li>
+<p>A média de todas as médias amostrais é a média populacional. Por incrível que pareça, fica mais fácil entender isto quando escrevemos em matemática:</p>
+<p><span class="math display">\[
+E(\overline X) = \mu
+\]</span></p>
+</li>
+<li><p>Chamamos <span class="math inline">\(\overline X\)</span> de um <span class="hl">estimador não-tendencioso (<em>unbiased</em>)</span> de <span class="math inline">\(\mu\)</span>.</p></li>
+</ul>
+</div>
+</div>
+<div id="exponencial-1" class="section level2" number="12.2">
+<h2>
+<span class="header-section-number">12.2</span> Exponencial<a class="anchor" aria-label="anchor" href="#exponencial-1"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<p>Dados:</p>
+<div class="sourceCode" id="cb740"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
+<span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span></code></pre></div>
+</li>
+<li>
+<p>Definimos uma população com <span class="math inline">\(\lambda = 2\)</span>:</p>
+<div class="sourceCode" id="cb741"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">exponencial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="va">tamanho_populacao</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Vamos retirar muitas amostras e examinar os resultados:</p>
+<pre><code>## Média da população         = 0,5
+## Desvio padrão da população = 0,499
+## 
+## Quantidade de amostras     = 10000
+## Tamanho da amostra         = 100
+## 
+## Média das médias amostrais = 0,501
+## D.P. das médias amostrais  = 0,05</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/demo-exp-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="uma-mistura" class="section level2" number="12.3">
+<h2>
+<span class="header-section-number">12.3</span> Uma mistura<a class="anchor" aria-label="anchor" href="#uma-mistura"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<p>Dados:</p>
+<div class="sourceCode" id="cb743"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
+<span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span></code></pre></div>
+</li>
+<li>
+<p>Definimos uma população que é uma mistura de uma binomial com uma Poisson:</p>
+<div class="sourceCode" id="cb744"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mistura</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="va">tamanho_populacao</span><span class="op">/</span><span class="fl">2</span>, size <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="fl">.3</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">rpois</a></span><span class="op">(</span><span class="va">tamanho_populacao</span><span class="op">/</span><span class="fl">2</span>, lambda <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Vamos retirar muitas amostras e examinar os resultados:</p>
+<pre><code>## Média da população         = 8,998
+## Desvio padrão da população = 6,667
+## 
+## Quantidade de amostras     = 10000
+## Tamanho da amostra         = 100
+## 
+## Média das médias amostrais = 9,002
+## D.P. das médias amostrais  = 0,678</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/demo-mistura-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Observe que, embora a população tenha uma distribuição discreta, <span class="hl">a distribuição das médias amostrais é sempre contínua.</span></p></li>
+</ul>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  if (t = document.getElementById("webex-total_correct")) {
+    var correct = document.getElementsByClassName("webex-correct").length;
+    var solvemes = document.getElementsByClassName("webex-solveme").length;
+    var radiogroups = document.getElementsByClassName("webex-radiogroup").length;
+    var selects = document.getElementsByClassName("webex-select").length;
+
+    t.innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+init_exercises = function() {
+  console.log("onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+  }
+
+  update_total_correct();
+}
+
+$(init_exercises)
+
+</script><div class="chapter-nav">
+<div class="prev"><a href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></div>
+<div class="next"><a href="uma-popula%C3%A7%C3%A3o-normal.html"><span class="header-section-number">13</span> Uma população normal</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#popula%C3%A7%C3%B5es-n%C3%A3o-normais"><span class="header-section-number">12</span> Populações não-normais</a></li>
+<li>
+<a class="nav-link" href="#uniforme"><span class="header-section-number">12.1</span> Uniforme</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#terminologia">Terminologia</a></li></ul>
+</li>
+<li><a class="nav-link" href="#exponencial-1"><span class="header-section-number">12.2</span> Exponencial</a></li>
+<li><a class="nav-link" href="#uma-mistura"><span class="header-section-number">12.3</span> Uma mistura</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/fnaufel/probestr/blob/master/tcl.Rmd">Ver código-fonte <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/fnaufel/probestr/edit/master/tcl.Rmd">Editar esta página <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 25/09/2023)</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Criado com o <a class="text-light" href="https://bookdown.org">pacote bookdown</a> do R.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

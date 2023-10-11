@@ -49,7 +49,7 @@
       <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html">Apresentação</a></li>
-<li><a class="" href="oque.html"><span class="header-section-number">1</span> O Que É Estatística?</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O que é estatística?</a></li>
 <li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
 <li><a class="" href="introdu%C3%A7%C3%A3o-ao-tidyverse.html"><span class="header-section-number">3</span> Introdução ao tidyverse</a></li>
 <li><a class="" href="viz.html"><span class="header-section-number">4</span> Visualização com ggplot2</a></li>
@@ -59,6 +59,7 @@
 <li><a class="" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
 <li><a class="" href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></li>
 <li><a class="active" href="distribui%C3%A7%C3%B5es-cont%C3%ADnuas.html"><span class="header-section-number">10</span> Distribuições contínuas</a></li>
+<li><a class="" href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></li>
 <li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
 </ul>
 
@@ -108,7 +109,7 @@
     \end{cases}
 \]</span></p>
 <p>cujo gráfico é</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-284-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-285-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 </ul>
 <div class="rmdimportant">
@@ -180,7 +181,7 @@ E(X) = \int_{-\infty}^{\infty} xf(x)\;\text{d}x = \int_{0}^{10} \frac{1}{10}x\;\
 <li><p><code>dunif(x, min = a, max = b)</code>.</p></li>
 <li>
 <p>No exemplo do gerador de números aleatórios em <span class="math inline">\([0, 10]\)</span>, todos os valores no intervalo têm a mesma densidade: <span class="math inline">\(\frac{1}{10}\)</span>. Valores fora do intervalo têm densidade <span class="math inline">\(0\)</span>:</p>
-<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb651"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">dunif</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">10</span>, <span class="fl">11</span><span class="op">)</span>, </span>
 <span>  min <span class="op">=</span> <span class="fl">0</span>,</span>
@@ -197,13 +198,13 @@ E(X) = \int_{-\infty}^{\infty} xf(x)\;\text{d}x = \int_{0}^{10} \frac{1}{10}x\;\
 <li><p><code>punif(q, min = a, max = b)</code>.</p></li>
 <li>
 <p>No exemplo do gerador de números aleatórios no intervalo <span class="math inline">\([0, 10]\)</span>, qual a probabilidade de obter um número <span class="hl">menor que <span class="math inline">\(4\)</span></span>?</p>
-<div class="sourceCode" id="cb656"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb653"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">punif</a></span><span class="op">(</span><span class="fl">4</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,4</code></pre>
 </li>
 <li>
 <p>E um número <span class="hl">maior que <span class="math inline">\(4\)</span></span>?</p>
-<div class="sourceCode" id="cb658"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb655"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">punif</a></span><span class="op">(</span><span class="fl">4</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,6</code></pre>
 </li>
@@ -217,13 +218,13 @@ E(X) = \int_{-\infty}^{\infty} xf(x)\;\text{d}x = \int_{0}^{10} \frac{1}{10}x\;\
 <li><p><code>qunif(p, min = a, max = b)</code>.</p></li>
 <li>
 <p>No exemplo do gerador de números aleatórios no intervalo <span class="math inline">\([0, 10]\)</span>, qual o número <span class="math inline">\(x\)</span> tal que existe uma probabilidade de <span class="math inline">\(80\%\)</span> de que um número <span class="hl">menor ou igual a <span class="math inline">\(x\)</span></span> seja gerado?</p>
-<div class="sourceCode" id="cb660"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb657"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">qunif</a></span><span class="op">(</span><span class="fl">.8</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 8</code></pre>
 </li>
 <li>
 <p>E qual o número <span class="math inline">\(x\)</span> tal que existe uma probabilidade de <span class="math inline">\(80\%\)</span> de que um número <span class="hl">maior ou igual a <span class="math inline">\(x\)</span></span> seja gerado?</p>
-<div class="sourceCode" id="cb662"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb659"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">qunif</a></span><span class="op">(</span><span class="fl">.8</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 </li>
@@ -236,7 +237,7 @@ E(X) = \int_{-\infty}^{\infty} xf(x)\;\text{d}x = \int_{0}^{10} \frac{1}{10}x\;\
 <li><p><code>runif(n, min = a, max = b)</code></p></li>
 <li>
 <p>Os números gerados são de ponto flutuante:</p>
-<div class="sourceCode" id="cb664"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb661"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] 8,916410 2,455677 7,494887 7,284187 2,800051 7,725894 3,115508 9,853665 1,507269
 ## [10] 1,031802</code></pre>
@@ -259,7 +260,7 @@ E(X) = \int_{-\infty}^{\infty} xf(x)\;\text{d}x = \int_{0}^{10} \frac{1}{10}x\;\
 <li><p>Segundo o <a href="https://pdf4pro.com/view/levantamento-do-perfil-antropom-201-trico-10652c.html">Levantamento do Perfil Antropométrico da População Brasileira Usuária do Transporte Aéreo Nacional</a>, em 2009, a estatura do homem brasileiro adulto era distribuída normalmente, com média <span class="math inline">\(1{,}73\)</span>m e desvio-padrão <span class="math inline">\(0{,}07\)</span>m.</p></li>
 <li>
 <p>Segundo <a href="https://www.pearson.com/us/higher-education/product/De-Veaux-Stats-Data-and-Models-Plus-NEW-My-Lab-Statistics-with-Pearson-e-Text-Access-Card-Package-4th-Edition/9780133956498.html">este livro</a>, a estatura do homem holandês é distribuída normalmente, com média <span class="math inline">\(1{,}84\)</span>m e desvio-padrão <span class="math inline">\(0{,}08\)</span>m.</p>
-<div class="sourceCode" id="cb666"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mu_brasil</span> <span class="op">&lt;-</span> <span class="fl">1.73</span></span>
 <span><span class="va">sigma_brasil</span> <span class="op">&lt;-</span> <span class="fl">.07</span></span>
 <span></span>
@@ -317,19 +318,19 @@ f(x \mid \mu, \sigma) =
 </li>
 <li>
 <p>Menos que <span class="math inline">\(1{,}80\)</span>m:</p>
-<div class="sourceCode" id="cb667"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb664"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.80</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,8413447</code></pre>
 </li>
 <li>
 <p>Menos que <span class="math inline">\(1{,}90\)</span>m:</p>
-<div class="sourceCode" id="cb669"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb666"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.90</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,9924208</code></pre>
 </li>
 <li>
 <p>Entre <span class="math inline">\(1{,}80\)</span>m e <span class="math inline">\(1{,}90\)</span>m:</p>
-<div class="sourceCode" id="cb671"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb668"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.90</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span><span class="op">)</span> <span class="op">-</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.80</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,151076</code></pre>
@@ -341,19 +342,19 @@ f(x \mid \mu, \sigma) =
 </li>
 <li>
 <p>Menos que <span class="math inline">\(1{,}80\)</span>m:</p>
-<div class="sourceCode" id="cb673"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb670"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.80</span>, <span class="va">mu_holanda</span>, <span class="va">sigma_holanda</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,3085375</code></pre>
 </li>
 <li>
 <p>Menos que <span class="math inline">\(1{,}90\)</span>m:</p>
-<div class="sourceCode" id="cb675"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb672"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.90</span>, <span class="va">mu_holanda</span>, <span class="va">sigma_holanda</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,7733726</code></pre>
 </li>
 <li>
 <p>Entre <span class="math inline">\(1{,}80\)</span>m e <span class="math inline">\(1{,}90\)</span>m:</p>
-<div class="sourceCode" id="cb677"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb674"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.90</span>, <span class="va">mu_holanda</span>, <span class="va">sigma_holanda</span><span class="op">)</span> <span class="op">-</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.80</span>, <span class="va">mu_holanda</span>, <span class="va">sigma_holanda</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,4648351</code></pre>
@@ -372,19 +373,19 @@ f(x \mid \mu, \sigma) =
 </li>
 <li>
 <p>O limite <span class="hl">inferior</span> é o valor à <span class="hl">esquerda</span> do qual existem <span class="hl"><span class="math inline">\(25\%\)</span></span> de probabilidade:</p>
-<div class="sourceCode" id="cb679"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb676"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1,682786</code></pre>
 </li>
 <li>
 <p>O limite <span class="hl">superior</span> é o valor à <span class="hl">esquerda</span> do qual existem <span class="hl"><span class="math inline">\(75\%\)</span></span> de probabilidade:</p>
-<div class="sourceCode" id="cb681"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb678"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.75</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1,777214</code></pre>
 </li>
 <li>
 <p>Ou, equivalentemente, o valor à <span class="hl">direita</span> do qual existem <span class="hl"><span class="math inline">\(25\%\)</span></span> de probabilidade:</p>
-<div class="sourceCode" id="cb683"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb680"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1,777214</code></pre>
 </li>
@@ -400,14 +401,14 @@ f(x \mid \mu, \sigma) =
 <li><p>Vamos responder fazendo uma simulação.</p></li>
 <li>
 <p>Vamos repetir muitas vezes o experimento de escolher um holandês ao acaso e um brasileiro ao acaso:</p>
-<div class="sourceCode" id="cb685"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb682"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e6</span></span>
 <span><span class="va">holandeses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">mu_holanda</span>, <span class="va">sigma_holanda</span><span class="op">)</span></span>
 <span><span class="va">brasileiros</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">mu_brasil</span>, <span class="va">sigma_brasil</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Qual a proporção de vezes em que o holandês é mais baixo?</p>
-<div class="sourceCode" id="cb686"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb683"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">holandeses</span> <span class="op">&lt;</span> <span class="va">brasileiros</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,150228</code></pre>
 </li>
@@ -423,14 +424,14 @@ f(x \mid \mu, \sigma) =
 <li><p>Como saber se um conjunto de dados numéricos segue a distribuição normal?</p></li>
 <li><p>Vamos gerar dados aproximadamente normais (média <span class="math inline">\(0\)</span>, desvio padrão <span class="math inline">\(1\)</span>):</p></li>
 </ul>
-<div class="sourceCode" id="cb688"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb685"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1]  0,38192457 -0,43298688 -0,16862736 -1,75288650  0,09037384 -0,22246299</code></pre>
 <ul>
 <li>Histograma:</li>
 </ul>
-<div class="sourceCode" id="cb690"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb687"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valores</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -443,20 +444,20 @@ f(x \mid \mu, \sigma) =
 <ul>
 <li>Para estes dados, os quartis são</li>
 </ul>
-<div class="sourceCode" id="cb691"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb688"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          0%         25%         50%         75%        100% 
 ## -3,22712269 -0,63928020  0,02319071  0,71205730  3,02162503</code></pre>
 <ul>
 <li>Na distribuição <span class="math inline">\(\mathcal{N}(0, 1)\)</span> teórica, os quartis seriam</li>
 </ul>
-<div class="sourceCode" id="cb693"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb690"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1]       -Inf -0,6744898  0,0000000  0,6744898        Inf</code></pre>
 <ul>
 <li>O gráfico QQ (quantil-quantil) mostra os quantis da amostra no eixo <span class="math inline">\(y\)</span> e os quantis teóricos no eixo <span class="math inline">\(x\)</span>. A reta vermelha serve para referência; se as duas distribuições fossem idênticas, todos os pontos estariam sobre a reta.</li>
 </ul>
-<div class="sourceCode" id="cb695"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb692"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valores</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -470,14 +471,14 @@ f(x \mid \mu, \sigma) =
 <ul>
 <li>Um exemplo concreto: pesos de <span class="math inline">\(15\)</span> mulheres com idades entre <span class="math inline">\(30\)</span> e <span class="math inline">\(39\)</span> anos:</li>
 </ul>
-<div class="sourceCode" id="cb696"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb693"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pesos</span> <span class="op">&lt;-</span> <span class="va">women</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/transmute.html">transmute</a></span><span class="op">(</span>peso <span class="op">=</span> <span class="va">weight</span> <span class="op">*</span> <span class="fl">.4535924</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>Histograma:</li>
 </ul>
-<div class="sourceCode" id="cb697"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb694"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pesos</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">peso</span><span class="op">)</span>, bins <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op">+</span></span>
@@ -486,7 +487,7 @@ f(x \mid \mu, \sigma) =
 <ul>
 <li>O gráfico quantil-quantil fica</li>
 </ul>
-<div class="sourceCode" id="cb698"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb695"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pesos</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_qq.html">geom_qq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -499,7 +500,7 @@ f(x \mid \mu, \sigma) =
 <li><p>Quanto mais próximos de uma reta com inclinação de <span class="math inline">\(45\)</span> graus os pontos ficarem, mais próximos da distribuição normal os dados estão.</p></li>
 <li><p>Podemos usar, como distribuição teórica no eixo <span class="math inline">\(x\)</span>, a distribuição normal com média e desvio padrão iguais à média e ao desvio padrão dos dados:</p></li>
 </ul>
-<div class="sourceCode" id="cb699"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb696"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pesos</span><span class="op">$</span><span class="va">peso</span><span class="op">)</span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">pesos</span><span class="op">$</span><span class="va">peso</span><span class="op">)</span></span>
 <span></span>
@@ -521,7 +522,7 @@ f(x \mid \mu, \sigma) =
 <li><p>Ou podemos padronizar os dados no eixo <span class="math inline">\(y\)</span>, fazendo com que a média deles seja <span class="math inline">\(0\)</span> e o desvio padrão deles seja <span class="math inline">\(1\)</span>.</p></li>
 <li><p>Para fazer isso manualmente, basta subtrair a média e dividir pelo desvio padrão:</p></li>
 </ul>
-<div class="sourceCode" id="cb700"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb697"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pesos</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>peso <span class="op">=</span> <span class="op">(</span><span class="va">peso</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span></span>
@@ -618,7 +619,7 @@ peso
 <ul>
 <li>Ou podemos usar a função <code>scale</code>, que faz o mesmo:</li>
 </ul>
-<div class="sourceCode" id="cb701"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb698"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pesos</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>peso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/kableExtra/man/kbl.html">kbl</a></span><span class="op">(</span></span>
@@ -712,7 +713,7 @@ peso
 </tr>
 </tbody>
 </table></div>
-<div class="sourceCode" id="cb702"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb699"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pesos</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>peso <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -726,14 +727,14 @@ peso
 <ul>
 <li>Um exemplo de dados não normais:</li>
 </ul>
-<div class="sourceCode" id="cb703"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb700"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="fl">100</span>, rate <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">dados</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>Histograma:</li>
 </ul>
-<div class="sourceCode" id="cb704"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb701"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -746,7 +747,7 @@ peso
 <ul>
 <li>QQ:</li>
 </ul>
-<div class="sourceCode" id="cb705"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb702"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -786,7 +787,7 @@ peso
 \]</span></p></li>
 <li><p>Em R</p></li>
 </ul>
-<div class="sourceCode" id="cb706"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb703"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">pbinom</a></span><span class="op">(</span></span>
 <span>  q <span class="op">=</span> <span class="fl">1849</span>,</span>
 <span>  size <span class="op">=</span> <span class="fl">32000</span>,</span>
@@ -810,7 +811,7 @@ peso
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb708"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb705"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span></span>
 <span>  q <span class="op">=</span> <span class="fl">1849</span>,</span>
 <span>  mean <span class="op">=</span> <span class="fl">1920</span>,</span>
@@ -825,7 +826,7 @@ peso
 <ul>
 <li>Mas nem toda binomial se parece com uma normal:</li>
 </ul>
-<div class="sourceCode" id="cb710"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb707"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">.1</span></span>
 <span><span class="fu">normal_binom</span><span class="op">(</span><span class="va">n</span>, <span class="va">p</span>, limites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -834,7 +835,7 @@ peso
 <ul>
 <li>Neste exemplo, quanto da probabilidade da normal está em valores abaixo de <span class="math inline">\(-0.5\)</span> (valores que não fazem sentido para a binomial!)?</li>
 </ul>
-<div class="sourceCode" id="cb711"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb708"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="op">-</span><span class="fl">.5</span>, <span class="va">n</span> <span class="op">*</span> <span class="va">p</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">p</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,06801856</code></pre>
 <ul>
@@ -867,14 +868,14 @@ np &gt; 3 \sqrt{np(1-p)}
 <ul>
 <li>E se, no exemplo dos doadores de sangue, quiséssemos calcular a probabilidade de a organização obter <em>exatamente</em> <span class="math inline">\(1.850\)</span> doadores com sangue O-?</li>
 </ul>
-<div class="sourceCode" id="cb713"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb710"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">1850</span>, <span class="fl">32000</span>, <span class="fl">.06</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,002420205</code></pre>
 <ul>
 <li><p>Usando a aproximação normal, como calcularíamos esta probabilidade? Como a normal é uma distribuição contínua, <span class="math inline">\(P(X = 1850)\)</span> é igual a zero (como qualquer probabilidade pontual)!</p></li>
 <li><p>A solução é calcular <span class="math inline">\(P(1849{,}5 \leq X \leq 1850{,}5)\)</span>:</p></li>
 </ul>
-<div class="sourceCode" id="cb715"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb712"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1849.5</span>, <span class="fl">1850.5</span><span class="op">)</span>, </span>
 <span>  mean <span class="op">=</span> <span class="fl">32000</span> <span class="op">*</span> <span class="fl">0.06</span>,  </span>
@@ -1132,7 +1133,7 @@ $(init_exercises)
 
 </script><div class="chapter-nav">
 <div class="prev"><a href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></div>
-<div class="next"><a href="refer%C3%AAncias.html">Referências</a></div>
+<div class="next"><a href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
       <ul class="nav navbar-nav">
@@ -1181,7 +1182,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 27/08/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 11/10/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
