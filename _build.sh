@@ -8,6 +8,6 @@ rm -f dfimg/*
 
 Rscript -e "bookdown::render_book('index.Rmd', 'fnaufelRmd::bs4_book')"
 
-Rscript -e "bookdown::render_book('index.Rmd', 'fnaufelRmd::pdf_book')"
-mv -f docs/_main.pdf docs/book.pdf
+# Rscript -e "bookdown::render_book('index.Rmd', 'fnaufelRmd::pdf_book')"
+# mv -f docs/_main.pdf docs/book.pdf
 

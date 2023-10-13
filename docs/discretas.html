@@ -165,17 +165,17 @@ E(X) &amp;= \frac{1}{n} \cdot (1 + \cdots + n)\\
 <ul>
 <li>
 <p>Para definir os valores possíveis da variável aleatória <span class="math inline">\(X\)</span>, use um vetor.</p>
-<div class="sourceCode" id="cb592"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span></code></pre></div>
 </li>
 <li>
 <p>Todas as probabilidades são iguais a <span class="math inline">\(\frac1n\)</span>:</p>
-<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Distribuição:</p>
-<div class="sourceCode" id="cb594"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">distr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  X <span class="op">=</span> <span class="va">x</span>,</span>
 <span>  p <span class="op">=</span> <span class="va">probs</span></span>
@@ -658,7 +658,7 @@ E(X) &amp;= \frac{1}{n} \cdot (1 + \cdots + n)\\
 </li>
 <li>
 <p>Exemplo: <span class="math inline">\(P(X \leq 2)\)</span>:</p>
-<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">X</span> <span class="op">&lt;=</span><span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -672,7 +672,7 @@ E(X) &amp;= \frac{1}{n} \cdot (1 + \cdots + n)\\
 <li><p>Para gerar amostras, use <code>sample</code>, que, por <em>default</em>, trabalha com a distribuição uniforme discreta.</p></li>
 <li>
 <p>Simulando dez lançamentos de um dado:</p>
-<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span>, size <span class="op">=</span> <span class="fl">10</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] 3 5 5 6 2 4 3 4 5 1</code></pre>
 </li>
@@ -782,7 +782,7 @@ E(X) &amp;= 0 \cdot (1 - p) \;+\: 1 \cdot p \\
 <li><p>Se você não quiser usar as funções da distribuição binomial, pode definir <span class="hl">um vetor com os dois valores possíveis</span> e <span class="hl">um vetor com as duas probabilidades</span>, e então usar <code>sample</code> com o argumento <code>prob</code>.</p></li>
 <li>
 <p>Por exemplo, para simular <span class="math inline">\(10\)</span> lançamentos de uma moeda viciada, onde <span class="math inline">\(p = 0{,}8\)</span>:</p>
-<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">moeda</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span></span>
 <span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.2</span>, <span class="fl">.8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">moeda</span>, size <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="va">probs</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -884,21 +884,21 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 <li><p>Tanto <code>x</code> quanto <code>prob</code> <span class="hl">podem ser vetores</span>.</p></li>
 <li>
 <p>No exemplo do <em>spam</em>, vamos computar as probabilidades de <span class="math inline">\(X\)</span> ser <span class="math inline">\(0, 1, 2, \ldots, 10\)</span>:</p>
-<div class="sourceCode" id="cb601"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">10</span>, prob <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] 0,10000000 0,09000000 0,08100000 0,07290000 0,06561000 0,05904900 0,05314410
 ##  [8] 0,04782969 0,04304672 0,03874205 0,03486784</code></pre>
 </li>
 <li>
 <p>Vamos computar <span class="math inline">\(\text{Geom}(X=10 \mid p)\)</span> para vários valores de <span class="math inline">\(p\)</span>:</p>
-<div class="sourceCode" id="cb603"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span><span class="fl">10</span>, prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  [1] 0,03486784401 0,02147483648 0,00847425747 0,00241864704 0,00048828125
 ##  [6] 0,00006291456 0,00000413343 0,00000008192 0,00000000009 0,00000000000</code></pre>
 </li>
 <li>
 <p><span class="hl">Mas cuidado</span>: se os dois argumentos forem vetores, o resultado é um vetor com o comprimento do maior argumento, <span class="hl">com os valores de <code>x</code> pareados um a um com os valores de <code>prob</code></span> (lembrando que R recicla o vetor mais curto):</p>
-<div class="sourceCode" id="cb605"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">11</span>, <span class="fl">12</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,03486784 0,01717987 0,02824295</code></pre>
 <p>Os valores acima são, respectivamente, <span class="math inline">\(P(X = 10 \mid p = 0{,}1)\)</span>, <span class="math inline">\(P(X = 11 \mid p = 0{,}2)\)</span> e <span class="math inline">\(P(X = 12 \mid p = 0{,}1)\)</span>.</p>
@@ -918,29 +918,29 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 <li><p>Tanto <code>q</code> quanto <code>prob</code> <span class="hl">podem ser vetores</span>.</p></li>
 <li>
 <p>No exemplo do <em>spam</em>, vamos computar a probabilidade de precisar abrir <span class="hl">no máximo</span> <span class="math inline">\(10\)</span> mensagens <em>spam</em> para então abrir a primeira mensagem não-<em>spam</em>:</p>
-<div class="sourceCode" id="cb607"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">pgeom</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">10</span>, prob <span class="op">=</span> <span class="fl">.1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,6861894</code></pre>
 <p>Na verdade, isto é o mesmo que somar as probabilidades de <span class="math inline">\(X = 0\)</span>, <span class="math inline">\(X = 1\)</span>, etc., até <span class="math inline">\(X = 10\)</span>:</p>
-<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">dgeom</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">10</span>, <span class="fl">.1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,6861894</code></pre>
 </li>
 <li><p>Um exemplo mais realista: cada vez que você joga <span class="math inline">\(6\)</span> números na Mega-Sena, a probabilidade de você acertar a sena é de <span class="math inline">\(1\)</span> em <span class="math inline">\(50.063.860\)</span>, segundo <a href="http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena" class="uri">http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena</a>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Esta probabilidade é computada usando a &lt;span class="hl"&gt;distribuição hipergeométrica&lt;/span&gt;, que não vamos cobrir neste curso. &lt;a href="https://pt.wikipedia.org/wiki/Distribui%C3%A7%C3%A3o_hipergeom%C3%A9trica"&gt;Veja mais informações aqui&lt;/a&gt;.&lt;/p&gt;'><sup>11</sup></a></p></li>
 <li>
 <p>Qual a probabilidade de você <span class="hl">acertar a sena em alguma das primeiras <span class="math inline">\(1.000\)</span> vezes que você jogar</span>? <span class="math inline">\(10.000\)</span> vezes? <span class="math inline">\(100.000\)</span> vezes (o que equivale a cerca de <span class="math inline">\(962\)</span> anos, jogando <span class="math inline">\(2\)</span> vezes por semana)?</p>
-<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb614"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">pgeom</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1e3</span>, <span class="fl">1e4</span>, <span class="fl">1e5</span><span class="op">)</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,00001999426 0,00019974491 0,00199547524</code></pre>
 </li>
 <li>
 <p>Qual a <span class="hl">probabilidade de você jogar duas vezes por semana, durante <span class="math inline">\(100\)</span> anos, sem acertar a sena</span>? Considerando <span class="math inline">\(52\)</span> semanas por ano:</p>
-<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">vezes</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="fl">52</span> <span class="op">*</span> <span class="fl">100</span></span>
 <span><span class="va">vezes</span></span></code></pre></div>
 <pre><code>## [1] 10400</code></pre>
-<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">pgeom</a></span><span class="op">(</span><span class="va">vezes</span>, <span class="va">p</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,9997923</code></pre>
 </li>
@@ -966,7 +966,7 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 </li>
 <li>
 <p>Quantas vezes você precisa apostar <span class="math inline">\(6\)</span> números na Mega-Sena para ter <span class="math inline">\(50\)</span>% de chance de acertar a sena alguma vez?</p>
-<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">qgeom</a></span><span class="op">(</span><span class="fl">.5</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 34701623</code></pre>
@@ -982,26 +982,26 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 <li><p>Voltando ao exemplo do <em>spam</em>, vamos simular muitos experimentos.</p></li>
 <li>
 <p>Os resultados são os valores de <span class="math inline">\(X\)</span>, i.e., as quantidades de mensagens <em>spam</em> que precisaram ser abertas antes de chegarmos à primeira mensagem não-<em>spam</em>:</p>
-<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">amostra</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">rgeom</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">.1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1]  6 10  3 56 12  1</code></pre>
 </li>
 <li>
 <p>O <span class="hl">valor esperado teórico</span> é <span class="math inline">\(\frac{1-p}{p} = 9\)</span>. Vamos comparar com a média da amostra gerada:</p>
-<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 9,195</code></pre>
 </li>
 <li>
 <p>A <span class="hl">variância teórica</span> é <span class="math inline">\(\frac{1-p}{p^2} = 90\)</span>. Vamos comparar com a variância da amostra gerada:</p>
-<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 106,1591</code></pre>
 </li>
 <li>
 <p>Vamos simular <span class="math inline">\(100\)</span> mil pessoas jogando na Mega-Sena e ver se <span class="hl">alguma acertou a sena antes de jogar mil vezes</span>:</p>
-<div class="sourceCode" id="cb625"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
 <span><span class="va">resultados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Geometric.html">rgeom</a></span><span class="op">(</span><span class="fl">1e5</span>, <span class="va">p</span><span class="op">)</span></span>
 <span><span class="va">resultados</span><span class="op">[</span><span class="va">resultados</span> <span class="op">&lt;=</span> <span class="fl">1e3</span><span class="op">]</span></span></code></pre></div>
@@ -1009,25 +1009,25 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 </li>
 <li>
 <p>Qual a média da nossa amostra? O valor esperado teórico é <span class="math inline">\(50.063.859\)</span>.</p>
-<div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 50085359</code></pre>
 </li>
 <li>
 <p>E a mediana?</p>
-<div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 34717558</code></pre>
 </li>
 <li>
 <p>E o máximo?</p>
-<div class="sourceCode" id="cb631"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 613202621</code></pre>
 </li>
 <li>
 <p>E o mínimo?</p>
-<div class="sourceCode" id="cb633"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb636"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">resultados</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 372</code></pre>
 </li>
@@ -1157,7 +1157,7 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 <li><p>Voltando à Mega-Sena: <span class="hl">para uma única pessoa</span>, jogar <span class="math inline">\(6\)</span> números <span class="hl">uma vez</span> é uma prova de Bernoulli, com probabilidade de sucesso de <span class="math inline">\(1/50.063.860 = 0{,}00000001997\)</span>.</p></li>
 <li>
 <p>Se você jogar <span class="math inline">\(6\)</span> números <span class="math inline">\(10\)</span> mil vezes — duas vezes por semana, durante quase <span class="math inline">\(100\)</span> anos — <span class="hl">sua probabilidade de obter zero sucessos</span> é</p>
-<div class="sourceCode" id="cb635"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb638"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
 <span><span class="va">vezes</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">dbinom</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">n</span>, <span class="va">p</span><span class="op">)</span></span></code></pre></div>
@@ -1198,7 +1198,7 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 <li><p>Para gerar um vetor com <span class="math inline">\(v\)</span> valores aleatórios a partir de uma distribuição <span class="math inline">\(\text{Binom}(X \mid n, p)\)</span>, use <code>rbinom(v, size=n, prob=p)</code>.</p></li>
 <li>
 <p>Vamos simular <span class="math inline">\(100\)</span> vezes o experimento de abrir <span class="math inline">\(10\)</span> mensagens e contar <span class="hl">quantas delas não são <em>spam</em></span>:</p>
-<div class="sourceCode" id="cb637"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb640"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">amostra</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">10</span>, <span class="fl">.3</span><span class="op">)</span></span>
 <span><span class="va">amostra</span></span></code></pre></div>
 <pre><code>##   [1] 2 3 3 5 2 3 3 3 2 2 3 1 7 4 1 3 2 1 4 2 4 3 5 4 1 1 0 3 4 6 3 2 1 2 2 3 1 2 0 3
@@ -1207,13 +1207,13 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 </li>
 <li>
 <p>Média:</p>
-<div class="sourceCode" id="cb639"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb642"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 2,92</code></pre>
 </li>
 <li>
 <p>Finalmente, vamos simular <span class="math inline">\(100\)</span> mil pessoas, cada uma jogando <span class="math inline">\(10\)</span> mil jogos da Mega-Sena e ver quantas ganharam pelo menos uma vez:</p>
-<div class="sourceCode" id="cb641"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">50063860</span></span>
 <span><span class="va">size</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
@@ -1246,11 +1246,11 @@ E(X) = \frac{q}{p} = \frac{0{,}9}{0{,}1} = 9
 ##  [898] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ##  [937] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ##  [976] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</code></pre>
-<div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ganhadores</span> <span class="op">&lt;-</span> <span class="va">resultados</span><span class="op">[</span><span class="va">resultados</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">]</span></span>
 <span><span class="va">ganhadores</span></span></code></pre></div>
 <pre><code>##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</code></pre>
-<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">ganhadores</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 20</code></pre>
 </li>
@@ -1361,7 +1361,7 @@ P(X = 0) &amp;= \text{Poisson}(X = 0 \mid \lambda = 4) \\
 <li><p>Qual a probabilidade de achar <span class="hl"><span class="math inline">\(4\)</span> carros com defeito</span> em uma <span class="hl">amostra de <span class="math inline">\(6.000\)</span> carros</span>?</p></li>
 <li>
 <p>Vamos usar <span class="math inline">\(\text{Binom}\left(X \;\middle\vert\;n = 6.000, p = \frac{1}{2.500}\right)\)</span>:</p>
-<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2500</span></span>
 <span><span class="va">size</span> <span class="op">&lt;-</span> <span class="fl">6000</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
@@ -1372,7 +1372,7 @@ P(X = 0) &amp;= \text{Poisson}(X = 0 \mid \lambda = 4) \\
 <li><p>Uma das condições para usar Poisson é que <span class="hl">a média seja constante</span>. Para <span class="math inline">\(6.000\)</span> carros, a média de defeitos é <span class="math inline">\(\frac{6.000}{2.500} = 2{,}40\)</span>.</p></li>
 <li>
 <p>Vamos usar, então, <span class="math inline">\(\text{Poisson}\left(X \;\middle\vert\; \lambda = 2{,}40 \right)\)</span>:</p>
-<div class="sourceCode" id="cb649"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">6000</span><span class="op">/</span><span class="fl">2500</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">4</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html">dpois</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">lambda</span><span class="op">)</span></span></code></pre></div>
@@ -1661,7 +1661,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 11/10/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 13/10/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
