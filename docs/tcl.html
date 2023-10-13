@@ -211,17 +211,9 @@
 <li>
 <p>Vamos ver as respostas para um exemplo maior: <span class="math inline">\(10.000\)</span> amostras de <span class="math inline">\(100\)</span> elementos cada:</p>
 <pre><code>## Média da população         = 0,499
-## Desvio padrão da população = 0,288</code></pre>
-<pre><code>## Warning: `rerun()` was deprecated in purrr 1.0.0.
-## ℹ Please use `map()` instead.
-##   # Previously
-##   rerun(10000, tirar_amostra(populacao, tamanho_amostra))
+## desvio-padrão da população = 0,288
 ## 
-##   # Now
-##   map(1:10000, ~ tirar_amostra(populacao, tamanho_amostra))
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-<pre><code>## Quantidade de amostras     = 10000
+## Quantidade de amostras     = 10000
 ## Tamanho da amostra         = 100
 ## 
 ## Média das médias amostrais = 0,499
@@ -261,20 +253,20 @@ E(\overline X) = \mu
 <ul>
 <li>
 <p>Agora, vamos fazer um exemplo com uma população com <span class="hl">distribuição exponencial</span>:</p>
-<div class="sourceCode" id="cb740"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb738"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span></code></pre></div>
 </li>
 <li>
 <p>Definimos a população com <span class="math inline">\(\lambda = 2\)</span>:</p>
-<div class="sourceCode" id="cb741"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb739"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exponencial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="va">tamanho_populacao</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Vamos retirar muitas amostras e examinar os resultados:</p>
 <pre><code>## Média da população         = 0,5
-## Desvio padrão da população = 0,499
+## desvio-padrão da população = 0,499
 ## 
 ## Quantidade de amostras     = 10000
 ## Tamanho da amostra         = 100
@@ -293,7 +285,7 @@ E(\overline X) = \mu
 <ul>
 <li>
 <p>Agora, uma população que é uma mistura de uma binomial com uma Poisson:</p>
-<div class="sourceCode" id="cb743"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb741"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
@@ -306,7 +298,7 @@ E(\overline X) = \mu
 <li>
 <p>Vamos retirar muitas amostras e examinar os resultados:</p>
 <pre><code>## Média da população         = 8,998
-## Desvio padrão da população = 6,667
+## desvio-padrão da população = 6,667
 ## 
 ## Quantidade de amostras     = 10000
 ## Tamanho da amostra         = 100
@@ -328,17 +320,17 @@ E(\overline X) = \mu
 <li><p>E se a população <span class="hl">já for distribuída normalmente?</span></p></li>
 <li>
 <p>Definimos uma população normal padrão (<span class="math inline">\(\mu = 0, \sigma = 1\)</span>):</p>
-<div class="sourceCode" id="cb745"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb743"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span></code></pre></div>
-<div class="sourceCode" id="cb746"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb744"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">normal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">tamanho_populacao</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Vamos retirar muitas amostras e examinar os resultados:</p>
 <pre><code>## Média da população         = 0
-## Desvio padrão da população = 1,003
+## desvio-padrão da população = 1,003
 ## 
 ## Quantidade de amostras     = 10000
 ## Tamanho da amostra         = 100
@@ -502,7 +494,7 @@ E(\hat p) = p
 </li>
 <li>
 <p>Vamos fazer uma simulação:</p>
-<div class="sourceCode" id="cb748"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb746"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e3</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
@@ -515,7 +507,7 @@ E(\hat p) = p
 <span>  prob <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">proporcao_pop</span>, <span class="va">proporcao_pop</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Média da população         = 0,307
-## Desvio padrão da população = 0,461
+## desvio-padrão da população = 0,461
 ## 
 ## Quantidade de amostras     = 10000
 ## Tamanho da amostra         = 100
@@ -594,7 +586,7 @@ p = 0{,}13
 </li>
 <li>
 <p>Ou seja, <span class="math inline">\(\hat p \sim \mathcal N (0{,}13; 0{,}035)\)</span>, e nós queremos <span class="math inline">\(P(\hat p &gt; 0{,}167)\)</span>. Basta usar o R:</p>
-<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb748"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">.167</span>, mean <span class="op">=</span> <span class="fl">.13</span>, sd <span class="op">=</span> <span class="fl">.035</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,1452232</code></pre>
 </li>
@@ -645,7 +637,7 @@ p = 0{,}13
 </li>
 <li>
 <p>Ou seja, <span class="math inline">\(\overline X \sim \mathcal N (86; 8{,}47)\)</span>, e nós queremos <span class="math inline">\(P(\overline X \geq 110)\)</span>. Basta usar o R:</p>
-<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">110</span>, mean <span class="op">=</span> <span class="fl">86</span>, sd <span class="op">=</span> <span class="fl">8.47</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,002301849</code></pre>
 </li>

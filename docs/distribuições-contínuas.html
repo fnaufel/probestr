@@ -239,8 +239,8 @@ E(X) = \int_{-\infty}^{\infty} xf(x)\;\text{d}x = \int_{0}^{10} \frac{1}{10}x\;\
 <p>Os números gerados são de ponto flutuante:</p>
 <div class="sourceCode" id="cb664"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##  [1] 8,916410 2,455677 7,494887 7,284187 2,800051 7,725894 3,115508 9,853665 1,507269
-## [10] 1,031802</code></pre>
+<pre><code>##  [1] 8,0446404 2,7052190 8,7356228 6,3046186 4,6212423 6,1559463 3,1436863 3,0824766
+##  [9] 4,0517886 0,6781619</code></pre>
 </li>
 <li><p><strong>Exercício:</strong> e se você quiser gerar apenas números inteiros no intervalo dado?</p></li>
 <li><p><strong>Exercício:</strong> os extremos do intervalo (<code>min</code> e <code>max</code>) podem ser gerados?</p></li>
@@ -410,7 +410,7 @@ f(x \mid \mu, \sigma) =
 <p>Qual a proporção de vezes em que o holandês é mais baixo?</p>
 <div class="sourceCode" id="cb686"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">holandeses</span> <span class="op">&lt;</span> <span class="va">brasileiros</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 0,150228</code></pre>
+<pre><code>## [1] 0,150629</code></pre>
 </li>
 <li><p>Segundo nossa simulação, esta é a resposta.</p></li>
 </ul>
@@ -427,7 +427,7 @@ f(x \mid \mu, \sigma) =
 <div class="sourceCode" id="cb688"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1]  0,38192457 -0,43298688 -0,16862736 -1,75288650  0,09037384 -0,22246299</code></pre>
+<pre><code>## [1]  1,1990763 -2,2858432 -0,4370087 -0,5767288 -0,8333627  1,0278603</code></pre>
 <ul>
 <li>Histograma:</li>
 </ul>
@@ -447,7 +447,7 @@ f(x \mid \mu, \sigma) =
 <div class="sourceCode" id="cb691"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          0%         25%         50%         75%        100% 
-## -3,22712269 -0,63928020  0,02319071  0,71205730  3,02162503</code></pre>
+## -3,48205150 -0,61771144  0,01948869  0,73147328  3,93829553</code></pre>
 <ul>
 <li>Na distribuição <span class="math inline">\(\mathcal{N}(0, 1)\)</span> teórica, os quartis seriam</li>
 </ul>
