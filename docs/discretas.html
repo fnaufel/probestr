@@ -7,7 +7,7 @@
 <title>Capítulo 9 Distribuições discretas | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="9.1 Vídeo 1    9.2 Distribuição uniforme discreta  9.2.1 Exemplo: um dado Cada resultado de \(1\) a \(6\) tem a mesma probabilidade de ocorrer. A variável aleatória \(X\) representa o número que...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Capítulo 9 Distribuições discretas | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -60,6 +60,8 @@
 <li><a class="active" href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></li>
 <li><a class="" href="distribui%C3%A7%C3%B5es-cont%C3%ADnuas.html"><span class="header-section-number">10</span> Distribuições contínuas</a></li>
 <li><a class="" href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></li>
+<li><a class="" href="ic.html"><span class="header-section-number">12</span> Intervalos de confiança</a></li>
+<li><a class="" href="th.html"><span class="header-section-number">13</span> Testes de hipóteses</a></li>
 <li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
 </ul>
 
@@ -1405,13 +1407,12 @@ P(X = 0) &amp;= \text{Poisson}(X = 0 \mid \lambda = 4) \\
 <li>
 <p>Para uma distribuição de nome <code>DISTRIB</code>, as funções são as seguintes (<code>...</code> representam os parâmetros da distribuição):</p>
 <ul>
-<li>
-<code>dDISTRIB(x, ...)</code>: retorna a probabilidade <span class="math inline">\(P(X = x \mid \dots)\)</span>.</li>
-</ul>
-</li>
+<li><p><code>dDISTRIB(x, ...)</code>: retorna a probabilidade <span class="math inline">\(P(X = x \mid \dots)\)</span>.</p></li>
 <li><p><code>pDISTRIB(q, ...)</code>: retorna a probabilidade <span class="math inline">\(P(X \leq q \mid \dots)\)</span> — ou a probabilidade <span class="math inline">\(P(X &gt; q \mid \dots)\)</span> se <code>lower.tail = FALSE</code>.</p></li>
 <li><p><code>qDISTRIB(p, ...)</code>: retorna o maior valor <span class="math inline">\(q\)</span> tal que <span class="math inline">\(P(X = q \mid \dots) \leq p\)</span> — ou o menor valor <span class="math inline">\(q\)</span> tal que <span class="math inline">\(P(X = q \mid \dots) &gt; p\)</span> se <code>lower.tail = FALSE</code>.</p></li>
 <li><p><code>rDISTRIB(n, ...)</code>: retorna um vetor com <span class="math inline">\(n\)</span> valores sorteados de acordo com a distribuição.</p></li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="jardim-zoológico-de-distribuições" class="section level2" number="9.9">
@@ -1661,7 +1662,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 13/10/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 03/11/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

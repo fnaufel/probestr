@@ -37,5 +37,7 @@ rmd_files: [
   "distribs-discretas.Rmd",
   "distribs-continuas.Rmd",
   "tcl.Rmd",
+  "ic.Rmd",
+  "th.Rmd",
   "refs.Rmd"
 ]

@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Capítulo 13 Testes de hipóteses | Probabilidade e Estatística com R</title>
+<meta name="author" content="Fernando Náufel">
+<meta name="description" content="13.1 Vídeo 1    13.2 Testes de hipóteses sobre a proporção  13.2.1 Exemplo: proporção de bebês do sexo masculino  Um estudo de 1994 feito em Punjab, na Índia, relata que \(56{,}9\%\) dos \(550\)...">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta property="og:title" content="Capítulo 13 Testes de hipóteses | Probabilidade e Estatística com R">
+<meta property="og:type" content="book">
+<meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
+<meta property="og:description" content="13.1 Vídeo 1    13.2 Testes de hipóteses sobre a proporção  13.2.1 Exemplo: proporção de bebês do sexo masculino  Um estudo de 1994 feito em Punjab, na Índia, relata que \(56{,}9\%\) dos \(550\)...">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Capítulo 13 Testes de hipóteses | Probabilidade e Estatística com R">
+<meta name="twitter:description" content="13.1 Vídeo 1    13.2 Testes de hipóteses sobre a proporção  13.2.1 Exemplo: proporção de bebês do sexo masculino  Um estudo de 1994 feito em Punjab, na Índia, relata que \(56{,}9\%\) dos \(550\)...">
+<meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
+<link rel="stylesheet" href="html_files/styles_book.css">
+<link rel="stylesheet" href="html_files/webex.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Ir para conteúdo principal</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">Probabilidade e Estatística com R</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Mostrar sumário</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Buscar" aria-label="Buscar">
+</form>
+
+      <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Apresentação</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O que é estatística?</a></li>
+<li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
+<li><a class="" href="introdu%C3%A7%C3%A3o-ao-tidyverse.html"><span class="header-section-number">3</span> Introdução ao tidyverse</a></li>
+<li><a class="" href="viz.html"><span class="header-section-number">4</span> Visualização com ggplot2</a></li>
+<li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
+<li><a class="" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
+<li><a class="" href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></li>
+<li><a class="" href="distribui%C3%A7%C3%B5es-cont%C3%ADnuas.html"><span class="header-section-number">10</span> Distribuições contínuas</a></li>
+<li><a class="" href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></li>
+<li><a class="" href="ic.html"><span class="header-section-number">12</span> Intervalos de confiança</a></li>
+<li><a class="active" href="th.html"><span class="header-section-number">13</span> Testes de hipóteses</a></li>
+<li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/fnaufel/probestr">Ver código-fonte do livro <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="th" class="section level1" number="13">
+<h1>
+<span class="header-section-number">Capítulo 13</span> Testes de hipóteses<a class="anchor" aria-label="anchor" href="#th"><i class="fas fa-link"></i></a>
+</h1>
+<div id="vídeo-1-7" class="section level2" number="13.1">
+<h2>
+<span class="header-section-number">13.1</span> Vídeo 1<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-1-7"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/jinX8qqzdxQ" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="testes-de-hipóteses-sobre-a-proporção" class="section level2" number="13.2">
+<h2>
+<span class="header-section-number">13.2</span> Testes de hipóteses sobre a proporção<a class="anchor" aria-label="anchor" href="#testes-de-hip%C3%B3teses-sobre-a-propor%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h2>
+<div id="ex1" class="section level3" number="13.2.1">
+<h3>
+<span class="header-section-number">13.2.1</span> Exemplo: proporção de bebês do sexo masculino<a class="anchor" aria-label="anchor" href="#ex1"><i class="fas fa-link"></i></a>
+</h3>
+<div class="rmdbox">
+<ul>
+<li><p>Um <a href="https://www.bmj.com/content/309/6964/1259.full">estudo de 1994 feito em Punjab, na Índia</a>, relata que <span class="math inline">\(56{,}9\%\)</span> dos <span class="math inline">\(550\)</span> bebês nascidos em um ano em uma maternidade da região eram do sexo masculino.</p></li>
+<li><p>Segundo estudos anteriores, <span class="math inline">\(51{,}7\%\)</span> dos bebês nascidos por ano nessa região são meninos.</p></li>
+<li><p>Agora que a população tem acesso a exames que determinam o sexo do feto durante a gravidez, existem suspeitas de que fetos do sexo feminino estão sendo abortados pelos pais, por motivos culturais.</p></li>
+<li><p>A evidência é suficiente para afirmar que a proporção de bebês meninos na maternidade do estudo é maior do que a proporção da região?</p></li>
+</ul>
+</div>
+<div id="hipóteses" class="section level4 unnumbered">
+<h4>Hipóteses<a class="anchor" aria-label="anchor" href="#hip%C3%B3teses"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Um teste de hipóteses sempre vai ter <span class="hl">duas hipóteses</span>.</p></li>
+<li>
+<p>A primeira hipótese é a apresentada como “padrão”. Esta é a hipótese que vai ser “desafiada”. O nome técnico para esta hipótese é <span class="hl">hipótese de nulidade</span>, ou <span class="hl">hipótese nula</span>. <span class="hl">A hipótese de nulidade sempre envolve uma igualdade.</span> e costuma ser chamada <span class="math inline">\(H_0\)</span>. No exemplo,</p>
+<p><span class="math display">\[
+H_0 : p = 0{,}517
+\]</span></p>
+<p>Ou seja, a proporção de meninos nascidos na maternidade do estudo é de <span class="math inline">\(51{,}7\%\)</span>, como no restante da região.</p>
+</li>
+<li>
+<p>A segunda hipótese, chamada <span class="hl">hipótese alternativa</span>, contradiz de alguma maneira a hipótese de nulidade. No exemplo, vamos trabalhar com</p>
+<p><span class="math display">\[
+H_A : p &gt; 0{,}517
+\]</span></p>
+<p>Ou seja, a verdadeira proporção de meninos nascidos na maternidade do estudo é maior que <span class="math inline">\(51{,}7\%\)</span>.</p>
+</li>
+</ul>
+</div>
+<div id="condições" class="section level4 unnumbered">
+<h4>Condições<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>O teste de hipóteses também se baseia no TCL.</p></li>
+<li>
+<p>Precisamos verificar as condições:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="hl">Independência:</span> os sexos dos bebês são independentes entre si? Vamos supor que sim.</p></li>
+<li><p><span class="hl">Amostra aleatória e representativa:</span> a amostra são os <span class="math inline">\(550\)</span> bebês nascidos na maternidade em questão. Não vamos poder generalizar nossas conclusões para outras maternidades, nem outras regiões. Na verdade, <span class="hl">a população consiste em todos os bebês nascidos nessa maternidade, nesse e em outros anos.</span> Vamos supor que os números desse ano são compatíveis com os números de outros anos.</p></li>
+<li><p><span class="hl">Tamanho da amostra:</span> temos mais do que <span class="math inline">\(30\)</span> elementos, e a amostra é menor do que <span class="math inline">\(10\%\)</span> da população.</p></li>
+<li><p><span class="hl">Quantidades de sucessos e fracassos potenciais:</span> considerando meninos como sucesso, a hipótese de nulidade diz que deveria haver <span class="math inline">\(550 \times 0{,}517 = 284{,}35\)</span> sucessos e <span class="math inline">\(550 \times 0{,}483 = 265{,}65\)</span> fracassos na amostra, mais do que os <span class="math inline">\(10\)</span> exigidos.</p></li>
+</ol>
+</li>
+</ul>
+</div>
+<div id="valores" class="section level4 unnumbered">
+<h4>Valores<a class="anchor" aria-label="anchor" href="#valores"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Tamanho da amostra: <span class="math inline">\(n = 550\)</span></p></li>
+<li><p>Proporção amostral: <span class="math inline">\(\hat p = 0{,}57\)</span></p></li>
+<li><p>Hipótese de nulidade: <span class="math inline">\(H_0 : p = 0{,}517\)</span></p></li>
+<li><p>Hipótese alternativa: <span class="math inline">\(H_A : p &gt; 0{,}517\)</span></p></li>
+<li><p>Nível de confiança: como com os intervalos de confiança, escolhemos <span class="math inline">\(0{,}95\)</span>. Mas, em testes de hipóteses, trabalhamos com <span class="math inline">\(1 - 0{,}95 = 0{,}05\)</span> e chamamos este valor de <span class="hl">nível de significância, escrito <span class="math inline">\(\alpha = 0{,}05\)</span>.</span></p></li>
+</ul>
+</div>
+<div id="estratégia" class="section level4 unnumbered">
+<h4>Estratégia<a class="anchor" aria-label="anchor" href="#estrat%C3%A9gia"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p><span class="hl">Sempre começamos supondo que <span class="math inline">\(H_0\)</span> é verdadeira.</span> No exemplo, isto significa supor que <span class="math inline">\(p = 0{,}517\)</span>.</p></li>
+<li><p>Com isso, <span class="hl">construímos a distribuição amostral de <span class="math inline">\(\hat p\)</span>, que vai ter como média o valor suposto de <span class="math inline">\(p\)</span>.</span></p></li>
+<li><p>Usando esta distribuição amostral, <span class="hl">calculamos a probabilidade de obter uma amostra como a que obtivemos</span> (com <span class="math inline">\(\hat p = 0{,}569\)</span>) <span class="hl">ou mais extrema</span> (com <span class="math inline">\(\hat p &gt; 0{,}569\)</span>).</p></li>
+<li><p><span class="hl">A probabilidade calculada é chamada de valor <span class="math inline">\(p\)</span>.</span></p></li>
+<li><p><span class="hl">Se o valor <span class="math inline">\(p\)</span> for muito baixo</span>, isto indica que, supondo <span class="math inline">\(H_0\)</span>, <span class="hl">nossa amostra é muito improvável e serve como evidência contra <span class="math inline">\(H_0\)</span>.</span> Dizemos, então, que <span class="hl">rejeitamos <span class="math inline">\(H_0\)</span>.</span></p></li>
+<li><p>Se o valor <span class="math inline">\(p\)</span> for alto, isto indica que, supondo <span class="math inline">\(H_0\)</span>, nossa amostra não tem nada de inesperado, e não é evidência contra <span class="math inline">\(H_0\)</span>. Não podemos rejeitar <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p><span class="hl">“Baixo” ou “alto” são definidos em função do nível de significância <span class="math inline">\(\alpha\)</span>.</span></p></li>
+</ul>
+</div>
+<div id="a-distribuição-amostral-de-hat-p-supondo-h_0" class="section level4 unnumbered">
+<h4>A distribuição amostral de <span class="math inline">\(\hat p\)</span>, supondo <span class="math inline">\(H_0\)</span><a class="anchor" aria-label="anchor" href="#a-distribui%C3%A7%C3%A3o-amostral-de-hat-p-supondo-h_0"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>Pelo TCL e supondo <span class="math inline">\(H_0\)</span>, a distribuição amostral das proporções vai ser normal, com média <span class="math inline">\(\mu = p = 0{,}52\)</span> e erro-padrão</p>
+<p><span class="math display">\[
+\sigma_{\hat p}
+= \sqrt{\frac{p(1-p)}{n}}
+= 0{,}02
+\]</span></p>
+</li>
+<li>
+<p>Graficamente:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-338-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="o-valor-p-e-a-conclusão" class="section level4 unnumbered">
+<h4>O valor <span class="math inline">\(p\)</span> e a conclusão<a class="anchor" aria-label="anchor" href="#o-valor-p-e-a-conclus%C3%A3o"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>O valor <span class="math inline">\(p\)</span> vai ser a probabilidade que corresponde à área em vermelho, que pode ser calculada em R:</p>
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">550</span></span>
+<span><span class="va">p_chapeu</span> <span class="op">&lt;-</span> <span class="fl">0.569</span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">0.517</span></span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">p_chapeu</span>, mean <span class="op">=</span> <span class="va">p0</span>, sd <span class="op">=</span> <span class="va">ep</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,007334952</code></pre>
+</li>
+<li><p>Este valor é muito menor do que <span class="math inline">\(\alpha = 0{,}05\)</span>. <span class="hl">Logo, nossa amostra é evidência para rejeitar a hipótese de nulidade neste nível de significância</span>. Concluímos que essa maternidade tem uma proporção de nascimentos de meninos maior do que <span class="math inline">\(0{,}52\)</span>, com <span class="math inline">\(\alpha = 0{,}05\)</span>.</p></li>
+<li><p>Outros níveis de significância usados na prática são <span class="math inline">\(\alpha = 0{,}1\)</span> (menos exigente) e <span class="math inline">\(\alpha = 0{,}01\)</span> (mais exigente). Em algumas áreas, como na Física, são usados níveis de significância mais exigentes ainda, como <span class="math inline">\(\alpha = 0{,}0000003\)</span> no <a href="https://medium.com/@chris.m.pease/the-higgs-boson-and-5-sigma-eec238b43f93">experimento que confirmou a existência do bóson de Higgs</a>.</p></li>
+</ul>
+</div>
+<div id="em-r-11" class="section level4 unnumbered">
+<h4>Em R<a class="anchor" aria-label="anchor" href="#em-r-11"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb780"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/prop.test.html">prop.test</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">p_chapeu</span> <span class="op">*</span> <span class="va">n</span>,          <span class="co"># número de sucessos</span></span>
+<span>  n <span class="op">=</span> <span class="va">n</span>,                     <span class="co"># tamanho da amostra</span></span>
+<span>  p <span class="op">=</span> <span class="va">p0</span>,                    <span class="co"># valor de p na hipótese de nulidade</span></span>
+<span>  alternative <span class="op">=</span> <span class="st">'greater'</span>,   <span class="co"># hipótese alternativa é p &gt; p0</span></span>
+<span>  conf.level <span class="op">=</span> <span class="fl">.95</span>,          <span class="co"># 1 - α (o default já é .95)</span></span>
+<span>  correct <span class="op">=</span> <span class="cn">FALSE</span>            <span class="co"># sem correção de continuidade </span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  1-sample proportions test without continuity correction
+## 
+## data:  p_chapeu * n out of n, null probability p0
+## X-squared = 5,9557, df = 1, p-value = 0,007335
+## alternative hypothesis: true p is greater than 0,517
+## 95 percent confidence interval:
+##  0,5340128 1,0000000
+## sample estimates:
+##     p 
+## 0,569</code></pre>
+</div>
+</div>
+<div id="ex2" class="section level3" number="13.2.2">
+<h3>
+<span class="header-section-number">13.2.2</span> Exemplo: percepção extra-sensorial<a class="anchor" aria-label="anchor" href="#ex2"><i class="fas fa-link"></i></a>
+</h3>
+<div class="rmdbox">
+<ul>
+<li><p>Um suposto vidente alega que consegue detectar os naipes de cartas colocadas viradas para baixo, diante dele, em uma mesa.</p></li>
+<li><p>Em um experimento, um pesquisador apresenta ao suposto vidente <span class="math inline">\(50\)</span> cartas, escolhidas ao acaso dentre as cartas de <span class="math inline">\(10\)</span> baralhos, e o suposto vidente acerta o naipe de <span class="math inline">\(10\)</span> delas.</p></li>
+<li><p>O pesquisador diz ao suposto vidente que ele teve <em>menos</em> acertos do que se ele tivesse adivinhado ao acaso: <span class="math inline">\(50 \times 1/4 = 12{,}50\)</span>.</p></li>
+<li><p>O suposto vidente diz que isso também é evidência dos seus poderes: os erros foram causados por “interferência”, pois o suposto vidente estava captando informações sobre o naipe da carta, mas não conseguiu interpretá-las corretamente.</p></li>
+</ul>
+</div>
+<div id="hipóteses-1" class="section level4 unnumbered">
+<h4>Hipóteses<a class="anchor" aria-label="anchor" href="#hip%C3%B3teses-1"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>A <span class="hl">hipótese de nulidade</span> diz que o suposto vidente não tem poderes; a verdadeira proporção de acertos sempre vai ser, a princípio, <span class="math inline">\(1/4\)</span> da quantidade de cartas:</p>
+<p><span class="math display">\[
+p = 0{,}25
+\]</span></p>
+</li>
+<li>
+<p>A <span class="hl">hipótese alternativa</span> reflete os argumentos do suposto vidente de que uma proporção significativamente maior ou significativamente menor do que <span class="math inline">\(25\%\)</span> indica a existência de poderes extra-sensoriais:</p>
+<p><span class="math display">\[
+p \neq 0{,}25
+\]</span></p>
+</li>
+<li><p>A hipótese alternativa, agora, vai gerar um <span class="hl">teste bilateral</span>.</p></li>
+</ul>
+</div>
+<div id="condições-1" class="section level4 unnumbered">
+<h4>Condições<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-1"><i class="fas fa-link"></i></a>
+</h4>
+<ol style="list-style-type: decimal">
+<li><p><span class="hl">Independência:</span> Vamos supor que acertar o naipe de uma carta independe de acertar o naipe de outra carta. Por exemplo, podemos supor que a dificuldade de acertar o naipe de uma carta é sempre a mesma, independente da carta, da ordem em que elas aparecem etc. O fato de que as <span class="math inline">\(50\)</span> cartas foram escolhidas dentre <span class="math inline">\(10\)</span> baralhos (<span class="math inline">\(520\)</span> cartas, no total) nos permite considerar que os naipes das cartas escolhidas são independentes. Além disso, se não quisermos que o suposto vidente “conte” os naipes das cartas durante o experimento, podemos decidir só revelar os naipes das <span class="math inline">\(50\)</span> cartas <em>depois</em> que o suposto vidente tiver registrado seus palpites.</p></li>
+<li><p><span class="hl">Amostra aleatória e representativa:</span> A população é o conjunto de todas as cartas que poderiam ser escolhidas para o suposto vidente poder exercer seus poderes. As <span class="math inline">\(50\)</span> cartas, escolhidas ao acaso, representam de forma adequada esta população.</p></li>
+<li><p><span class="hl">Tamanho da amostra:</span> temos mais do que <span class="math inline">\(30\)</span> elementos, e a amostra é menor do que <span class="math inline">\(10\%\)</span> da população (que é infinita).</p></li>
+<li><p><span class="hl">Quantidades de sucessos e fracassos potenciais:</span> a hipótese de nulidade diz que deveria haver <span class="math inline">\(50 \times 1/4 = 12{,}50\)</span> sucessos e <span class="math inline">\(50 \times 3/4 = 37{,}50\)</span> fracassos na amostra, mais do que os <span class="math inline">\(10\)</span> exigidos.</p></li>
+</ol>
+</div>
+<div id="valores-1" class="section level4 unnumbered">
+<h4>Valores<a class="anchor" aria-label="anchor" href="#valores-1"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Tamanho da amostra: <span class="math inline">\(n = 50\)</span></p></li>
+<li><p>Proporção amostral: <span class="math inline">\(\hat p = 0{,}20\)</span></p></li>
+<li><p>Hipótese de nulidade: <span class="math inline">\(H_0 : p = 0{,}25\)</span></p></li>
+<li><p>Hipótese alternativa: <span class="math inline">\(H_A : p \neq 0{,}25\)</span></p></li>
+<li><p>Nível de significância: <span class="math inline">\(\alpha = 0{,}05\)</span></p></li>
+</ul>
+</div>
+<div id="estratégia-1" class="section level4 unnumbered">
+<h4>Estratégia<a class="anchor" aria-label="anchor" href="#estrat%C3%A9gia-1"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Começamos supondo que <span class="math inline">\(H_0\)</span> é verdadeira: <span class="math inline">\(p = 0{,}25\)</span>.</p></li>
+<li><p>Com isso, construímos a distribuição amostral de <span class="math inline">\(\hat p\)</span>, que vai ter como média o valor suposto de <span class="math inline">\(p\)</span>.</p></li>
+<li><p>Usando esta distribuição amostral, calculamos a probabilidade de obter uma amostra como a que obtivemos ou mais extrema (mais distante de <span class="math inline">\(0{,}25\)</span>).</p></li>
+</ul>
+</div>
+<div id="a-distribuição-amostral-de-hat-p-supondo-h_0-1" class="section level4 unnumbered">
+<h4>A distribuição amostral de <span class="math inline">\(\hat p\)</span>, supondo <span class="math inline">\(H_0\)</span><a class="anchor" aria-label="anchor" href="#a-distribui%C3%A7%C3%A3o-amostral-de-hat-p-supondo-h_0-1"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>Pelo TCL e supondo <span class="math inline">\(H_0\)</span>, a distribuição amostral das proporções vai ser normal, com média <span class="math inline">\(\mu = p = 0{,}25\)</span> e erro-padrão</p>
+<p><span class="math display">\[
+\sigma_{\hat p}
+= \sqrt{\frac{p(1-p)}{n}}
+= 0{,}06
+\]</span></p>
+</li>
+<li>
+<p>Graficamente:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-341-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="o-valor-p-e-a-conclusão-1" class="section level4 unnumbered">
+<h4>O valor <span class="math inline">\(p\)</span> e a conclusão<a class="anchor" aria-label="anchor" href="#o-valor-p-e-a-conclus%C3%A3o-1"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>O valor <span class="math inline">\(p\)</span> vai ser a probabilidade que corresponde à área em vermelho, que pode ser calculada em R:</p>
+<div class="sourceCode" id="cb782"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">sucessos</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">4</span></span>
+<span><span class="va">p_chapeu</span> <span class="op">&lt;-</span> <span class="va">sucessos</span> <span class="op">/</span> <span class="va">n</span></span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">p0</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p0</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">p_cauda_direita</span> <span class="op">&lt;-</span> <span class="va">p0</span> <span class="op">+</span> <span class="op">(</span><span class="va">p0</span> <span class="op">-</span> <span class="va">p_chapeu</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">p_chapeu</span>, mean <span class="op">=</span> <span class="va">p0</span>, sd <span class="op">=</span> <span class="va">ep</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">p_cauda_direita</span>, mean <span class="op">=</span> <span class="va">p0</span>, sd <span class="op">=</span> <span class="va">ep</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,4142162</code></pre>
+</li>
+<li><p>Este valor é maior do que <span class="math inline">\(\alpha = 0{,}05\)</span>. <span class="hl">Logo, nossa amostra não é evidência para rejeitar a hipótese de nulidade neste nível de significância</span>.</p></li>
+</ul>
+</div>
+<div id="em-r-12" class="section level4 unnumbered">
+<h4>Em R<a class="anchor" aria-label="anchor" href="#em-r-12"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb784"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/prop.test.html">prop.test</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">sucessos</span>,              <span class="co"># número de sucessos</span></span>
+<span>  n <span class="op">=</span> <span class="va">n</span>,                     <span class="co"># tamanho da amostra</span></span>
+<span>  p <span class="op">=</span> <span class="va">p0</span>,                    <span class="co"># valor de p na hipótese de nulidade</span></span>
+<span>  alternative <span class="op">=</span> <span class="st">'two.sided'</span>, <span class="co"># hipótese alternativa é p != p0</span></span>
+<span>  conf.level <span class="op">=</span> <span class="fl">.95</span>,          <span class="co"># 1 - α (o default já é .95)</span></span>
+<span>  correct <span class="op">=</span> <span class="cn">FALSE</span>            <span class="co"># sem correção de continuidade </span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  1-sample proportions test without continuity correction
+## 
+## data:  sucessos out of n, null probability p0
+## X-squared = 0,66667, df = 1, p-value = 0,4142
+## alternative hypothesis: true p is not equal to 0,25
+## 95 percent confidence interval:
+##  0,1124375 0,3303711
+## sample estimates:
+##   p 
+## 0,2</code></pre>
+</div>
+</div>
+<div id="erros-poder-e-tamanho-do-efeito" class="section level3" number="13.2.3">
+<h3>
+<span class="header-section-number">13.2.3</span> Erros, poder e tamanho do efeito<a class="anchor" aria-label="anchor" href="#erros-poder-e-tamanho-do-efeito"><i class="fas fa-link"></i></a>
+</h3>
+<div id="rejeitar-times-não-rejeitar" class="section level4 unnumbered">
+<h4>Rejeitar <span class="math inline">\(\times\)</span> não rejeitar<a class="anchor" aria-label="anchor" href="#rejeitar-times-n%C3%A3o-rejeitar"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Em um teste de hipóteses, <span class="hl">nada é provado</span>.</p></li>
+<li><p>Se o valor <span class="math inline">\(p\)</span> for <span class="hl">menor</span> do que <span class="math inline">\(\alpha\)</span>, você deve concluir que <span class="hl">existem evidências para rejeitar a hipótese de nulidade</span>.</p></li>
+<li><p>Se o valor <span class="math inline">\(p\)</span> for <span class="hl">maior</span> do que <span class="math inline">\(\alpha\)</span>, você deve concluir que <span class="hl">não existem evidências para rejeitar a hipótese de nulidade</span>.</p></li>
+<li>
+<p>Seja como for, você deve incluir na sua conclusão</p>
+<ul>
+<li><p>As hipóteses.</p></li>
+<li><p>O valor da estatística envolvida no teste (aqui, a proporção amostral).</p></li>
+<li><p>O tamanho da amostra.</p></li>
+<li><p>O valor de <span class="math inline">\(\alpha\)</span>.</p></li>
+<li><p>O valor <span class="math inline">\(p\)</span>.</p></li>
+<li><p>A informação de se o teste é unilateral ou bilateral.</p></li>
+</ul>
+</li>
+<li>
+<p>Como nada é provado, <span class="hl">existe a possibilidade de acontecer um erro</span>:</p>
+<ul>
+<li><p>Você pode <span class="hl">rejeitar <span class="math inline">\(H_0\)</span> quando ela é verdadeira</span>, ou</p></li>
+<li><p>Você pode <span class="hl">não rejeitar <span class="math inline">\(H_0\)</span> quando ela é falsa.</span></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="erro-tipo-1-rejeitar-quando-não-devíamos" class="section level4 unnumbered">
+<h4>Erro tipo 1: rejeitar quando não devíamos<a class="anchor" aria-label="anchor" href="#erro-tipo-1-rejeitar-quando-n%C3%A3o-dev%C3%ADamos"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Falso positivo.</p></li>
+<li><p>Diagnosticar como doente um paciente saudável.</p></li>
+<li><p>Condenar um réu inocente.</p></li>
+<li><p><span class="hl">Um erro tipo <span class="math inline">\(1\)</span> só acontece quando a hipótese de nulidade é verdadeira.</span></p></li>
+<li><p>A probabilidade de um erro tipo <span class="math inline">\(1\)</span> acontecer é a probabilidade de a nossa amostra ser uma amostra “ruim”.</p></li>
+<li><p>Mas a probabilidade de a amostra ser ruim é exatamente <span class="math inline">\(\alpha\)</span>.</p></li>
+<li><p>Então, <span class="hl">a probabilidade de um erro tipo <span class="math inline">\(1\)</span> é sempre igual a <span class="math inline">\(\alpha\)</span>.</span></p></li>
+</ul>
+</div>
+<div id="erro-tipo-2-não-rejeitar-quando-devíamos" class="section level4 unnumbered">
+<h4>Erro tipo 2: não rejeitar quando devíamos<a class="anchor" aria-label="anchor" href="#erro-tipo-2-n%C3%A3o-rejeitar-quando-dev%C3%ADamos"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Falso negativo.</p></li>
+<li><p>Diagnosticar como saudável um paciente doente.</p></li>
+<li><p>Absolver um réu culpado.</p></li>
+<li><p><span class="hl">Um erro tipo <span class="math inline">\(2\)</span> só acontece quando a hipótese de nulidade é falsa.</span></p></li>
+<li><p>Qual a probabilidade de um erro tipo <span class="math inline">\(2\)</span> acontecer? Vamos chamar esta probabilidade de <span class="math inline">\(\beta\)</span>.</p></li>
+<li><p>É difícil calcular <span class="math inline">\(\beta\)</span>, porque a hipótese alternativa não fixa um valor para o parâmetro sendo testado; então, não sabemos qual distribuição amostral usar.</p></li>
+<li><p>A probabilidade <span class="math inline">\(\beta\)</span> de um erro tipo <span class="math inline">\(2\)</span> diminui à medida que <span class="math inline">\(\alpha\)</span> aumenta.</p></li>
+<li><p>Um <span class="math inline">\(\alpha\)</span> maior torna mais difícil rejeitar a hipótese de nulidade.</p></li>
+</ul>
+</div>
+<div id="poder-de-um-teste" class="section level4 unnumbered">
+<h4>Poder de um teste<a class="anchor" aria-label="anchor" href="#poder-de-um-teste"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>O “melhor” resultado do teste é <span class="hl">rejeitar <span class="math inline">\(H_0\)</span> quando ela é falsa</span>.</p></li>
+<li><p>Isto acontece com probabilidade <span class="math inline">\(1 - \beta\)</span>.</p></li>
+<li><p>Este é o <span class="hl">poder (ou potência)</span> do teste: <span class="hl">a capacidade de detectar a diferença entre o valor do parâmetro em <span class="math inline">\(H_0\)</span> e o valor verdadeiro do parâmetro.</span></p></li>
+<li><p>Mas não é uma boa idéia aumentar <span class="math inline">\(\alpha\)</span> para aumentar o poder, pois isto aumenta a chance de um erro tipo <span class="math inline">\(1\)</span>.</p></li>
+<li><p>A melhor maneira de diminuir <span class="math inline">\(\alpha\)</span> e <span class="math inline">\(\beta\)</span> ao mesmo tempo é <span class="hl">aumentando o tamanho da amostra.</span></p></li>
+<li><p>Podemos calcular o tamanho da amostra necessário para que o poder do teste tenha um certo valor, mas isto depende de mais informação.</p></li>
+</ul>
+</div>
+<div id="o-tamanho-do-efeito" class="section level4 unnumbered">
+<h4>O tamanho do efeito<a class="anchor" aria-label="anchor" href="#o-tamanho-do-efeito"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Diferença entre o valor do parâmetro em <span class="math inline">\(H_0\)</span> e o valor verdadeiro do parâmetro.</p></li>
+<li><p>Efeitos maiores são mais fáceis de detectar.</p></li>
+<li><p>Efeitos menores são mais difíceis de detectar.</p></li>
+<li><p><span class="hl">O poder de um teste também depende do tamanho do efeito.</span></p></li>
+</ul>
+</div>
+<div id="explorando-tudo-interativamente" class="section level4 unnumbered">
+<h4>Explorando tudo interativamente<a class="anchor" aria-label="anchor" href="#explorando-tudo-interativamente"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><a href="https://rpsychologist.com/d3/nhst/" class="uri">https://rpsychologist.com/d3/nhst/</a></li>
+</ul>
+</div>
+</div>
+<div id="exercícios-16" class="section level3" number="13.2.4">
+<h3>
+<span class="header-section-number">13.2.4</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-16"><i class="fas fa-link"></i></a>
+</h3>
+<div id="usando-binom.test-1" class="section level4 unnumbered">
+<h4>Usando <code>binom.test</code><a class="anchor" aria-label="anchor" href="#usando-binom.test-1"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>No <a href="th.html#ex1">exemplo dos bebês</a>, calcule a <em>quantidade</em> de nascimentos de meninos na amostra. O que há de estranho?</p></li>
+<li>
+<p>A função <code>binom.test</code>, de R base, também faz teste de hipótese para a proporção (embora usando um algoritmo diferente do nosso). Rode o seguinte código:</p>
+<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/binom.test.html">binom.test</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="va">p_chapeu</span> <span class="op">*</span> <span class="va">n</span>,          <span class="co"># número de sucessos</span></span>
+<span>  n <span class="op">=</span> <span class="va">n</span>,                     <span class="co"># tamanho da amostra</span></span>
+<span>  p <span class="op">=</span> <span class="va">p0</span>,                    <span class="co"># valor de p na hipótese de nulidade</span></span>
+<span>  alternative <span class="op">=</span> <span class="st">'greater'</span>,   <span class="co"># hipótese alternativa é p &gt; p0</span></span>
+<span>  conf.level <span class="op">=</span> <span class="fl">.95</span>           <span class="co"># 1 - α</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>O que dá errado? Por quê? Como consertar?</p>
+</li>
+</ul>
+</div>
+<div id="outro-suposto-vidente" class="section level4 unnumbered">
+<h4>Outro suposto vidente<a class="anchor" aria-label="anchor" href="#outro-suposto-vidente"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>O <a href="th.html#ex2">experimento do exemplo</a> é repetido com outra pessoa, que acerta o naipe de <span class="math inline">\(17\)</span> das <span class="math inline">\(50\)</span> cartas. Refaça o teste de hipóteses com este novo valor, de duas maneiras:</p>
+<ol style="list-style-type: decimal">
+<li><p>Com um teste bilateral: <span class="math inline">\(H_A : p \neq 0{,}25\)</span>.</p></li>
+<li><p>Com um teste unilateral: <span class="math inline">\(H_A : p &gt; 0{,}25\)</span>.</p></li>
+</ol>
+</li>
+<li><p>Quais as suas conclusões?</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="vídeo-2-6" class="section level2" number="13.3">
+<h2>
+<span class="header-section-number">13.3</span> Vídeo 2<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-2-6"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/Ajf5r4EIV6c" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="testes-de-hipóteses-sobre-a-média" class="section level2" number="13.4">
+<h2>
+<span class="header-section-number">13.4</span> Testes de hipóteses sobre a média<a class="anchor" aria-label="anchor" href="#testes-de-hip%C3%B3teses-sobre-a-m%C3%A9dia"><i class="fas fa-link"></i></a>
+</h2>
+<div id="gest" class="section level3" number="13.4.1">
+<h3>
+<span class="header-section-number">13.4.1</span> Exemplo: duração da gestação<a class="anchor" aria-label="anchor" href="#gest"><i class="fas fa-link"></i></a>
+</h3>
+<div class="rmdbox">
+<ul>
+<li><p>O tempo de gestação em seres humanos segue a distribuição normal, com média <span class="math inline">\(\mu = 280\)</span> dias e desvio-padrão <span class="math inline">\(\sigma = 10\)</span> dias.</p></li>
+<li><p>Em uma amostra de <span class="math inline">\(n = 25\)</span> bebês nascidos em uma clínica, o tempo médio de gestação foi de <span class="math inline">\(\bar x = 275\)</span> dias.</p></li>
+<li><p>Esta amostra é evidência de que a duração média da gestação humana é <em>diferente de</em> <span class="math inline">\(280\)</span> dias?</p></li>
+</ul>
+</div>
+<div id="hipóteses-2" class="section level4 unnumbered">
+<h4>Hipóteses<a class="anchor" aria-label="anchor" href="#hip%C3%B3teses-2"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>A hipótese de nulidade diz que a duração média da gestação é de <span class="math inline">\(280\)</span> dias:</p>
+<p><span class="math display">\[
+H_0 : \mu = 280
+\]</span></p>
+</li>
+<li>
+<p>A hipótese alternativa diz que duração média da gestação é diferente de <span class="math inline">\(280\)</span> dias:</p>
+<p><span class="math display">\[
+H_A : \mu \neq 280
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="condições-2" class="section level4 unnumbered">
+<h4>Condições<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-2"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Verifique que as condições de independência, aleatoriedade, representatividade e tamanho da amostra são satisfeitas.</p></li>
+<li><p>Como a distribuição da população é normal, podemos aceitar <span class="math inline">\(n = 25\)</span>.</p></li>
+</ul>
+</div>
+<div id="valores-2" class="section level4 unnumbered">
+<h4>Valores<a class="anchor" aria-label="anchor" href="#valores-2"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Tamanho da amostra: <span class="math inline">\(n = 25\)</span></p></li>
+<li><p>Média amostral: <span class="math inline">\(\bar x = 275\)</span></p></li>
+<li><p>Hipótese de nulidade: <span class="math inline">\(H_0 : \mu = 280\)</span></p></li>
+<li><p>Hipótese alternativa: <span class="math inline">\(H_A : \mu \neq 280\)</span></p></li>
+<li><p>Nível de significância: <span class="math inline">\(\alpha = 0{,}05\)</span></p></li>
+</ul>
+</div>
+<div id="o-valor-p-e-a-conclusão-2" class="section level4 unnumbered">
+<h4>O valor <span class="math inline">\(p\)</span> e a conclusão<a class="anchor" aria-label="anchor" href="#o-valor-p-e-a-conclus%C3%A3o-2"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Como a hipótese alternativa envolve “<span class="math inline">\(\neq\)</span>”, <span class="hl">o teste é bilateral</span>.</p></li>
+<li><p><span class="hl">Já sabemos <span class="math inline">\(\sigma\)</span> (o desvio-padrão populacional)</span>. Não precisamos do desvio-padrão amostral.</p></li>
+<li>
+<p><span class="hl">A distribuição amostral vai ser a normal</span> com média <span class="math inline">\(\mu = 280\)</span> e desvio-padrão</p>
+<p><span class="math display">\[
+EP = \frac{\sigma}{\sqrt{n}} = \frac{10}{\sqrt{25}} = 2
+\]</span></p>
+</li>
+<li><p>Usando esta distribuição amostral, calculamos a probabilidade de obter uma amostra como a que obtivemos (com a média amostral <span class="math inline">\(5\)</span> dias <span class="hl">menor ou maior</span> que a média suposta por <span class="math inline">\(H_0\)</span>) ou mais extrema.</p></li>
+<li>
+<p>O valor <span class="math inline">\(p\)</span> vai ser esta probabilidade.</p>
+<div class="inline-figure"><img src="_main_files/figure-html/graf-gest-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Calculando em R:</p>
+<div class="sourceCode" id="cb787"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">xbar</span> <span class="op">&lt;-</span> <span class="fl">275</span></span>
+<span><span class="va">σ</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">25</span></span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="va">σ</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">m0</span> <span class="op">&lt;-</span> <span class="fl">280</span></span>
+<span><span class="va">dif</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">m0</span> <span class="op">-</span> <span class="va">xbar</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">xbar</span>, <span class="va">m0</span>, <span class="va">ep</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">m0</span> <span class="op">+</span> <span class="va">dif</span>, <span class="va">m0</span>, <span class="va">ep</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,01241933</code></pre>
+</li>
+<li><p>Este valor é menor do que <span class="math inline">\(\alpha = 0{,}05\)</span>. <span class="hl">Logo, nossa amostra é evidência para rejeitar a hipótese de nulidade neste nível de significância</span>.</p></li>
+<li><p>Pode parecer surpreendente que <span class="math inline">\(5\)</span> dias façam tanta diferença assim. O problema é que o desvio-padrão da população é relativamente baixo: <span class="math inline">\(10\)</span> dias. A variação é pequena. Por isso a diferença entre a média amostral e a média afirmada em <span class="math inline">\(H_0\)</span> é significativa.</p></li>
+<li><p>Visto de outro modo: como <span class="math inline">\(\sigma\)</span> é um valor pequeno, o erro-padrão (i.e., o desvio-padrão da distribuição amostral) também é pequeno; a distribuição amostral, vista na figura acima, é bem estreita, com boa parte da probabilidade bem próxima da média.</p></li>
+</ul>
+</div>
+<div id="em-r-13" class="section level4 unnumbered">
+<h4>Em R<a class="anchor" aria-label="anchor" href="#em-r-13"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>Vamos carregar um pacote que implementa o teste z:</p>
+<div class="sourceCode" id="cb789"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alanarnholt/BSDA">BSDA</a></span><span class="op">)</span></span></code></pre></div>
+</li>
+<li>
+<p>Esta função recebe o resumo (<em>summary</em>) da amostra:</p>
+<div class="sourceCode" id="cb790"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://alanarnholt.github.io/BSDA/reference/zsum.test.html">zsum.test</a></span><span class="op">(</span></span>
+<span>  mean.x <span class="op">=</span> <span class="va">xbar</span>, </span>
+<span>  sigma.x <span class="op">=</span> <span class="va">σ</span>, </span>
+<span>  n.x <span class="op">=</span> <span class="va">n</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="st">'two.sided'</span>,</span>
+<span>  mu <span class="op">=</span> <span class="va">m0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  One-sample z-Test
+## 
+## data:  Summarized x
+## z = -2,5, p-value = 0,01242
+## alternative hypothesis: true mean is not equal to 280
+## 95 percent confidence interval:
+##  271,0801 278,9199
+## sample estimates:
+## mean of x 
+##       275</code></pre>
+</li>
+</ul>
+</div>
+</div>
+<div id="exemplo-salmões-novamente" class="section level3" number="13.4.2">
+<h3>
+<span class="header-section-number">13.4.2</span> Exemplo: salmões novamente<a class="anchor" aria-label="anchor" href="#exemplo-salm%C3%B5es-novamente"><i class="fas fa-link"></i></a>
+</h3>
+<div class="rmdbox">
+<ul>
+<li><p>Numa amostra de <span class="math inline">\(150\)</span> salmões, foi medida a concentração do contaminante <a href="https://en.wikipedia.org/wiki/Mirex"><em>mirex</em></a>, um inseticida banido pela <a href="https://pt.wikipedia.org/wiki/Conven%C3%A7%C3%A3o_de_Estocolmo">Convenção de Estocolmo</a>.</p></li>
+<li>
+<p>As concentrações (em ppm) estão resumidas na tabela abaixo.</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["location"],"name":[1],"type":["chr"],"align":["left"]},{"label":["mirex"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Chile","2":"0,055"},{"1":"Chile","2":"0,057"},{"1":"Chile","2":"0,052"},{"1":"Chile","2":"0,054"},{"1":"Chile","2":"0,057"},{"1":"Chile","2":"0,050"},{"1":"Chile","2":"0,058"},{"1":"Chile","2":"0,060"},{"1":"Chile","2":"0,052"},{"1":"Chile","2":"0,056"},{"1":"Chile","2":"0,048"},{"1":"Chile","2":"0,047"},{"1":"Chile","2":"0,084"},{"1":"Chile","2":"0,086"},{"1":"Chile","2":"0,088"},{"1":"Chile","2":"0,086"},{"1":"Chile","2":"0,094"},{"1":"Chile","2":"0,092"},{"1":"Chile","2":"0,046"},{"1":"Chile","2":"0,048"},{"1":"Chile","2":"0,034"},{"1":"Chile","2":"0,065"},{"1":"Chile","2":"0,058"},{"1":"Chile","2":"0,058"},{"1":"Chile","2":"0,050"},{"1":"Chile","2":"0,052"},{"1":"Chile","2":"0,050"},{"1":"Chile","2":"0,049"},{"1":"Chile","2":"0,060"},{"1":"Chile","2":"0,052"},{"1":"Eastern Canada","2":"0,057"},{"1":"Eastern Canada","2":"0,000"},{"1":"Eastern Canada","2":"0,056"},{"1":"Eastern Canada","2":"0,000"},{"1":"Eastern Canada","2":"0,040"},{"1":"Eastern Canada","2":"0,000"},{"1":"Eastern Canada","2":"0,076"},{"1":"Eastern Canada","2":"0,084"},{"1":"Eastern Canada","2":"0,069"},{"1":"Eastern Canada","2":"0,075"},{"1":"Eastern Canada","2":"0,075"},{"1":"Eastern Canada","2":"0,078"},{"1":"Eastern Canada","2":"0,094"},{"1":"Eastern Canada","2":"0,095"},{"1":"Eastern Canada","2":"0,095"},{"1":"Eastern Canada","2":"0,091"},{"1":"Eastern Canada","2":"0,068"},{"1":"Eastern Canada","2":"0,073"},{"1":"Eastern Canada","2":"0,061"},{"1":"Eastern Canada","2":"0,059"},{"1":"Eastern Canada","2":"0,058"},{"1":"Eastern Canada","2":"0,067"},{"1":"Eastern Canada","2":"0,070"},{"1":"Eastern Canada","2":"0,070"},{"1":"Faroe Islands","2":"0,097"},{"1":"Faroe Islands","2":"0,093"},{"1":"Faroe Islands","2":"0,102"},{"1":"Faroe Islands","2":"0,126"},{"1":"Faroe Islands","2":"0,119"},{"1":"Faroe Islands","2":"0,113"},{"1":"Faroe Islands","2":"0,162"},{"1":"Faroe Islands","2":"0,167"},{"1":"Faroe Islands","2":"0,156"},{"1":"Faroe Islands","2":"0,173"},{"1":"Faroe Islands","2":"0,172"},{"1":"Faroe Islands","2":"0,176"},{"1":"Faroe Islands","2":"0,162"},{"1":"Faroe Islands","2":"0,174"},{"1":"Faroe Islands","2":"0,178"},{"1":"Faroe Islands","2":"0,194"},{"1":"Faroe Islands","2":"0,159"},{"1":"Faroe Islands","2":"0,182"},{"1":"Faroe Islands","2":"0,180"},{"1":"Faroe Islands","2":"0,173"},{"1":"Faroe Islands","2":"0,193"},{"1":"Maine","2":"0,058"},{"1":"Maine","2":"0,054"},{"1":"Maine","2":"0,059"},{"1":"Maine","2":"0,054"},{"1":"Maine","2":"0,048"},{"1":"Maine","2":"0,063"},{"1":"Norway","2":"0,104"},{"1":"Norway","2":"0,119"},{"1":"Norway","2":"0,115"},{"1":"Norway","2":"0,078"},{"1":"Norway","2":"0,081"},{"1":"Norway","2":"0,087"},{"1":"Norway","2":"0,163"},{"1":"Norway","2":"0,164"},{"1":"Norway","2":"0,171"},{"1":"Norway","2":"0,136"},{"1":"Norway","2":"0,147"},{"1":"Norway","2":"0,131"},{"1":"Scotland","2":"0,133"},{"1":"Scotland","2":"0,121"},{"1":"Scotland","2":"0,141"},{"1":"Scotland","2":"0,143"},{"1":"Scotland","2":"0,162"},{"1":"Scotland","2":"0,156"},{"1":"Scotland","2":"0,073"},{"1":"Scotland","2":"0,073"},{"1":"Scotland","2":"0,066"},{"1":"Scotland","2":"0,143"},{"1":"Scotland","2":"0,137"},{"1":"Scotland","2":"0,134"},{"1":"Scotland","2":"0,151"},{"1":"Scotland","2":"0,149"},{"1":"Scotland","2":"0,152"},{"1":"Scotland","2":"0,130"},{"1":"Scotland","2":"0,131"},{"1":"Scotland","2":"0,133"},{"1":"Scotland","2":"0,127"},{"1":"Scotland","2":"0,128"},{"1":"Scotland","2":"0,135"},{"1":"Scotland","2":"0,151"},{"1":"Scotland","2":"0,165"},{"1":"Scotland","2":"0,151"},{"1":"Scotland","2":"0,145"},{"1":"Scotland","2":"0,139"},{"1":"Scotland","2":"0,133"},{"1":"Scotland","2":"0,167"},{"1":"Scotland","2":"0,149"},{"1":"Scotland","2":"0,151"},{"1":"Washington","2":"0,024"},{"1":"Washington","2":"0,021"},{"1":"Washington","2":"0,000"},{"1":"Washington","2":"0,022"},{"1":"Washington","2":"0,020"},{"1":"Washington","2":"0,020"},{"1":"Washington","2":"0,024"},{"1":"Washington","2":"0,019"},{"1":"Washington","2":"0,021"},{"1":"Western Canada","2":"0,024"},{"1":"Western Canada","2":"0,026"},{"1":"Western Canada","2":"0,020"},{"1":"Western Canada","2":"0,026"},{"1":"Western Canada","2":"0,033"},{"1":"Western Canada","2":"0,026"},{"1":"Western Canada","2":"0,081"},{"1":"Western Canada","2":"0,073"},{"1":"Western Canada","2":"0,073"},{"1":"Western Canada","2":"0,066"},{"1":"Western Canada","2":"0,063"},{"1":"Western Canada","2":"0,071"},{"1":"Western Canada","2":"0,077"},{"1":"Western Canada","2":"0,083"},{"1":"Western Canada","2":"0,073"},{"1":"Western Canada","2":"0,089"},{"1":"Western Canada","2":"0,080"},{"1":"Western Canada","2":"0,085"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</li>
+<li><p>A média foi <span class="math inline">\(\overline x = 0{,}09\)</span>ppm.</p></li>
+<li><p>O desvio-padrão <em>amostral</em> foi <span class="math inline">\(s = 0{,}05\)</span>ppm.</p></li>
+<li><p>Não sabemos o desvio-padrão <em>populacional</em>.</p></li>
+<li><p>Alguém nos diz que a concentração máxima de mirex permitida é de <span class="math inline">\(0{,}08\)</span>ppm.</p></li>
+<li><p>Esta amostra é evidência de que a concentração máxima foi ultrapassada?</p></li>
+</ul>
+</div>
+<div id="hipóteses-3" class="section level4 unnumbered">
+<h4>Hipóteses<a class="anchor" aria-label="anchor" href="#hip%C3%B3teses-3"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>A hipótese de nulidade diz que a concentração é a máxima permitida ou menor:</p>
+<p><span class="math display">\[
+H_0 : \mu \leq 0{,}08
+\]</span></p>
+</li>
+<li>
+<p>A hipótese alternativa diz que a concentração máxima foi ultrapassada:</p>
+<p><span class="math display">\[
+H_A : \mu &gt; 0{,}08
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="condições-3" class="section level4 unnumbered">
+<h4>Condições<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-3"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Verifique que as condições de independência, aleatoriedade, representatividade e tamanho da amostra são satisfeitas.</p></li>
+<li><p>Se precisar, reveja o vídeo sobre intervalos de confiança para a média, onde este exemplo também aparece.</p></li>
+</ul>
+</div>
+<div id="valores-3" class="section level4 unnumbered">
+<h4>Valores<a class="anchor" aria-label="anchor" href="#valores-3"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Tamanho da amostra: <span class="math inline">\(n = 150\)</span></p></li>
+<li><p>Média amostral: <span class="math inline">\(\bar x = 0{,}09\)</span></p></li>
+<li><p>Hipótese de nulidade: <span class="math inline">\(H_0 : \mu \leq 0{,}08\)</span></p></li>
+<li><p>Hipótese alternativa: <span class="math inline">\(H_A : \mu &gt; 0{,}08\)</span></p></li>
+<li><p>Nível de significância: <span class="math inline">\(\alpha = 0{,}05\)</span></p></li>
+</ul>
+</div>
+<div id="o-valor-p-e-a-conclusão-3" class="section level4 unnumbered">
+<h4>O valor <span class="math inline">\(p\)</span> e a conclusão<a class="anchor" aria-label="anchor" href="#o-valor-p-e-a-conclus%C3%A3o-3"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Como não sabemos <span class="math inline">\(\sigma\)</span> (o desvio-padrão populacional), <span class="hl">vamos usar <span class="math inline">\(s\)</span> (o desvio-padrão amostral)</span>.</p></li>
+<li><p>Com isto, <span class="hl">a distribuição amostral das médias será a distribuição <span class="math inline">\(t\)</span></span>, com <span class="math inline">\(n - 1 = 149\)</span> graus de liberdade.</p></li>
+<li>
+<p>Mas, <span class="hl">como a distribuição <span class="math inline">\(t\)</span> tem média <span class="math inline">\(0\)</span>, precisamos padronizar a nossa média amostral</span>: subtrair a média que <span class="math inline">\(H_0\)</span> diz ser a verdadeira (<span class="math inline">\(\mu_0 = 0{,}08\)</span>) e dividir pelo erro-padrão:</p>
+<p><span class="math display">\[
+t_0 = \frac{\bar x - \mu_0}{EP}
+\]</span></p>
+</li>
+<li>
+<p>O erro-padrão, como vimos nas aulas sobre intervalos de confiança, é</p>
+<p><span class="math display">\[
+EP = \frac{s}{\sqrt{n}} = \frac{0{,}05}{\sqrt{150}} = 0{,}00
+\]</span></p>
+</li>
+<li>
+<p>Isto nos dá</p>
+<p><span class="math display">\[
+t_0 = \frac{\bar x - \mu_0}{EP} = \frac{0{,}09 - 0{,}08}{0{,}00} = 2{,}80
+\]</span></p>
+</li>
+<li><p>Como a hipótese alternativa envolve “<span class="math inline">\(&gt;\)</span>” e não “<span class="math inline">\(\neq\)</span>”, <span class="hl">o teste é unilateral</span>.</p></li>
+<li>
+<p>O valor <span class="math inline">\(p\)</span> é a probabilidade de a <span class="hl">média amostral padronizada</span> ser maior do que <span class="math inline">\(t_0\)</span>:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-350-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Este valor pode ser calculado em R (os valores da amostra estão em <code>salmoes$mirex</code>):</p>
+<div class="sourceCode" id="cb792"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">xbar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">salmoes</span><span class="op">$</span><span class="va">mirex</span><span class="op">)</span></span>
+<span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">salmoes</span><span class="op">$</span><span class="va">mirex</span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">salmoes</span><span class="op">$</span><span class="va">mirex</span><span class="op">)</span></span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="va">s</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">m0</span> <span class="op">&lt;-</span> <span class="fl">0.08</span></span>
+<span><span class="va">t0</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">xbar</span> <span class="op">-</span> <span class="va">m0</span><span class="op">)</span> <span class="op">/</span> <span class="va">ep</span></span>
+<span><span class="va">valor_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="va">t0</span>, <span class="va">n</span> <span class="op">-</span> <span class="fl">1</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,002856456</code></pre>
+</li>
+<li><p>Conclusão: <span class="hl">como o valor <span class="math inline">\(p\)</span> é menor do que <span class="math inline">\(\alpha\)</span>, rejeitamos a hipótese de nulidade.</span> Com este nível de significância, a amostra é evidência de que a contaminação é maior do que a permitida.</p></li>
+</ul>
+</div>
+<div id="em-r-14" class="section level4 unnumbered">
+<h4>Em R<a class="anchor" aria-label="anchor" href="#em-r-14"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb794"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span></span>
+<span>  <span class="va">salmoes</span><span class="op">$</span><span class="va">mirex</span>, </span>
+<span>  alternative <span class="op">=</span> <span class="st">'greater'</span>,</span>
+<span>  mu <span class="op">=</span> <span class="va">m0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  salmoes$mirex
+## t = 2,8044, df = 149, p-value = 0,002856
+## alternative hypothesis: true mean is greater than 0,08
+## 95 percent confidence interval:
+##  0,08464724        Inf
+## sample estimates:
+## mean of x 
+##   0,09134</code></pre>
+</div>
+</div>
+<div id="relação-entre-testes-e-ic" class="section level3" number="13.4.3">
+<h3>
+<span class="header-section-number">13.4.3</span> Relação entre testes e IC<a class="anchor" aria-label="anchor" href="#rela%C3%A7%C3%A3o-entre-testes-e-ic"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p>Intervalos de confiança e testes de hipóteses são <span class="hl">duas maneiras de enxergar a mesma inferência</span>.</p></li>
+<li>
+<p>Lembre-se do <a href="th.html#gest">exemplo sobre o tempo de gestação</a>:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-353-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb796"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">zt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://alanarnholt.github.io/BSDA/reference/zsum.test.html">zsum.test</a></span><span class="op">(</span></span>
+<span>  mean.x <span class="op">=</span> <span class="va">xbar</span>, </span>
+<span>  sigma.x <span class="op">=</span> <span class="va">σ</span>, </span>
+<span>  n.x <span class="op">=</span> <span class="va">n</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="st">'two.sided'</span>,</span>
+<span>  mu <span class="op">=</span> <span class="va">m0</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">zt</span></span></code></pre></div>
+<pre><code>## 
+##  One-sample z-Test
+## 
+## data:  Summarized x
+## z = -2,5, p-value = 0,01242
+## alternative hypothesis: true mean is not equal to 280
+## 95 percent confidence interval:
+##  271,0801 278,9199
+## sample estimates:
+## mean of x 
+##       275</code></pre>
+</li>
+<li><p>Mantenha fixa a nossa amostra de <span class="math inline">\(25\)</span> gestações.</p></li>
+<li><p>A hipótese de nulidade <span class="hl">foi rejeitada</span> com <span class="math inline">\(\alpha = 0{,}05\)</span> porque o valor que ela “defendia” (<span class="math inline">\(280\)</span>) estava <span class="hl">fora do intervalo de confiança</span> de <span class="math inline">\(1 - \alpha = 0{,}95\)</span>.</p></li>
+<li><p>Reciprocamente, mantendo <span class="math inline">\(\alpha = 0{,}05\)</span>, qualquer hipótese de nulidade que <span class="hl">não for rejeitada</span> vai “defender” um valor <span class="hl">dentro do intervalo de confiança</span> (entre <span class="math inline">\(271{,}08\)</span> e <span class="math inline">\(278{,}92\)</span>).</p></li>
+<li><p>Experimente rodar a função <code>zsum.test</code> com diferentes valores de <code>mu</code> para verificar que isto acontece.</p></li>
+</ul>
+</div>
+<div id="explorando-tudo-interativamente-com-outro-app" class="section level3" number="13.4.4">
+<h3>
+<span class="header-section-number">13.4.4</span> Explorando tudo interativamente (com outro app)<a class="anchor" aria-label="anchor" href="#explorando-tudo-interativamente-com-outro-app"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><a href="https://rpsychologist.com/pvalue/" class="uri">https://rpsychologist.com/pvalue/</a></li>
+</ul>
+</div>
+<div id="exercícios-17" class="section level3" number="13.4.5">
+<h3>
+<span class="header-section-number">13.4.5</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-17"><i class="fas fa-link"></i></a>
+</h3>
+<div id="gestação" class="section level4 unnumbered">
+<h4>Gestação<a class="anchor" aria-label="anchor" href="#gesta%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>
+<p>No <a href="th.html#gest">exemplo</a>, mude a hipótese alternativa para</p>
+<p><span class="math display">\[
+H_A : \mu &lt; 280?
+\]</span></p>
+<ul>
+<li><p>Sem refazer os cálculos, você consegue dizer qual é o novo valor <span class="math inline">\(p\)</span>? Compare-o com o valor <span class="math inline">\(p\)</span> original.</p></li>
+<li><p>A hipótese de nulidade continuaria sendo rejeitada?</p></li>
+<li><p>O que mudaria na chamada da função <code>zsum.test</code>?</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="salmões" class="section level4 unnumbered">
+<h4>Salmões<a class="anchor" aria-label="anchor" href="#salm%C3%B5es"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Qual seria o valor <span class="math inline">\(p\)</span> se a média amostral tivesse sido <span class="math inline">\(0{,}08\)</span>ppm?</p></li>
+<li>
+<p>Qual seria o valor <span class="math inline">\(p\)</span> se as hipóteses fossem</p>
+<p><span class="math display">\[
+\begin{align*}
+H_0 &amp;: \mu = 0{,}08 \\
+H_A &amp;: \mu \neq 0{,}08
+\end{align*}
+\]</span></p>
+<p>e a média amostral tivesse sido <span class="math inline">\(0{,}08\)</span>ppm?</p>
+</li>
+<li><p>Quando o valor <span class="math inline">\(p\)</span> é <span class="math inline">\(0\)</span>?</p></li>
+</ul>
+</div>
+<div id="testes-e-ic" class="section level4 unnumbered">
+<h4>Testes e IC<a class="anchor" aria-label="anchor" href="#testes-e-ic"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>O que acontece com o intervalo de confiança quando o teste de hipótese é unilateral?</p></li>
+<li><p>Já que intervalos de confiança e testes de hipóteses contêm a mesma informação, qual dos dois procedimentos você acha mais intuitivo? Mais fácil de executar? Mais fácil de apresentar a um leigo?</p></li>
+</ul>
+</div>
+<div id="app" class="section level4 unnumbered">
+<h4>App<a class="anchor" aria-label="anchor" href="#app"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>Entre em <a href="https://rpsychologist.com/pvalue/" class="uri">https://rpsychologist.com/pvalue/</a></p></li>
+<li><p>No “painel de controle”, deixe <code>sample dist. statistic</code> (estatística da distribuição amostral) em <code>Mean</code> (média). Com isto, a curva de baixo vai mostrar a distribuição amostral das médias.</p></li>
+<li><p>Qual o efeito, sobre a distribuição amostral, de aumentar o tamanho da amostra? Por quê?</p></li>
+<li><p>Defina o tamanho da amostra como <span class="math inline">\(9\)</span>.</p></li>
+<li>
+<p>O app está configurado para o seguinte teste:</p>
+<p><span class="math display">\[
+\begin{align*}
+H_0 &amp;: \mu = 100 \\
+H_A &amp;: \mu \neq 100
+\end{align*}
+\]</span></p>
+</li>
+<li>
+<p><span class="hl">Primeira situação: a hipótese de nulidade é verdadeira.</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Faça o que você deve fazer para que, no app, <span class="math inline">\(H_0\)</span> seja verdadeira.<br>
+Dica: a distribuição populacional “verdadeira” é representada pela curva de cima.</p></li>
+<li><p>Retire <span class="math inline">\(200\)</span> amostras de <span class="math inline">\(9\)</span> elementos cada, apertando quatro vezes o botão <code>+50</code>.</p></li>
+<li><p>Quantas das <span class="math inline">\(200\)</span> bolinhas são azuis? O que elas significam em termos de médias amostrais? Qual a relação delas com <span class="math inline">\(\alpha\)</span>?</p></li>
+<li><p>Mude <code>sample dist. statistic</code> para <code>Z</code>.</p></li>
+<li><p>O que significam os novos rótulos no eixo horizontal da distribuição amostral?</p></li>
+<li><p>O que significam as linhas pontilhadas verticais? Em que valores do eixo horizontal elas estão?</p></li>
+<li><p>Se o app nos deixasse mudar essas linhas pontilhadas de posição (o app não deixa), o que isto significaria?</p></li>
+<li><p>Mude <code>sample dist. statistic</code> para <code>p-value</code>. Agora, as <span class="math inline">\(200\)</span> amostras aparecem distribuídas de acordo com seus valores <span class="math inline">\(p\)</span>.</p></li>
+<li><p>O que significam as bolinhas azuis?</p></li>
+<li><p>O que significam as bolinhas vermelhas?</p></li>
+<li><p>Com <span class="math inline">\(H_0\)</span> verdadeira, como os valores <span class="math inline">\(p\)</span> das <span class="math inline">\(200\)</span> amostras estão distribuídos?</p></li>
+</ol>
+</li>
+<li>
+<p><span class="hl">Segunda situação: a hipótese de nulidade é falsa.</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Apague as amostras, clicando em <code>CLEAR</code>.</p></li>
+<li><p>Mude <code>sample dist. statistic</code> para <code>mean</code>.</p></li>
+<li><p>Defina o tamanho da amostra como <span class="math inline">\(9\)</span>.</p></li>
+<li><p>Faça o que você deve fazer para que a média populacional passe a ser <span class="hl">aproximadamente <span class="math inline">\(110\)</span></span>, tornando <span class="math inline">\(H_0\)</span> falsa.</p></li>
+<li><p>Retire <span class="math inline">\(200\)</span> amostras de <span class="math inline">\(9\)</span> elementos cada, apertando quatro vezes o botão <code>+50</code>.</p></li>
+<li><p>Qual fração aproximada das <span class="math inline">\(200\)</span> bolinhas são azuis? O que elas significam em termos de médias amostrais? Qual a relação delas com <span class="math inline">\(1 - \beta\)</span> (a potência)?</p></li>
+<li><p>Você pode alterar o tamanho das amostras agora, e o app vai atualizar as figuras magicamente. Qual deve ser o valor de <span class="math inline">\(n\)</span> para que a potência ultrapasse <span class="math inline">\(0{,}8\)</span>?</p></li>
+<li><p>Mude <code>sample dist. statistic</code> para <code>p-value</code>.</p></li>
+<li><p>O que significam as bolinhas azuis?</p></li>
+<li><p>O que significam as bolinhas vermelhas?</p></li>
+<li><p>Com <span class="math inline">\(H_0\)</span> falsa, como os valores <span class="math inline">\(p\)</span> das <span class="math inline">\(200\)</span> amostras estão distribuídos?</p></li>
+</ol>
+</li>
+<li>
+<p><span class="hl">Terceira situação: a hipótese de nulidade é falsa, mas não muito.</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Apague as amostras, clicando em <code>CLEAR</code>.</p></li>
+<li><p>Faça o que você deve fazer para que a média populacional passe a ser <span class="hl">aproximadamente <span class="math inline">\(105\)</span></span>, tornando <span class="math inline">\(H_0\)</span> falsa, mas com uma diferença menor para a média verdadeira.</p></li>
+<li><p>Refaça os passos restantes da segunda situação.</p></li>
+<li><p>Comente os resultados.</p></li>
+</ol>
+</li>
+<li>
+<p><span class="hl">Quarta situação: a hipótese de nulidade é falsa, e muito.</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Apague as amostras, clicando em <code>CLEAR</code>.</p></li>
+<li><p>Faça o que você deve fazer para que a média populacional passe a ser <span class="hl">aproximadamente <span class="math inline">\(120\)</span></span>, tornando <span class="math inline">\(H_0\)</span> falsa, com uma diferença muito grande para a média verdadeira.</p></li>
+<li><p>Refaça os passos restantes da segunda situação.</p></li>
+<li><p>Comente os resultados.</p></li>
+</ol>
+</li>
+<li>
+<p><strong>Desafio:</strong></p>
+<ul>
+<li><p>A curva da parte superior da página, de onde “pingam” as médias amostrais, é uma distribuição normal.</p></li>
+<li><p>Durante os exercícios acima, você descobriu como alterar a média dessa normal.</p></li>
+<li><p>Você consegue calcular o desvio-padrão dessa normal?<br>
+Dica: considere a fórmula que dá o erro-padrão da distribuição amostral (a curva de baixo).</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="vídeo-3-1" class="section level2" number="13.5">
+<h2>
+<span class="header-section-number">13.5</span> Vídeo 3<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-3-1"><i class="fas fa-link"></i></a>
+</h2>
+<iframe src="https://www.youtube.com/embed/83pzxnP-p6s" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
+</iframe>
+</div>
+<div id="testes-de-hipóteses-com-duas-amostras" class="section level2" number="13.6">
+<h2>
+<span class="header-section-number">13.6</span> Testes de hipóteses com duas amostras<a class="anchor" aria-label="anchor" href="#testes-de-hip%C3%B3teses-com-duas-amostras"><i class="fas fa-link"></i></a>
+</h2>
+<div id="diferença-entre-proporções" class="section level3" number="13.6.1">
+<h3>
+<span class="header-section-number">13.6.1</span> Diferença entre proporções<a class="anchor" aria-label="anchor" href="#diferen%C3%A7a-entre-propor%C3%A7%C3%B5es"><i class="fas fa-link"></i></a>
+</h3>
+<div id="exemplo-jovens-online" class="section level4 unnumbered">
+<h4>Exemplo: jovens <em>online</em><a class="anchor" aria-label="anchor" href="#exemplo-jovens-online"><i class="fas fa-link"></i></a>
+</h4>
+<div class="rmdbox">
+<p>Duas amostras:</p>
+<ul>
+<li><p><span class="math inline">\(141\)</span> de <span class="math inline">\(248\)</span> rapazes com idades entre <span class="math inline">\(15\)</span> e <span class="math inline">\(17\)</span> anos possuem um perfil <em>online</em>.</p></li>
+<li><p><span class="math inline">\(179\)</span> de <span class="math inline">\(256\)</span> meninas com idades entre <span class="math inline">\(15\)</span> e <span class="math inline">\(17\)</span> anos possuem um perfil <em>online</em>.</p></li>
+</ul>
+<p>A diferença entre as proporções é significativa?</p>
+</div>
+<div id="condições-4" class="section level5 unnumbered">
+<h5>Condições<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-4"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li>
+<p>As <span class="hl">mesmas condições de testes com uma amostra</span> precisam ser verificadas:</p>
+<ul>
+<li><p>Independência.</p></li>
+<li><p>Amostras aleatórias e representativas.</p></li>
+<li><p>Tamanho da amostra menor que <span class="math inline">\(10\%\)</span> da população.</p></li>
+</ul>
+</li>
+<li>
+<p><span class="hl">E mais:</span></p>
+<ul>
+<li><p>Independência dos grupos.</p></li>
+<li><p>Cada grupo deve ter no mínimo <span class="math inline">\(10\)</span> sucessos e <span class="math inline">\(10\)</span> fracassos.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="hipóteses-4" class="section level5 unnumbered">
+<h5>Hipóteses<a class="anchor" aria-label="anchor" href="#hip%C3%B3teses-4"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li>
+<p>O teste, agora, é sobre a <span class="hl">diferença</span> entre as proporções:</p>
+<p><span class="math display">\[
+H_0 : p_h - p_m = 0 \\
+H_A : p_h - p_m \neq 0
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="erro-padrão" class="section level5 unnumbered">
+<h5>Erro padrão<a class="anchor" aria-label="anchor" href="#erro-padr%C3%A3o"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>A diferença <span class="math inline">\(p_h - p_m\)</span> é uma variável aleatória.</p></li>
+<li>
+<p>A variância da diferença é a soma das variâncias:</p>
+<p><span class="math display">\[
+\sigma^2_{p_h - p_m} = \sigma^2_{p_h} + \sigma^2_{p_m}
+\]</span></p>
+</li>
+<li>
+<p>A variância da proporção <span class="hl">amostral</span> é</p>
+<p><span class="math display">\[
+\sigma^2(\hat p) = \frac{p(1 - p)}{n}
+\]</span></p>
+</li>
+<li>
+<p>Logo, a variância da diferença <span class="math inline">\(p_h - p_m\)</span> será</p>
+<p><span class="math display">\[
+\sigma^2(\hat p_h - \hat p_m)
+= \frac{p_h(1 - p_h)}{n_h} + \frac{p_m(1 - p_m)}{n_m}
+\]</span></p>
+</li>
+<li>
+<p>Daí, o desvio-padrão da distribuição amostral da diferença é</p>
+<p><span class="math display">\[
+\sigma(\hat p_h - \hat p_m)
+= \sqrt{\frac{p_h(1 - p_h)}{n_h} + \frac{p_m(1 - p_m)}{n_m}}
+\]</span></p>
+</li>
+<li>
+<p>Como não sabemos os valores verdadeiros de <span class="math inline">\(p_h\)</span> e <span class="math inline">\(p_m\)</span>, usamos as proporções amostrais para obter o erro-padrão:</p>
+<p><span class="math display">\[
+EP(\hat p_h - \hat p_m)
+= \sqrt{\frac{\hat p_h(1 - \hat p_h)}{n_h} + \frac{\hat p_m(1 - \hat p_m)}{n_m}}
+\]</span></p>
+</li>
+<li><p><span class="hl">Se fôssemos construir um intervalo de confiança</span>, usaríamos este erro-padrão.</p></li>
+<li><p>Mas, em um teste de hipóteses, <span class="hl">estamos supondo que <span class="math inline">\(H_0\)</span> é verdadeira, o que equivale a dizer que <span class="math inline">\(p_h = p_m\)</span>.</span></p></li>
+<li>
+<p>Então, podemos calcular uma <span class="hl">proporção ponderada, ou agregada:</span></p>
+<p><span class="math display">\[
+\bar p = \frac{\text{sucessos}_h + \text{sucessos}_m}{n_h + n_m}
+\]</span></p>
+</li>
+<li>
+<p>Aí, <span class="hl">calculamos o erro-padrão com este valor</span> em vez de <span class="math inline">\(\hat p_h\)</span> e <span class="math inline">\(\hat p_m\)</span>:</p>
+<p><span class="math display">\[
+EP(\hat p_h - \hat p_m)
+= \sqrt{\frac{\bar p(1 - \bar p)}{n_h} + \frac{\bar p(1 - \bar p)}{n_m}}
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="valores-4" class="section level5 unnumbered">
+<h5>Valores<a class="anchor" aria-label="anchor" href="#valores-4"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>Tamanhos das amostras: <span class="math inline">\(n_h = 248\)</span> e <span class="math inline">\(n_m = 256\)</span>.</p></li>
+<li><p>Proporções amostrais: <span class="math inline">\(\hat p_h = 0{,}57\)</span> e <span class="math inline">\(\hat p_m = 0{,}7\)</span>.</p></li>
+<li><p>Hipótese de nulidade: <span class="math inline">\(H_0 : p_h - p_m = 0\)</span>.</p></li>
+<li><p>Hipótese alternativa: <span class="math inline">\(H_A : p_h - p_m \neq 0\)</span>.</p></li>
+<li><p>Nível de significância: <span class="math inline">\(\alpha = 0{,}05\)</span>.</p></li>
+</ul>
+</div>
+<div id="cálculos" class="section level5 unnumbered">
+<h5>Cálculos<a class="anchor" aria-label="anchor" href="#c%C3%A1lculos"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb798"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n_h</span> <span class="op">&lt;-</span> <span class="fl">248</span></span>
+<span><span class="va">sucessos_h</span> <span class="op">&lt;-</span> <span class="fl">141</span></span>
+<span><span class="va">p_h</span> <span class="op">&lt;-</span> <span class="va">sucessos_h</span> <span class="op">/</span> <span class="va">n_h</span></span>
+<span></span>
+<span><span class="va">n_m</span> <span class="op">&lt;-</span> <span class="fl">256</span></span>
+<span><span class="va">sucessos_m</span> <span class="op">&lt;-</span> <span class="fl">179</span></span>
+<span><span class="va">p_m</span> <span class="op">&lt;-</span> <span class="va">sucessos_m</span> <span class="op">/</span> <span class="va">n_m</span></span>
+<span></span>
+<span><span class="va">d0</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">d_chapeu</span> <span class="op">&lt;-</span> <span class="va">p_m</span> <span class="op">-</span> <span class="va">p_h</span> </span>
+<span><span class="va">d_cauda_esquerda</span> <span class="op">&lt;-</span> <span class="va">d0</span> <span class="op">-</span> <span class="op">(</span><span class="va">d_chapeu</span> <span class="op">-</span> <span class="va">d0</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_agregado</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">sucessos_h</span> <span class="op">+</span> <span class="va">sucessos_m</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">n_h</span> <span class="op">+</span> <span class="va">n_m</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span></span>
+<span>  <span class="va">p_agregado</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p_agregado</span><span class="op">)</span> <span class="op">/</span> <span class="va">n_h</span> <span class="op">+</span> </span>
+<span>  <span class="va">p_agregado</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p_agregado</span><span class="op">)</span> <span class="op">/</span> <span class="va">n_m</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ep</span></span></code></pre></div>
+<pre><code>## [1] 0,04289659</code></pre>
+</div>
+<div id="a-distribuição-amostral-de-hat-p_h---hat-p_m-supondo-h_0" class="section level5 unnumbered">
+<h5>A distribuição amostral de <span class="math inline">\(\hat p_h - \hat p_m\)</span>, supondo <span class="math inline">\(H_0\)</span><a class="anchor" aria-label="anchor" href="#a-distribui%C3%A7%C3%A3o-amostral-de-hat-p_h---hat-p_m-supondo-h_0"><i class="fas fa-link"></i></a>
+</h5>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-358-1.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
+<div id="valor-p-e-conclusão" class="section level5 unnumbered">
+<h5>Valor <span class="math inline">\(p\)</span> e conclusão<a class="anchor" aria-label="anchor" href="#valor-p-e-conclus%C3%A3o"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb800"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">valor_p</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">d_cauda_esquerda</span>, mean <span class="op">=</span> <span class="va">d0</span>, sd <span class="op">=</span> <span class="va">ep</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="va">d_chapeu</span>, mean <span class="op">=</span> <span class="va">d0</span>, sd <span class="op">=</span> <span class="va">ep</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,002317759</code></pre>
+<ul>
+<li>Este valor é <span class="hl">menor</span> do que <span class="math inline">\(\alpha = 0{,}05\)</span>. Logo, nossa amostra é evidência para <span class="hl">rejeitar</span> a hipótese de nulidade neste nível de significância.</li>
+</ul>
+</div>
+</div>
+<div id="em-r-15" class="section level4 unnumbered">
+<h4>Em R<a class="anchor" aria-label="anchor" href="#em-r-15"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb802"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/prop.test.html">prop.test</a></span><span class="op">(</span></span>
+<span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sucessos_m</span>, <span class="va">sucessos_h</span><span class="op">)</span>,</span>
+<span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n_m</span>, <span class="va">n_h</span><span class="op">)</span>,</span>
+<span>  alternative <span class="op">=</span> <span class="st">'two.sided'</span>,</span>
+<span>  correct <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  2-sample test for equality of proportions without continuity correction
+## 
+## data:  c(sucessos_m, sucessos_h) out of c(n_m, n_h)
+## X-squared = 9,2792, df = 1, p-value = 0,002318
+## alternative hypothesis: two.sided
+## 95 percent confidence interval:
+##  0,04727054 0,21407019
+## sample estimates:
+##    prop 1    prop 2 
+## 0,6992188 0,5685484</code></pre>
+</div>
+</div>
+<div id="diferença-entre-médias-amostras-independentes" class="section level3" number="13.6.2">
+<h3>
+<span class="header-section-number">13.6.2</span> Diferença entre médias (amostras independentes)<a class="anchor" aria-label="anchor" href="#diferen%C3%A7a-entre-m%C3%A9dias-amostras-independentes"><i class="fas fa-link"></i></a>
+</h3>
+<div id="exemplo-olhos-times-flores" class="section level4 unnumbered">
+<h4>Exemplo: olhos <span class="math inline">\(\times\)</span> flores<a class="anchor" aria-label="anchor" href="#exemplo-olhos-times-flores"><i class="fas fa-link"></i></a>
+</h4>
+<div class="rmdbox">
+<ul>
+<li><p>Em <span class="math inline">\(2006\)</span>, pesquisadores em uma universidade inglesa fizeram um experimento para verificar se as pessoas alteram seu comportamento quando se sentem vigiadas.</p></li>
+<li><p>Na universidade, havia uma copa onde chá, café e leite eram disponibilizados para todos que frequentavam o local.</p></li>
+<li><p>Na parede, próximo às bebidas, ficava um cartaz com as instruções para pagamento e os valores de cada bebida. As pessoas deviam depositar o dinheiro em uma caixa próxima às bebidas.</p></li>
+<li><p>Junto a esse cartaz, os pesquisadores afixaram outro, com imagens.</p></li>
+<li><p>As imagens eram trocadas regularmente. Durante uma semana, eram flores; durante uma semana, era um par de olhos. Esta alternância foi mantida durante <span class="math inline">\(10\)</span> semanas.</p></li>
+<li><p>A disposição da copa era tal que, se alguém decidisse não pagar, ninguém perceberia.</p></li>
+<li><p>Os pesquisadores controlaram a arrecadação por litro de leite consumido por semana.</p></li>
+<li><p>Em média, esta arrecadação foi quase <span class="math inline">\(3\)</span> vezes maior nas semanas em que o cartaz continha o par de olhos, em comparação com as semanas em que o cartaz continha as flores:</p></li>
+</ul>
+<div class="inline-figure"><img src="images/eyes-flowers.png" class="center" style="width: 50%;"></div>
+<ul>
+<li>Este exemplo é baseado em <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1686213/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1686213/</a>, de onde foi retirada a imagem acima.</li>
+</ul>
+</div>
+<div id="amostras" class="section level5 unnumbered">
+<h5>Amostras<a class="anchor" aria-label="anchor" href="#amostras"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>As <span class="math inline">\(5\)</span> semanas com os cartazes dos olhos formam uma amostra.</p></li>
+<li><p>Nessas semanas, a arrecadação média por litro de leite foi de <span class="math inline">\(0{,}417\)</span> libras, com desvio-padrão de <span class="math inline">\(0{,}1811\)</span>.</p></li>
+<li><p>As <span class="math inline">\(5\)</span> semanas com os cartazes das flores formam a outra amostra.</p></li>
+<li><p>Nessas semanas, a arrecadação média por litro de leite foi de <span class="math inline">\(0{,}151\)</span> libras, com desvio-padrão de <span class="math inline">\(0{,}067\)</span>.</p></li>
+<li>
+<p>Em R:</p>
+<div class="sourceCode" id="cb804"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">amostra_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.6843</span>, <span class="fl">0.3038</span>, <span class="fl">0.3780</span>, <span class="fl">0.2202</span>, <span class="fl">0.4987</span><span class="op">)</span></span>
+<span><span class="va">amostra_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1737</span>, <span class="fl">0.117</span>, <span class="fl">0.1075</span>, <span class="fl">0.0981</span>, <span class="fl">0.2587</span><span class="op">)</span></span></code></pre></div>
+</li>
+</ul>
+</div>
+<div id="condições-5" class="section level5 unnumbered">
+<h5>Condições<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-5"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p><span class="hl">Independência:</span> vamos supor que as contribuições de uma pessoa são independentes das das outras.</p></li>
+<li><p><span class="hl">Amostras aleatórias e representativas:</span> vamos supor que essas contribuições representam a população de interesse (contribuições de frequentadores e funcionários da universidade? de todos os cidadãos ingleses? de toda a humanidade?)</p></li>
+<li>
+<p><span class="hl">Tamanho das amostras:</span></p>
+<ul>
+<li><p>As amostras são menos do que <span class="math inline">\(10\%\)</span> da população.</p></li>
+<li><p>As amostras são pequenas (<span class="math inline">\(n_1 = n_2 = 5\)</span>). Precisamos ser cautelosos quanto às conclusões.</p></li>
+</ul>
+</li>
+<li><p><span class="hl">Independência dos grupos:</span> o comportamento das pessoas nas semanas dos olhos é independente do comportamento <em>das mesmas pessoas</em> nas semanas das flores? Vamos supor que sim, embora esta seja uma suposição arriscada.</p></li>
+<li>
+<p><span class="hl">Dados aproximadamente normais:</span> com amostras tão pequenas, é difícil avaliar.</p>
+<ul>
+<li>
+<p>Para as semanas dos olhos:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-362-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Para as semanas das flores:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-363-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li>
+<p>Agregando as duas amostras:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-364-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+<li><p>Pelo menos o terceiro histograma (com a união das duas amostras) é unimodal e simétrico. Vamos prosseguir com cautela.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="hipóteses-5" class="section level5 unnumbered">
+<h5>Hipóteses<a class="anchor" aria-label="anchor" href="#hip%C3%B3teses-5"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li>
+<p>O teste, agora, é sobre a <span class="hl">diferença entre as médias</span>:</p>
+<p><span class="math display">\[
+H_0 : \mu_1 - \mu_2 = 0 \\
+H_A : \mu_1 - \mu_2 \neq 0
+\]</span></p>
+<p>onde <span class="math inline">\(\mu_1\)</span> é a média da arrecadação nas semanas dos olhos, e <span class="math inline">\(\mu_2\)</span> é a média da arrecadação nas semanas das flores.</p>
+</li>
+</ul>
+</div>
+<div id="erro-padrão-variâncias-diferentes" class="section level5 unnumbered">
+<h5>Erro padrão (variâncias diferentes)<a class="anchor" aria-label="anchor" href="#erro-padr%C3%A3o-vari%C3%A2ncias-diferentes"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>Mesmo quando supomos <span class="math inline">\(H_0\)</span> — i.e., que as médias <span class="hl">populacionais</span> <span class="math inline">\(\mu_1\)</span> e <span class="math inline">\(\mu_2\)</span> são iguais — não podemos afirmar nada sobre os desvios-padrão das duas <span class="hl">subpopulações</span>: as semanas dos olhos e as semanas das flores.</p></li>
+<li>
+<p>Podemos estimar as variações das duas amostras criando um <em>boxplot</em>:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-365-1.png" width="100%" style="display: block; margin: auto;"></div>
+<p>A amostra <span class="math inline">\(1\)</span> parece ter uma variação maior do que a amostra <span class="math inline">\(2\)</span>.</p>
+</li>
+<li>
+<p>De fato, o desvio-padrão da amostra <span class="math inline">\(1\)</span> é quase o triplo do da amostra <span class="math inline">\(2\)</span>.</p>
+<div class="sourceCode" id="cb805"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">amostra_1</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,1811006</code></pre>
+<div class="sourceCode" id="cb807"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">amostra_2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0,06700978</code></pre>
+</li>
+<li>
+<p>Então, estimamos a variância das semanas dos olhos por</p>
+<p><span class="math display">\[
+\hat \sigma^2_1 = \frac{s^2_1}{n_1}
+\]</span></p>
+<p>e estimamos a variância das semanas das flores por</p>
+<p><span class="math display">\[
+\hat \sigma^2_2 = \frac{s^2_2}{n_2}
+\]</span></p>
+</li>
+<li>
+<p>Daí, supondo <span class="math inline">\(H_0\)</span>, a estimativa da variância populacional é</p>
+<p><span class="math display">\[
+\hat \sigma^2 = \frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}
+\]</span></p>
+</li>
+<li>
+<p>E o erro-padrão será</p>
+<p><span class="math display">\[
+EP = \sqrt{\frac{s^2_1}{n_1} + \frac{s^2_2}{n_2}}
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="valores-5" class="section level5 unnumbered">
+<h5>Valores<a class="anchor" aria-label="anchor" href="#valores-5"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>Tamanhos das amostras: <span class="math inline">\(n_1 = n_2 = 5\)</span>.</p></li>
+<li><p>Médias amostrais: <span class="math inline">\(\bar x_1 = 0{,}417\)</span> e <span class="math inline">\(\bar x_2 = 0{,}151\)</span>.</p></li>
+<li><p>desvios-padrão amostrais: <span class="math inline">\(s_1 = 0{,}1811\)</span> e <span class="math inline">\(s_2 = 0{,}067\)</span>.</p></li>
+<li><p>Hipótese de nulidade: <span class="math inline">\(H_0 : \mu_1 - \mu_2 = 0\)</span>.</p></li>
+<li><p>Hipótese alternativa: <span class="math inline">\(H_A : \mu_1 - \mu_2 \neq 0\)</span>.</p></li>
+<li><p>Nível de significância: <span class="math inline">\(\alpha = 0{,}05\)</span>.</p></li>
+</ul>
+</div>
+<div id="cálculos-1" class="section level5 unnumbered">
+<h5>Cálculos<a class="anchor" aria-label="anchor" href="#c%C3%A1lculos-1"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb809"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">amostra_1</span><span class="op">)</span></span>
+<span><span class="va">xbarra_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">amostra_1</span><span class="op">)</span></span>
+<span><span class="va">s_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">amostra_1</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">n_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">amostra_2</span><span class="op">)</span></span>
+<span><span class="va">xbarra_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">amostra_2</span><span class="op">)</span></span>
+<span><span class="va">s_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">amostra_2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">d0</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span><span class="va">dx</span> <span class="op">&lt;-</span> <span class="va">xbarra_1</span> <span class="op">-</span> <span class="va">xbarra_2</span></span>
+<span><span class="va">d_cauda_esquerda</span> <span class="op">&lt;-</span> <span class="va">d0</span> <span class="op">-</span> <span class="va">dx</span></span>
+<span>  </span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">s_1</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n_1</span> <span class="op">+</span> <span class="va">s_2</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n_2</span><span class="op">)</span></span>
+<span><span class="va">ep</span></span></code></pre></div>
+<pre><code>## [1] 0,08635708</code></pre>
+</div>
+<div id="a-distribuição-amostral-de-bar-x_1---bar-x_2-supondo-h_0" class="section level5 unnumbered">
+<h5>A distribuição amostral de <span class="math inline">\(\bar x_1 - \bar x_2\)</span>, supondo <span class="math inline">\(H_0\)</span><a class="anchor" aria-label="anchor" href="#a-distribui%C3%A7%C3%A3o-amostral-de-bar-x_1---bar-x_2-supondo-h_0"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>Como não sabemos o desvio-padrão <span class="hl">populacional</span>, precisamos usar a distribuição <span class="math inline">\(t\)</span>.</p></li>
+<li>
+<p>A média da distribuição <span class="math inline">\(t\)</span> é <span class="math inline">\(0\)</span>. Precisamos padronizar os valores:</p>
+<div class="sourceCode" id="cb811"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dx</span></span></code></pre></div>
+<pre><code>## [1] 0,266</code></pre>
+<div class="sourceCode" id="cb813"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">dx</span> <span class="op">-</span> <span class="va">d0</span><span class="op">)</span><span class="op">/</span><span class="va">ep</span></span>
+<span><span class="va">tx</span></span></code></pre></div>
+<pre><code>## [1] 3,080234</code></pre>
+<div class="sourceCode" id="cb815"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t_cauda_esquerda</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d_cauda_esquerda</span> <span class="op">-</span> <span class="va">d0</span><span class="op">)</span><span class="op">/</span><span class="va">ep</span></span></code></pre></div>
+</li>
+<li>
+<p>Quantos graus de liberdade?</p>
+<p>O número de graus de liberdade é dado por</p>
+<p><span class="math display">\[
+\nu = \frac{
+  \left( \frac{s_1^2}{n_1} + \frac{s_2^2}{n_2} \right)^2
+}{
+  \frac{(s_1^2 / n_1)^2}{n_1 - 1} +
+  \frac{(s_2^2 / n_2)^2}{n_2 - 1}
+}
+\]</span></p>
+<div class="sourceCode" id="cb816"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gl</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">s_1</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n_1</span> <span class="op">+</span> <span class="va">s_2</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n_2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="op">(</span></span>
+<span>  <span class="op">(</span><span class="va">s_1</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n_1</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="va">n_1</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="op">(</span><span class="va">s_2</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="va">n_2</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="op">(</span><span class="va">n_2</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">gl</span></span></code></pre></div>
+<pre><code>## [1] 5,075131</code></pre>
+</li>
+<li>
+<p>Graficamente:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-372-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="valor-p-e-conclusão-1" class="section level5 unnumbered">
+<h5>Valor <span class="math inline">\(p\)</span> e conclusão<a class="anchor" aria-label="anchor" href="#valor-p-e-conclus%C3%A3o-1"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb818"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">valor_p</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="va">t_cauda_esquerda</span>, <span class="va">gl</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="va">tx</span>, <span class="va">gl</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,02692873</code></pre>
+<ul>
+<li>Este valor é <span class="hl">menor</span> do que <span class="math inline">\(\alpha = 0{,}05\)</span>. Logo, nossa amostra é evidência para <span class="hl">rejeitar</span> a hipótese de nulidade neste nível de significância.</li>
+</ul>
+</div>
+</div>
+<div id="em-r-16" class="section level4 unnumbered">
+<h4>Em R<a class="anchor" aria-label="anchor" href="#em-r-16"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb820"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">amostra_1</span>, <span class="va">amostra_2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  amostra_1 and amostra_2
+## t = 3,0802, df = 5,0751, p-value = 0,02693
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0,04499686 0,48700314
+## sample estimates:
+## mean of x mean of y 
+##     0,417     0,151</code></pre>
+</div>
+<div id="e-se-as-arrecadações-médias-tiverem-o-mesmo-sigma" class="section level4 unnumbered">
+<h4>E se as arrecadações médias tiverem o mesmo <span class="math inline">\(\sigma\)</span>?<a class="anchor" aria-label="anchor" href="#e-se-as-arrecada%C3%A7%C3%B5es-m%C3%A9dias-tiverem-o-mesmo-sigma"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li><p>O cálculo do erro-padrão muda.</p></li>
+<li>
+<p>A variância agregada é</p>
+<p><span class="math display">\[
+s^2 = \frac{(n_1 - 1)s_1^2}{(n_1 + n_2 - 2)} +
+  \frac{(n_2 - 1)s_2^2}{(n_1 + n_2 - 2)}
+\]</span></p>
+</li>
+<li>
+<p>O erro-padrão fica</p>
+<p><span class="math display">\[
+EP = \sqrt{\frac{s^2}{n_1} + \frac{s^2}{n_2}}
+\]</span></p>
+<p>onde <span class="math inline">\(s^2\)</span> é a variância agregada, calculada acima.</p>
+<div class="sourceCode" id="cb822"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">var_agregada</span> <span class="op">&lt;-</span> <span class="op">(</span></span>
+<span>  <span class="op">(</span><span class="va">n_1</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">amostra_1</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="va">n_2</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">amostra_2</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">n_1</span> <span class="op">+</span> <span class="va">n_2</span> <span class="op">-</span> <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">var_agregada</span> <span class="op">/</span> <span class="va">n_1</span> <span class="op">+</span> <span class="va">var_agregada</span> <span class="op">/</span> <span class="va">n_2</span><span class="op">)</span></span>
+<span><span class="va">ep</span></span></code></pre></div>
+<pre><code>## [1] 0,08635708</code></pre>
+</li>
+<li>
+<p>O número de graus de liberdade fica mais simples:</p>
+<div class="sourceCode" id="cb824"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gl</span> <span class="op">&lt;-</span> <span class="va">n_1</span> <span class="op">+</span> <span class="va">n_2</span> <span class="op">-</span> <span class="fl">2</span></span>
+<span><span class="va">gl</span></span></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+</li>
+<li>
+<p>Refazendo os cálculos:</p>
+<div class="sourceCode" id="cb826"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">tx</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">dx</span> <span class="op">-</span> <span class="va">d0</span><span class="op">)</span><span class="op">/</span><span class="va">ep</span></span>
+<span><span class="va">tx</span></span></code></pre></div>
+<pre><code>## [1] 3,080234</code></pre>
+<div class="sourceCode" id="cb828"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t_cauda_esquerda</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d_cauda_esquerda</span> <span class="op">-</span> <span class="va">d0</span><span class="op">)</span><span class="op">/</span><span class="va">ep</span></span>
+<span></span>
+<span><span class="va">valor_p</span> <span class="op">&lt;-</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="va">t_cauda_esquerda</span>, <span class="va">gl</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="va">tx</span>, <span class="va">gl</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,01511156</code></pre>
+</li>
+<li><p>Supondo o mesmo desvio-padrão para as duas subpopulações, o valor <span class="math inline">\(p\)</span> fica ainda menor. Como o valor é <span class="hl">menor</span> do que <span class="math inline">\(\alpha = 0{,}05\)</span>, nossa amostra é evidência para <span class="hl">rejeitar</span> a hipótese de nulidade neste nível de significância.</p></li>
+<li>
+<p>Em R:</p>
+<div class="sourceCode" id="cb830"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">amostra_1</span>, <span class="va">amostra_2</span>, var.equal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  amostra_1 and amostra_2
+## t = 3,0802, df = 8, p-value = 0,01511
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0,06686022 0,46513978
+## sample estimates:
+## mean of x mean of y 
+##     0,417     0,151</code></pre>
+</li>
+</ul>
+</div>
+</div>
+<div id="diferença-entre-médias-amostras-pareadas" class="section level3" number="13.6.3">
+<h3>
+<span class="header-section-number">13.6.3</span> Diferença entre médias (amostras pareadas)<a class="anchor" aria-label="anchor" href="#diferen%C3%A7a-entre-m%C3%A9dias-amostras-pareadas"><i class="fas fa-link"></i></a>
+</h3>
+<div id="exemplo-quilometragem" class="section level4 unnumbered">
+<h4>Exemplo: quilometragem<a class="anchor" aria-label="anchor" href="#exemplo-quilometragem"><i class="fas fa-link"></i></a>
+</h4>
+<div class="rmdbox">
+<ul>
+<li><p>Durante um ano, um órgão público mediu a quilometragem total de seus <span class="math inline">\(11\)</span> motoristas em um regime de trabalho de <span class="math inline">\(5\)</span> dias por semana.</p></li>
+<li><p>No ano seguinte, os mesmos <span class="math inline">\(11\)</span> motoristas trabalharam <span class="math inline">\(4\)</span> dias por semana, e as quilometragens totais foram medidas novamente.</p></li>
+<li>
+<p>Os resultados foram:</p>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["motorista"],"name":[1],"type":["int"],"align":["right"]},{"label":["dias_5"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["dias_4"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["diferença"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2798","3":"2914","4":"-116"},{"1":"2","2":"7724","3":"6112","4":"1612"},{"1":"3","2":"7505","3":"6177","4":"1328"},{"1":"4","2":"838","3":"1102","4":"-264"},{"1":"5","2":"4592","3":"3281","4":"1311"},{"1":"6","2":"8107","3":"4997","4":"3110"},{"1":"7","2":"1228","3":"1695","4":"-467"},{"1":"8","2":"8718","3":"6606","4":"2112"},{"1":"9","2":"1097","3":"1063","4":"34"},{"1":"10","2":"8089","3":"6392","4":"1697"},{"1":"11","2":"3807","3":"3362","4":"445"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</li>
+<li><p>A diferença nas quilometragens foi significativa?</p></li>
+<li><p>Exemplo baseado em <a href="https://www.thefreelibrary.com/Four-day+work+week+improves+environment.-a019280161" class="uri">https://www.thefreelibrary.com/Four-day+work+week+improves+environment.-a019280161</a></p></li>
+</ul>
+</div>
+<ul>
+<li><p>As amostras agora são <span class="hl">pareadas</span>.</p></li>
+<li><p>O que nos interessa é a diferença na quilometragem <span class="hl">de cada motorista</span>.</p></li>
+<li><p>Vamos fazer um <span class="hl">teste <span class="math inline">\(t\)</span> sobre as diferenças</span> (os valores da última coluna).</p></li>
+</ul>
+<div id="condições-6" class="section level5 unnumbered">
+<h5>Condições<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-6"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p><span class="hl">Independência entre os pares:</span> o comportamento de cada motorista independe do comportamento dos outros.</p></li>
+<li><p><span class="hl">Amostras aleatórias e representativas:</span> vamos supor que sim.</p></li>
+<li><p><span class="hl">Tamanho das amostras:</span> as amostras são menos do que <span class="math inline">\(10\%\)</span> da população.</p></li>
+<li>
+<p><span class="hl">Dados aproximadamente normais:</span> vejamos um histograma das diferenças:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-382-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="hipóteses-6" class="section level5 unnumbered">
+<h5>Hipóteses<a class="anchor" aria-label="anchor" href="#hip%C3%B3teses-6"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li>
+<p>O teste, agora, é sobre a <span class="hl">média das diferenças</span>:</p>
+<p><span class="math display">\[
+H_0 : \mu_d = 0 \\
+H_A : \mu_d \neq 0
+\]</span></p>
+</li>
+</ul>
+</div>
+<div id="erro-padrão-1" class="section level5 unnumbered">
+<h5>Erro padrão<a class="anchor" aria-label="anchor" href="#erro-padr%C3%A3o-1"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li>
+<p>Como o erro-padrão de <span class="math inline">\(\mu\)</span>, mas, aqui, <span class="hl"><span class="math inline">\(n\)</span> é o número de pares.</span></p>
+<p><span class="math display">\[
+EP = \frac{s_d}{\sqrt n}
+\]</span></p>
+<p>onde <span class="math inline">\(s_d\)</span> é o desvio-padrão das diferenças.</p>
+</li>
+</ul>
+</div>
+<div id="valores-6" class="section level5 unnumbered">
+<h5>Valores<a class="anchor" aria-label="anchor" href="#valores-6"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>Tamanho da amostra: <span class="math inline">\(n = 11\)</span>.</p></li>
+<li><p>Média amostral: <span class="math inline">\(\bar d = 982\)</span>.</p></li>
+<li><p>desvio-padrão amostral: <span class="math inline">\(s_d = 1.139{,}57\)</span>.</p></li>
+<li><p>Hipótese de nulidade: <span class="math inline">\(H_0 : \mu_d = 0\)</span>.</p></li>
+<li><p>Hipótese alternativa: <span class="math inline">\(H_A : \mu_d \neq 0\)</span>.</p></li>
+<li><p>Nível de significância: <span class="math inline">\(\alpha = 0{,}05\)</span>.</p></li>
+</ul>
+</div>
+<div id="cálculos-2" class="section level5 unnumbered">
+<h5>Cálculos<a class="anchor" aria-label="anchor" href="#c%C3%A1lculos-2"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb832"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">diferença</span><span class="op">)</span></span>
+<span><span class="va">d_barra</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">diferença</span><span class="op">)</span></span>
+<span><span class="va">s_d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">diferença</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">d0</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>  </span>
+<span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="va">s_d</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">ep</span></span></code></pre></div>
+<pre><code>## [1] 343,5928</code></pre>
+</div>
+<div id="a-distribuição-amostral-de-bar-d" class="section level5 unnumbered">
+<h5>A distribuição amostral de <span class="math inline">\(\bar d\)</span><a class="anchor" aria-label="anchor" href="#a-distribui%C3%A7%C3%A3o-amostral-de-bar-d"><i class="fas fa-link"></i></a>
+</h5>
+<ul>
+<li><p>Como não sabemos o desvio-padrão <span class="hl">populacional</span>, precisamos usar a distribuição <span class="math inline">\(t\)</span>.</p></li>
+<li>
+<p>A média da distribuição <span class="math inline">\(t\)</span> é <span class="math inline">\(0\)</span>. Precisamos padronizar os valores:</p>
+<div class="sourceCode" id="cb834"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d_barra</span></span></code></pre></div>
+<pre><code>## [1] 982</code></pre>
+<div class="sourceCode" id="cb836"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">t_barra</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">d_barra</span> <span class="op">-</span> <span class="va">d0</span><span class="op">)</span><span class="op">/</span><span class="va">ep</span></span>
+<span><span class="va">t_barra</span></span></code></pre></div>
+<pre><code>## [1] 2,858034</code></pre>
+</li>
+<li>
+<p>O número de graus de liberdade é <span class="math inline">\(n - 1 = 10\)</span>.</p>
+<div class="sourceCode" id="cb838"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gl</span> <span class="op">&lt;-</span> <span class="va">n</span> <span class="op">-</span> <span class="fl">1</span></span></code></pre></div>
+</li>
+<li>
+<p>Graficamente:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-387-1.png" width="100%" style="display: block; margin: auto;"></div>
+</li>
+</ul>
+</div>
+<div id="valor-p-e-conclusão-2" class="section level5 unnumbered">
+<h5>Valor <span class="math inline">\(p\)</span> e conclusão<a class="anchor" aria-label="anchor" href="#valor-p-e-conclus%C3%A3o-2"><i class="fas fa-link"></i></a>
+</h5>
+<div class="sourceCode" id="cb839"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">valor_p</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">pt</a></span><span class="op">(</span><span class="va">t_barra</span>, <span class="va">gl</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">valor_p</span></span></code></pre></div>
+<pre><code>## [1] 0,01701413</code></pre>
+<ul>
+<li>Este valor é <span class="hl">menor</span> do que <span class="math inline">\(\alpha = 0{,}05\)</span>, nossa amostra é evidência para <span class="hl">rejeitar</span> a hipótese de nulidade neste nível de significância. A quilometragem média variou de um ano para o outro.</li>
+</ul>
+</div>
+</div>
+<div id="em-r-17" class="section level4 unnumbered">
+<h4>Em R<a class="anchor" aria-label="anchor" href="#em-r-17"><i class="fas fa-link"></i></a>
+</h4>
+<div class="sourceCode" id="cb841"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span></span>
+<span>  <span class="va">df</span><span class="op">$</span><span class="va">dias_5</span>, </span>
+<span>  <span class="va">df</span><span class="op">$</span><span class="va">dias_4</span>,</span>
+<span>  paired <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  df$dias_5 and df$dias_4
+## t = 2,858, df = 10, p-value = 0,01701
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##   216,4276 1747,5724
+## sample estimates:
+## mean difference 
+##             982</code></pre>
+</div>
+</div>
+</div>
+<div id="outros-testes-em-r" class="section level2" number="13.7">
+<h2>
+<span class="header-section-number">13.7</span> Outros testes em R<a class="anchor" aria-label="anchor" href="#outros-testes-em-r"><i class="fas fa-link"></i></a>
+</h2>
+<div class="rmdimportant">
+<p>Diversas outras funções em R apresentam os resultados de testes em termos de intervalos de confiança e/ou valores <span class="math inline">\(p\)</span>.</p>
+</div>
+<div id="teste-de-normalidade-de-shapiro-wilk" class="section level3" number="13.7.1">
+<h3>
+<span class="header-section-number">13.7.1</span> Teste de normalidade de Shapiro-Wilk<a class="anchor" aria-label="anchor" href="#teste-de-normalidade-de-shapiro-wilk"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p><span class="hl">A hipótese de nulidade é <span class="math inline">\(H_0: {}\)</span> a amostra vem de uma distribuição normal.</span></p></li>
+<li>
+<p>Então, um valor <span class="math inline">\(p\)</span> alto é evidência a favor da normalidade dos dados:</p>
+<div class="sourceCode" id="cb843"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">5</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0,99388, p-value = 0,9349</code></pre>
+<div class="sourceCode" id="cb845"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Shapiro-Wilk normality test
+## 
+## data:  x
+## W = 0,9454, p-value = 0,0004182</code></pre>
+</li>
+</ul>
+</div>
+<div id="teste-para-comparar-variâncias" class="section level3" number="13.7.2">
+<h3>
+<span class="header-section-number">13.7.2</span> Teste para comparar variâncias<a class="anchor" aria-label="anchor" href="#teste-para-comparar-vari%C3%A2ncias"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p><span class="hl">A hipótese de nulidade é <span class="math inline">\(H_0 : \sigma^2_x / \sigma^2_y = r\)</span>, onde o valor <em>default</em> de <span class="math inline">\(r\)</span> é <span class="math inline">\(1\)</span>.</span></p></li>
+<li>
+<p>Testando as amostras do experimento olhos <span class="math inline">\(\times\)</span> flores:</p>
+<div class="sourceCode" id="cb847"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/var.test.html">var.test</a></span><span class="op">(</span><span class="va">amostra_1</span>, <span class="va">amostra_2</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  F test to compare two variances
+## 
+## data:  amostra_1 and amostra_2
+## F = 7,304, num df = 4, denom df = 4, p-value = 0,08003
+## alternative hypothesis: true ratio of variances is not equal to 1
+## 95 percent confidence interval:
+##   0,7604789 70,1518943
+## sample estimates:
+## ratio of variances 
+##           7,304042</code></pre>
+</li>
+</ul>
+</div>
+<div id="teste-de-correlação" class="section level3" number="13.7.3">
+<h3>
+<span class="header-section-number">13.7.3</span> Teste de correlação<a class="anchor" aria-label="anchor" href="#teste-de-correla%C3%A7%C3%A3o"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li><p><span class="hl">A hipótese de nulidade é <span class="math inline">\(H_0 : {}\)</span> as variáveis (pareadas) <span class="math inline">\(x\)</span> e <span class="math inline">\(y\)</span> <em>não</em> são correlacionadas.</span></p></li>
+<li>
+<p>Testando as amostras do exemplo dos motoristas:</p>
+<div class="sourceCode" id="cb849"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">dias_4</span>, <span class="va">df</span><span class="op">$</span><span class="va">dias_5</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+##  Pearson's product-moment correlation
+## 
+## data:  df$dias_4 and df$dias_5
+## t = 13,671, df = 9, p-value = 0,0000002518
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0,9101992 0,9941362
+## sample estimates:
+##       cor 
+## 0,9767585</code></pre>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<script>
+
+/* update total correct if #webex-total_correct exists */
+update_total_correct = function() {
+  console.log("webex: update total_correct");
+
+  if (t = document.getElementById("webex-total_correct")) {
+    var correct = document.getElementsByClassName("webex-correct").length;
+    var solvemes = document.getElementsByClassName("webex-solveme").length;
+    var radiogroups = document.getElementsByClassName("webex-radiogroup").length;
+    var selects = document.getElementsByClassName("webex-select").length;
+
+    t.innerHTML = correct + " of " + (solvemes + radiogroups + selects) + " correct";
+  }
+}
+
+/* webex-solution button toggling function */
+b_func = function() {
+  console.log("webex: toggle hide");
+
+  var cl = this.parentElement.classList;
+  if (cl.contains('open')) {
+    cl.remove("open");
+  } else {
+    cl.add("open");
+  }
+}
+
+/* function for checking solveme answers */
+solveme_func = function(e) {
+  console.log("webex: check solveme");
+
+  var real_answers = JSON.parse(this.dataset.answer);
+  var my_answer = this.value;
+  var cl = this.classList;
+  if (cl.contains("ignorecase")) {
+    my_answer = my_answer.toLowerCase();
+  }
+  if (cl.contains("nospaces")) {
+    my_answer = my_answer.replace(/ /g, "")
+  }
+
+  if (my_answer == "") {
+    cl.remove("webex-correct");
+    cl.remove("webex-incorrect");
+  } else if (real_answers.includes(my_answer)) {
+    cl.add("webex-correct");
+    cl.remove("webex-incorrect");
+  } else {
+    cl.add("webex-incorrect");
+    cl.remove("webex-correct");
+  }
+
+  // match numeric answers within a specified tolerance
+  if(this.dataset.tol > 0){
+    var tol = JSON.parse(this.dataset.tol);
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+      cl.add("webex-correct");
+    } else {
+      cl.remove("webex-correct");
+    }
+  }
+
+  // added regex bit
+  if (cl.contains("regex")){
+    answer_regex = RegExp(real_answers.join("|"))
+    if (answer_regex.test(my_answer)) {
+      cl.add("webex-correct");
+    }
+  }
+
+  update_total_correct();
+}
+
+/* function for checking select answers */
+select_func = function(e) {
+  console.log("webex: check select");
+
+  var cl = this.classList
+
+  /* add style */
+  cl.remove("webex-incorrect");
+  cl.remove("webex-correct");
+  if (this.value == "answer") {
+    cl.add("webex-correct");
+  } else if (this.value != "blank") {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+/* function for checking radiogroups answers */
+radiogroups_func = function(e) {
+  console.log("webex: check radiogroups");
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+  var cl = checked_button.parentElement.classList;
+  var labels = checked_button.parentElement.parentElement.children;
+
+  /* get rid of styles */
+  for (i = 0; i < labels.length; i++) {
+    labels[i].classList.remove("webex-incorrect");
+    labels[i].classList.remove("webex-correct");
+  }
+
+  /* add style */
+  if (checked_button.value == "answer") {
+    cl.add("webex-correct");
+  } else {
+    cl.add("webex-incorrect");
+  }
+
+  update_total_correct();
+}
+
+init_exercises = function() {
+  console.log("onload");
+  /* set up solution buttons */
+  var buttons = document.getElementsByTagName("button");
+
+  for (var i = 0; i < buttons.length; i++) {
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+      buttons[i].onclick = b_func;
+    }
+  }
+
+  /* set up webex-solveme inputs */
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+  for (var i = 0; i < solveme.length; i++) {
+    /* make sure input boxes don't auto-anything */
+    solveme[i].setAttribute("autocomplete","off");
+    solveme[i].setAttribute("autocorrect", "off");
+    solveme[i].setAttribute("autocapitalize", "off");
+    solveme[i].setAttribute("spellcheck", "false");
+    solveme[i].value = "";
+
+    /* adjust answer for ignorecase or nospaces */
+    var cl = solveme[i].classList;
+    var real_answer = solveme[i].dataset.answer;
+    if (cl.contains("ignorecase")) {
+      real_answer = real_answer.toLowerCase();
+    }
+    if (cl.contains("nospaces")) {
+      real_answer = real_answer.replace(/ /g, "");
+    }
+    solveme[i].dataset.answer = real_answer;
+
+    /* attach checking function */
+    solveme[i].onkeyup = solveme_func;
+    solveme[i].onchange = solveme_func;
+  }
+
+  /* set up radiogroups */
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+  for (var i = 0; i < radiogroups.length; i++) {
+    radiogroups[i].onchange = radiogroups_func;
+  }
+
+  /* set up selects */
+  var selects = document.getElementsByClassName("webex-select");
+  for (var i = 0; i < selects.length; i++) {
+    selects[i].onchange = select_func;
+  }
+
+  update_total_correct();
+}
+
+$(init_exercises)
+
+</script><div class="chapter-nav">
+<div class="prev"><a href="ic.html"><span class="header-section-number">12</span> Intervalos de confiança</a></div>
+<div class="next"><a href="refer%C3%AAncias.html">Referências</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#th"><span class="header-section-number">13</span> Testes de hipóteses</a></li>
+<li><a class="nav-link" href="#v%C3%ADdeo-1-7"><span class="header-section-number">13.1</span> Vídeo 1</a></li>
+<li>
+<a class="nav-link" href="#testes-de-hip%C3%B3teses-sobre-a-propor%C3%A7%C3%A3o"><span class="header-section-number">13.2</span> Testes de hipóteses sobre a proporção</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#ex1"><span class="header-section-number">13.2.1</span> Exemplo: proporção de bebês do sexo masculino</a></li>
+<li><a class="nav-link" href="#ex2"><span class="header-section-number">13.2.2</span> Exemplo: percepção extra-sensorial</a></li>
+<li><a class="nav-link" href="#erros-poder-e-tamanho-do-efeito"><span class="header-section-number">13.2.3</span> Erros, poder e tamanho do efeito</a></li>
+<li><a class="nav-link" href="#exerc%C3%ADcios-16"><span class="header-section-number">13.2.4</span> Exercícios</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#v%C3%ADdeo-2-6"><span class="header-section-number">13.3</span> Vídeo 2</a></li>
+<li>
+<a class="nav-link" href="#testes-de-hip%C3%B3teses-sobre-a-m%C3%A9dia"><span class="header-section-number">13.4</span> Testes de hipóteses sobre a média</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#gest"><span class="header-section-number">13.4.1</span> Exemplo: duração da gestação</a></li>
+<li><a class="nav-link" href="#exemplo-salm%C3%B5es-novamente"><span class="header-section-number">13.4.2</span> Exemplo: salmões novamente</a></li>
+<li><a class="nav-link" href="#rela%C3%A7%C3%A3o-entre-testes-e-ic"><span class="header-section-number">13.4.3</span> Relação entre testes e IC</a></li>
+<li><a class="nav-link" href="#explorando-tudo-interativamente-com-outro-app"><span class="header-section-number">13.4.4</span> Explorando tudo interativamente (com outro app)</a></li>
+<li><a class="nav-link" href="#exerc%C3%ADcios-17"><span class="header-section-number">13.4.5</span> Exercícios</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#v%C3%ADdeo-3-1"><span class="header-section-number">13.5</span> Vídeo 3</a></li>
+<li>
+<a class="nav-link" href="#testes-de-hip%C3%B3teses-com-duas-amostras"><span class="header-section-number">13.6</span> Testes de hipóteses com duas amostras</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#diferen%C3%A7a-entre-propor%C3%A7%C3%B5es"><span class="header-section-number">13.6.1</span> Diferença entre proporções</a></li>
+<li><a class="nav-link" href="#diferen%C3%A7a-entre-m%C3%A9dias-amostras-independentes"><span class="header-section-number">13.6.2</span> Diferença entre médias (amostras independentes)</a></li>
+<li><a class="nav-link" href="#diferen%C3%A7a-entre-m%C3%A9dias-amostras-pareadas"><span class="header-section-number">13.6.3</span> Diferença entre médias (amostras pareadas)</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#outros-testes-em-r"><span class="header-section-number">13.7</span> Outros testes em R</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#teste-de-normalidade-de-shapiro-wilk"><span class="header-section-number">13.7.1</span> Teste de normalidade de Shapiro-Wilk</a></li>
+<li><a class="nav-link" href="#teste-para-comparar-vari%C3%A2ncias"><span class="header-section-number">13.7.2</span> Teste para comparar variâncias</a></li>
+<li><a class="nav-link" href="#teste-de-correla%C3%A7%C3%A3o"><span class="header-section-number">13.7.3</span> Teste de correlação</a></li>
+</ul>
+</li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/fnaufel/probestr/blob/master/th.Rmd">Ver código-fonte <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/fnaufel/probestr/edit/master/th.Rmd">Editar esta página <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 03/11/2023)</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>Criado com o <a class="text-light" href="https://bookdown.org">pacote bookdown</a> do R.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

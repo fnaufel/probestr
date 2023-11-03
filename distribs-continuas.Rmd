@@ -441,7 +441,7 @@ Perceba que a [probabilidade]{.hl} $P(X = 5)$ é $0$, mas a [densidade]{.hl} $f(
 
 * Como saber se um conjunto de dados numéricos segue a distribuição normal?
 
-* Vamos gerar dados aproximadamente normais (média $0$, desvio padrão $1$):
+* Vamos gerar dados aproximadamente normais (média $0$, desvio-padrão $1$):
 
 ```{r amostra-normal}
 valores <- rnorm(1000)
@@ -518,7 +518,7 @@ pesos %>%
 
 * Quanto mais próximos de uma reta com inclinação de $45$ graus os pontos ficarem, mais próximos da distribuição normal os dados estão.
 
-* Podemos usar, como distribuição teórica no eixo $x$, a distribuição normal com média e desvio padrão iguais à média e ao desvio padrão dos dados:
+* Podemos usar, como distribuição teórica no eixo $x$, a distribuição normal com média e desvio-padrão iguais à média e ao desvio-padrão dos dados:
 
 ```{r pesos-qq-nao-padrao}
 m <- mean(pesos$peso)
@@ -539,9 +539,9 @@ pesos %>%
     )
 ```
 
-* Ou podemos padronizar os dados no eixo $y$, fazendo com que a média deles seja $0$ e o desvio padrão deles seja $1$. 
+* Ou podemos padronizar os dados no eixo $y$, fazendo com que a média deles seja $0$ e o desvio-padrão deles seja $1$. 
 
-* Para fazer isso manualmente, basta subtrair a média e dividir pelo desvio padrão:
+* Para fazer isso manualmente, basta subtrair a média e dividir pelo desvio-padrão:
 
 ```{r padronizar-manual}
 pesos %>% 
@@ -662,9 +662,9 @@ $$
 
   * A média da distribuição binomial é $np = 32.000 \cdot 0{,}06 = 1920$.
   
-  * O desvio padrão da distribuição binomial é $\sqrt{np(1-p)} \approx 42{,}48$.
+  * O desvio-padrão da distribuição binomial é $\sqrt{np(1-p)} \approx 42{,}48$.
   
-  * Usando uma normal com esta média e este desvio padrão, temos
+  * Usando uma normal com esta média e este desvio-padrão, temos
   
 ```{r 0-normal}
 pnorm(
@@ -748,7 +748,7 @@ pnorm(-.5, n * p, sqrt(n * p * (1 - p)))
 
 * Como resolver isto?
 
-* Lembrando que $99{,}7\%$ da probabilidade da distribuição normal está a $3$ desvios padrão de distância da média, podemos exigir que a distribuição binomial esteja dentro destes limites. 
+* Lembrando que $99{,}7\%$ da probabilidade da distribuição normal está a $3$ desvios-padrão de distância da média, podemos exigir que a distribuição binomial esteja dentro destes limites. 
 
 * Então, a normal deve ser $\mathcal{N}(\mu, \sigma)$ tal que o intervalo de $\mu - 3\sigma$ até $\mu + 3\sigma$ só tenha valores positivos.
 

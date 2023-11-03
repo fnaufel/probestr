@@ -7,7 +7,7 @@
 <title>Capítulo 4 Visualização com ggplot2 | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="Busque mais informações sobre os pacotes tidyverse e ggplot2 nas referências recomendadas.  4.1 Vídeo 1    4.2 Componentes de um gráfico ggplot2  4.2.1 Geometrias e mapeamentos estéticos...">
-<meta name="generator" content="bookdown 0.35 with bs4_book()">
+<meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Capítulo 4 Visualização com ggplot2 | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -60,6 +60,8 @@
 <li><a class="" href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></li>
 <li><a class="" href="distribui%C3%A7%C3%B5es-cont%C3%ADnuas.html"><span class="header-section-number">10</span> Distribuições contínuas</a></li>
 <li><a class="" href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></li>
+<li><a class="" href="ic.html"><span class="header-section-number">12</span> Intervalos de confiança</a></li>
+<li><a class="" href="th.html"><span class="header-section-number">13</span> Testes de hipóteses</a></li>
 <li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
 </ul>
 
@@ -1351,7 +1353,7 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p><a href="http://sillasgonzaga.com/material/curso_visualizacao/ggplot2-parte-ii.html#customizando-escalas">Descubra que função da forma <code>scale_x_...</code> usar</a> para fazer com que o eixo <span class="math inline">\(x\)</span> tenha uma escala logarítmica. Gere um novo histograma.</p></li>
 <li><p>Qual dos dois histogramas é melhor para responder a pergunta “<em>Qual a faixa de peso cerebral que tem mais animais?</em>” de forma satisfatória?</p></li>
 <li><p>Construa um <em>scatter plot</em> de horas de sono versus peso do cérebro. Você percebe alguma correlação entre estas variáveis? Se precisar, concentre-se em um subconjunto dos dados.</p></li>
-<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico de dispersão, usando o método <code>lm</code> e sem o erro-padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
 </div>
 <div id="igualdade-de-gênero-entre-furacões" class="section level3" number="4.10.3">
@@ -1404,11 +1406,11 @@ IQE (CV) : 5,9 (0,4)</td>
 <li><p>Por que o histograma do logaritmo do número de mortes vem com uma mensagem de aviso?</p></li>
 <li><p>Por que isto não acontece com o logaritmo do prejuízo?</p></li>
 <li><p>Faça um gráfico de dispersão com <code>pressao</code> no eixo <span class="math inline">\(y\)</span> e <code>velocidade</code> no eixo <span class="math inline">\(x\)</span>.</p></li>
-<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro-padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 <li><p>Faça um gráfico de dispersão com <code>logmortes</code> no eixo <span class="math inline">\(y\)</span> e <code>pressao</code> no eixo <span class="math inline">\(x\)</span>.</p></li>
-<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha uma reta de regressão ao gráfico, usando o método <code>lm</code> e sem o erro-padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 <li><p>Faça um gráfico de dispersão com <code>logmortes</code> no eixo <span class="math inline">\(y\)</span> e <code>pressao</code> no eixo <span class="math inline">\(x\)</span>, com pontos coloridos de acordo com o gênero do nome do furacão.</p></li>
-<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método <code>lm</code> e sem o erro padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
+<li><p>Usando <code>geom_smooth</code> (<a href="https://cdr.ibpad.com.br/ggplot2.html#objetos-geom%C3%A9tricos-e-tipos-de-gr%C3%A1ficos">leia a respeito</a>), sobreponha retas de regressão ao gráfico, uma para cada gênero, usando o método <code>lm</code> e sem o erro-padrão (i.e., com <code>se = FALSE</code>). O que você observa? Discuta.</p></li>
 </ol>
 <div class="rmdcaution">
 <p>Visualizações como esta ajudam a explorar os dados, mas não servem para testar rigorosamente a hipótese de que furacões mulheres matam mais do que furacões homens.</p>
@@ -1652,7 +1654,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 13/10/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 03/11/2023)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

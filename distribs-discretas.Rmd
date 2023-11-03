@@ -1318,11 +1318,11 @@ O exemplo da quantidade de [emissões de partículas alfa por minuto por uma mas
 
   * `dDISTRIB(x, ...)`: retorna a probabilidade $P(X = x \mid \dots)$.
 
-* `pDISTRIB(q, ...)`: retorna a probabilidade $P(X \leq q \mid \dots)$ --- ou a probabilidade $P(X > q \mid \dots)$ se `lower.tail = FALSE`.
+  * `pDISTRIB(q, ...)`: retorna a probabilidade $P(X \leq q \mid \dots)$ --- ou a probabilidade $P(X > q \mid \dots)$ se `lower.tail = FALSE`.
 
-* `qDISTRIB(p, ...)`: retorna o maior valor $q$ tal que $P(X = q \mid \dots) \leq p$ --- ou o menor valor $q$ tal que $P(X = q \mid \dots) > p$ se `lower.tail = FALSE`.
+  * `qDISTRIB(p, ...)`: retorna o maior valor $q$ tal que $P(X = q \mid \dots) \leq p$ --- ou o menor valor $q$ tal que $P(X = q \mid \dots) > p$ se `lower.tail = FALSE`.
 
-* `rDISTRIB(n, ...)`: retorna um vetor com $n$ valores sorteados de acordo com a distribuição.
+  * `rDISTRIB(n, ...)`: retorna um vetor com $n$ valores sorteados de acordo com a distribuição.
 
 
 ## Jardim zoológico de distribuições
