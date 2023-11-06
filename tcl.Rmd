@@ -561,7 +561,7 @@ Adaptados de @de15:_stats.
 
 * Para os $10$ homens excederem o limite de peso, o total dos seus pesos deve ultrapassar $1.100$kg, o que equivale a dizer que [o peso médio deve ultrapassar $1.100 / 10 = 110$kg]{.hl}.
 
-* A pergunta, então, é: [qual a probabilidade $\P(\overline X \geq 110)$?]{.hl}
+* A pergunta, então, é: [qual a probabilidade $P(\overline X \geq 110)$?]{.hl}
 
 * Vamos verificar as [condições para usar o TCL]{.hl}:
 
