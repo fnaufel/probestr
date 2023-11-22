@@ -39,5 +39,7 @@ rmd_files: [
   "tcl.Rmd",
   "ic.Rmd",
   "th.Rmd",
+  "corr.Rmd",
+  "regr.Rmd",
   "refs.Rmd"
 ]

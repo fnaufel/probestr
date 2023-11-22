@@ -1,0 +1,1329 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Regressão linear {#regr}
+
+```{r echo=FALSE}
+set.seed(123)
+```
+
+## Vídeo
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('diUFBf0JUC4')
+```
+
+
+## Exemplo: altura e peso
+
+```{r echo=FALSE, message=FALSE}
+peso_altura <- read_csv(
+    'data/Heights_and_Weights.csv',
+    col_types = 'dd'
+  ) %>% 
+  transmute(
+    altura = Height * 2.54,
+    peso = Weight * 0.45
+  ) %>% 
+  distinct()
+```
+
+::: {.rmdbox}
+
+Pessoas mais altas tendem a ser mais pesadas?
+
+Temos dados de $`r nrow(peso_altura)`$ pessoas, com alturas em cm e pesos em kg:
+
+```{r echo=FALSE}
+peso_altura
+```
+
+:::
+
+* O gráfico de dispersão (*scatter plot*) é o ideal para visualizar a correlação entre duas variáveis numéricas:
+
+    ```{r}
+    grafico_pa <- peso_altura %>% 
+      ggplot(aes(altura, peso)) +
+        geom_point() +
+        labs(
+          x = 'altura (cm)',
+          y = 'peso\n(kg)'
+        ) +
+        scale_x_continuous(breaks = seq(150, 200, 5))
+    
+    grafico_pa
+    ```
+
+* Podemos pedir ao R para traçar [uma reta resumindo a variação do peso em função da altura]{.hl}:
+
+    ```{r}
+    regressao <- grafico_pa + 
+      geom_smooth(method = 'lm', formula = y ~ x, se = FALSE)
+    
+    regressao
+    ```
+
+* Esta é a [reta de regressão]{.hl}, ou [reta de melhor ajuste]{.hl}.
+
+* Se tivermos a equação desta reta, podemos 
+
+  1. [Explicar]{.hl} como o peso varia de acordo com a altura.
+  
+  1. [Prever]{.hl} o peso de pessoas cujas alturas conhecemos, mas que não estavam nos dados originais.
+
+* A equação da reta vai ser da forma
+  $\quad$ [$\widehat{\text{peso}}(x) = \widehat{b_0} + \widehat{b_1} \cdot \text{altura}(x)$.]{.hl}
+
+* Os "chapéus" em $\widehat{\text{peso}}$, $\widehat{b_0}$, e em $\widehat{b_1}$ significam que os valores são [estimativas]{.hl} (baseadas na amostra), e não os valores verdadeiros da população.
+
+    ```{r echo=FALSE}
+    mpa <- lm(peso ~ altura, data = peso_altura)
+    b0 <- coef(mpa)[1] %>% round(2)
+    b1 <- coef(mpa)[2] %>% round(2)
+    ```
+
+* Neste exemplo, a equação da reta é $\quad$
+  [$\widehat{\text{peso}}(x) = `r b0` + `r b1` \cdot \text{altura}(x)$.]{.hl}
+
+* Dando nomes às coisas:
+
+  * O [intercepto]{.hl} é o valor de $\widehat{b_0} = `r b0`$. Neste exemplo, corresponderia ao peso de uma pessoa com altura zero! Claro que isto não faz sentido na realidade física, mas é um valor que faz parte da definição da reta. [Aliás, serve como aviso de que a reta de regressão só faz sentido dentro da faixa de valores dos dados que temos.]{.hl}
+  
+  * A [inclinação]{.hl} é o valor de $\widehat{b_1} = `r b1`$. Neste exemplo, significa que um aumento de $1$cm na altura corresponde a um aumento de $`r b1`$kg no peso.
+  
+  * O [resíduo]{.hl} de um indivíduo $x$ do conjunto de dados é a [diferença entre o peso verdadeiro]{.hl} de $x$ e o [peso estimado]{.hl} para $x$ pela equação.
+  
+    Por exemplo, para as duas pessoas com altura próxima a $1{,}65$m:
+    
+    ```{r echo=FALSE}
+    exemplos <- peso_altura %>% 
+      filter(abs(altura - 165) < 1) 
+    
+    exemplos%>% 
+      mutate(
+        peso_estimado = b0 + b1 * altura,
+        resíduo = peso - peso_estimado
+      ) %>% 
+      kbl(
+        format.args = list(big.mark = '.')
+      ) %>% 
+      kable_paper(
+        c('striped', 'hover'),
+        full_width = FALSE
+      )
+    ```
+    
+
+## Como achar a equação da melhor reta? Com Cálculo!
+
+* Qual reta queremos? A que deixe [o mínimo possível de resíduos]{.hl}, de certa forma.
+
+* Mas, em vez de considerar os resíduos, que podem ser negativos ou positivos, vamos considerar os [quadrados dos resíduos]{.hl}, mais ou menos como no [cálculo da variância](#variância).
+
+* Então, para cada indivíduo $x_i$, calculamos o resíduo e elevamos ao quadrado; depois, somamos tudo:
+
+  $$
+  S = \sum_i \left[\text{peso}(x_i) - \widehat{\text{peso}}(x_i)\right]^2
+  $$
+
+* Esta soma $S$ é a quantidade que queremos minimizar: [a soma dos quadrados dos resíduos]{.hl}.
+
+* Eis alguns exemplos de retas diferentes, com seus respectivos valores de S:
+
+    ```{r echo=FALSE}
+    ssr <- function(df, b0, b1) {
+      
+      sum((df$peso - (b0 + b1 * df$altura))^2) %>% 
+        round(1)
+      
+    }
+    
+    altura_max <- 198
+    
+    dados_grafico <- tribble(
+      ~intercepto, ~incl,     ~cor, 
+      b0,          b1,        'blue',
+      b0 + 20,     b1 - .15,  'green',
+      b0 - 30,     b1 + .2,   'red',
+      b0 + 40,     b1 - .12,  'brown'
+    ) %>% 
+      mutate(
+        ssr = map2_dbl(intercepto, incl, ~ssr(peso_altura, .x, .y)),
+        reta = pmap(
+          list(
+            intercepto,
+            incl,
+            cor
+          ),
+          ~geom_abline(intercept = ..1, slope = ..2, color = ..3)
+        ),
+        rotulo = pmap_chr(
+          list(
+            intercepto,
+            incl,
+            ssr
+          ),
+          ~paste0(
+            r'($\widehat{b_0} =)', 
+            ..1, 
+            r'(\;\widehat{b_1} =)', 
+            ..2, 
+            r'(\;S =)', 
+            ..3,
+            r'($)'
+          )
+        ),
+        altura = intercepto + incl * altura_max
+      )
+      
+    grafico_pa +
+      dados_grafico$reta +
+      scale_y_continuous(
+        sec.axis = dup_axis(
+          breaks = dados_grafico$altura,
+          labels = TeX(dados_grafico$rotulo),
+          name = NULL
+        )
+      ) +
+      theme(axis.ticks.y.right = element_blank()) +
+      labs(
+        title = TeX(
+            r'(Várias retas de ajuste da forma $\widehat{peso} = \widehat{b_0} + \widehat{b_1} \cdot altura$)'
+        )
+      )
+    
+    ```
+
+* Mas lembre-se de que $\widehat{peso}(x_i) = \widehat{b_0} + \widehat{b_1} \cdot \text{altura}(x_i)$.
+
+* Então, a soma fica
+
+  $$
+  S = \sum_i \left[\;\text{peso}(x_i) - (\widehat{b_0} + \widehat{b_1} \cdot \text{altura}(x_i))\;\right]^2
+  $$
+
+* No fim das contas, [$S$ é uma função de duas variáveis: $\widehat{b_0}$ e $\widehat{b_1}$]{.hl} (lembre-se de que os pesos e alturas das pessoas são conhecidos).
+
+* Podemos usar as ferramentas do Cálculo para achar os [valores de $\widehat{b_0}$ e $\widehat{b_1}$ que minimizam esta função.]{.hl}
+
+* Vamos um passo de cada vez.
+
+  Vamos [abreviar "$\text{peso}(x_i)$" como $x_i$]{.hl} e ["$\text{altura}(x_i)$" como $y_i$]{.hl}, só para escrever menos.
+  
+  Para lembrarmos que $S$ é uma função de $\widehat{b_0}$ e $\widehat{b_1}$, vamos escrever $S\left(\widehat{b_0}, \widehat{b_1}\right)$:
+
+  $$
+  \begin{align*}
+    S\left(\widehat{b_0}, \widehat{b_1}\right) &= 
+    \sum_i 
+    \left[\;y_i - 
+    (\widehat{b_0} + 
+    \widehat{b_1} x_i)
+    \;\right]^2
+  \end{align*}
+  $$
+
+* Desenvolvendo o quadrado:
+
+  $$
+  \begin{align*}
+    S\left(\widehat{b_0}, \widehat{b_1}\right) &= 
+    \sum_i 
+    \left[\;
+    y_i^2 - 
+    2y_i(\widehat{b_0} + \widehat{b_1}x_i)
+    + (\widehat{b_0} + \widehat{b_1}x_i)^2
+    \;\right]
+  \end{align*}
+  $$
+
+* Desenvolvendo o quadrado na última parcela:
+
+  $$
+  \begin{align*}
+    S\left(\widehat{b_0}, \widehat{b_1}\right) &= 
+    \sum_i 
+    \left[\;
+    y_i^2 - 
+    2y_i(\widehat{b_0} + \widehat{b_1}x_i)
+    + \widehat{b_0}^2 + 
+    2\widehat{b_0}\widehat{b_1}x_i +
+    \widehat{b_1}^2x_i^2
+    \;\right]
+  \end{align*}
+  $$
+
+* Desenvolvendo a parte com parênteses:
+
+  $$
+  \begin{align*}
+    S\left(\widehat{b_0}, \widehat{b_1}\right) &= 
+    \sum_i 
+    \left[\;
+    y_i^2 - 
+    2y_i\widehat{b_0} - 
+    2y_i\widehat{b_1}x_i +
+    \widehat{b_0}^2 + 
+    2\widehat{b_0}\widehat{b_1}x_i +
+    \widehat{b_1}^2x_i^2
+    \;\right]
+  \end{align*}
+  $$
+
+* Separando os somatórios:
+
+  $$
+  \begin{align*}
+    S\left(\widehat{b_0}, \widehat{b_1}\right) &= 
+    \sum_i y_i^2 - 
+    \sum_i 2y_i\widehat{b_0} - 
+    \sum_i 2y_i\widehat{b_1}x_i +
+    \sum_i \widehat{b_0}^2 + 
+    \sum_i 2\widehat{b_0}\widehat{b_1}x_i +
+    \sum_i \widehat{b_1}^2x_i^2
+  \end{align*}
+  $$
+
+* Jogando tudo que não depende de $i$ para fora dos somatórios.
+
+  Além disso, $\sum_i \widehat{b_0}^2$ é simplesmente $n\widehat{b_0}^2$, onde $n$ é o total de pessoas.
+
+  $$
+  \begin{align*}
+    S\left(\widehat{b_0}, \widehat{b_1}\right) &= 
+    \sum_i y_i^2 - 
+    2\widehat{b_0}\sum_i y_i - 
+    2\widehat{b_1}\sum_i x_iy_i +
+    n\widehat{b_0}^2 + 
+    2\widehat{b_0}\widehat{b_1}\sum_i x_i +
+    \widehat{b_1}^2\sum_i x_i^2
+  \end{align*}
+  $$
+
+* Pronto. Agora vamos achar as [derivadas parciais desta função]{.hl}:
+
+  $$
+  \begin{align*}
+  \frac{\partial S}{\partial \widehat{b_0}} &= 
+  -2\sum_i y_i + 2n\widehat{b_0} + 2\widehat{b_1}\sum_i x_i \\
+  \\
+  \frac{\partial S}{\partial \widehat{b_1}} &= 
+  -2\sum_i x_i y_i + 2\widehat{b_0}\sum_i x_i + 2\widehat{b_1}\sum_i x_i^2
+  \end{align*}
+  $$
+
+* Os valores de $\widehat{b_0}$ e $\widehat{b_1}$ para os quais estas duas derivadas são [iguais a zero]{.hl} são os valores que estamos procurando.
+
+* Para $\frac{\partial S}{\partial \widehat{b_0}}$:
+
+  $$
+  \begin{align*}
+  & -2\sum_i y_i + 2n\widehat{b_0} + 2\widehat{b_1}\sum_i x_i  = 0 \\ \\
+  \iff & 
+     -2\frac{\sum_i y_i}n + 
+     \frac{2n\widehat{b_0}}n + 
+     2\widehat{b_1}\frac{\sum_i x_i}n  = 0 
+       & \text{(dividimos tudo por }n > 1\text{)} \\ \\
+  \iff & 
+     -2\overline y + 
+     2\widehat{b_0} + 
+     2\widehat{b_1}\overline x  = 0 
+       & \text{(apareceram médias!)} \\ \\
+  \iff & 
+     \widehat{b_0} =
+     \frac{2\overline y - 2\widehat{b_1} \overline x}{2} \\ \\
+  \iff & 
+     \widehat{b_0} =
+     \overline y - \widehat{b_1} \overline x
+  \end{align*}
+  $$
+
+* Para $\frac{\partial S}{\partial \widehat{b_1}}$:
+
+  $$
+  \begin{align*}
+  & -2\sum_i x_i y_i + 2\widehat{b_0}\sum_i x_i + 2\widehat{b_1}\sum_i x_i^2
+  = 0 \\ \\
+  \iff &
+    -\sum_i x_i y_i + \widehat{b_0}\sum_i x_i + \widehat{b_1}\sum_i x_i^2 = 0
+       & \text{(dividimos tudo por }2\text{)} \\ \\
+  \iff &
+    -\sum_i x_i y_i + (\overline y - \widehat{b_1} \overline x)\sum_i x_i + \widehat{b_1}\sum_i x_i^2 = 0
+       & \text{(substituímos }\widehat{b_0}\text{)} \\ \\
+  \iff &
+    -\sum_i x_i y_i + \overline y\sum_i x_i - \widehat{b_1} \overline x\sum_i x_i + \widehat{b_1}\sum_i x_i^2 = 0 \\ \\
+  \iff &
+    -\sum_i x_i y_i + \frac{\sum_i y_i\sum_i x_i}n - \widehat{b_1} \frac{\left(\sum_i x_i\right)^2}n + \widehat{b_1}\sum_i x_i^2 = 0 
+       & \text{(expandimos }\overline x\text{ e }\overline y\text) \\ \\
+  \iff &
+    \widehat{b_1}
+    \left(\sum_i x_i^2 - \frac{\left(\sum_i x_i\right)^2}n\right) 
+    =
+    \sum_i x_i y_i - \frac{\sum_i y_i\sum_i x_i}n  
+       & \text{(isolamos }\widehat{b_1}\text) \\ \\
+  \iff &
+    \widehat{b_1} = 
+    \frac
+    {\sum_i x_i y_i - \frac{\sum_i y_i\sum_i x_i}n}
+    {\sum_i x_i^2 - \frac{\left(\sum_i x_i\right)^2}n} \\ \\
+  \iff &
+    \widehat{b_1} = 
+    \frac
+    {n\sum_i x_i y_i - \sum_i y_i\sum_i x_i}
+    {n\sum_i x_i^2 - \left(\sum_i x_i\right)^2}
+  \end{align*}
+  $$
+
+* A rigor, precisamos calcular as [segundas derivadas parciais]{.hl} para garantir que achamos um mínimo, e não um máximo ou um ponto de sela, mas vamos pular esta parte. 
+
+* A expressão para $\widehat{b_1}$ é bem feia, mas podemos escrevê-la de um jeito mais bonito.
+
+* Vamos lembrar as definições:
+
+  * A [variância *amostral* da variável aleatória $X$]{.hl} pode ser escrita como
+  
+    $$
+    \begin{align*}
+      s^2_x  &=
+         \frac{n}{n-1} 
+        \left[
+          E(X^2) - [E(X)]^2 
+        \right] \\ \\
+       &= 
+        \frac{n}{n-1} 
+        \left[
+          \frac{\sum_i x_i^2}{n} - (\overline{x})^2
+        \right] \\ \\
+       &=
+         \frac{\sum_i x_i^2}{n - 1} - \frac{n(\overline{x})^2}{n - 1}
+    \end{align*}
+    $$
+
+    Como a reta de regressão é construída sobre uma [amostra]{.hl}, precisamos usar a variância amostral, com denominador $n - 1$ em vez de denominador $n$. Isto equivale a multiplicar a variância populacional pela fração $\frac{n}{n-1}$.
+
+  * A [covariância *amostral* de $X$ e $Y$]{.hl} é:
+  
+    $$
+    \begin{align*}
+      s_{xy}  &= 
+         \frac{n}{n-1} 
+        \left[
+          E(XY) - E(X)E(Y) 
+        \right] \\ \\
+       &= 
+         \frac{n}{n-1} 
+        \left[
+          \frac{\sum_i x_i y _i}{n} - \overline{x}\;\overline{y}
+        \right] \\ \\
+       &=
+          \frac{\sum_i x_i y_i}{n - 1} - 
+          \frac{n\;\overline{x}\;\overline{y}}{n - 1} \\ \\
+       &=
+          \frac{\sum_i x_i y_i}{n - 1} - 
+          \frac{\overline{x}\;\sum_i{y_i}}{n - 1}
+    \end{align*}
+    $$
+
+    O último passo se justifica porque $n\overline{y} = \sum_i y_i$.
+
+  * A [correlação entre $X$ e $Y$]{.hl} é:
+  
+    $$
+    r = \frac{s_{xy}}{s_x s_y}
+    $$
+
+    Lembre-se de que $s_x = \sqrt{s_x^2}$ é o [desvio-padrão amostral de $X$]{.hl}, e $s_y = \sqrt{s_y^2}$ é o [desvio-padrão amostral de $Y$]{.hl}.
+
+* Vamos transformar a fórmula que achamos para $\widehat{b_1}$.
+
+* Começamos com
+
+  $$
+  \widehat{b_1} = 
+    \frac
+    {n\sum_i x_i y_i - \sum_i y_i\sum_i x_i}
+    {n\sum_i x_i^2 - \left(\sum_i x_i\right)^2}
+  $$
+
+* Vamos multiplicar em cima e embaixo por $\frac{1}{n(n-1)}$; lembre-se de que $n > 1$, o que elimina o perigo de dividir por zero.:
+
+  $$
+  \widehat{b_1} = 
+    \frac{
+      \frac{\sum_i x_i y_i}{n - 1} - 
+      \frac{\sum_i y_i \sum_i x_i}{n(n - 1)}
+    }
+    {
+      \frac{\sum_i x_i^2}{n - 1} - 
+      \frac{\left(\sum_i x_i\right)^2}{n(n - 1)}
+    }
+  $$
+
+* Lembrando que 
+
+  $$
+  \frac{\sum_i x_i}{n} = \overline{x}
+  $$ 
+  
+  e que (o que é  equivalente)
+  
+  $$
+  n\overline{x} = \sum_i x_i
+  $$
+
+  temos que
+  
+  $$
+  \widehat{b_1} = 
+    \frac{
+      \frac{\sum_i x_i y_i}{n - 1} - 
+      \frac{\overline{x}\sum_i y_i}{n - 1}
+    }
+    {
+      \frac{\sum_i x_i^2}{n - 1} - 
+      \frac{n(\overline{x})^2}{n - 1}
+    }
+  $$
+
+* As definições de $s_{xy}$ e de $s^2_x$ apareceram!
+
+  $$
+  \widehat{b_1} = \frac{s_{xy}}{s_x^2}
+  $$
+  
+* Para ficar mais bonito, multiplicamos em cima e embaixo por $s_y$ --- que é maior que zero (senão, todos os $y_i$ teriam o mesmo valor!):
+  
+  $$
+  \widehat{b_1} = \frac{s_{xy}}{s_x s_y} \cdot \frac{s_y}{s_x}
+  $$
+
+* E acabamos com
+  
+  $$
+  \widehat{b_1} = r \cdot \frac{s_y}{s_x}
+  $$
+
+* Agora ficou fácil de entender: a inclinação da reta é a [correlação entre $X$ e $Y$ multiplicada pela razão entre os desvios-padrão de $Y$ e $X$]{.hl}. 
+
+  ::: {.rmdnote}
+
+  ### Resumindo {-}
+
+  Para construir a reta de regressão, com equação
+
+  $$
+  \widehat{y}(x) = \widehat{b_0} + \widehat{b_1} x
+  $$
+
+  basta usar as fórmulas
+
+  [
+  $$
+  \begin{cases}
+    \widehat{b_0} =&
+     \overline y - \widehat{b_1} \overline x \\
+     \\
+    \widehat{b_1} =&
+      r \cdot \frac{s_y}{s_x}
+  \end{cases}
+  $$
+  ]{.hl}
+
+  :::
+
+* No nosso exemplo de $x=$ alturas e $y=$ pesos:
+
+    ```{r}
+    peso <- peso_altura$peso
+    altura <- peso_altura$altura
+    
+    xbarra <- mean(altura)
+    sx <- sd(altura)
+    
+    ybarra <- mean(peso)
+    sy <- sd(peso)
+    
+    r <- cor(altura, peso)
+    
+    b1 <- r * sy / sx
+    b0 <- ybarra - b1 * xbarra
+    
+    cat(
+      paste(
+        'b0 =', round(b0, 2),
+        '\nb1 =', round(b1, 2)
+      )
+    )
+    ```
+
+
+### Exercícios
+
+#### Unidades {-}
+
+* No nosso exemplo de alturas e pesos:
+
+  * Qual é a unidade de $\widehat{b_0}$?
+  
+  * Qual é a unidade de $\widehat{b_1}$?
+  
+  * Por que isto faz sentido no contexto de $\widehat{\text{peso}}(x) = \widehat{b_0} + \widehat{b_1} \cdot \text{altura}(x)$?
+
+
+#### Regressão com variáveis padronizadas {-}
+
+* Quais são os valores de $\widehat{b_0}$ e $\widehat{b_1}$ quando as variáveis $X$ e $Y$ estão [padronizadas]{.hl}? Use as fórmulas para $\widehat{b_0}$ e $\widehat{b_1}$.
+
+* Quando as variáveis estão padronizadas, qual o valor máximo da inclinação da reta de regressão? E o valor mínimo?
+
+* Confirme suas respostas usando o R:
+
+  1. Padronize as variáveis `altura` e `peso` do exemplo, usando a função `scale`.
+  
+  1. Compute, sobre as variáveis padronizadas, os valores de
+  
+     * $\overline{\text{peso}}$,
+     
+     * $\overline{\text{altura}}$,
+     
+     * $s_{\text{peso}}$,
+     
+     * $s_{\text{altura}}$,
+     
+     * $r$, a correlação entre `altura` e `peso`,
+     
+     * Os valores de $\widehat{b_0}$ e $\widehat{b_1}$ usando as fórmulas.
+     
+  1. Construa o *scatter plot* das variáveis padronizadas e use `geom_smooth` (como no exemplo acima) para desenhar a reta de regressão.
+  
+  1. Estime (pelo gráfico) o intercepto da reta e compare com a sua resposta para $\widehat{b_0}$.
+
+  1. Estime (pelo gráfico) a inclinação da reta e compare com a sua resposta para $\widehat{b_1}$.
+  
+
+#### Altura média corresponde a peso médio {-}
+
+* Usando somente as fórmulas
+
+  $$
+  \begin{cases}
+    \widehat{b_0} =&
+     \overline y - \widehat{b_1} \overline x \\
+     \\
+    \widehat{b_1} =&
+      r \cdot \frac{s_y}{s_x}
+  \end{cases}
+  $$
+
+  e a equação
+  
+  $$
+  \widehat{y}(x) = \widehat{b_0} + \widehat{b_1} \cdot x
+  $$
+
+  mostre que [a altura média corresponde ao peso médio]{.hl}, ou seja, que
+  
+  $$
+  \widehat{y}(\overline{x}) = \overline{y} 
+  $$
+
+
+#### Soma dos resíduos {-}
+
+* Uma das consequências da maneira como achamos a reta de melhor ajuste é que [a soma de todos os resíduos é zero.]{.hl}
+
+* Confira isto no nosso exemplo de alturas e pesos:
+
+  * Acrescente duas colunas ao *data frame* `peso_altura`:
+
+    * `peso_chapeu`, com os valores de $\widehat{\text{peso}}(x)$ para cada pessoa $x$.
+  
+    * `residuo`, com os valores de `peso - peso_chapeu`.
+    
+  * Use `summarize()` para obter a soma dos resíduos.
+  
+* Em símbolos:
+
+  $$
+  \sum_i \left(y_i - \widehat{y}(x_i) \right) \;=\; 0
+  $$
+
+* Usando as definições de $\widehat{y}(x_i)$, de $\widehat{b_0}$, e de $\widehat{b_1}$, prove esta igualdade.
+
+
+## Em R
+
+* A função `lm` (*linear model*) acha a reta de regressão e retorna muitas informações sobre o modelo.
+
+* No nosso exemplo:
+
+    ```{r}
+    modelo <- lm(peso ~ altura, data = peso_altura)
+    ```
+
+* O argumento `peso ~ altura` é uma [fórmula]{.hl}, um tipo de expressão que faz parte da sintaxe de R.
+
+* O objeto retornado por `lm` é uma lista com muitos elementos:
+
+    ```{r}
+    str(modelo)
+    ```
+
+* Vamos ver os mais importantes, usando funções auxiliares para acessá-los:
+
+  * Os coeficientes da reta:
+
+    ```{r}
+    coef(modelo)
+    ```
+  
+  * Os valores de $\widehat{y}(x)$ para todas as observações $x$:
+
+    ```{r}
+    fitted(modelo)
+    ```
+
+  * Os resíduos de todas as observações:
+
+    ```{r}
+    resid(modelo)
+    ```
+
+  * Aliás, como prometido, a soma dos resíduos é zero, salvo erro de arredondamento:
+
+    ```{r}
+    sum(resid(modelo))
+    ```
+
+* Outra maneira de ver os coeficientes é simplesmente imprimir o objeto retornado por `lm`:
+
+    ```{r}
+    modelo
+    ```
+
+* Ou usar a função `summary`, que mostra estatísticas sobre os resíduos, os valores dos coeficientes, os resultados de testes estatísticos sobre eles, e informações sobre o modelo como um todo.
+
+  Vamos falar sobre estes testes e estas informações depois.
+
+    ```{r}
+    summary(modelo)
+    ```
+
+* Para [prever]{.hl} os pesos de novas alturas observadas, use `predict`:
+
+    ```{r}
+    novas <- tibble(
+      altura = c(156, 177, 192)
+    )
+    
+    predict(modelo, newdata = novas)
+    ```
+
+
+### No Tidyverse
+
+* O pacote `broom` recolhe em *tibbles* as informações retornadas por `lm`.
+
+  ```{r}
+  library(broom)
+  ```
+
+* Use a função `tidy` para informações sobre os coeficientes:
+
+  ```{r}
+  tidy(modelo)
+  ```
+
+* Use a função `glance` para outras informações sobre o modelo:
+
+  ```{r}
+  glance(modelo)
+  ```
+
+* Para ver os valores computados pelo modelo para as observações, use `augment`, passando o modelo e, opcionalmente, os dados originais:
+
+  ```{r}
+  dados_aumentados <- augment(modelo, data = peso_altura)
+  dados_aumentados
+  ```
+
+* Para [prever]{.hl} os pesos de novas alturas observadas, use `augment` com as novas observações no argumento `newdata`:
+
+  ```{r warning=FALSE}
+  novas <- tibble(
+    altura = c(156, 177, 192)
+  )
+  
+  augment(modelo, newdata = novas)
+  ```
+
+* Como não passamos os pesos verdadeiros destas observações, a função não calculou resíduos.
+
+* Se passarmos os pesos verdadeiros (como se quiséssemos testar o modelo com observações que não foram usadas para construir a regressão), a função calcula os resíduos:
+
+  ```{r}
+  novas <- tibble(
+    altura = c(156, 177, 192),
+    peso   = c( 55,  70,  80)
+  )
+  
+  augment(modelo, newdata = novas)
+  ```
+
+
+## Avaliando o modelo através dos resíduos
+
+* Vamos repetir o *scatter plot* com a reta de regressão:
+
+    ```{r echo=FALSE}
+    regressao
+    ```
+
+* [Os resíduos são usados para verificar se o modelo é adequado]{.hl}.
+
+* O pacote `gglm` (http://graysonwhite.com/gglm/) tem funções para produzir gráficos úteis sobre os resíduos. Lembre-se de que a variável `modelo` guarda o objeto retornado pela função `lm`:
+
+    ```{r}
+    library(gglm)
+    gglm(modelo)
+    ```
+
+* Ou, se você não se importar com a feiúra dos gráficos do R base, pode usar a função `plot`:
+
+    ```{r}
+    plot(modelo)
+    ```
+
+* Vamos discutir apenas os dois primeiros gráficos: [resíduos pelos valores estimados]{.hl} e ???
+
+* As observações com os maiores resíduos, $3$ delas marcadas com os números nos gráficos gerados pelo R base, são
+
+  ```{r}
+  dados_aumentados %>% 
+    slice_max(.resid, n = 6) %>% 
+    select(altura, peso, .fitted, .resid)
+  ```
+
+* Que condições devemos verificar sobre os resíduos?
+
+  1. Devemos confirmar que [os resíduos seguem uma distribuição normal]{.hl}.
+  
+     Fazendo um histograma:
+     
+     ```{r}
+     dados_aumentados %>% 
+       ggplot(aes(.resid)) +
+         geom_histogram(bins = 15)
+     ```
+
+     Pelo histograma e pelo gráfico QQ acima, os resíduos não parecem ter distribuição normal.
+  
+     Podemos fazer um [teste estatístico de normalidade](#teste-de-normalidade-de-shapiro-wilk):
+     
+     ```{r}
+     dados_aumentados %>% 
+       pull(.resid) %>% 
+       shapiro.test()
+     ```
+
+     Este resultado diz que [não devemos considerar estes resíduos como sendo normais.]{.hl} Os resíduos à direita atrapalham muito. Se ignorarmos todos os resíduos maiores que $10$kg, o teste retorna um resultado mais compatível com a normalidade (mas não muito):
+   
+     ```{r}
+     dados_aumentados %>% 
+       filter(.resid < 10) %>% 
+       pull(.resid) %>% 
+       shapiro.test()
+     ```
+
+     ::: {.rmdimportant latex=1}
+     
+     Quando a distribuição dos resíduos não for normal, o que fazer?
+     
+     * No nosso exemplo, a causa é a presença de alguns [*outliers* com resíduos maiores que $10$]{.hl}. São pessoas que têm pesos altos demais para as suas alturas. Se estes *outliers* estiverem muito próximos da borda esquerda ou da borda direita do gráfico, eles podem afetar muito a inclinação da reta (tecnicamente, dizemos que eles têm *leverage* alto). Podemos refazer a regressão sem estes *outliers* e verificar se isto altera muito a reta. [Faça isto como exercício neste exemplo]{.hl}. 
+     
+       Leia mais sobre este problema [nesta discussão *online*](https://stats.stackexchange.com/questions/100214/assumptions-of-linear-models-and-what-to-do-if-the-residuals-are-not-normally-di) e [neste artigo](https://discovery.ucl.ac.uk/id/eprint/10070182/1/Schmidt_UCL_depos_JCE2018.pdf).
+     
+     * Em outros casos, isto pode ser um sinal de que a correlação entre as variáveis [não é linear]{.hl}. Nesta situação, você pode tentar transformar uma das variáveis, como mostrado no [capítulo sobre correlação](#transformações).
+     
+     :::
+     
+  2. Devemos confirmar que [os resíduos não dependem dos valores estimados]{.hl}. 
+  
+     A idéia é que o *scatter plot* dos resíduos pelos valores estimados [não deve apresentar nenhum padrão]{.hl}. A nuvem de pontos deve se distribuir de forma aparentemente aleatória em torno da reta horizontal $y = 0$ (a média dos resíduos), sem *outliers* e sem alterações significativas da variância.
+     
+     Repetindo o gráfico de resíduos por pesos estimados:
+  
+     ```{r}
+     dados_aumentados %>% 
+       ggplot() +
+         stat_fitted_resid() +
+         labs(
+           y = 'resíduos\n(kg)',
+           x = 'pesos estimados (kg)',
+           title = 'Resíduos por pesos estimados'
+         )
+     ```
+     
+     De novo, os *outliers* são o problema. Se forem ignorados, os resíduos 
+  
+
+### Como os resíduos *não* devem ser
+
+* A distribuição dos resíduos [não deve se afastar da normal:]{.hl}
+
+    ```{r echo=FALSE}
+    set.seed(1234)
+    
+    tibble(
+      resíduos = c(rnorm(80, -2), rnorm(80, 2))
+    ) %>% 
+      ggplot(aes(resíduos)) +
+        geom_histogram(bins = 20) +
+        labs(y = NULL)
+    ```
+
+* O *scatter plot* [não deve ter padrões visíveis:]{.hl}
+
+    ```{r echo=FALSE}
+    set.seed(12345)
+    
+    n <- 100
+    tibble(
+      estimados = runif(n, -20, 20),
+      resíduos  = (estimados^2) / 50 + rnorm(n, sd = 3)
+    ) %>% 
+      ggplot(aes(estimados, resíduos)) +
+        geom_point() +
+        labs(
+          x = 'valores estimados'
+        )
+    ```
+
+* No *scatter plot*, [os resíduos não devem ter variabilidade diferente, dependendo do valor estimado:]{.hl}
+
+    ```{r echo=FALSE}
+    set.seed(12345)
+    
+    n <- 100
+    tibble(
+      estimados = runif(n, -10, 10),
+      resíduos  = estimados + 10 + rnorm(n, sd = estimados + 10)
+    ) %>% 
+          ggplot(aes(estimados, resíduos)) +
+            geom_point() +
+        labs(
+          x = 'valores estimados'
+        )
+    ```
+
+
+## Condições para usar regressão linear
+
+* As duas variáveis devem ser [quantitativas]{.hl}.
+
+* Como a equação da reta de regressão usa a correlação [linear]{.hl}, devemos verificar que este é o tipo de correlação entre as duas variáveis. Um *scatter plot* é uma boa maneira de visualizar isto.
+
+* Não deve haver [*outliers*]{.hl} extremos.
+
+* Uma vez definida a reta de regressão, devemos [examinar os resíduos]{.hl}. No *scatter plot* de resíduos pelos valores estimados, a nuvem de pontos deve estar espalhada em torno da reta $y = 0$, sem padrões óbvios, sem curvatura, sem alterações na variância à medida que percorremos a reta horizontal..
+
+
+## Exemplo: furacões
+
+::: {.rmdbox}
+
+* A [pressão do ar]{.hl} no centro de um furacão está relacionada com a [velocidade máxima dos ventos]{.hl}. 
+
+* Vamos usar o seguinte conjunto de dados para contruir um modelo linear:
+
+```{r echo=FALSE, message=FALSE}
+if (!require(DAAG))
+  install.packages("DAAG")
+```
+
+  ```{r}
+  furacoes <- hurricNamed %>% 
+    as_tibble() %>% 
+    transmute(
+      nome = Name,
+      ano = Year,
+      velocidade = LF.WindsMPH * 1.8,      # convertido para km/h
+      pressao = LF.PressureMB              # em mbar
+    )
+  
+  furacoes
+  ```
+
+:::
+
+
+### Examinar o *scatter plot*
+
+```{r}
+grafico <- furacoes %>% 
+  ggplot(aes(pressao, velocidade)) +
+    geom_point() +
+    labs(
+      x = 'pressão (mbar)',
+      y = 'velocidade\nmáxima\n(km/h)',
+      title = 'Furacões'
+    )
+
+grafico
+```
+
+* As duas variáveis são quantitativas.
+
+* A relação entre velocidade e pressão é aproximadamente linear.
+
+* Quanto maior a pressão, menor a velocidade. A correlação é negativa.
+
+* Há $3$ potenciais *outliers*, mas vamos prosseguir mesmo assim.
+
+* Os pontos parecem estar dispostos em filas horizontais. Isto é causado pela (falta de) precisão das velocidades, que são valores inteiros no conjunto de dados.
+
+
+### Construir o modelo
+
+```{r}
+modelo <- lm(velocidade ~ pressao, data = furacoes)
+summary(modelo)
+```
+
+```{r echo=FALSE}
+b0 <- coef(modelo)[1] %>% round(2)
+b1 <- coef(modelo)[2] %>% round(2)
+```
+
+* A equação é
+
+  $$
+  \widehat{\text{velocidade}} = `r b0` + (`r b1`) \cdot \text{pressão}
+  $$
+
+* A cada mbar de aumento na pressão está associada uma mudança de $`r b1`$km/h na velocidade.
+
+* Gráfico:
+
+    ```{r echo=FALSE}
+    grafico +
+      geom_abline(slope = b1, intercept = b0, color = 'blue')
+    ```
+
+
+### Examinar os resíduos
+
+* Histograma dos resíduos:
+
+    ```{r}
+    modelo %>% 
+      ggplot() +
+        stat_resid_hist(bins = 20) +
+        labs(
+          x = 'resíduos (km/h)',
+          y = NULL,
+          title = 'Histograma dos resíduos'
+        )      
+    ```
+
+* Ignorando os *outliers* à esquerda, a distribuição dos resíduos é aproximadamente normal.
+
+* Incluindo todos os resíduos, o teste de normalidade é horrível:
+
+    ```{r}
+    dados_aumentados <- augment_columns(modelo, data = furacoes)
+    
+    dados_aumentados %>% 
+      pull(.resid) %>% 
+      shapiro.test()
+    ```
+
+* Eliminando os resíduos extremos à esquerda, o resultado é bom:
+
+    ```{r}
+    dados_aumentados %>% 
+      filter(.resid > -50) %>% 
+      pull(.resid) %>% 
+      shapiro.test()
+    ```
+
+
+* Gráfico QQ dos resíduos:
+
+    ```{r}
+    modelo %>% 
+      ggplot() +
+        stat_normal_qq() +
+        labs(
+          x = 'quantis da distribuição normal\n(desvios-padrão)',
+          y = 'resíduos\npadronizados',
+          title = 'QQ Normal'
+        )
+    ```
+
+* Resíduos por valores estimados:
+
+    ```{r}
+    modelo %>% 
+      ggplot() +
+        stat_fitted_resid() +
+        labs(
+          y = 'resíduos\n(km/h)',
+          x = 'velocidades estimadas (km/h)',
+          title = 'Resíduos por velocidades estimadas'
+        )
+    ```
+
+* As filas de pontos aparecem porque as velocidades são valores inteiros no conjunto de dados.
+
+* Quase todos os resíduos têm valor absoluto menor que $50$km/h. 
+
+* Vamos ver as exceções:
+
+  ```{r}
+  dados_aumentados %>% 
+    filter(abs(.resid) > 50) %>% 
+    select(nome, ano, pressao, velocidade, .fitted, .resid)
+  ```
+
+* A variância dos resíduos é menor para velocidades estimadas menores (no lado esquerdo do gráfico). À medida que a velocidade estimada aumenta, a variância aumenta também.
+
+* Esta variância não-constante afeta os resultados dos testes estatísticos sobre os coeficientes, um assunto que vamos abordar depois.
+
+
+### Exercícios
+
+* O que significa o intercepto de $`r b0`$km/h? 
+
+* Qual a previsão do modelo para a velocidade máxima de um furacão com pressão de $925$mbar?
+
+* Na *tibble* `furacoes`, crie uma coluna `faixa` com os seguintes valores:
+
+  $$
+  \text{faixa} =
+  \begin{cases}
+    \text{A} &\text{ se velocidade estimada } < 150  \\
+    \text{B} &\text{ se } 150 \leq \text{velocidade estimada } < 200  \\
+    \text{C} &\text{ se velocidade estimada } \geq 200
+  \end{cases}
+  $$
+
+  Usando `group_by` e `summarize`, calcule a variância das velocidades estimadas de cada faixa. É verdade que, à medida que a velocidade estimada aumenta, a variância aumenta também?
+  
+
+## Exemplo: a lei de Moore
+
+::: {.rmdbox}
+
+* A [lei de Moore](https://pt.wikipedia.org/wiki/Lei_de_Moore) estima que, a cada dois anos, o número de transistores em um circuito integrado dobra.
+
+* Vamos usar o *dataset* em https://raw.githubusercontent.com/egarpor/handy/master/datasets/cpus.txt, salvo localmente.
+
+  ```{r message=FALSE}
+  moore <- read_csv2(
+    'data/cpus.csv'
+  ) %>% 
+    select(
+      processador = Processor,
+      transistores = 'Transistor count',
+      ano = 'Date of introduction'
+    )
+  
+  moore
+  ```
+
+* Usando regressão linear, [podemos confirmar a lei de Moore para estes dados?]{.hl}
+
+:::
+
+
+### Examinar o *scatter plot*
+
+```{r message=FALSE}
+library(scales)
+```
+
+```{r}
+moore %>% 
+  ggplot(aes(ano, transistores)) +
+    geom_point() +
+    scale_y_continuous(
+      labels = label_number(scale = 1e-9, decimal.mark = ',', suffix = 'M')
+    )
+```
+
+* Como já era de se esperar (pelo próprio enunciado da lei!) [a relação não é linear, mas sim exponencial.]{.hl}
+
+* Então, vamos usar o [logaritmo]{.hl} do número de transistores:
+
+    ```{r}
+    moore <- moore %>% 
+      mutate(ltransistores = log10(transistores))
+    ```
+
+    ```{r}
+    grafico <- moore %>% 
+      ggplot(aes(ano, ltransistores)) +
+        geom_point() +
+        labs(
+          y = TeX('log_{10}(transistores)')
+        )
+    
+    grafico
+    ```
+
+* Agora, sim. Bem melhor.
+
+
+### Construir o modelo
+
+```{r}
+modelo <- lm(ltransistores ~ ano, data = moore)
+```
+
+```{r}
+summary(modelo)
+```
+
+```{r echo=FALSE}
+b0 <- coef(modelo)[1]
+b1 <- coef(modelo)[2]
+```
+
+* A equação é 
+
+  $$
+  \widehat{\text{log(transistores)}} = `r b0` + `r b1` \cdot \text{ano}
+  $$
+
+* A equação diz que, a cada $2$ anos, o [logaritmo do número de transistores]{.hl} (na base $10$) aumenta de $`r 2 * b1`$.
+
+* Chamando de $t(n)$ o número de transistores no ano $n$, a equação diz que:
+
+  $$
+  \begin{align*}
+    \log t(n + 2) = \log t(n) + `r 2 * b1` 
+    & \implies
+      t(n + 2) = t(n) \cdot 10^{`r 2 * b1`} 
+    & \text{(elevando }10\text{ a cada lado)} \\
+    & \implies 
+      t(n + 2) = `r (10^(2 * b1)) %>% round(3)` \cdot t(n)
+  \end{align*}
+  $$
+
+* Isto corresponde ao que a lei de Moore diz: a cada $2$ anos, o número de transistores aproximadamente dobra.
+
+* O gráfico fica:
+
+    ```{r echo=FALSE}
+    grafico +
+      geom_abline(slope = b1, intercept = b0, color = 'blue')
+    ```
+
+
+### Examinar os resíduos
+
+* Histograma dos resíduos:
+
+    ```{r}
+    modelo %>% 
+      ggplot() +
+        stat_resid_hist(bins = 15) +
+        labs(
+          x = 'resíduos',
+          y = NULL,
+          title = 'Histograma dos resíduos'
+        )      
+    ```
+
+* Ignorando os *outliers* à esquerda, a distribuição dos resíduos é aproximadamente normal.
+
+* Um resíduo de $-1$ no logaritmo (na base $10$) do número de transistores equivale a $\frac{1}{10}$ do número de transistores estimado pela regressão.
+
+* Um resíduo de $-2$ no logaritmo (na base $10$) do número de transistores equivale a $\frac{1}{100}$ do número de transistores estimado pela regressão.
+
+* Teste de normalidade com todos os resíduos:
+
+    ```{r}
+    dados_aumentados <- augment_columns(modelo, data = moore)
+    
+    dados_aumentados %>% 
+      pull(.resid) %>% 
+      shapiro.test()
+    ```
+
+* Sem os *outliers*:
+
+    ```{r}
+    dados_aumentados %>% 
+      filter(.resid > -.5) %>% 
+      pull(.resid) %>% 
+      shapiro.test()
+    ```
+
+* Gráfico QQ dos resíduos:
+
+    ```{r}
+    modelo %>% 
+      ggplot() +
+        stat_normal_qq() +
+        labs(
+          x = 'quantis da distribuição normal\n(desvios-padrão)',
+          y = 'resíduos\npadronizados',
+          title = 'QQ Normal'
+        )
+    ```
+
+* Aqui também ficam nítidos os *outliers* à esquerda.
+
+* Resíduos por valores estimados:
+
+    ```{r}
+    modelo %>% 
+      ggplot() +
+        stat_fitted_resid() +
+        labs(
+          y = 'resíduos',
+          x = 'log(transistores) estimado',
+          title = 'Resíduos por valores estimados'
+        )
+    ```
+
+* De novo, os *outliers* são óbvios. Vamos listar as CPUs com resíduo menor que $-0{,}5$:
+
+  ```{r}
+  dados_aumentados %>% 
+    filter(.resid < -.5) %>% 
+    select(processador, transistores, ano, ltransistores, .fitted, .resid) %>% 
+    arrange(.resid)
+  ```
+
+* Os resíduos parecem não ter variância constante.
+
+* Além disso, parece haver uma certa curvatura na nuvem de pontos.
+
+
+### Exercícios
+
+* Faça uma pesquisa *online* e tente descobrir se há algum motivo específico para a maioria dos *outliers* ser de processadores ARM.
+
+* Faça uma pesquisa *online* sobre processadores lançados nos anos de $2017$, $2018$, $2019$, $2020$ e $2021$ (no mínimo um processador de cada ano); compare as quantidades de transistores dos processadores que você achou com as quantidades de transistores previstas para eles pelo modelo linear.
+
+* A lei de Moore vale para estas [GPUs]{.hl}?
+
+  ```{r message=FALSE}
+  gpus <- 
+    read_csv2('data/gpus.csv') %>% 
+    select(
+      processador = Processor,
+      transistores = 'Transistor count',
+      ano = 'Date of introduction',
+      fabricante = Manufacturer
+    )
+  
+  gpus
+  ```
+
+

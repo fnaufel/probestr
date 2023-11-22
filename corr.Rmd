@@ -1,0 +1,620 @@
+--- 
+knit: "bookdown::render_book"
+---
+
+# Covariância e correlação {#corr}
+
+```{r echo=FALSE}
+set.seed(123)
+```
+
+## Vídeo
+
+```{r echo=FALSE, results='asis', out.extra=center()}
+embed_yt('T0FBgils_9o')
+```
+
+
+## Exemplo: altura e peso
+
+```{r echo=FALSE, message=FALSE, cache=TRUE}
+peso_altura <- read_csv('data/Heights_and_Weights.csv') %>% 
+  mutate(
+    altura = Height * 2.54,
+    peso = Weight * 0.45
+  )
+```
+
+::: {.rmdbox}
+
+Pessoas mais altas tendem a ser mais pesadas?
+
+Temos dados de $`r nrow(peso_altura)`$ alunos e alunas, com alturas em cm e pesos em kg:
+
+```{r echo=FALSE}
+peso_altura %>% select(altura, peso)
+```
+
+:::
+
+* O gráfico de dispersão (*scatter plot*) é o ideal para visualizar a correlação entre duas variáveis numéricas:
+
+    ```{r}
+    peso_altura %>% 
+      ggplot(aes(altura, peso)) +
+        geom_point() +
+        labs(
+          x = 'altura (cm)',
+          y = 'peso\n(kg)'
+        )
+    ```
+
+
+## Correlação linear
+
+* Vamos subtrair, de cada peso, a média dos pesos; vamos subtrair, de cada altura, a média das alturas.
+
+    ```{r}
+    peso_altura <- peso_altura %>% 
+      mutate(
+        altura_desvio = altura - mean(altura),
+        peso_desvio = peso - mean(peso)
+      )
+    ```
+
+* O novo *scatter plot* tem a mesma forma. Só mudam as escalas: [a altura média e o peso médio agora são iguais a zero]{.hl}.
+
+    ```{r}
+    peso_altura %>% 
+      ggplot(aes(altura_desvio, peso_desvio)) +
+        geom_point() +
+        labs(
+          x = 'desvios altura (cm)',
+          y = 'desvios peso\n(kg)'
+        )
+    ```
+
+* Quando o desvio da altura e o desvio do peso têm o [mesmo sinal]{.hl}, os valores têm uma [associação positiva]{.hl}: ou altura e peso estão ambos acima da média, ou ambos abaixo da média.
+
+* Colorindo os pontos de acordo com a associação:
+
+    ```{r}
+    peso_altura %>% 
+      ggplot(aes(altura_desvio, peso_desvio)) +
+        geom_point(
+          data = . %>% filter(altura_desvio * peso_desvio >= 0),
+          color = 'blue'
+        ) +
+        geom_point(
+          data = . %>% filter(altura_desvio * peso_desvio < 0),
+          color = 'red'
+        ) +
+        geom_hline(aes(yintercept = 0), linetype = 'dashed') +
+        geom_vline(aes(xintercept = 0), linetype = 'dashed') +
+        labs(
+          x = 'desvios altura (cm)',
+          y = 'desvios peso\n(kg)'
+        )
+    ```
+
+## Covariância
+
+* Examine o código acima: para verificar se os desvios têm o mesmo sinal, basta verificar se o produto dos desvios é positivo.
+
+* E mais: quanto maior o produto dos desvios, mais acima (ou mais abaixo) das respectivas médias os desvios estão, [ao mesmo tempo]{.hl}. Ou seja, maior a associação entre as duas variáveis.
+
+* Estamos falando de
+
+  $$
+  \text{produto dos desvios}_i = (\text{altura}_i - E(\text{altura})) \cdot (\text{peso}_i - E(\text{peso}))
+  $$
+
+* Podemos calcular os produtos dos desvios e achar a média destes produtos. O resultado vai ser a [covariância:]{.hl}
+
+  $$
+  \text{Cov}(\text{altura}, \text{peso}) = 
+  \frac{
+  \sum_i\; [(\text{altura}_i - E(\text{altura})) \cdot (\text{peso}_i - E(\text{peso}))]
+  }{n}
+  $$
+
+* Ou, de forma mais compacta,
+
+  $$
+  \text{Cov}(\text{altura}, \text{peso}) = 
+  E[(\text{altura} - E(\text{altura})) \cdot (\text{peso} - E(\text{peso}))]
+  $$
+
+* [O R usa $n - 1$ no denominador,]{.hl} em vez de $n$. Isto significa que o R calcula a [covariância amostral]{.hl}, que serve como um estimador da covariância populacional.
+
+* Calculando:
+
+    ```{r}
+    peso_altura %>% 
+      mutate(produto = altura_desvio * peso_desvio) %>% 
+      summarize(cov = sum(produto)/(nrow(.) - 1)) %>% 
+      pull(cov)
+    ```
+
+
+### Em R
+
+```{r}
+cov(peso_altura$altura, peso_altura$peso)
+```
+
+### Exercícios
+
+* Qual é a unidade da covariância? Examine as fórmulas acima para responder.
+
+* []{#excov} Execute o bloco abaixo com diversos valores de `k`, inclusive valores negativos.
+
+    ```{r}
+    k <- 10
+    
+    X <- 1:5
+    Y <- k * X
+    
+    tibble(X, Y) %>% 
+      ggplot(aes(X, Y)) +
+        geom_point(size = 2) +
+        labs(
+          title = paste('cov(X, Y) =', cov(X, Y))
+        )
+    ```
+
+* Qual a covariância máxima entre duas variáveis? E a mínima?
+
+* Usando as propriedades do valor esperado, mostre que, para quaisquer variáveis aleatórias $X$ e $Y$
+
+  $$
+  \text{Cov}(X,Y) \quad=\quad E\big[(X - E(X)) \cdot (Y - E(Y))\big] \quad=\quad E(XY) - E(X)E(Y)
+  $$
+
+* Lembre-se de que a variância de uma variável aleatória $X$ pode ser escrita como
+
+  $$
+  \text{Var}(X) = E(X^2) - [E(X)]^2
+  $$
+
+  Alguma semelhança entre esta expressão e a expressão do item anterior?
+  
+* Qual a covariância de uma variável aleatória $X$ com ela mesma?
+
+* O R usa $n - 1$ no denominador da covariância. Mostre que definir a covariância como 
+  $$
+  \text{Cov}(X, Y) = \frac{1}{n - 1} \cdot \sum_{i = 1}^n \big[(x_i - E(X)) \cdot (y_i - E(Y)) \big]
+  $$
+
+  é equivalente a
+  
+  $$
+  \text{Cov}(X, Y) = \frac{n}{n-1} \cdot \big[ E(XY) - E(X)E(Y) \big]
+  $$
+
+
+* Usando o *data frame* `peso_altura`, compute o valor da expressão acima e compare com o resultado de `cov(peso_altura$altura, peso_altura$peso)`.
+
+
+## Coeficiente de correlação linear
+
+* Vamos [padronizar]{.hl} as alturas e pesos (i.e., [subtrair a média e dividir pelo desvio-padrão]{.hl}):
+
+    ```{r}
+    peso_altura <- peso_altura %>% 
+      mutate(
+        altura_padronizada = scale(altura),
+        peso_padronizado = scale(peso)
+      )
+    ```
+
+* E construir o *scatter plot*:
+
+    ```{r}
+    peso_altura %>% 
+      ggplot(aes(altura_padronizada, peso_padronizado)) +
+        geom_point(
+          data = . %>% filter(altura_padronizada * peso_padronizado >= 0),
+          color = 'blue'
+        ) +
+        geom_point(
+          data = . %>% filter(altura_padronizada * peso_padronizado < 0),
+          color = 'red'
+        ) +
+        geom_hline(aes(yintercept = 0), linetype = 'dashed') +
+        geom_vline(aes(xintercept = 0), linetype = 'dashed') +
+        labs(
+          x = 'altura padronizada',
+          y = 'peso\npadronizado'
+        )
+    ```
+
+* Ou seja, agora as variáveis são
+
+  $$
+  Z_A = \frac{\text{altura} - E(\text{altura})}{DP(\text{altura})}
+  $$
+
+  e
+  
+  $$
+  Z_P = \frac{\text{peso} - E(\text{peso})}{DP(\text{peso})}
+  $$
+
+* A covariância entre elas é
+
+    ```{r}
+    cov(peso_altura$peso_padronizado, peso_altura$altura_padronizada)
+    ```
+
+* Quando padronizamos as duas variáveis, a covariância entre elas se chama [correlação]{.hl}.
+
+* O [coeficiente de correlação amostral]{.hl} é este valor.
+
+  $$
+  r = \frac{\sum x_i y_i}{n - 1}
+  $$
+
+  onde [$X$ e $Y$ são variáveis padronizadas]{.hl}.
+  
+* Alguns livros chamam o coeficiente de correlação de $\rho$ em vez de $r$.
+
+* O coeficiente de correlação [sempre está entre $-1$ e $1$]{.hl}, inclusive.
+
+* Fórmulas alternativas para o coeficiente de correlação entre $X$ e $Y$ (não necessariamente padronizadas):
+
+  $$
+  r = \frac{\text{Cov}(X, Y)}{DP_X \cdot DP_Y}
+  $$
+  
+  e
+
+  $$
+  r = \frac{
+    \sum(x_i - E(X))\cdot(y_i - E(Y))
+  }{
+    \sqrt{\sum(x_i - E(X))^2\cdot(y_i - E(Y))^2}
+  }
+  $$
+
+
+### Em R
+
+```{r}
+cor(peso_altura$peso, peso_altura$altura)
+```
+
+### Exercícios
+
+* Qual a unidade do coeficiente de correlação?
+
+* Execute o bloco abaixo com diversos valores de `k`, inclusive valores negativos.
+
+    ```{r}
+    k <- 10
+    
+    X <- 1:5
+    Y <- k * X
+    
+    tibble(X, Y) %>% 
+      ggplot(aes(X, Y)) +
+        geom_point(size = 2) +
+        labs(
+          title = paste('cor(X, Y) =', cor(X, Y))
+        )
+    ```
+
+* Como você explica os valores de $\text{cor}(X,Y)$ no item anterior, em comparação com os valores de $\text{cov}(X,Y)$ [nesse outro exercício](#excov)?
+
+* Qual a correlação de uma variável aleatória $X$ com ela mesma?
+
+* Usando o *data frame* `peso_altura`, compute o valor do coeficiente de correlação entre peso e altura usando as fórmulas alternativas.
+
+
+### Observações importantes
+
+#### A correlação é [linear]{.hl} {-}
+
+![](images/Pearson_Correlation_Coefficient_and_associated_scatterplots.png){ style="width: 90%;" .center }
+
+:::{style="text-align: right;"}
+(https://commons.wikimedia.org/wiki/File:Pearson_Correlation_Coefficient_and_associated_scatterplots.png)
+:::
+
+* Se $r > 0$, valores [altos]{.hl} de uma variável tendem a corresponder a valores [altos]{.hl} da outra variável.
+
+* Se $r < 0$, valores [altos]{.hl} de uma variável tendem a corresponder a valores [baixos]{.hl} da outra variável.
+
+* Se $r = 0$, não há correlação [linear]{.hl} entre as variáveis.
+
+* O coeficiente de correlação $r$ só mede a correlação [linear]{.hl} entre duas variáveis.
+
+  ![](images/Correlation_examples2.svg){ style="width: 90%;" .center }
+
+:::{style="text-align: right;"}
+(https://commons.wikimedia.org/wiki/File:Correlation_examples2.svg)
+:::
+
+* [Exemplos de Anscombe](https://pt.wikipedia.org/wiki/Quarteto_de_Anscombe), com $4$ conjuntos de dados com [o mesmo valor de $r$]{.hl} mas com associações [muito diferentes]{.hl} entre as variáveis:
+
+  ```{r}
+  anscombe
+  ```
+
+    ```{r message=FALSE, cache=TRUE}
+    desenhar <- function(n) {
+      
+      nomex <- paste0('x', n)
+      nomey <- paste0('y', n)
+      r <- cor(anscombe[[nomex]], anscombe[[nomey]]) %>% round(2)
+      
+      anscombe %>% 
+        ggplot(aes(.data[[nomex]], .data[[nomey]])) +
+          geom_point() +
+          geom_smooth(method = 'lm', se = FALSE) +
+          labs(
+            title = paste('r =', r)
+          )
+      
+    }
+      
+      
+    plots <- map(1:4, desenhar)
+    plots[[1]] + plots[[2]] + plots[[3]] + plots[[4]] 
+    ```
+
+* Conclusões:
+
+  * O valor de $r$ só reflete correlação [linear]{.hl}.
+  
+  * A presença de [*outliers*]{.hl} produz valores não-confiáveis de $r$.
+  
+  
+#### Correlação $\neq$ causação {-}
+
+* Dados coletados em Oldenburg, na Alemanha, nos anos $1930$, mostrando a correlação entre a quantidade de cegonhas e a população (de pessoas) na cidade:
+
+    ```{r message=FALSE, cache=TRUE}
+    df <- read_csv('data/Storks.csv') %>% 
+      transmute(
+        cegonhas = Storks,
+        pessoas = Population
+      ) 
+    
+    r <- cor(df$cegonhas, df$pessoas) %>% round(2)
+    
+    df %>% 
+      ggplot(aes(cegonhas, pessoas)) +
+        geom_point() +
+        labs(
+          title = paste('r =', r)
+        )
+    
+    ```
+
+* [Variável oculta]{.hl}: quantidade de casas com chaminé.
+
+* Ou coincidência: http://tylervigen.com/spurious-correlations
+
+
+## Teste e intervalo de confiança para a correlação
+
+### Exemplo: PIB e CO$_2$
+
+* Em uma amostra de $10$ países, examinamos o PIB (em trilhões de dólares) e a quantidade de emissões de CO$_2$ (em milhões de toneladas):
+
+  ```{r echo=FALSE}
+  df <- tibble(
+    PIB = c(1.7, 1.2, 2.5, 2.8, 3.6, 2.2, 0.8, 1.5, 2.4, 5.9),
+    emissões = c(
+      552.6, 462.3, 475.4, 374.3, 748.5, 400.9, 253.0, 318.6, 496.8, 1180.6
+    )
+  )
+  
+  df
+  ```
+
+* Gráfico:
+
+    ```{r}
+    df %>% 
+      ggplot(aes(PIB, emissões)) +
+        geom_point() +
+        scale_y_continuous(
+          'emissões\n(milhões de\ntoneladas)',
+          breaks = seq(0, 1200, 200),
+          limits = c(0, 1200)
+        ) +
+        scale_x_continuous(
+          'PIB (trilhões US$)',
+          breaks = 0:6,
+          limits = c(0, 6)
+        )
+    ```
+
+* O coeficiente de correlação [amostral]{.hl} é
+
+    ```{r}
+    cor(df$PIB, df$emissões)
+    ```
+
+* Como esta é uma amostra, devemos calcular um intervalo de confiança para o coeficiente de correlação [populacional]{.hl}.
+
+* O R faz isto com a função `cor.test`:
+
+    ```{r}
+    ct <- cor.test(df$PIB, df$emissões)
+    ct
+    ```
+
+* Conclusão: com $95\%$ de confiança, estimamos que o coeficiente de correlação [populacional]{.hl} é capturado pelo intervalo
+
+  $$
+  [\quad `r ct$conf.int[1]` \quad ;\quad  `r ct$conf.int[2]` \quad]
+  $$
+
+### Exercícios
+
+* Qual é o tipo de teste usado por `cor.test`?
+
+* Quais são as hipóteses do teste?
+
+* Como é calculado o valor da estatística do teste ($`r ct$statistic %>% fm(3)`$ no exemplo acima)?
+
+* Como é calculado o valor $p$ ($`r ct$p.value %>% fm(7)`$ no exemplo acima)?
+
+* Implemente uma função em R para fazer o mesmo que `cor.test`.
+
+
+## Transformações
+
+### Exemplo: fotografia
+
+* Ao configurar uma câmera para tirar uma foto, você deve ajustar a velocidade do obturador e a abertura do diafragma.
+
+* O fabricante de uma câmera recomenda os seguintes valores:
+
+  ```{r echo=FALSE}
+  df <- tibble(
+    velocidade = c(
+      1 / 1000,
+      1 / 500,
+      1 / 250,
+      1 / 125,
+      1 / 60,
+      1 / 30,
+      1 / 15,
+      1 / 8
+    ),
+    abertura = c(2.8, 4, 5.6, 8, 11, 16, 22, 32)
+  )
+  
+  df
+  ```
+
+* Gráfico:
+
+    ```{r}
+    df %>% 
+      ggplot(aes(velocidade, abertura)) +
+        geom_point()
+    ```
+
+* Coeficiente de correlação:
+
+    ```{r}
+    cor(df$velocidade, df$abertura)
+    ```
+
+* Este já é um coeficiente de correlação alto, mas o gráfico mostra que também existe uma associação [não-linear]{.hl} entre as variáveis.
+
+* Vamos transformar os valores de uma das variáveis para tornar a correlação mais linear (menos curva):
+
+    ```{r}
+    df <- df %>% 
+      mutate(quad_abertura = abertura^2)
+    ```
+    
+    ```{r}
+    df %>% 
+      ggplot(aes(velocidade, quad_abertura)) +
+        geom_point() +
+        labs(y = 'abertura²')
+    ```
+
+* A correlação linear agora é
+
+    ```{r}
+    cor(df$velocidade, df$quad_abertura)
+    ```
+
+
+### Funções usadas em transformações
+
+* $f(x) = x^2$: útil quando os valores originais têm cauda longa à esquerda, ou quando os valores originais têm concavidade para baixo.
+
+* $f(x) = \sqrt{x}$: útil para valores que representam contagens.
+
+* $f(x) = \log x$: útil para valores positivos, que crescem de acordo com percentagens, como salários, populações etc. Como $\log 0$ não é definido, você pode precisar acrescentar uma constante $\varepsilon$ aos valores antes da transformação.
+
+* $f(x) = -\frac1{\sqrt{x}}$: o sinal negativo mantém a ordenação dos valores.
+
+* $f(x) = -\frac1x$: útil para razões, como km/h. O sinal negativo mantém a ordenação dos valores. Como $y/0$ não é definido, você pode precisar acrescentar uma constante $\varepsilon$ aos valores antes da transformação.
+
+
+### Exercício
+
+* Aplique as outras transformações da lista acima aos valores da variável `abertura`. Desenhe gráficos, calcule correlações, e compare os resultados.
+
+
+### Exemplo: planetas
+
+* A distância média de um planeta ao Sol, em milhões de km, está correlacionada com a posição do planeta na sequência, mas como?
+
+  ```{r echo=FALSE}
+  planetas <- tribble(
+    ~nome, ~posição, ~distância,
+    'Mercúrio', 1, 36,
+    'Vênus', 2, 67,
+    'Terra', 3, 93,
+    'Marte', 4, 142,
+    'Júpiter', 5, 484,
+    'Saturno', 6, 887,
+    'Urano', 7, 1784,
+    'Netuno', 8, 2796,
+    'Plutão', 9, 3666
+  ) %>% 
+    mutate(
+      distância = distância * 1.6
+    )
+  
+  planetas
+  ```
+
+* Gráfico:
+
+    ```{r}
+    planetas %>% 
+      ggplot(aes(posição, distância)) +
+        geom_point() +
+        scale_x_continuous(breaks = 1:9) +
+        labs(
+          y = 'distância\n(milhões km)'
+        )
+    ```
+
+* Coeficiente de correlação:
+
+    ```{r}
+    cor(planetas$posição, planetas$distância)
+    ```
+
+* Vamos transformar os valores das distâncias usando $\log$:
+
+    ```{r}
+    planetas <- planetas %>% 
+      mutate(ldist = log10(distância))
+    ```
+    
+    ```{r}
+    planetas %>% 
+      ggplot(aes(posição, ldist)) +
+        geom_point() +
+        scale_x_continuous(breaks = 1:9) +
+        labs(
+          y = 'log distância\n(milhões km)'
+        )
+    ```
+
+* A correlação se torna
+
+    ```{r}
+    cor(planetas$posição, planetas$ldist)
+    ```
+
+
+### Exercício
+
+* Aplique as outras transformações da lista acima aos valores da variável `distância`. Desenhe gráficos, calcule correlações, e compare os resultados.
+
+
