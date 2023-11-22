@@ -89,6 +89,10 @@ peso_altura
 
 * Dando nomes às coisas:
 
+  * Neste exemplo, altura é o [preditor]{.hl}.
+
+  * Neste exemplo, peso é a [variável de resposta]{.hl}.
+
   * O [intercepto]{.hl} é o valor de $\widehat{b_0} = `r b0`$. Neste exemplo, corresponderia ao peso de uma pessoa com altura zero! Claro que isto não faz sentido na realidade física, mas é um valor que faz parte da definição da reta. [Aliás, serve como aviso de que a reta de regressão só faz sentido dentro da faixa de valores dos dados que temos.]{.hl}
   
   * A [inclinação]{.hl} é o valor de $\widehat{b_1} = `r b1`$. Neste exemplo, significa que um aumento de $1$cm na altura corresponde a um aumento de $`r b1`$kg no peso.
@@ -781,45 +785,67 @@ peso_altura
     regressao
     ```
 
+* Lembre-se de que, neste exemplo, os resíduos são as diferenças, para cada observação, entre o peso verdadeiro e o peso estimado pela reta de regressão. 
+
+* No gráfico acima, o resíduo de uma observação é a [distância vertical da reta até o ponto]{.hl}. O resíduo é positivo se o ponto está acima da reta, negativo se abaixo.
+
 * [Os resíduos são usados para verificar se o modelo é adequado]{.hl}.
 
-* O pacote `gglm` (http://graysonwhite.com/gglm/) tem funções para produzir gráficos úteis sobre os resíduos. Lembre-se de que a variável `modelo` guarda o objeto retornado pela função `lm`:
+* O pacote `gglm` (http://graysonwhite.com/gglm/) tem funções para produzir gráficos úteis sobre os resíduos:
 
     ```{r}
     library(gglm)
-    gglm(modelo)
     ```
-
-* Ou, se você não se importar com a feiúra dos gráficos do R base, pode usar a função `plot`:
 
     ```{r}
-    plot(modelo)
+    dados_aumentados %>% 
+      ggplot() +
+        stat_fitted_resid() +
+        labs(
+          y = 'resíduos\n(kg)',
+          x = 'pesos estimados (kg)',
+          title = 'Resíduos por pesos estimados'
+        )
     ```
 
-* Vamos discutir apenas os dois primeiros gráficos: [resíduos pelos valores estimados]{.hl} e ???
+    ```{r}
+    dados_aumentados %>% 
+      ggplot() +
+        stat_normal_qq() +
+        labs(
+          x = 'quantis da distribuição normal\n(desvios padrão)',
+          y = 'resíduos\npadronizados',
+          title = 'QQ Normal'
+        )
+    ```
+    
+* Ou, se você não se importar com a feiúra dos gráficos do R base, pode usar a função `plot` com o objeto retornado pela função `lm`:
 
-* As observações com os maiores resíduos, $3$ delas marcadas com os números nos gráficos gerados pelo R base, são
-
-  ```{r}
-  dados_aumentados %>% 
-    slice_max(.resid, n = 6) %>% 
-    select(altura, peso, .fitted, .resid)
-  ```
+    ```{r}
+    plot(modelo, which = 1:2)
+    ```
 
 * Que condições devemos verificar sobre os resíduos?
 
   1. Devemos confirmar que [os resíduos seguem uma distribuição normal]{.hl}.
   
-     Fazendo um histograma:
+     Fazendo um histograma dos resíduos:
      
      ```{r}
      dados_aumentados %>% 
        ggplot(aes(.resid)) +
-         geom_histogram(bins = 15)
+         geom_histogram(bins = 15) +
+         labs(y = NULL, x = 'resíduo')
      ```
 
-     Pelo histograma e pelo gráfico QQ acima, os resíduos não parecem ter distribuição normal.
-  
+     Pelo histograma e pelo gráfico QQ mais acima, os resíduos parecem [não ter distribuição normal]{.hl}. O problema são os *outliers*, observações com resíduos altos:
+
+     ```{r}
+     dados_aumentados %>% 
+       slice_max(.resid, n = 6) %>% 
+       select(altura, peso, .fitted, .resid)
+     ```
+
      Podemos fazer um [teste estatístico de normalidade](#teste-de-normalidade-de-shapiro-wilk):
      
      ```{r}
@@ -828,7 +854,7 @@ peso_altura
        shapiro.test()
      ```
 
-     Este resultado diz que [não devemos considerar estes resíduos como sendo normais.]{.hl} Os resíduos à direita atrapalham muito. Se ignorarmos todos os resíduos maiores que $10$kg, o teste retorna um resultado mais compatível com a normalidade (mas não muito):
+     Este resultado confirma que [não devemos considerar estes resíduos como sendo normais.]{.hl} Se ignorarmos todos os resíduos maiores que $10$kg, o teste retorna um resultado mais compatível com a normalidade (mas não muito):
    
      ```{r}
      dados_aumentados %>% 
@@ -841,7 +867,7 @@ peso_altura
      
      Quando a distribuição dos resíduos não for normal, o que fazer?
      
-     * No nosso exemplo, a causa é a presença de alguns [*outliers* com resíduos maiores que $10$]{.hl}. São pessoas que têm pesos altos demais para as suas alturas. Se estes *outliers* estiverem muito próximos da borda esquerda ou da borda direita do gráfico, eles podem afetar muito a inclinação da reta (tecnicamente, dizemos que eles têm *leverage* alto). Podemos refazer a regressão sem estes *outliers* e verificar se isto altera muito a reta. [Faça isto como exercício neste exemplo]{.hl}. 
+     * No nosso exemplo, a causa é a presença de alguns [*outliers* com resíduos maiores que $10$]{.hl}. São pessoas que têm pesos altos demais para as suas alturas. Se estes *outliers* estiverem muito próximos da borda esquerda ou da borda direita do *scatter plot*, eles podem afetar muito a inclinação da reta (tecnicamente, dizemos que eles têm *leverage* alto). Podemos refazer a regressão sem estes *outliers* e verificar se isto altera muito a reta. [Faça isto como exercício neste exemplo]{.hl}. 
      
        Leia mais sobre este problema [nesta discussão *online*](https://stats.stackexchange.com/questions/100214/assumptions-of-linear-models-and-what-to-do-if-the-residuals-are-not-normally-di) e [neste artigo](https://discovery.ucl.ac.uk/id/eprint/10070182/1/Schmidt_UCL_depos_JCE2018.pdf).
      
@@ -851,7 +877,7 @@ peso_altura
      
   2. Devemos confirmar que [os resíduos não dependem dos valores estimados]{.hl}. 
   
-     A idéia é que o *scatter plot* dos resíduos pelos valores estimados [não deve apresentar nenhum padrão]{.hl}. A nuvem de pontos deve se distribuir de forma aparentemente aleatória em torno da reta horizontal $y = 0$ (a média dos resíduos), sem *outliers* e sem alterações significativas da variância.
+     A idéia é que o *scatter plot* dos resíduos pelos valores estimados [não deve apresentar nenhum padrão]{.hl}. A nuvem de pontos deve se distribuir de maneira uniforme em torno da reta horizontal $y = 0$ (a média dos resíduos), sem *outliers* e sem alterações significativas da variância (a "altura" da nuvem).
      
      Repetindo o gráfico de resíduos por pesos estimados:
   
@@ -866,57 +892,37 @@ peso_altura
          )
      ```
      
-     De novo, os *outliers* são o problema. Se forem ignorados, os resíduos 
+     De novo, os *outliers* são o problema. Refaça a regressão sem os *outliers* e gere os gráficos novamente.
   
 
-### Como os resíduos *não* devem ser
+     ::: {.rmdimportant latex=1}
+     
+     Quando a variância dos resíduos não for constante, o que fazer?
+     
+     Observe o gráfico abaixo, feito a partir de outros dados:
 
-* A distribuição dos resíduos [não deve se afastar da normal:]{.hl}
+     ```{r echo=FALSE}
+     set.seed(12345)
+     
+     n <- 100
+     tibble(
+       estimados = runif(n, -10, 10),
+       resíduos  = estimados + rnorm(n, sd = estimados + 10)
+     ) %>% 
+           ggplot(aes(estimados, resíduos)) +
+             geom_point() +
+         labs(
+           x = 'valores estimados'
+         )
+     ```
+ 
+     Perceba como a variância dos resíduos muda à medida que o valor estimado aumenta. Este fenômeno tem o nome de [heterocedasticidade]{.hl}.
+     
+     Quando isto acontece, podemos refazer a regressão com a variável de resposta transformada por $\log$ ou por $\sqrt{\,\,}$ e verificar se a variância dos resíduos ficou mais bem comportada.
+     
+     Alternativamente, em algumas situações, podemos usar uma variante de regressão linear chamada [[regressão linear com pesos]{.hl}](https://en.wikipedia.org/wiki/Weighted_least_squares), que não vamos abordar aqui.
 
-    ```{r echo=FALSE}
-    set.seed(1234)
-    
-    tibble(
-      resíduos = c(rnorm(80, -2), rnorm(80, 2))
-    ) %>% 
-      ggplot(aes(resíduos)) +
-        geom_histogram(bins = 20) +
-        labs(y = NULL)
-    ```
-
-* O *scatter plot* [não deve ter padrões visíveis:]{.hl}
-
-    ```{r echo=FALSE}
-    set.seed(12345)
-    
-    n <- 100
-    tibble(
-      estimados = runif(n, -20, 20),
-      resíduos  = (estimados^2) / 50 + rnorm(n, sd = 3)
-    ) %>% 
-      ggplot(aes(estimados, resíduos)) +
-        geom_point() +
-        labs(
-          x = 'valores estimados'
-        )
-    ```
-
-* No *scatter plot*, [os resíduos não devem ter variabilidade diferente, dependendo do valor estimado:]{.hl}
-
-    ```{r echo=FALSE}
-    set.seed(12345)
-    
-    n <- 100
-    tibble(
-      estimados = runif(n, -10, 10),
-      resíduos  = estimados + 10 + rnorm(n, sd = estimados + 10)
-    ) %>% 
-          ggplot(aes(estimados, resíduos)) +
-            geom_point() +
-        labs(
-          x = 'valores estimados'
-        )
-    ```
+     :::
 
 
 ## Condições para usar regressão linear
@@ -927,7 +933,7 @@ peso_altura
 
 * Não deve haver [*outliers*]{.hl} extremos.
 
-* Uma vez definida a reta de regressão, devemos [examinar os resíduos]{.hl}. No *scatter plot* de resíduos pelos valores estimados, a nuvem de pontos deve estar espalhada em torno da reta $y = 0$, sem padrões óbvios, sem curvatura, sem alterações na variância à medida que percorremos a reta horizontal..
+* Uma vez definida a reta de regressão, devemos [examinar os resíduos]{.hl}. No *scatter plot* de resíduos pelos valores estimados, a nuvem de pontos deve estar espalhada em torno da reta $y = 0$, sem padrões óbvios, sem curvatura, sem alterações na variância à medida que percorremos a reta horizontal.
 
 
 ## Exemplo: furacões
@@ -1168,7 +1174,7 @@ moore %>%
       ggplot(aes(ano, ltransistores)) +
         geom_point() +
         labs(
-          y = TeX('log_{10}(transistores)')
+          y = TeX('$\\log_{10}$ (transistores)')
         )
     
     grafico
@@ -1300,9 +1306,7 @@ b1 <- coef(modelo)[2]
     arrange(.resid)
   ```
 
-* Os resíduos parecem não ter variância constante.
-
-* Além disso, parece haver uma certa curvatura na nuvem de pontos.
+* Além disso, parece haver uma certa curvatura na nuvem de pontos, e os resíduos parecem não ter variância constante.
 
 
 ### Exercícios

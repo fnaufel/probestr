@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Capítulo 16 Regressão linear | Probabilidade e Estatística com R</title>
+<title>Capítulo 15 Regressão linear | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
-<meta name="description" content="16.1 Vídeo    16.2 Exemplo: altura e peso  Pessoas mais altas tendem a ser mais pesadas? Temos dados de \(68\) pessoas, com alturas em cm e pesos em kg: ...">
+<meta name="description" content="15.1 Vídeo    15.2 Exemplo: altura e peso  Pessoas mais altas tendem a ser mais pesadas? Temos dados de \(68\) pessoas, com alturas em cm e pesos em kg: ...">
 <meta name="generator" content="bookdown 0.36 with bs4_book()">
-<meta property="og:title" content="Capítulo 16 Regressão linear | Probabilidade e Estatística com R">
+<meta property="og:title" content="Capítulo 15 Regressão linear | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
-<meta property="og:description" content="16.1 Vídeo    16.2 Exemplo: altura e peso  Pessoas mais altas tendem a ser mais pesadas? Temos dados de \(68\) pessoas, com alturas em cm e pesos em kg: ...">
+<meta property="og:description" content="15.1 Vídeo    15.2 Exemplo: altura e peso  Pessoas mais altas tendem a ser mais pesadas? Temos dados de \(68\) pessoas, com alturas em cm e pesos em kg: ...">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Capítulo 16 Regressão linear | Probabilidade e Estatística com R">
-<meta name="twitter:description" content="16.1 Vídeo    16.2 Exemplo: altura e peso  Pessoas mais altas tendem a ser mais pesadas? Temos dados de \(68\) pessoas, com alturas em cm e pesos em kg: ...">
+<meta name="twitter:title" content="Capítulo 15 Regressão linear | Probabilidade e Estatística com R">
+<meta name="twitter:description" content="15.1 Vídeo    15.2 Exemplo: altura e peso  Pessoas mais altas tendem a ser mais pesadas? Temos dados de \(68\) pessoas, com alturas em cm e pesos em kg: ...">
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -47,27 +47,45 @@
 </form>
 
       <nav aria-label="Conteúdo"><h2>Conteúdo</h2>
-        <ul class="book-toc list-unstyled"><li><a class="" href="index.html"><span class="header-section-number">Capítulo 16</span> Regressão linear</a></li></ul>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Apresentação</a></li>
+<li><a class="" href="oque.html"><span class="header-section-number">1</span> O que é estatística?</a></li>
+<li><a class="" href="rintro.html"><span class="header-section-number">2</span> Introdução a R</a></li>
+<li><a class="" href="introdu%C3%A7%C3%A3o-ao-tidyverse.html"><span class="header-section-number">3</span> Introdução ao tidyverse</a></li>
+<li><a class="" href="viz.html"><span class="header-section-number">4</span> Visualização com ggplot2</a></li>
+<li><a class="" href="viz2.html"><span class="header-section-number">5</span> Visualização com ggplot2 (continuação)</a></li>
+<li><a class="" href="medidas.html"><span class="header-section-number">6</span> Medidas</a></li>
+<li><a class="" href="probs.html"><span class="header-section-number">7</span> Probabilidades</a></li>
+<li><a class="" href="variaveis.html"><span class="header-section-number">8</span> Variáveis aleatórias</a></li>
+<li><a class="" href="discretas.html"><span class="header-section-number">9</span> Distribuições discretas</a></li>
+<li><a class="" href="distribui%C3%A7%C3%B5es-cont%C3%ADnuas.html"><span class="header-section-number">10</span> Distribuições contínuas</a></li>
+<li><a class="" href="tcl.html"><span class="header-section-number">11</span> Teorema central do limite</a></li>
+<li><a class="" href="ic.html"><span class="header-section-number">12</span> Intervalos de confiança</a></li>
+<li><a class="" href="th.html"><span class="header-section-number">13</span> Testes de hipóteses</a></li>
+<li><a class="" href="corr.html"><span class="header-section-number">14</span> Covariância e correlação</a></li>
+<li><a class="active" href="regr.html"><span class="header-section-number">15</span> Regressão linear</a></li>
+<li><a class="" href="refer%C3%AAncias.html">Referências</a></li>
+</ul>
 
         <div class="book-extra">
           <p><a id="book-repo" href="https://github.com/fnaufel/probestr">Ver código-fonte do livro <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="regr" class="section level1" number="16">
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="regr" class="section level1" number="15">
 <h1>
-<span class="header-section-number">Capítulo 16</span> Regressão linear<a class="anchor" aria-label="anchor" href="#regr"><i class="fas fa-link"></i></a>
+<span class="header-section-number">Capítulo 15</span> Regressão linear<a class="anchor" aria-label="anchor" href="#regr"><i class="fas fa-link"></i></a>
 </h1>
-<div id="vídeo-7" class="section level2" number="16.1">
+<div id="vídeo-7" class="section level2" number="15.1">
 <h2>
-<span class="header-section-number">16.1</span> Vídeo<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-7"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.1</span> Vídeo<a class="anchor" aria-label="anchor" href="#v%C3%ADdeo-7"><i class="fas fa-link"></i></a>
 </h2>
 <iframe src="https://www.youtube.com/embed/diUFBf0JUC4" width="100%" height="400px" data-external="1" class="center" style="width: 80%;">
 </iframe>
 </div>
-<div id="exemplo-altura-e-peso-1" class="section level2" number="16.2">
+<div id="exemplo-altura-e-peso-1" class="section level2" number="15.2">
 <h2>
-<span class="header-section-number">16.2</span> Exemplo: altura e peso<a class="anchor" aria-label="anchor" href="#exemplo-altura-e-peso-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.2</span> Exemplo: altura e peso<a class="anchor" aria-label="anchor" href="#exemplo-altura-e-peso-1"><i class="fas fa-link"></i></a>
 </h2>
 <div class="rmdbox">
 <p>Pessoas mais altas tendem a ser mais pesadas?</p>
@@ -81,7 +99,7 @@
 <ul>
 <li>
 <p>O gráfico de dispersão (<em>scatter plot</em>) é o ideal para visualizar a correlação entre duas variáveis numéricas:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb890"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grafico_pa</span> <span class="op">&lt;-</span> <span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">altura</span>, <span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -92,16 +110,16 @@
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">150</span>, <span class="fl">200</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">grafico_pa</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-435-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Podemos pedir ao R para traçar <span class="hl">uma reta resumindo a variação do peso em função da altura</span>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb891"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">regressao</span> <span class="op">&lt;-</span> <span class="va">grafico_pa</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">'lm'</span>, formula <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">regressao</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-436-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Esta é a <span class="hl">reta de regressão</span>, ou <span class="hl">reta de melhor ajuste</span>.</p></li>
 <li>
@@ -119,6 +137,8 @@
 <li>
 <p>Dando nomes às coisas:</p>
 <ul>
+<li><p>Neste exemplo, altura é o <span class="hl">preditor</span>.</p></li>
+<li><p>Neste exemplo, peso é a <span class="hl">variável de resposta</span>.</p></li>
 <li><p>O <span class="hl">intercepto</span> é o valor de <span class="math inline">\(\widehat{b_0} = -89{,}81\)</span>. Neste exemplo, corresponderia ao peso de uma pessoa com altura zero! Claro que isto não faz sentido na realidade física, mas é um valor que faz parte da definição da reta. <span class="hl">Aliás, serve como aviso de que a reta de regressão só faz sentido dentro da faixa de valores dos dados que temos.</span></p></li>
 <li><p>A <span class="hl">inclinação</span> é o valor de <span class="math inline">\(\widehat{b_1} = 0{,}90\)</span>. Neste exemplo, significa que um aumento de <span class="math inline">\(1\)</span>cm na altura corresponde a um aumento de <span class="math inline">\(0{,}90\)</span>kg no peso.</p></li>
 <li>
@@ -175,9 +195,9 @@
 </li>
 </ul>
 </div>
-<div id="como-achar-a-equação-da-melhor-reta-com-cálculo" class="section level2" number="16.3">
+<div id="como-achar-a-equação-da-melhor-reta-com-cálculo" class="section level2" number="15.3">
 <h2>
-<span class="header-section-number">16.3</span> Como achar a equação da melhor reta? Com Cálculo!<a class="anchor" aria-label="anchor" href="#como-achar-a-equa%C3%A7%C3%A3o-da-melhor-reta-com-c%C3%A1lculo"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.3</span> Como achar a equação da melhor reta? Com Cálculo!<a class="anchor" aria-label="anchor" href="#como-achar-a-equa%C3%A7%C3%A3o-da-melhor-reta-com-c%C3%A1lculo"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li><p>Qual reta queremos? A que deixe <span class="hl">o mínimo possível de resíduos</span>, de certa forma.</p></li>
@@ -191,7 +211,7 @@ S = \sum_i \left[\text{peso}(x_i) - \widehat{\text{peso}}(x_i)\right]^2
 <li><p>Esta soma <span class="math inline">\(S\)</span> é a quantidade que queremos minimizar: <span class="hl">a soma dos quadrados dos resíduos</span>.</p></li>
 <li>
 <p>Eis alguns exemplos de retas diferentes, com seus respectivos valores de S:</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-439-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Mas lembre-se de que <span class="math inline">\(\widehat{peso}(x_i) = \widehat{b_0} + \widehat{b_1} \cdot \text{altura}(x_i)\)</span>.</p></li>
 <li>
@@ -510,7 +530,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>No nosso exemplo de <span class="math inline">\(x=\)</span> alturas e <span class="math inline">\(y=\)</span> pesos:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb892"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso</span> <span class="op">&lt;-</span> <span class="va">peso_altura</span><span class="op">$</span><span class="va">peso</span></span>
 <span><span class="va">altura</span> <span class="op">&lt;-</span> <span class="va">peso_altura</span><span class="op">$</span><span class="va">altura</span></span>
 <span></span>
@@ -535,9 +555,9 @@ n\overline{x} = \sum_i x_i
 ## b1 = 0,9</code></pre>
 </li>
 </ul>
-<div id="exercícios-21" class="section level3" number="16.3.1">
+<div id="exercícios-21" class="section level3" number="15.3.1">
 <h3>
-<span class="header-section-number">16.3.1</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-21"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.3.1</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-21"><i class="fas fa-link"></i></a>
 </h3>
 <div id="unidades" class="section level4 unnumbered">
 <h4>Unidades<a class="anchor" aria-label="anchor" href="#unidades"><i class="fas fa-link"></i></a>
@@ -636,21 +656,21 @@ n\overline{x} = \sum_i x_i
 </div>
 </div>
 </div>
-<div id="em-r-20" class="section level2" number="16.4">
+<div id="em-r-20" class="section level2" number="15.4">
 <h2>
-<span class="header-section-number">16.4</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-20"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-20"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li><p>A função <code>lm</code> (<em>linear model</em>) acha a reta de regressão e retorna muitas informações sobre o modelo.</p></li>
 <li>
 <p>No nosso exemplo:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb894"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">peso</span> <span class="op">~</span> <span class="va">altura</span>, data <span class="op">=</span> <span class="va">peso_altura</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li><p>O argumento <code>peso ~ altura</code> é uma <span class="hl">fórmula</span>, um tipo de expressão que faz parte da sintaxe de R.</p></li>
 <li>
 <p>O objeto retornado por <code>lm</code> é uma lista com muitos elementos:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb895"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## List of 12
 ##  $ coefficients : Named num [1:2] -89,806 0,899
@@ -715,14 +735,14 @@ n\overline{x} = \sum_i x_i
 <ul>
 <li>
 <p>Os coeficientes da reta:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb897"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## (Intercept)      altura 
 ## -89,8056787   0,8988101</code></pre>
 </li>
 <li>
 <p>Os valores de <span class="math inline">\(\widehat{y}(x)\)</span> para todas as observações <span class="math inline">\(x\)</span>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb899"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##        1        2        3        4        5        6        7        8        9 
 ## 56,30488 54,02191 72,28573 56,30488 51,73893 58,58786 57,44637 66,57828 59,72935 
@@ -743,7 +763,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Os resíduos de todas as observações:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb901"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##            1            2            3            4            5            6 
 ##  -6,80488467   1,32809288 -11,98572754   1,74511533   6,31107043  -3,23786223 
@@ -772,7 +792,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Aliás, como prometido, a soma dos resíduos é zero, salvo erro de arredondamento:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb903"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,00000000000002731149</code></pre>
 </li>
@@ -780,7 +800,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Outra maneira de ver os coeficientes é simplesmente imprimir o objeto retornado por <code>lm</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb905"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -793,7 +813,7 @@ n\overline{x} = \sum_i x_i
 <li>
 <p>Ou usar a função <code>summary</code>, que mostra estatísticas sobre os resíduos, os valores dos coeficientes, os resultados de testes estatísticos sobre eles, e informações sobre o modelo como um todo.</p>
 <p>Vamos falar sobre estes testes e estas informações depois.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb907"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -816,7 +836,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Para <span class="hl">prever</span> os pesos de novas alturas observadas, use <code>predict</code>:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb909"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">novas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  altura <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">156</span>, <span class="fl">177</span>, <span class="fl">192</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -826,19 +846,19 @@ n\overline{x} = \sum_i x_i
 ## 50,40869 69,28370 82,76585</code></pre>
 </li>
 </ul>
-<div id="no-tidyverse" class="section level3" number="16.4.1">
+<div id="no-tidyverse" class="section level3" number="15.4.1">
 <h3>
-<span class="header-section-number">16.4.1</span> No Tidyverse<a class="anchor" aria-label="anchor" href="#no-tidyverse"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4.1</span> No Tidyverse<a class="anchor" aria-label="anchor" href="#no-tidyverse"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li>
 <p>O pacote <code>broom</code> recolhe em <em>tibbles</em> as informações retornadas por <code>lm</code>.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb911"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Use a função <code>tidy</code> para informações sobre os coeficientes:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb912"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -848,7 +868,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Use a função <code>glance</code> para outras informações sobre o modelo:</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb913"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -858,7 +878,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Para ver os valores computados pelo modelo para as observações, use <code>augment</code>, passando o modelo e, opcionalmente, os dados originais:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb914"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/augment.html">augment</a></span><span class="op">(</span><span class="va">modelo</span>, data <span class="op">=</span> <span class="va">peso_altura</span><span class="op">)</span></span>
 <span><span class="va">dados_aumentados</span></span></code></pre></div>
 <div data-pagedtable="false">
@@ -869,7 +889,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Para <span class="hl">prever</span> os pesos de novas alturas observadas, use <code>augment</code> com as novas observações no argumento <code>newdata</code>:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb915"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">novas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  altura <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">156</span>, <span class="fl">177</span>, <span class="fl">192</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -884,7 +904,7 @@ n\overline{x} = \sum_i x_i
 <li><p>Como não passamos os pesos verdadeiros destas observações, a função não calculou resíduos.</p></li>
 <li>
 <p>Se passarmos os pesos verdadeiros (como se quiséssemos testar o modelo com observações que não foram usadas para construir a regressão), a função calcula os resíduos:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb916"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">novas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  altura <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">156</span>, <span class="fl">177</span>, <span class="fl">192</span><span class="op">)</span>,</span>
 <span>  peso   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span> <span class="fl">55</span>,  <span class="fl">70</span>,  <span class="fl">80</span><span class="op">)</span></span>
@@ -900,32 +920,63 @@ n\overline{x} = \sum_i x_i
 </ul>
 </div>
 </div>
-<div id="avaliando-o-modelo-através-dos-resíduos" class="section level2" number="16.5">
+<div id="avaliando-o-modelo-através-dos-resíduos" class="section level2" number="15.5">
 <h2>
-<span class="header-section-number">16.5</span> Avaliando o modelo através dos resíduos<a class="anchor" aria-label="anchor" href="#avaliando-o-modelo-atrav%C3%A9s-dos-res%C3%ADduos"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.5</span> Avaliando o modelo através dos resíduos<a class="anchor" aria-label="anchor" href="#avaliando-o-modelo-atrav%C3%A9s-dos-res%C3%ADduos"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
 <p>Vamos repetir o <em>scatter plot</em> com a reta de regressão:</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-456-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
+<li><p>Lembre-se de que, neste exemplo, os resíduos são as diferenças, para cada observação, entre o peso verdadeiro e o peso estimado pela reta de regressão.</p></li>
+<li><p>No gráfico acima, o resíduo de uma observação é a <span class="hl">distância vertical da reta até o ponto</span>. O resíduo é positivo se o ponto está acima da reta, negativo se abaixo.</p></li>
 <li><p><span class="hl">Os resíduos são usados para verificar se o modelo é adequado</span>.</p></li>
 <li>
 <p>O pacote <code>gglm</code> (<a href="http://graysonwhite.com/gglm/" class="uri">http://graysonwhite.com/gglm/</a>) tem funções para produzir gráficos úteis sobre os resíduos:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/graysonwhite/gglm">gglm</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/gglm/man/gglm.html">gglm</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb917"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/graysonwhite/gglm">gglm</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb918"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_fitted_resid.html">stat_fitted_resid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>      y <span class="op">=</span> <span class="st">'resíduos\n(kg)'</span>,</span>
+<span>      x <span class="op">=</span> <span class="st">'pesos estimados (kg)'</span>,</span>
+<span>      title <span class="op">=</span> <span class="st">'Resíduos por pesos estimados'</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-458-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="sourceCode" id="cb919"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_normal_qq.html">stat_normal_qq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<span>      x <span class="op">=</span> <span class="st">'quantis da distribuição normal\n(desvios padrão)'</span>,</span>
+<span>      y <span class="op">=</span> <span class="st">'resíduos\npadronizados'</span>,</span>
+<span>      title <span class="op">=</span> <span class="st">'QQ Normal'</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-459-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
-<p>Ou, se você não se importar com a feiúra dos gráficos do R base, pode usar a função <code>plot</code> sobre o objeto retornado pela função <code>lm</code>:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="100%" style="display: block; margin: auto;"><img src="_main_files/figure-html/unnamed-chunk-29-2.png" width="100%" style="display: block; margin: auto;"><img src="_main_files/figure-html/unnamed-chunk-29-3.png" width="100%" style="display: block; margin: auto;"><img src="_main_files/figure-html/unnamed-chunk-29-4.png" width="100%" style="display: block; margin: auto;"></p>
+<p>Ou, se você não se importar com a feiúra dos gráficos do R base, pode usar a função <code>plot</code> com o objeto retornado pela função <code>lm</code>:</p>
+<div class="sourceCode" id="cb920"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modelo</span>, which <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-460-1.png" width="100%" style="display: block; margin: auto;"><img src="_main_files/figure-html/unnamed-chunk-460-2.png" width="100%" style="display: block; margin: auto;"></p>
 </li>
 <li>
-<p>As observações com os maiores resíduos, <span class="math inline">\(3\)</span> delas marcadas com os números nos gráficos gerados pelo R base, são</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<p>Que condições devemos verificar sobre os resíduos?</p>
+<ol style="list-style-type: decimal">
+<li>
+<p>Devemos confirmar que <span class="hl">os resíduos seguem uma distribuição normal</span>.</p>
+<p>Fazendo um histograma dos resíduos:</p>
+<div class="sourceCode" id="cb921"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span>, x <span class="op">=</span> <span class="st">'resíduo'</span><span class="op">)</span></span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-461-1.png" width="100%" style="display: block; margin: auto;"></div>
+<p>Pelo histograma e pelo gráfico QQ mais acima, os resíduos parecem <span class="hl">não ter distribuição normal</span>. O problema são os <em>outliers</em>, observações com resíduos altos:</p>
+<div class="sourceCode" id="cb922"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">.resid</span>, n <span class="op">=</span> <span class="fl">6</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">altura</span>, <span class="va">peso</span>, <span class="va">.fitted</span>, <span class="va">.resid</span><span class="op">)</span></span></code></pre></div>
@@ -934,21 +985,8 @@ n\overline{x} = \sum_i x_i
 {"columns":[{"label":["altura"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["peso"],"name":[2],"type":["dbl"],"align":["right"]},{"label":[".fitted"],"name":[3],"type":["dbl"],"align":["right"]},{"label":[".resid"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"180,34","2":"123,75","3":"72,28573","4":"51,46427"},{"1":"162,56","2":"81,00","3":"56,30488","4":"24,69512"},{"1":"167,64","2":"83,25","3":"60,87084","4":"22,37916"},{"1":"180,34","2":"90,00","3":"72,28573","4":"17,71427"},{"1":"185,42","2":"94,50","3":"76,85168","4":"17,64832"},{"1":"157,48","2":"67,50","3":"51,73893","4":"15,76107"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-</li>
-<li>
-<p>Que condições devemos verificar sobre os resíduos?</p>
-<ol style="list-style-type: decimal">
-<li>
-<p>Devemos confirmar que <span class="hl">os resíduos seguem uma distribuição normal</span>.</p>
-<p>Fazendo um histograma:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="100%" style="display: block; margin: auto;"></div>
-<p>Pelo histograma e pelo gráfico QQ acima, os resíduos não parecem ter distribuição normal.</p>
 <p>Podemos fazer um <a href="th.html#teste-de-normalidade-de-shapiro-wilk">teste estatístico de normalidade</a>:</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb923"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -957,8 +995,8 @@ n\overline{x} = \sum_i x_i
 ## 
 ## data:  .
 ## W = 0,8076, p-value = 0,00000005328</code></pre>
-<p>Este resultado diz que <span class="hl">não devemos considerar estes resíduos como sendo normais.</span> Os resíduos à direita atrapalham muito. Se ignorarmos todos os resíduos maiores que <span class="math inline">\(10\)</span>kg, o teste retorna um resultado mais compatível com a normalidade (mas não muito):</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<p>Este resultado confirma que <span class="hl">não devemos considerar estes resíduos como sendo normais.</span> Se ignorarmos todos os resíduos maiores que <span class="math inline">\(10\)</span>kg, o teste retorna um resultado mais compatível com a normalidade (mas não muito):</p>
+<div class="sourceCode" id="cb925"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.resid</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -972,7 +1010,7 @@ n\overline{x} = \sum_i x_i
 <p>Quando a distribuição dos resíduos não for normal, o que fazer?</p>
 <ul>
 <li>
-<p>No nosso exemplo, a causa é a presença de alguns <span class="hl"><em>outliers</em> com resíduos maiores que <span class="math inline">\(10\)</span></span>. São pessoas que têm pesos altos demais para as suas alturas. Se estes <em>outliers</em> estiverem muito próximos da borda esquerda ou da borda direita do gráfico, eles podem afetar muito a inclinação da reta (tecnicamente, dizemos que eles têm <em>leverage</em> alto). Podemos refazer a regressão sem estes <em>outliers</em> e verificar se isto altera muito a reta. <span class="hl">Faça isto como exercício neste exemplo</span>.</p>
+<p>No nosso exemplo, a causa é a presença de alguns <span class="hl"><em>outliers</em> com resíduos maiores que <span class="math inline">\(10\)</span></span>. São pessoas que têm pesos altos demais para as suas alturas. Se estes <em>outliers</em> estiverem muito próximos da borda esquerda ou da borda direita do <em>scatter plot</em>, eles podem afetar muito a inclinação da reta (tecnicamente, dizemos que eles têm <em>leverage</em> alto). Podemos refazer a regressão sem estes <em>outliers</em> e verificar se isto altera muito a reta. <span class="hl">Faça isto como exercício neste exemplo</span>.</p>
 <p>Leia mais sobre este problema <a href="https://stats.stackexchange.com/questions/100214/assumptions-of-linear-models-and-what-to-do-if-the-residuals-are-not-normally-di">nesta discussão <em>online</em></a> e <a href="https://discovery.ucl.ac.uk/id/eprint/10070182/1/Schmidt_UCL_depos_JCE2018.pdf">neste artigo</a>.</p>
 </li>
 <li><p>Em outros casos, isto pode ser um sinal de que a correlação entre as variáveis <span class="hl">não é linear</span>. Nesta situação, você pode tentar transformar uma das variáveis, como mostrado no <a href="corr.html#transforma%C3%A7%C3%B5es">capítulo sobre correlação</a>.</p></li>
@@ -981,9 +1019,9 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Devemos confirmar que <span class="hl">os resíduos não dependem dos valores estimados</span>.</p>
-<p>A idéia é que o <em>scatter plot</em> dos resíduos pelos valores estimados <span class="hl">não deve apresentar nenhum padrão</span>. A nuvem de pontos deve se distribuir de forma aparentemente aleatória em torno da reta horizontal <span class="math inline">\(y = 0\)</span> (a média dos resíduos), sem <em>outliers</em> e sem alterações significativas da variância.</p>
+<p>A idéia é que o <em>scatter plot</em> dos resíduos pelos valores estimados <span class="hl">não deve apresentar nenhum padrão</span>. A nuvem de pontos deve se distribuir de maneira uniforme em torno da reta horizontal <span class="math inline">\(y = 0\)</span> (a média dos resíduos), sem <em>outliers</em> e sem alterações significativas da variância (a “altura” da nuvem).</p>
 <p>Repetindo o gráfico de resíduos por pesos estimados:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb927"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_fitted_resid.html">stat_fitted_resid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -992,53 +1030,42 @@ n\overline{x} = \sum_i x_i
 <span>      x <span class="op">=</span> <span class="st">'pesos estimados (kg)'</span>,</span>
 <span>      title <span class="op">=</span> <span class="st">'Resíduos por pesos estimados'</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="100%" style="display: block; margin: auto;"></div>
-<p>De novo, os <em>outliers</em> são o problema. Se forem ignorados, os resíduos</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-465-1.png" width="100%" style="display: block; margin: auto;"></div>
+<p>De novo, os <em>outliers</em> são o problema. Refaça a regressão sem os <em>outliers</em> e gere os gráficos novamente.</p>
+<div class="rmdimportant">
+<p>Quando a variância dos resíduos não for constante, o que fazer?</p>
+<p>Observe o gráfico abaixo, feito a partir de outros dados:</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-466-1.png" width="100%" style="display: block; margin: auto;"></div>
+<p>Perceba como a variância dos resíduos muda à medida que o valor estimado aumenta. Este fenômeno tem o nome de <span class="hl">heterocedasticidade</span>.</p>
+<p>Quando isto acontece, podemos refazer a regressão com a variável de resposta transformada por <span class="math inline">\(\log\)</span> ou por <span class="math inline">\(\sqrt{\,\,}\)</span> e verificar se a variância dos resíduos ficou mais bem comportada.</p>
+<p>Alternativamente, em algumas situações, podemos usar uma variante de regressão linear chamada <a href="https://en.wikipedia.org/wiki/Weighted_least_squares"><span class="hl">regressão linear com pesos</span></a>, que não vamos abordar aqui.</p>
+</div>
 </li>
 </ol>
 </li>
 </ul>
-<div id="como-os-resíduos-não-devem-ser" class="section level3" number="16.5.1">
-<h3>
-<span class="header-section-number">16.5.1</span> Como os resíduos <em>não</em> devem ser<a class="anchor" aria-label="anchor" href="#como-os-res%C3%ADduos-n%C3%A3o-devem-ser"><i class="fas fa-link"></i></a>
-</h3>
-<ul>
-<li>
-<p>A distribuição dos resíduos <span class="hl">não deve se afastar da normal:</span></p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="100%" style="display: block; margin: auto;"></div>
-</li>
-<li>
-<p>O <em>scatter plot</em> <span class="hl">não deve ter padrões visíveis:</span></p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-36-1.png" width="100%" style="display: block; margin: auto;"></div>
-</li>
-<li>
-<p>No <em>scatter plot</em>, <span class="hl">os resíduos não devem ter variabilidade diferente, dependendo do valor estimado:</span></p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="100%" style="display: block; margin: auto;"></div>
-</li>
-</ul>
 </div>
-</div>
-<div id="condições-para-usar-regressão-linear" class="section level2" number="16.6">
+<div id="condições-para-usar-regressão-linear" class="section level2" number="15.6">
 <h2>
-<span class="header-section-number">16.6</span> Condições para usar regressão linear<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-para-usar-regress%C3%A3o-linear"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.6</span> Condições para usar regressão linear<a class="anchor" aria-label="anchor" href="#condi%C3%A7%C3%B5es-para-usar-regress%C3%A3o-linear"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li><p>As duas variáveis devem ser <span class="hl">quantitativas</span>.</p></li>
 <li><p>Como a equação da reta de regressão usa a correlação <span class="hl">linear</span>, devemos verificar que este é o tipo de correlação entre as duas variáveis. Um <em>scatter plot</em> é uma boa maneira de visualizar isto.</p></li>
 <li><p>Não deve haver <span class="hl"><em>outliers</em></span> extremos.</p></li>
-<li><p>Uma vez definida a reta de regressão, devemos <span class="hl">examinar os resíduos</span>. No <em>scatter plot</em> de resíduos pelos valores estimados, a nuvem de pontos deve estar espalhada em torno da reta <span class="math inline">\(y = 0\)</span>, sem padrões óbvios, sem curvatura, sem alterações na variância à medida que percorremos a reta horizontal..</p></li>
+<li><p>Uma vez definida a reta de regressão, devemos <span class="hl">examinar os resíduos</span>. No <em>scatter plot</em> de resíduos pelos valores estimados, a nuvem de pontos deve estar espalhada em torno da reta <span class="math inline">\(y = 0\)</span>, sem padrões óbvios, sem curvatura, sem alterações na variância à medida que percorremos a reta horizontal.</p></li>
 </ul>
 </div>
-<div id="exemplo-furacões" class="section level2" number="16.7">
+<div id="exemplo-furacões" class="section level2" number="15.7">
 <h2>
-<span class="header-section-number">16.7</span> Exemplo: furacões<a class="anchor" aria-label="anchor" href="#exemplo-furac%C3%B5es"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.7</span> Exemplo: furacões<a class="anchor" aria-label="anchor" href="#exemplo-furac%C3%B5es"><i class="fas fa-link"></i></a>
 </h2>
 <div class="rmdbox">
 <ul>
 <li><p>A <span class="hl">pressão do ar</span> no centro de um furacão está relacionada com a <span class="hl">velocidade máxima dos ventos</span>.</p></li>
 <li>
 <p>Vamos usar o seguinte conjunto de dados para contruir um modelo linear:</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb928"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">furacoes</span> <span class="op">&lt;-</span> <span class="va">hurricNamed</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/transmute.html">transmute</a></span><span class="op">(</span></span>
@@ -1057,11 +1084,11 @@ n\overline{x} = \sum_i x_i
 </li>
 </ul>
 </div>
-<div id="examinar-o-scatter-plot" class="section level3" number="16.7.1">
+<div id="examinar-o-scatter-plot" class="section level3" number="15.7.1">
 <h3>
-<span class="header-section-number">16.7.1</span> Examinar o <em>scatter plot</em><a class="anchor" aria-label="anchor" href="#examinar-o-scatter-plot"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.7.1</span> Examinar o <em>scatter plot</em><a class="anchor" aria-label="anchor" href="#examinar-o-scatter-plot"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb929"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grafico</span> <span class="op">&lt;-</span> <span class="va">furacoes</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">pressao</span>, <span class="va">velocidade</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1072,7 +1099,7 @@ n\overline{x} = \sum_i x_i
 <span>    <span class="op">)</span></span>
 <span></span>
 <span><span class="va">grafico</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-40-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-469-1.png" width="100%" style="display: block; margin: auto;"></div>
 <ul>
 <li><p>As duas variáveis são quantitativas.</p></li>
 <li><p>A relação entre velocidade e pressão é aproximadamente linear.</p></li>
@@ -1081,11 +1108,11 @@ n\overline{x} = \sum_i x_i
 <li><p>Os pontos parecem estar dispostos em filas horizontais. Isto é causado pela (falta de) precisão das velocidades, que são valores inteiros no conjunto de dados.</p></li>
 </ul>
 </div>
-<div id="construir-o-modelo" class="section level3" number="16.7.2">
+<div id="construir-o-modelo" class="section level3" number="15.7.2">
 <h3>
-<span class="header-section-number">16.7.2</span> Construir o modelo<a class="anchor" aria-label="anchor" href="#construir-o-modelo"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.7.2</span> Construir o modelo<a class="anchor" aria-label="anchor" href="#construir-o-modelo"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb930"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">velocidade</span> <span class="op">~</span> <span class="va">pressao</span>, data <span class="op">=</span> <span class="va">furacoes</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
@@ -1116,18 +1143,18 @@ n\overline{x} = \sum_i x_i
 <li><p>A cada mbar de aumento na pressão está associada uma mudança de <span class="math inline">\(-1{,}73\)</span>km/h na velocidade.</p></li>
 <li>
 <p>Gráfico:</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-43-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-472-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 </ul>
 </div>
-<div id="examinar-os-resíduos" class="section level3" number="16.7.3">
+<div id="examinar-os-resíduos" class="section level3" number="15.7.3">
 <h3>
-<span class="header-section-number">16.7.3</span> Examinar os resíduos<a class="anchor" aria-label="anchor" href="#examinar-os-res%C3%ADduos"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.7.3</span> Examinar os resíduos<a class="anchor" aria-label="anchor" href="#examinar-os-res%C3%ADduos"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li>
 <p>Histograma dos resíduos:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb932"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_resid_hist.html">stat_resid_hist</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1136,12 +1163,12 @@ n\overline{x} = \sum_i x_i
 <span>      y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>      title <span class="op">=</span> <span class="st">'Histograma dos resíduos'</span></span>
 <span>    <span class="op">)</span>      </span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-473-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Ignorando os <em>outliers</em> à esquerda, a distribuição dos resíduos é aproximadamente normal.</p></li>
 <li>
 <p>Incluindo todos os resíduos, o teste de normalidade é horrível:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb933"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://broom.tidymodels.org/reference/augment_columns.html">augment_columns</a></span><span class="op">(</span><span class="va">modelo</span>, data <span class="op">=</span> <span class="va">furacoes</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1155,7 +1182,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Eliminando os resíduos extremos à esquerda, o resultado é bom:</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb935"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.resid</span> <span class="op">&gt;</span> <span class="op">-</span><span class="fl">50</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1168,7 +1195,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Gráfico QQ dos resíduos:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb937"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_normal_qq.html">stat_normal_qq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1177,11 +1204,11 @@ n\overline{x} = \sum_i x_i
 <span>      y <span class="op">=</span> <span class="st">'resíduos\npadronizados'</span>,</span>
 <span>      title <span class="op">=</span> <span class="st">'QQ Normal'</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-476-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>Resíduos por valores estimados:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb938"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_fitted_resid.html">stat_fitted_resid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1190,13 +1217,13 @@ n\overline{x} = \sum_i x_i
 <span>      x <span class="op">=</span> <span class="st">'velocidades estimadas (km/h)'</span>,</span>
 <span>      title <span class="op">=</span> <span class="st">'Resíduos por velocidades estimadas'</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-477-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>As filas de pontos aparecem porque as velocidades são valores inteiros no conjunto de dados.</p></li>
 <li><p>Quase todos os resíduos têm valor absoluto menor que <span class="math inline">\(50\)</span>km/h.</p></li>
 <li>
 <p>Vamos ver as exceções:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb939"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">50</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">nome</span>, <span class="va">ano</span>, <span class="va">pressao</span>, <span class="va">velocidade</span>, <span class="va">.fitted</span>, <span class="va">.resid</span><span class="op">)</span></span></code></pre></div>
@@ -1210,9 +1237,9 @@ n\overline{x} = \sum_i x_i
 <li><p>Esta variância não-constante afeta os resultados dos testes estatísticos sobre os coeficientes, um assunto que vamos abordar depois.</p></li>
 </ul>
 </div>
-<div id="exercícios-22" class="section level3" number="16.7.4">
+<div id="exercícios-22" class="section level3" number="15.7.4">
 <h3>
-<span class="header-section-number">16.7.4</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-22"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.7.4</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-22"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li><p>O que significa o intercepto de <span class="math inline">\(1.859{,}85\)</span>km/h?</p></li>
@@ -1232,16 +1259,16 @@ n\overline{x} = \sum_i x_i
 </ul>
 </div>
 </div>
-<div id="exemplo-a-lei-de-moore" class="section level2" number="16.8">
+<div id="exemplo-a-lei-de-moore" class="section level2" number="15.8">
 <h2>
-<span class="header-section-number">16.8</span> Exemplo: a lei de Moore<a class="anchor" aria-label="anchor" href="#exemplo-a-lei-de-moore"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.8</span> Exemplo: a lei de Moore<a class="anchor" aria-label="anchor" href="#exemplo-a-lei-de-moore"><i class="fas fa-link"></i></a>
 </h2>
 <div class="rmdbox">
 <ul>
 <li><p>A <a href="https://pt.wikipedia.org/wiki/Lei_de_Moore">lei de Moore</a> estima que, a cada dois anos, o número de transistores em um circuito integrado dobra.</p></li>
 <li>
 <p>Vamos usar o <em>dataset</em> em <a href="https://raw.githubusercontent.com/egarpor/handy/master/datasets/cpus.txt" class="uri">https://raw.githubusercontent.com/egarpor/handy/master/datasets/cpus.txt</a>, salvo localmente.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb940"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">moore</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span></span>
 <span>  <span class="st">'data/cpus.csv'</span></span>
 <span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1261,48 +1288,48 @@ n\overline{x} = \sum_i x_i
 <li><p>Usando regressão linear, <span class="hl">podemos confirmar a lei de Moore para estes dados?</span></p></li>
 </ul>
 </div>
-<div id="examinar-o-scatter-plot-1" class="section level3" number="16.8.1">
+<div id="examinar-o-scatter-plot-1" class="section level3" number="15.8.1">
 <h3>
-<span class="header-section-number">16.8.1</span> Examinar o <em>scatter plot</em><a class="anchor" aria-label="anchor" href="#examinar-o-scatter-plot-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.8.1</span> Examinar o <em>scatter plot</em><a class="anchor" aria-label="anchor" href="#examinar-o-scatter-plot-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb941"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://scales.r-lib.org">scales</a></span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb942"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">moore</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ano</span>, <span class="va">transistores</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span></span>
 <span>      labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html">label_number</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1e-9</span>, decimal.mark <span class="op">=</span> <span class="st">','</span>, suffix <span class="op">=</span> <span class="st">'M'</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-481-1.png" width="100%" style="display: block; margin: auto;"></div>
 <ul>
 <li><p>Como já era de se esperar (pelo próprio enunciado da lei!) <span class="hl">a relação não é linear, mas sim exponencial.</span></p></li>
 <li>
 <p>Então, vamos usar o <span class="hl">logaritmo</span> do número de transistores:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb943"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">moore</span> <span class="op">&lt;-</span> <span class="va">moore</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ltransistores <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">transistores</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb944"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grafico</span> <span class="op">&lt;-</span> <span class="va">moore</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">ano</span>, <span class="va">ltransistores</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>      y <span class="op">=</span> <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">'log_{10}(transistores)'</span><span class="op">)</span></span>
+<span>      y <span class="op">=</span> <span class="fu"><a href="https://www.stefanom.io/latex2exp/reference/TeX.html">TeX</a></span><span class="op">(</span><span class="st">'$\\log_{10}$ (transistores)'</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span></span>
 <span><span class="va">grafico</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-483-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Agora, sim. Bem melhor.</p></li>
 </ul>
 </div>
-<div id="construir-o-modelo-1" class="section level3" number="16.8.2">
+<div id="construir-o-modelo-1" class="section level3" number="15.8.2">
 <h3>
-<span class="header-section-number">16.8.2</span> Construir o modelo<a class="anchor" aria-label="anchor" href="#construir-o-modelo-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.8.2</span> Construir o modelo<a class="anchor" aria-label="anchor" href="#construir-o-modelo-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb945"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">ltransistores</span> <span class="op">~</span> <span class="va">ano</span>, data <span class="op">=</span> <span class="va">moore</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb946"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
@@ -1346,18 +1373,18 @@ n\overline{x} = \sum_i x_i
 <li><p>Isto corresponde ao que a lei de Moore diz: a cada <span class="math inline">\(2\)</span> anos, o número de transistores aproximadamente dobra.</p></li>
 <li>
 <p>O gráfico fica:</p>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-58-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-487-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 </ul>
 </div>
-<div id="examinar-os-resíduos-1" class="section level3" number="16.8.3">
+<div id="examinar-os-resíduos-1" class="section level3" number="15.8.3">
 <h3>
-<span class="header-section-number">16.8.3</span> Examinar os resíduos<a class="anchor" aria-label="anchor" href="#examinar-os-res%C3%ADduos-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.8.3</span> Examinar os resíduos<a class="anchor" aria-label="anchor" href="#examinar-os-res%C3%ADduos-1"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li>
 <p>Histograma dos resíduos:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb948"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_resid_hist.html">stat_resid_hist</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fl">15</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1366,14 +1393,14 @@ n\overline{x} = \sum_i x_i
 <span>      y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>      title <span class="op">=</span> <span class="st">'Histograma dos resíduos'</span></span>
 <span>    <span class="op">)</span>      </span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-59-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-488-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Ignorando os <em>outliers</em> à esquerda, a distribuição dos resíduos é aproximadamente normal.</p></li>
 <li><p>Um resíduo de <span class="math inline">\(-1\)</span> no logaritmo (na base <span class="math inline">\(10\)</span>) do número de transistores equivale a <span class="math inline">\(\frac{1}{10}\)</span> do número de transistores estimado pela regressão.</p></li>
 <li><p>Um resíduo de <span class="math inline">\(-2\)</span> no logaritmo (na base <span class="math inline">\(10\)</span>) do número de transistores equivale a <span class="math inline">\(\frac{1}{100}\)</span> do número de transistores estimado pela regressão.</p></li>
 <li>
 <p>Teste de normalidade com todos os resíduos:</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb949"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://broom.tidymodels.org/reference/augment_columns.html">augment_columns</a></span><span class="op">(</span><span class="va">modelo</span>, data <span class="op">=</span> <span class="va">moore</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1387,7 +1414,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Sem os <em>outliers</em>:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb951"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.resid</span> <span class="op">&gt;</span> <span class="op">-</span><span class="fl">.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">.resid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1400,7 +1427,7 @@ n\overline{x} = \sum_i x_i
 </li>
 <li>
 <p>Gráfico QQ dos resíduos:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb953"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_normal_qq.html">stat_normal_qq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1409,12 +1436,12 @@ n\overline{x} = \sum_i x_i
 <span>      y <span class="op">=</span> <span class="st">'resíduos\npadronizados'</span>,</span>
 <span>      title <span class="op">=</span> <span class="st">'QQ Normal'</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-491-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Aqui também ficam nítidos os <em>outliers</em> à esquerda.</p></li>
 <li>
 <p>Resíduos por valores estimados:</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb954"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modelo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/gglm/man/stat_fitted_resid.html">stat_fitted_resid</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -1423,11 +1450,11 @@ n\overline{x} = \sum_i x_i
 <span>      x <span class="op">=</span> <span class="st">'log(transistores) estimado'</span>,</span>
 <span>      title <span class="op">=</span> <span class="st">'Resíduos por valores estimados'</span></span>
 <span>    <span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-492-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p>De novo, os <em>outliers</em> são óbvios. Vamos listar as CPUs com resíduo menor que <span class="math inline">\(-0{,}5\)</span>:</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb955"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_aumentados</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">.resid</span> <span class="op">&lt;</span> <span class="op">-</span><span class="fl">.5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">processador</span>, <span class="va">transistores</span>, <span class="va">ano</span>, <span class="va">ltransistores</span>, <span class="va">.fitted</span>, <span class="va">.resid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1438,20 +1465,19 @@ n\overline{x} = \sum_i x_i
   </script>
 </div>
 </li>
-<li><p>Os resíduos parecem não ter variância constante.</p></li>
-<li><p>Além disso, parece haver uma certa curvatura na nuvem de pontos.</p></li>
+<li><p>Além disso, parece haver uma certa curvatura na nuvem de pontos, e os resíduos parecem não ter variância constante.</p></li>
 </ul>
 </div>
-<div id="exercícios-23" class="section level3" number="16.8.4">
+<div id="exercícios-23" class="section level3" number="15.8.4">
 <h3>
-<span class="header-section-number">16.8.4</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-23"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.8.4</span> Exercícios<a class="anchor" aria-label="anchor" href="#exerc%C3%ADcios-23"><i class="fas fa-link"></i></a>
 </h3>
 <ul>
 <li><p>Faça uma pesquisa <em>online</em> e tente descobrir se há algum motivo específico para a maioria dos <em>outliers</em> ser de processadores ARM.</p></li>
 <li><p>Faça uma pesquisa <em>online</em> sobre processadores lançados nos anos de <span class="math inline">\(2017\)</span>, <span class="math inline">\(2018\)</span>, <span class="math inline">\(2019\)</span>, <span class="math inline">\(2020\)</span> e <span class="math inline">\(2021\)</span> (no mínimo um processador de cada ano); compare as quantidades de transistores dos processadores que você achou com as quantidades de transistores previstas para eles pelo modelo linear.</p></li>
 <li>
 <p>A lei de Moore vale para estas <span class="hl">GPUs</span>?</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb956"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gpus</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">'data/gpus.csv'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span></span>
@@ -1645,15 +1671,44 @@ init_exercises = function() {
 $(init_exercises)
 
 </script><div class="chapter-nav">
-<div class="empty"></div>
-<div class="empty"></div>
+<div class="prev"><a href="corr.html"><span class="header-section-number">14</span> Covariância e correlação</a></div>
+<div class="next"><a href="refer%C3%AAncias.html">Referências</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="Nesta página"><h2>Nesta página</h2>
-      <div id="book-on-this-page"></div>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#regr"><span class="header-section-number">15</span> Regressão linear</a></li>
+<li><a class="nav-link" href="#v%C3%ADdeo-7"><span class="header-section-number">15.1</span> Vídeo</a></li>
+<li><a class="nav-link" href="#exemplo-altura-e-peso-1"><span class="header-section-number">15.2</span> Exemplo: altura e peso</a></li>
+<li>
+<a class="nav-link" href="#como-achar-a-equa%C3%A7%C3%A3o-da-melhor-reta-com-c%C3%A1lculo"><span class="header-section-number">15.3</span> Como achar a equação da melhor reta? Com Cálculo!</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exerc%C3%ADcios-21"><span class="header-section-number">15.3.1</span> Exercícios</a></li></ul>
+</li>
+<li>
+<a class="nav-link" href="#em-r-20"><span class="header-section-number">15.4</span> Em R</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#no-tidyverse"><span class="header-section-number">15.4.1</span> No Tidyverse</a></li></ul>
+</li>
+<li><a class="nav-link" href="#avaliando-o-modelo-atrav%C3%A9s-dos-res%C3%ADduos"><span class="header-section-number">15.5</span> Avaliando o modelo através dos resíduos</a></li>
+<li><a class="nav-link" href="#condi%C3%A7%C3%B5es-para-usar-regress%C3%A3o-linear"><span class="header-section-number">15.6</span> Condições para usar regressão linear</a></li>
+<li>
+<a class="nav-link" href="#exemplo-furac%C3%B5es"><span class="header-section-number">15.7</span> Exemplo: furacões</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#examinar-o-scatter-plot"><span class="header-section-number">15.7.1</span> Examinar o scatter plot</a></li>
+<li><a class="nav-link" href="#construir-o-modelo"><span class="header-section-number">15.7.2</span> Construir o modelo</a></li>
+<li><a class="nav-link" href="#examinar-os-res%C3%ADduos"><span class="header-section-number">15.7.3</span> Examinar os resíduos</a></li>
+<li><a class="nav-link" href="#exerc%C3%ADcios-22"><span class="header-section-number">15.7.4</span> Exercícios</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#exemplo-a-lei-de-moore"><span class="header-section-number">15.8</span> Exemplo: a lei de Moore</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#examinar-o-scatter-plot-1"><span class="header-section-number">15.8.1</span> Examinar o scatter plot</a></li>
+<li><a class="nav-link" href="#construir-o-modelo-1"><span class="header-section-number">15.8.2</span> Construir o modelo</a></li>
+<li><a class="nav-link" href="#examinar-os-res%C3%ADduos-1"><span class="header-section-number">15.8.3</span> Examinar os resíduos</a></li>
+<li><a class="nav-link" href="#exerc%C3%ADcios-23"><span class="header-section-number">15.8.4</span> Exercícios</a></li>
+</ul>
+</li>
+</ul>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-          
+<li><a id="book-source" href="https://github.com/fnaufel/probestr/blob/master/regr.Rmd">Ver código-fonte <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/fnaufel/probestr/edit/master/regr.Rmd">Editar esta página <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>

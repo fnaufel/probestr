@@ -281,20 +281,14 @@ funções-usadas-em-transformações
 exercício-4
 exemplo-planetas
 exercício-5
-see-httpsgithub.comfnaufelbookdowntemplate01-for-more-information.
 regr
 vídeo-7
 exemplo-altura-e-peso-1
 como-achar-a-equação-da-melhor-reta-com-cálculo
 exercícios-21
-unidades
-regressão-com-variáveis-padronizadas
-altura-média-corresponde-a-peso-médio
-soma-dos-resíduos
 em-r-20
 no-tidyverse
-examinando-os-resíduos
-como-os-resíduos-não-devem-ser
+avaliando-o-modelo-através-dos-resíduos
 condições-para-usar-regressão-linear
 exemplo-furacões
 examinar-o-scatter-plot
@@ -306,4 +300,3 @@ examinar-o-scatter-plot-1
 construir-o-modelo-1
 examinar-os-resíduos-1
 exercícios-23
-avaliando-o-modelo-através-dos-resíduos

@@ -1,0 +1,278 @@
+
+```{r setup}
+source('../before_chapter.R')
+library(broom)
+library(gglm)
+```
+
+# Regressão peso x altura com e sem outliers
+
+```{r}
+peso_altura <- read_csv(
+    '../data/Heights_and_Weights.csv',
+    col_types = 'dd'
+  ) %>% 
+  transmute(
+    altura = Height * 2.54,
+    peso = Weight * 0.45
+  ) %>% 
+  distinct()
+```
+
+```{r}
+modelo <- lm(peso ~ altura, data = peso_altura)
+```
+
+```{r}
+grafico_pa <- peso_altura %>% 
+  ggplot(aes(altura, peso)) +
+    geom_point() +
+    labs(
+      x = 'altura (cm)',
+      y = 'peso\n(kg)'
+    ) +
+    scale_x_continuous(breaks = seq(150, 200, 5))
+```
+
+```{r}
+regressao <- grafico_pa + 
+  geom_smooth(method = 'lm', formula = y ~ x, se = FALSE)
+
+regressao
+```
+
+```{r}
+dados_aumentados <- augment(modelo, data = peso_altura)
+dados_aumentados
+```
+
+```{r}
+df2 <- dados_aumentados %>% 
+  filter(.resid < 15) %>% 
+  select(altura, peso)
+```
+
+```{r}
+df2 %>% ggplot(aes(altura, peso)) +
+    geom_point() +
+    labs(
+      x = 'altura (cm)',
+      y = 'peso\n(kg)'
+    ) +
+    geom_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
+    scale_x_continuous(breaks = seq(150, 200, 5))
+```
+
+```{r}
+regressao +
+  geom_smooth(
+    data = df2,
+    method = 'lm', 
+    formula = y ~ x, 
+    se = FALSE,
+    color = 'red'
+  )
+```
+
+```{r}
+modelo_2 <- lm(peso ~ altura, data = df2)
+```
+
+```{r}
+modelo_2 %>% 
+  ggplot() +
+    stat_fitted_resid() +
+    labs(
+      y = 'resíduos\n(kg)',
+      x = 'pesos estimados (kg)',
+      title = 'Resíduos por pesos estimados'
+    )
+```
+
+```{r}
+tidy(modelo)
+```
+
+```{r}
+tidy(modelo_2)
+```
+
+
+# Regressão furacões
+
+```{r}
+library(DAAG)
+
+furacoes <- hurricNamed %>% 
+  as_tibble() %>% 
+  transmute(
+    nome = Name,
+    ano = Year,
+    velocidade = LF.WindsMPH * 1.8,      # convertido para km/h
+    pressao = LF.PressureMB              # em mbar
+  )
+
+furacoes
+```
+
+```{r}
+grafico <- furacoes %>% 
+  ggplot(aes(pressao, velocidade)) +
+    geom_point() +
+    geom_smooth(method = 'lm', se = FALSE) +
+    labs(
+      x = 'pressão (mbar)',
+      y = 'velocidade\nmáxima\n(km/h)',
+      title = 'Furacões'
+    )
+
+grafico
+```
+
+```{r}
+modelo <- lm(velocidade ~ pressao, data = furacoes)
+summary(modelo)
+```
+
+```{r}
+modelo %>% 
+  ggplot() +
+    stat_resid_hist(bins = 20) +
+    labs(
+      x = 'resíduos (km/h)',
+      y = NULL,
+      title = 'Histograma dos resíduos'
+    )      
+```
+    
+```{r}
+modelo %>% 
+  ggplot() +
+    stat_fitted_resid() +
+    labs(
+      y = 'resíduos\n(km/h)',
+      x = 'velocidades estimadas (km/h)',
+      title = 'Resíduos por velocidades estimadas'
+    )
+```
+
+```{r}
+furacoes_augm <- augment(modelo)
+```
+
+```{r}
+furacoes_no_outliers <- furacoes_augm %>% 
+  filter(abs(.resid) < 50) %>% 
+  select(velocidade, pressao)
+```
+
+```{r}
+modelo_2 <- lm(velocidade ~ pressao, data = furacoes_no_outliers)
+summary(modelo_2)
+```
+
+```{r}
+furacoes_augm_2 <- augment(modelo_2)
+```
+
+```{r}
+modelo_2 %>% 
+  ggplot() +
+    stat_fitted_resid() +
+    labs(
+      y = 'resíduos\n(km/h)',
+      x = 'velocidades estimadas (km/h)',
+      title = 'Resíduos por velocidades estimadas'
+    )
+```
+
+```{r}
+grafico +
+  geom_smooth(
+    data = furacoes_no_outliers, 
+    method = 'lm', 
+    se = FALSE,
+    color = 'red'
+  )
+
+```
+
+```{r}
+tidy(modelo)
+```
+
+```{r}
+tidy(modelo_2)
+```
+
+```{r}
+furacoes_sq <- furacoes_no_outliers %>% 
+  mutate(velocidade = sqrt(velocidade))  
+```
+
+```{r}
+grafico_sq <- furacoes_sq %>% 
+  ggplot(aes(pressao, velocidade)) +
+    geom_point() +
+    geom_smooth(method = 'lm', se = FALSE) +
+    labs(
+      x = 'pressão (mbar)',
+      y = 'velocidade\nmáxima\n(km/h)\nsqrt',
+      title = 'Furacões'
+    )
+
+grafico_sq
+```
+
+```{r}
+modelo_sq <- lm(velocidade ~ pressao, data = furacoes_sq)
+summary(modelo_sq)
+
+```
+
+```{r}
+modelo_sq %>% 
+  ggplot() +
+    stat_fitted_resid() +
+    labs(
+      y = 'resíduos\n(km/h)',
+      x = 'velocidades estimadas (km/h) (sqrt)',
+      title = 'Resíduos por velocidades estimadas'
+    )
+```
+
+```{r}
+furacoes_log <- furacoes_no_outliers %>% 
+  mutate(velocidade = log(velocidade))  
+```
+
+```{r}
+grafico_log <- furacoes_log %>% 
+  ggplot(aes(pressao, velocidade)) +
+    geom_point() +
+    geom_smooth(method = 'lm', se = FALSE) +
+    labs(
+      x = 'pressão (mbar)',
+      y = 'velocidade\nmáxima\n(km/h)\nlog',
+      title = 'Furacões'
+    )
+
+grafico_log
+```
+
+```{r}
+modelo_log <- lm(velocidade ~ pressao, data = furacoes_log)
+summary(modelo_log)
+
+```
+
+```{r}
+modelo_log %>% 
+  ggplot() +
+    stat_fitted_resid() +
+    labs(
+      y = 'resíduos\n(km/h)',
+      x = 'velocidades estimadas (km/h) (log)',
+      title = 'Resíduos por velocidades estimadas'
+    )
+```
