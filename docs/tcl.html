@@ -7,7 +7,7 @@
 <title>Capítulo 11 Teorema central do limite | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="11.1 Vídeo    11.2 Objetivo Neste capítulo, vamos pensar em todas as amostras possíveis de tamanho \(n\) que podem ser retiradas de uma população. Se calcularmos a média de cada uma das amostras,...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Capítulo 11 Teorema central do limite | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.9/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -114,18 +114,18 @@
 <li><p>Vamos começar com um exemplo.</p></li>
 <li>
 <p>Imagine que temos uma população cujos valores (entre <span class="math inline">\(0\)</span> e <span class="math inline">\(1\)</span>) obedecem a uma <span class="hl">distribuição uniforme</span>.</p>
-<div class="sourceCode" id="cb717"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb723"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">uniforme</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="va">tamanho_populacao</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Vamos retirar amostras (de tamanho <span class="math inline">\(n\)</span> fixo) desta população e calcular a média de cada amostra.</p>
-<div class="sourceCode" id="cb718"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb724"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span></code></pre></div>
 </li>
 <li>
 <p>Por exemplo, três amostras e suas respectivas médias:</p>
-<div class="sourceCode" id="cb719"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb725"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">uniforme</span>, <span class="va">tamanho_amostra</span><span class="op">)</span></span>
 <span><span class="va">a1</span></span></code></pre></div>
 <pre><code>##   [1] 0,869329581 0,209982300 0,496638928 0,499368979 0,186657457 0,344342385
@@ -145,10 +145,10 @@
 ##  [85] 0,974769468 0,182308296 0,618412335 0,784412536 0,429907971 0,524626410
 ##  [91] 0,839356654 0,009628747 0,982638869 0,460771559 0,447391513 0,701077975
 ##  [97] 0,419461402 0,022708026 0,071822650 0,268530721</code></pre>
-<div class="sourceCode" id="cb721"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb727"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,5013405</code></pre>
-<div class="sourceCode" id="cb723"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb729"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">uniforme</span>, <span class="va">tamanho_amostra</span><span class="op">)</span></span>
 <span><span class="va">a2</span></span></code></pre></div>
 <pre><code>##   [1] 0,537127257 0,714157724 0,758129320 0,607783146 0,191654072 0,558148076
@@ -168,10 +168,10 @@
 ##  [85] 0,633335854 0,540881501 0,690710838 0,014458583 0,677491209 0,612267448
 ##  [91] 0,941688599 0,347645721 0,032504889 0,003996033 0,697600042 0,229145339
 ##  [97] 0,873270965 0,310203195 0,757048784 0,455766988</code></pre>
-<div class="sourceCode" id="cb725"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb731"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,5586305</code></pre>
-<div class="sourceCode" id="cb727"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb733"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">uniforme</span>, <span class="va">tamanho_amostra</span><span class="op">)</span></span>
 <span><span class="va">a3</span></span></code></pre></div>
 <pre><code>##   [1] 0,37304029 0,60533056 0,67742812 0,78079738 0,16619780 0,80176380 0,84082814
@@ -189,26 +189,26 @@
 ##  [85] 0,36160928 0,03643693 0,38048180 0,43833383 0,31232725 0,81037264 0,43365283
 ##  [92] 0,54855347 0,25296780 0,06554264 0,33923681 0,90978174 0,54939680 0,36144745
 ##  [99] 0,05036426 0,55322867</code></pre>
-<div class="sourceCode" id="cb729"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb735"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,5140166</code></pre>
 </li>
 <li>
 <p>Teremos, então, um conjunto de médias amostrais.</p>
-<div class="sourceCode" id="cb731"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb737"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">medias</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">a3</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">medias</span></span></code></pre></div>
 <pre><code>## [1] 0,5013405 0,5586305 0,5140166</code></pre>
 </li>
 <li>
 <p>Qual é a média destas médias amostrais?</p>
-<div class="sourceCode" id="cb733"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb739"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">medias</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,5246626</code></pre>
 </li>
 <li>
 <p>Qual é o desvio-padrão destas médias amostrais?</p>
-<div class="sourceCode" id="cb735"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb741"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">medias</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,03009216</code></pre>
 </li>
@@ -257,14 +257,14 @@ E(\overline X) = \mu
 <ul>
 <li>
 <p>Agora, vamos fazer um exemplo com uma população com <span class="hl">distribuição exponencial</span>:</p>
-<div class="sourceCode" id="cb738"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb744"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span></code></pre></div>
 </li>
 <li>
 <p>Definimos a população com <span class="math inline">\(\lambda = 2\)</span>:</p>
-<div class="sourceCode" id="cb739"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb745"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exponencial</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span><span class="va">tamanho_populacao</span>, <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
@@ -289,7 +289,7 @@ E(\overline X) = \mu
 <ul>
 <li>
 <p>Agora, uma população que é uma mistura de uma binomial com uma Poisson:</p>
-<div class="sourceCode" id="cb741"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb747"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
@@ -324,11 +324,11 @@ E(\overline X) = \mu
 <li><p>E se a população <span class="hl">já for distribuída normalmente?</span></p></li>
 <li>
 <p>Definimos uma população normal padrão (<span class="math inline">\(\mu = 0, \sigma = 1\)</span>):</p>
-<div class="sourceCode" id="cb743"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb749"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e5</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span></code></pre></div>
-<div class="sourceCode" id="cb744"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">normal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">tamanho_populacao</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
@@ -498,7 +498,7 @@ E(\hat p) = p
 </li>
 <li>
 <p>Vamos fazer uma simulação:</p>
-<div class="sourceCode" id="cb746"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tamanho_populacao</span> <span class="op">&lt;-</span> <span class="fl">1e3</span></span>
 <span><span class="va">tamanho_amostra</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">qtde_amostras</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
@@ -544,7 +544,7 @@ E(\hat p) = p
 <h2>
 <span class="header-section-number">11.8</span> Mais exemplos<a class="anchor" aria-label="anchor" href="#mais-exemplos-1"><i class="fas fa-link"></i></a>
 </h2>
-<p>Adaptados de <span class="citation">De Veaux, Velleman, e Bock (<a href="refer%C3%AAncias.html#ref-de15:_stats">2015</a>)</span>.</p>
+<p>Adaptados de <span class="citation">De Veaux, Velleman, e Bock (<a href="refer%C3%AAncias.html#ref-de15:_stats">2016</a>)</span>.</p>
 <div id="canhotos" class="section level3" number="11.8.1">
 <h3>
 <span class="header-section-number">11.8.1</span> Canhotos<a class="anchor" aria-label="anchor" href="#canhotos"><i class="fas fa-link"></i></a>
@@ -590,7 +590,7 @@ p = 0{,}13
 </li>
 <li>
 <p>Ou seja, <span class="math inline">\(\hat p \sim \mathcal N (0{,}13; 0{,}035)\)</span>, e nós queremos <span class="math inline">\(P(\hat p &gt; 0{,}167)\)</span>. Basta usar o R:</p>
-<div class="sourceCode" id="cb748"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">.167</span>, mean <span class="op">=</span> <span class="fl">.13</span>, sd <span class="op">=</span> <span class="fl">.035</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,1452232</code></pre>
 </li>
@@ -641,7 +641,7 @@ p = 0{,}13
 </li>
 <li>
 <p>Ou seja, <span class="math inline">\(\overline X \sim \mathcal N (86; 8{,}47)\)</span>, e nós queremos <span class="math inline">\(P(\overline X \geq 110)\)</span>. Basta usar o R:</p>
-<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fl">110</span>, mean <span class="op">=</span> <span class="fl">86</span>, sd <span class="op">=</span> <span class="fl">8.47</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,002301849</code></pre>
 </li>
@@ -868,7 +868,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/07/2024)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

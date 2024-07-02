@@ -1,0 +1,255 @@
+
+/* Fix font in paged data frames */
+.pagedtable tbody {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Fix margin in paged data frames */
+.pagedtable-wrapper {
+  margin-bottom: 20px;
+}
+
+/* Fix bottom margin in paged data frames */
+.pagedtable-wrapper {
+  margin-bottom: 40px;
+}
+
+/* Fix font in tables */
+table.lightable-paper tbody {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Make summarytools table use monospace font */
+.st-table {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Fix gt tables */
+.gt_table {
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+
+/* I don't like the frame around images */
+.inline-figure {
+  border: none;
+}
+
+/* Blocks with shadow borders */
+
+/*
+.shadow {
+  -moz-box-shadow:    3px 3px 3px 5px #bbb;
+  -webkit-box-shadow: 3px 3px 3px 5px #bbb;
+  box-shadow:         3px 3px 3px 5px #bbb;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+*/
+
+/* Box  */
+
+.rmdbox {
+  margin: 1rem calc(-2px - 0.5em);
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background: #fcfcfc;
+}
+
+.rmdbox > *:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 767.98px) {
+  .rmdbox {
+    margin: 1rem -1rem;
+    border-width: 4px;
+  }
+}
+
+.rmdbox > *:last-child {
+  padding-bottom: 0;
+}
+
+
+/* Icons for callout boxes */
+
+.rmdcaution {
+  background-image: url("images/caution.png");
+}
+
+.rmdimportant {
+  background-image: url("images/important.png");
+}
+
+.rmdnote {
+  background-image: url("images/note.png");
+}
+
+.rmdtip {
+  background-image: url("images/tip.png");
+}
+
+.rmdwarning {
+  background-image: url("images/warning.png");
+}
+
+
+/* Section headers */
+
+.header-section-number {
+  padding-right: .2em;
+}
+
+.level1 > h1 {
+  box-sizing: border-box;
+  font-weight: normal;
+  border-bottom: 3px solid;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  padding-bottom: 0;
+}
+
+h1 > .header-section-number {
+  display: inline-block;
+  box-sizing: border-box;
+  border-bottom: 8px solid;
+  margin-bottom: -2px;
+  padding-bottom: 0;
+  color: #212529;
+}
+
+.level2 > h2 {
+  box-sizing: border-box;
+  font-weight: normal;
+  border-bottom: 2px solid;
+  margin-top: 1.6em;
+  margin-bottom: .8em;
+  padding-bottom: 0;
+}
+
+h2 > .header-section-number {
+  display: inline-block;
+  box-sizing: border-box;
+  border-bottom: 6px solid;
+  margin-bottom: -2px;
+  padding-bottom: 0;
+  color: #212529;
+}
+
+.level3 > h3 {
+  font-weight: 500;
+  font-style: italic;
+  border-bottom: 2px solid;
+  margin-top: 1.6em;
+  margin-bottom: .8em;
+  padding-bottom: 5px;
+}
+
+h3 > .header-section-number {
+  font-style: italic;
+  font-weight: 500;
+  border-bottom: 0;
+  color: #212529;
+}
+
+.level4 > h4 {
+  font-weight: normal;
+  font-style: normal;
+  border-bottom: 2px solid;
+}
+
+.level5 > h5, .level6 > h6 {
+  font-weight: normal;
+  font-style: normal;
+  border-bottom: 0;
+}
+
+
+.level4 > .header-section-number{
+  font-style: normal;
+  border-bottom: 0;
+  color: #212529;
+}
+
+.rmdbox > h3,
+.rmdcaution > h3,
+.rmdimportant > h3,
+.rmdwarning > h3,
+.rmdtip > h3,
+.rmdnote > h3,
+.rmdbox > h4,
+.rmdcaution > h4,
+.rmdimportant > h4,
+.rmdwarning > h4,
+.rmdtip > h4,
+.rmdnote > h4
+{
+  margin-top: 0;
+}
+
+
+/* highlight */
+.hl,
+.hl code{
+  background-color: yellow;
+}
+
+.framed {
+  border: solid 2px #f1f1f1;
+}
+
+
+/* Utilities */
+
+.flushright {
+  text-align: right;
+}
+
+.smallcaps {
+  font-variant: small-caps;
+}
+
+.full-width{
+  width: 100%;
+}
+
+.half-width{
+  width: 50%;
+}
+
+.one-third-width{
+  width: 33%;
+}
+
+.two-thirds-width{
+  width: 67%;
+}
+
+.ninety-pct-width{
+  width: 90%;
+}
+
+.float-right{
+  float: right;
+}
+
+.float-left{
+  float: left;
+}
+
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vspace{
+  height: 2em;
+}
+
+.text-center{
+  text-align: center;
+}

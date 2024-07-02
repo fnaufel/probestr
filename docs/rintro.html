@@ -7,7 +7,7 @@
 <title>Capítulo 2 Introdução a R | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="2.1 Vídeo 1    2.2 Usando o RStudio Leia uma introdução ao R e ao RStudio no livro Ciência de Dados com R. Ali, você vai encontrar exemplos e exercícios.  2.3 RMarkdown Para ver uma referência...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Capítulo 2 Introdução a R | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.9/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -413,14 +413,14 @@
 <p>Para lançar este dado uma vez, usamos <code>sample</code>:</p>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">dado</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 1</code></pre>
+<pre><code>## [1] 5</code></pre>
 </li>
 <li>
 <p>Para lançar o dado várias vezes:</p>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">dado</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 6 4 6 5 6 2</code></pre>
+<pre><code>## [1] 4 6 1 4 6 6</code></pre>
 </li>
 <li><p>Observe que, para permitir que o mesmo valor apareça mais de uma vez, precisamos usar <code>replace = TRUE</code> — a amostragem será feita com reposição.</p></li>
 <li>
@@ -435,7 +435,7 @@
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lancar2</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 8</code></pre>
+<pre><code>## [1] 4</code></pre>
 </li>
 <li>
 <p>Vamos generalizar a função:</p>
@@ -456,7 +456,7 @@
 <pre><code>## [1] 11</code></pre>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lancar</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">4</span>, k <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 21</code></pre>
+<pre><code>## [1] 23</code></pre>
 </li>
 </ul>
 </li>
@@ -478,7 +478,8 @@
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/qplot.html">qplot</a></span><span class="op">(</span><span class="va">resultados</span>, bins <span class="op">=</span> <span class="fl">11</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning: `qplot()` was deprecated in ggplot2 3.4.0.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <div class="inline-figure"><img src="_main_files/figure-html/qplot-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Em um <a href="viz.html#viz">capítulo sobre visualização</a>, você vai aprender a configurar melhor a aparência de gráficos como este.</p></li>
@@ -782,7 +783,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/07/2024)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -7,7 +7,7 @@
 <title>Capítulo 14 Covariância e correlação | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="14.1 Vídeo    14.2 Exemplo: altura e peso  Pessoas mais altas tendem a ser mais pesadas? Temos dados de \(80\) alunos e alunas, com alturas em cm e pesos em kg: ...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Capítulo 14 Covariância e correlação | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.9/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -99,7 +99,7 @@
 <ul>
 <li>
 <p>O gráfico de dispersão (<em>scatter plot</em>) é o ideal para visualizar a correlação entre duas variáveis numéricas:</p>
-<div class="sourceCode" id="cb851"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb857"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">altura</span>, <span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -118,7 +118,7 @@
 <ul>
 <li>
 <p>Vamos subtrair, de cada peso, a média dos pesos; vamos subtrair, de cada altura, a média das alturas.</p>
-<div class="sourceCode" id="cb852"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb858"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso_altura</span> <span class="op">&lt;-</span> <span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    altura_desvio <span class="op">=</span> <span class="va">altura</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">altura</span><span class="op">)</span>,</span>
@@ -127,7 +127,7 @@
 </li>
 <li>
 <p>O novo <em>scatter plot</em> tem a mesma forma. Só mudam as escalas: <span class="hl">a altura média e o peso médio agora são iguais a zero</span>.</p>
-<div class="sourceCode" id="cb853"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb859"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">altura_desvio</span>, <span class="va">peso_desvio</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -140,7 +140,7 @@
 <li><p>Quando o desvio da altura e o desvio do peso têm o <span class="hl">mesmo sinal</span>, os valores têm uma <span class="hl">associação positiva</span>: ou altura e peso estão ambos acima da média, ou ambos abaixo da média.</p></li>
 <li>
 <p>Colorindo os pontos de acordo com a associação:</p>
-<div class="sourceCode" id="cb854"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb860"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">altura_desvio</span>, <span class="va">peso_desvio</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
@@ -193,7 +193,7 @@ E[(\text{altura} - E(\text{altura})) \cdot (\text{peso} - E(\text{peso}))]
 <li><p><span class="hl">O R usa <span class="math inline">\(n - 1\)</span> no denominador,</span> em vez de <span class="math inline">\(n\)</span>. Isto significa que o R calcula a <span class="hl">covariância amostral</span>, que serve como um estimador da covariância populacional.</p></li>
 <li>
 <p>Calculando:</p>
-<div class="sourceCode" id="cb855"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb861"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>produto <span class="op">=</span> <span class="va">altura_desvio</span> <span class="op">*</span> <span class="va">peso_desvio</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>cov <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">produto</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -205,7 +205,7 @@ E[(\text{altura} - E(\text{altura})) \cdot (\text{peso} - E(\text{peso}))]
 <h3>
 <span class="header-section-number">14.4.1</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-18"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb857"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb863"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span><span class="op">(</span><span class="va">peso_altura</span><span class="op">$</span><span class="va">altura</span>, <span class="va">peso_altura</span><span class="op">$</span><span class="va">peso</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 73,8935</code></pre>
 </div>
@@ -217,7 +217,7 @@ E[(\text{altura} - E(\text{altura})) \cdot (\text{peso} - E(\text{peso}))]
 <li><p>Qual é a unidade da covariância? Examine as fórmulas acima para responder.</p></li>
 <li>
 <p><span id="excov"></span> Execute o bloco abaixo com diversos valores de <code>k</code>, inclusive valores negativos.</p>
-<div class="sourceCode" id="cb859"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb865"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
@@ -267,7 +267,7 @@ E[(\text{altura} - E(\text{altura})) \cdot (\text{peso} - E(\text{peso}))]
 <ul>
 <li>
 <p>Vamos <span class="hl">padronizar</span> as alturas e pesos (i.e., <span class="hl">subtrair a média e dividir pelo desvio-padrão</span>):</p>
-<div class="sourceCode" id="cb860"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb866"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso_altura</span> <span class="op">&lt;-</span> <span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    altura_padronizada <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">altura</span><span class="op">)</span>,</span>
@@ -276,7 +276,7 @@ E[(\text{altura} - E(\text{altura})) \cdot (\text{peso} - E(\text{peso}))]
 </li>
 <li>
 <p>E construir o <em>scatter plot</em>:</p>
-<div class="sourceCode" id="cb861"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb867"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">peso_altura</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">altura_padronizada</span>, <span class="va">peso_padronizado</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span></span>
@@ -296,7 +296,8 @@ E[(\text{altura} - E(\text{altura})) \cdot (\text{peso} - E(\text{peso}))]
 <pre><code>## Warning: Using one column matrices in `filter()` was deprecated in dplyr 1.1.0.
 ## ℹ Please use one dimensional logical vectors instead.
 ## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-407-1.png" width="100%" style="display: block; margin: auto;"></div>
 </li>
 <li>
@@ -311,7 +312,7 @@ Z_P = \frac{\text{peso} - E(\text{peso})}{DP(\text{peso})}
 </li>
 <li>
 <p>A covariância entre elas é</p>
-<div class="sourceCode" id="cb863"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb869"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span><span class="op">(</span><span class="va">peso_altura</span><span class="op">$</span><span class="va">peso_padronizado</span>, <span class="va">peso_altura</span><span class="op">$</span><span class="va">altura_padronizada</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##           [,1]
 ## [1,] 0,6440311</code></pre>
@@ -345,7 +346,7 @@ r = \frac{
 <h3>
 <span class="header-section-number">14.5.1</span> Em R<a class="anchor" aria-label="anchor" href="#em-r-19"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb865"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb871"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">peso_altura</span><span class="op">$</span><span class="va">peso</span>, <span class="va">peso_altura</span><span class="op">$</span><span class="va">altura</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,6440311</code></pre>
 </div>
@@ -357,7 +358,7 @@ r = \frac{
 <li><p>Qual a unidade do coeficiente de correlação?</p></li>
 <li>
 <p>Execute o bloco abaixo com diversos valores de <code>k</code>, inclusive valores negativos.</p>
-<div class="sourceCode" id="cb867"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb873"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">k</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span></span>
@@ -402,14 +403,14 @@ r = \frac{
 <ul>
 <li>
 <p><a href="https://pt.wikipedia.org/wiki/Quarteto_de_Anscombe">Exemplos de Anscombe</a>, com <span class="math inline">\(4\)</span> conjuntos de dados com <span class="hl">o mesmo valor de <span class="math inline">\(r\)</span></span> mas com associações <span class="hl">muito diferentes</span> entre as variáveis:</p>
-<div class="sourceCode" id="cb868"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb874"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">anscombe</span></span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["x1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["x2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["x3"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["x4"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["y1"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["y2"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["y3"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["y4"],"name":[8],"type":["dbl"],"align":["right"]}],"data":[{"1":"10","2":"10","3":"10","4":"8","5":"8,04","6":"9,14","7":"7,46","8":"6,58"},{"1":"8","2":"8","3":"8","4":"8","5":"6,95","6":"8,14","7":"6,77","8":"5,76"},{"1":"13","2":"13","3":"13","4":"8","5":"7,58","6":"8,74","7":"12,74","8":"7,71"},{"1":"9","2":"9","3":"9","4":"8","5":"8,81","6":"8,77","7":"7,11","8":"8,84"},{"1":"11","2":"11","3":"11","4":"8","5":"8,33","6":"9,26","7":"7,81","8":"8,47"},{"1":"14","2":"14","3":"14","4":"8","5":"9,96","6":"8,10","7":"8,84","8":"7,04"},{"1":"6","2":"6","3":"6","4":"8","5":"7,24","6":"6,13","7":"6,08","8":"5,25"},{"1":"4","2":"4","3":"4","4":"19","5":"4,26","6":"3,10","7":"5,39","8":"12,50"},{"1":"12","2":"12","3":"12","4":"8","5":"10,84","6":"9,13","7":"8,15","8":"5,56"},{"1":"7","2":"7","3":"7","4":"8","5":"4,82","6":"7,26","7":"6,42","8":"7,91"},{"1":"5","2":"5","3":"5","4":"8","5":"5,68","6":"4,74","7":"5,73","8":"6,89"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
-<div class="sourceCode" id="cb869"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb875"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">desenhar</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
 <span>  <span class="va">nomex</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">'x'</span>, <span class="va">n</span><span class="op">)</span></span>
@@ -446,7 +447,7 @@ r = \frac{
 <ul>
 <li>
 <p>Dados coletados em Oldenburg, na Alemanha, nos anos <span class="math inline">\(1930\)</span>, mostrando a correlação entre a quantidade de cegonhas e a população (de pessoas) na cidade:</p>
-<div class="sourceCode" id="cb870"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb876"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">'data/Storks.csv'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/transmute.html">transmute</a></span><span class="op">(</span></span>
 <span>    cegonhas <span class="op">=</span> <span class="va">Storks</span>,</span>
@@ -488,7 +489,7 @@ r = \frac{
 </li>
 <li>
 <p>Gráfico:</p>
-<div class="sourceCode" id="cb871"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb877"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">PIB</span>, <span class="va">emissões</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -506,14 +507,14 @@ r = \frac{
 </li>
 <li>
 <p>O coeficiente de correlação <span class="hl">amostral</span> é</p>
-<div class="sourceCode" id="cb872"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb878"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PIB</span>, <span class="va">df</span><span class="op">$</span><span class="va">emissões</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,9115924</code></pre>
 </li>
 <li><p>Como esta é uma amostra, devemos calcular um intervalo de confiança para o coeficiente de correlação <span class="hl">populacional</span>.</p></li>
 <li>
 <p>O R faz isto com a função <code>cor.test</code>:</p>
-<div class="sourceCode" id="cb874"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb880"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">PIB</span>, <span class="va">df</span><span class="op">$</span><span class="va">emissões</span><span class="op">)</span></span>
 <span><span class="va">ct</span></span></code></pre></div>
 <pre><code>## 
@@ -569,7 +570,7 @@ r = \frac{
 </li>
 <li>
 <p>Gráfico:</p>
-<div class="sourceCode" id="cb876"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb882"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">velocidade</span>, <span class="va">abertura</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -577,17 +578,17 @@ r = \frac{
 </li>
 <li>
 <p>Coeficiente de correlação:</p>
-<div class="sourceCode" id="cb877"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb883"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">velocidade</span>, <span class="va">df</span><span class="op">$</span><span class="va">abertura</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,978669</code></pre>
 </li>
 <li><p>Este já é um coeficiente de correlação alto, mas o gráfico mostra que também existe uma associação <span class="hl">não-linear</span> entre as variáveis.</p></li>
 <li>
 <p>Vamos transformar os valores de uma das variáveis para tornar a correlação mais linear (menos curva):</p>
-<div class="sourceCode" id="cb879"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb885"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>quad_abertura <span class="op">=</span> <span class="va">abertura</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb880"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb886"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">velocidade</span>, <span class="va">quad_abertura</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -596,7 +597,7 @@ r = \frac{
 </li>
 <li>
 <p>A correlação linear agora é</p>
-<div class="sourceCode" id="cb881"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb887"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">velocidade</span>, <span class="va">df</span><span class="op">$</span><span class="va">quad_abertura</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,9983046</code></pre>
 </li>
@@ -637,7 +638,7 @@ r = \frac{
 </li>
 <li>
 <p>Gráfico:</p>
-<div class="sourceCode" id="cb883"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb889"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">planetas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">posição</span>, <span class="va">distância</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -649,16 +650,16 @@ r = \frac{
 </li>
 <li>
 <p>Coeficiente de correlação:</p>
-<div class="sourceCode" id="cb884"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb890"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">planetas</span><span class="op">$</span><span class="va">posição</span>, <span class="va">planetas</span><span class="op">$</span><span class="va">distância</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,9102565</code></pre>
 </li>
 <li>
 <p>Vamos transformar os valores das distâncias usando <span class="math inline">\(\log\)</span>:</p>
-<div class="sourceCode" id="cb886"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb892"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">planetas</span> <span class="op">&lt;-</span> <span class="va">planetas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ldist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">distância</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb887"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb893"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">planetas</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">posição</span>, <span class="va">ldist</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -670,7 +671,7 @@ r = \frac{
 </li>
 <li>
 <p>A correlação se torna</p>
-<div class="sourceCode" id="cb888"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb894"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">planetas</span><span class="op">$</span><span class="va">posição</span>, <span class="va">planetas</span><span class="op">$</span><span class="va">ldist</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,990712</code></pre>
 </li>
@@ -913,7 +914,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/07/2024)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

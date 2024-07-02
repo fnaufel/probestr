@@ -7,7 +7,7 @@
 <title>Capítulo 8 Variáveis aleatórias | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="8.1 Vídeo    8.2 O que é uma variável aleatória? Uma variável aleatória é uma maneira de associar a cada resultado do espaço amostral um número real. Dependendo do conjunto de números, a variável...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Capítulo 8 Variáveis aleatórias | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.9/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -606,7 +606,7 @@
 </li>
 <li>
 <p>Suponha que a distribuição de probabilidade de <span class="math inline">\(X\)</span> esteja na seguinte <em>tibble</em>:</p>
-<div class="sourceCode" id="cb562"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb560"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">dados_distr</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Rows: 11
 ## Columns: 3
@@ -618,7 +618,7 @@
 <li>
 <p>Qual a probabilidade de conseguir <span class="hl"><span class="math inline">\(10\)</span> ou mais</span>?</p>
 <p>Basta somar as probabilidades de <span class="math inline">\(X=10\)</span>, <span class="math inline">\(X=11\)</span> e <span class="math inline">\(X=12\)</span>:</p>
-<div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb562"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">10</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -627,7 +627,7 @@
 </li>
 <li>
 <p>Qual a probabilidade de conseguir entre <span class="math inline">\(6\)</span> e <span class="math inline">\(8\)</span>, inclusive?</p>
-<div class="sourceCode" id="cb566"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">6</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;=</span> <span class="fl">8</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -646,7 +646,7 @@
 <li><p>Segundo o <a href="https://pdf4pro.com/view/levantamento-do-perfil-antropom-201-trico-10652c.html">Levantamento do Perfil Antropométrico da População Brasileira Usuária do Transporte Aéreo Nacional</a>, em <span class="math inline">\(2009\)</span>, a estatura média do homem brasileiro adulto era de <span class="math inline">\(1{,}73\)</span>m, com desvio-padrão de <span class="math inline">\(0{,}07\)</span>m.</p></li>
 <li>
 <p>Vamos simular uma amostra de muitos homens desta população:</p>
-<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb566"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">media</span> <span class="op">&lt;-</span> <span class="fl">1.73</span></span>
 <span><span class="va">desvio</span> <span class="op">&lt;-</span> <span class="fl">0.07</span></span>
 <span><span class="va">homens</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
@@ -655,7 +655,7 @@
 </li>
 <li>
 <p>Eis um histograma com as <span class="hl">percentagens</span>:</p>
-<div class="sourceCode" id="cb569"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb567"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">homens_plot</span> <span class="op">&lt;-</span> <span class="va">homens</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">altura</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span></span>
@@ -674,7 +674,7 @@
 </li>
 <li>
 <p>Agora, <span class="hl">sobrepomos o gráfico de uma distribuição normal</span> com a mesma média e o mesmo desvio-padrão que a distribuição das alturas:</p>
-<div class="sourceCode" id="cb570"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">homens_normal</span> <span class="op">&lt;-</span> <span class="va">homens_plot</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_function.html">stat_function</a></span><span class="op">(</span></span>
 <span>    fun <span class="op">=</span> <span class="va">dnorm</span>, </span>
@@ -708,13 +708,13 @@
 <ul>
 <li>
 <p>Na amostra:</p>
-<div class="sourceCode" id="cb571"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb569"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span> <span class="op">&gt;</span> <span class="fl">1.80</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,15931</code></pre>
 </li>
 <li>
 <p>Na distribuição teórica:</p>
-<div class="sourceCode" id="cb573"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb571"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.80</span>, mean <span class="op">=</span> <span class="va">media</span>, sd <span class="op">=</span> <span class="va">desvio</span>, lower.tail <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,1586553</code></pre>
 </li>
@@ -729,13 +729,13 @@
 <ul>
 <li>
 <p>Na amostra:</p>
-<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb573"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span> <span class="op">&gt;</span> <span class="fl">1.60</span> <span class="op">&amp;</span> <span class="va">homens</span><span class="op">$</span><span class="va">altura</span> <span class="op">&lt;</span> <span class="fl">1.70</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,30314</code></pre>
 </li>
 <li>
 <p>Na distribuição teórica:</p>
-<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.70</span>, mean <span class="op">=</span> <span class="va">media</span>, sd <span class="op">=</span> <span class="va">desvio</span><span class="op">)</span> <span class="op">-</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span><span class="op">(</span><span class="fl">1.60</span>, mean <span class="op">=</span> <span class="va">media</span>, sd <span class="op">=</span> <span class="va">desvio</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,3024722</code></pre>
@@ -775,7 +775,7 @@
 <ul>
 <li>
 <p>Lembrando que a <em>tibble</em> <code>dados_distr</code> contém a distribuição de probabilidades do valor da soma de dois dados, o valor esperado é</p>
-<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>E <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span> <span class="op">*</span> <span class="va">num</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">E</span><span class="op">)</span></span></code></pre></div>
@@ -790,7 +790,7 @@
 <ul>
 <li>
 <p>O valor esperado do valor obtido em um lançamento de um dado não-viciado (onde cada valor tem a probabilidade <span class="math inline">\(1/6\)</span>) é</p>
-<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lado</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">lado</span> <span class="op">*</span> <span class="va">p</span><span class="op">)</span></span></code></pre></div>
@@ -805,7 +805,7 @@
 <ul>
 <li>
 <p>Estimamos o valor esperado da população simplesmente calculando a média da amostra:</p>
-<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1,730068</code></pre>
 </li>
@@ -907,7 +907,7 @@ E(f(X)) = \int_{-\infty}^{+\infty} f(x) \cdot \text{fdp}(x) \text{d}x
 <ul>
 <li>
 <p>A variância é</p>
-<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dados_distr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>s2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fl">7</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">num</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">s2</span><span class="op">)</span></span></code></pre></div>
@@ -922,7 +922,7 @@ E(f(X)) = \int_{-\infty}^{+\infty} f(x) \cdot \text{fdp}(x) \text{d}x
 <ul>
 <li>
 <p>A variância é</p>
-<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lado</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">lado</span> <span class="op">-</span> <span class="fl">3.5</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">p</span><span class="op">)</span></span></code></pre></div>
@@ -937,7 +937,7 @@ E(f(X)) = \int_{-\infty}^{+\infty} f(x) \cdot \text{fdp}(x) \text{d}x
 <ul>
 <li>
 <p>Estimando pela variância da amostra:</p>
-<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">homens</span><span class="op">$</span><span class="va">altura</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,00490808</code></pre>
 </li>
@@ -1101,11 +1101,11 @@ E(X)
 <li><p>Isto vai dar um desvio-padrão <span class="math inline">\(\sigma = \sqrt{\sigma^2} = \frac{\sqrt{3}}{3} \approx 0{,}58\)</span>.</p></li>
 <li>
 <p>Mas R tem este gerador! Vamos gerar muitos valores e calcular a média e o desvio-padrão:</p>
-<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valores</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1e6</span>, min <span class="op">=</span> <span class="fl">1</span>, max <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 1,999971</code></pre>
-<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">valores</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,5772607</code></pre>
 </li>
@@ -1354,7 +1354,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/07/2024)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,0 +1,44 @@
+
+/* Links in main text (not navigation) */
+main a {
+  text-decoration: underline;
+}
+
+/* Source code */
+/*
+
++ bs4book has code with negative side margins! Make them smaller
+
++ Also, add border and rounded corners
+
+*/
+pre.sourceCode {
+  margin: 0 -.5rem 1rem -.5rem;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+}
+
+/* Fix bottom margin in output blocks (book) */
+div.sourceCode + pre {
+  margin-bottom: 40px;
+}
+
+
+/* Fix padding of call out boxes to fit icon */
+
+.rmdnote, .rmdcaution, .rmdimportant, .rmdtip, .rmdwarning {
+  padding: 1rem 1rem 1rem 5rem;
+  border-radius: 10px;
+  background-color: #fcfcfc;
+  background-position: 1rem 50%;
+  background-repeat: no-repeat;
+}
+
+.rmdnote > *:last-child,
+.rmdcaution > *:last-child,
+.rmdimportant > *:last-child,
+.rmdtip > *:last-child,
+.rmdwarning > *:last-child {
+  padding-bottom: 0;
+}
+

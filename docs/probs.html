@@ -7,7 +7,7 @@
 <title>Capítulo 7 Probabilidades | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="7.1 Vídeo 1    7.2 Espaço amostral Para falar em probabilidades, precisamos falar de experimentos, resultados, espaços amostrais, e eventos. Um experimento probabilístico é um experimento cujo...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Capítulo 7 Probabilidades | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.9/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -265,6 +265,7 @@ P(A) = \frac{\text{Qtde de ocorrências de } A}{\text{Qtde total de repetições
 <li>
 <p>A <a href="https://pt.wikipedia.org/wiki/Lei_dos_grandes_n%C3%BAmeros"><span class="hl">lei dos grandes números</span></a> é um resultado matemático que diz, essencialmente, que, <span class="hl">quando o número <span class="math inline">\(n\)</span> de repetições de um experimento tende a infinito, a frequência relativa de um evento tende à sua probabilidade real</span>.</p>
 <div class="rmdcaution">
+<p><strong>A falácia do jogador</strong></p>
 <p>Um <span class="hl">erro comum</span> é achar que, se houve poucas caras nos lançamentos mais recentes, então a probabilidade de o resultado ser cara no próximo lançamento é maior, para que a proporção de caras fique mais perto de <span class="math inline">\(0{,}5\)</span>.</p>
 <p>A lei dos grandes números fala sobre os resultados do experimento quando <span class="math inline">\(n\)</span> tende ao infinito, <span class="hl">não no futuro próximo</span>.</p>
 <p>Em lançamentos <span class="hl">independentes</span> de uma moeda <span class="hl">não-viciada</span>, a probabilidade de cara <span class="hl">sempre</span> é <span class="math inline">\(0{,}5\)</span>.</p>
@@ -512,14 +513,14 @@ P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
 </li>
 <li>
 <p>O que dá</p>
-<div class="sourceCode" id="cb503"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb501"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pn</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op">(</span><span class="op">(</span><span class="fl">364</span><span class="op">:</span><span class="fl">341</span><span class="op">)</span><span class="op">/</span><span class="fl">365</span><span class="op">)</span></span>
 <span><span class="va">pn</span></span></code></pre></div>
 <pre><code>## [1] 0,4313003</code></pre>
 </li>
 <li>
 <p>Então, <span class="math inline">\(P(I)\)</span> é</p>
-<div class="sourceCode" id="cb505"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb503"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="va">pn</span></span></code></pre></div>
 <pre><code>## [1] 0,5686997</code></pre>
 </li>
@@ -533,7 +534,7 @@ P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
 <ul>
 <li>
 <p>Vamos simular milhares de salas com <span class="math inline">\(25\)</span> pessoas satisfazendo as <a href="#premissas">premissas</a> e ver em quantas delas há coincidência de aniversários. Examine o código abaixo:</p>
-<div class="sourceCode" id="cb507"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb505"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
 <span><span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">25</span></span>
 <span></span>
@@ -568,7 +569,7 @@ P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">simular</span><span class="op">(</span><span class="va">npessoas</span>, <span class="va">nsalas</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 0,5682</code></pre>
+<pre><code>## [1] 0,5712</code></pre>
 </li>
 </ul>
 </div>
@@ -582,7 +583,7 @@ P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
 <ul>
 <li>
 <p>Vamos calcular as probabilidades de coincidência para diferentes quantidades <span class="math inline">\(n\)</span> de pessoas na sala e fazer um gráfico:</p>
-<div class="sourceCode" id="cb509"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb507"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
@@ -619,7 +620,7 @@ P(N) = \frac{364}{365} \cdot \frac{363}{365} \cdot \cdots \cdot
 Resposta
 </button>
 <p>Os valores <em>default</em> dos argumentos resolvem este problema:</p>
-<div class="sourceCode" id="cb510"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb508"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/birthday.html">qbirthday</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 23</code></pre>
 </div>
@@ -630,7 +631,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb512"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb510"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/birthday.html">qbirthday</a></span><span class="op">(</span><span class="fl">.9</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 41</code></pre>
 </div>
@@ -641,7 +642,7 @@ Resposta
 <button>
 Resposta
 </button>
-<div class="sourceCode" id="cb514"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb512"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/birthday.html">qbirthday</a></span><span class="op">(</span>coincident <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 313</code></pre>
 </div>
@@ -653,7 +654,7 @@ Resposta
 <div id="simulação-1" class="section level4 unnumbered">
 <h4>Simulação<a class="anchor" aria-label="anchor" href="#simula%C3%A7%C3%A3o-1"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb516"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb514"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e3</span></span>
 <span><span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span></span>
 <span></span>
@@ -692,7 +693,7 @@ Resposta
 <li><p>A função <code>sample</code> <span class="hl">normaliza</span> automaticamente estes pesos.</p></li>
 <li>
 <p>Normalizar significa dividir todos os valores pela mesma constante, de forma que a soma seja <span class="math inline">\(1\)</span>.</p>
-<div class="sourceCode" id="cb517"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e3</span></span>
 <span><span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span></span>
 <span></span>
@@ -793,7 +794,7 @@ Resposta
 <li><p><span class="math inline">\(15\)</span> semanas são <span class="math inline">\(105\)</span> dias.</p></li>
 <li>
 <p>O restante do ano tem <span class="math inline">\(260\)</span> dias.</p>
-<div class="sourceCode" id="cb518"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb516"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nsalas</span> <span class="op">&lt;-</span> <span class="fl">1e4</span></span>
 <span><span class="va">npessoas</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">:</span><span class="fl">50</span></span>
 <span></span>
@@ -897,7 +898,7 @@ Resposta
 <li><p>O resultado é aproximadamente <span class="math inline">\(0{,}49\)</span>.</p></li>
 <li>
 <p>Criando as cartas:</p>
-<div class="sourceCode" id="cb519"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb517"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">baralho</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/expand_grid.html">expand_grid</a></span><span class="op">(</span></span>
 <span>  numero <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span><span class="op">:</span><span class="fl">10</span>, <span class="st">'J'</span>, <span class="st">'Q'</span>, <span class="st">'K'</span>, <span class="st">'A'</span><span class="op">)</span>,</span>
 <span>  naipe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'♥'</span>, <span class="st">'♦'</span>, <span class="st">'♣'</span>, <span class="st">'♠'</span><span class="op">)</span></span>
@@ -907,14 +908,14 @@ Resposta
 </li>
 <li>
 <p>Função para gerar uma mão:</p>
-<div class="sourceCode" id="cb520"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb518"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mao</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">baralho</span>, size <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 </li>
 <li>
 <p>Testar se a mão tem (pelo menos) um ás:</p>
-<div class="sourceCode" id="cb521"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb519"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tem_as</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/any.html">any</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'A'</span><span class="op">)</span><span class="op">)</span></span>
@@ -923,7 +924,7 @@ Resposta
 </li>
 <li>
 <p>Simulação:</p>
-<div class="sourceCode" id="cb522"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb520"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nsim</span> <span class="op">&lt;-</span> <span class="fl">1e6</span></span>
 <span><span class="va">maos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/rerun.html">rerun</a></span><span class="op">(</span><span class="va">nsim</span>, <span class="fu">mao</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## Warning: `rerun()` was deprecated in purrr 1.0.0.
@@ -935,7 +936,7 @@ Resposta
 ##   map(1:1000000, ~ mao())
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb522"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_as</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,488336</code></pre>
 </li>
@@ -961,7 +962,7 @@ Resposta
 <li><p>Uma probabilidade de pouco mais de <span class="hl">um décimo de milésimo</span>.</p></li>
 <li>
 <p>Testar se a mão tem <span class="math inline">\(4\)</span> ases:</p>
-<div class="sourceCode" id="cb526"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tem_4_ases</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html">str_starts</a></span><span class="op">(</span><span class="va">mao</span>, <span class="st">'A'</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="fl">4</span></span>
@@ -970,7 +971,7 @@ Resposta
 </li>
 <li>
 <p>Simular (usando as mesmas mãos geradas na resposta anterior):</p>
-<div class="sourceCode" id="cb527"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb525"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_4_ases</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,000145</code></pre>
 </li>
@@ -997,7 +998,7 @@ Resposta
 </li>
 <li>
 <p>Testar se a mão tem sequência:</p>
-<div class="sourceCode" id="cb529"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb527"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tem_seq</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span>, <span class="fl">1</span>, <span class="st">'J'</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html">str_sub</a></span><span class="op">(</span><span class="va">mao</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">||</span></span>
@@ -1009,7 +1010,7 @@ Resposta
 </li>
 <li>
 <p>Simular (usando as mesmas mãos geradas na primeira resposta):</p>
-<div class="sourceCode" id="cb530"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_seq</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,020388</code></pre>
 </li>
@@ -1036,7 +1037,7 @@ Resposta
 <li><p><span class="hl">É mais improvável obter uma sequência do mesmo naipe do que obter <span class="math inline">\(4\)</span> ases.</span></p></li>
 <li>
 <p>Testar se a mão tem sequência do mesmo naipe:</p>
-<div class="sourceCode" id="cb532"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb530"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tem_seq_naipe</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
 <span>  <span class="fu">tem_seq</span><span class="op">(</span><span class="va">mao</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="op">(</span></span>
@@ -1050,7 +1051,7 @@ Resposta
 </li>
 <li>
 <p>Simular:</p>
-<div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb531"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map_lgl</a></span><span class="op">(</span><span class="va">maos</span>, <span class="va">tem_seq_naipe</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0,000061</code></pre>
 </li>
@@ -1135,7 +1136,7 @@ P(\text{tripulante}) =
 </li>
 <li>
 <p>A tabela está na variável <code>tit_tab</code>. Em R, podemos indexar uma tabela pelos nomes. O primeiro índice corresponde à linha, o segundo à coluna:</p>
-<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb534"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ptrip</span> <span class="op">&lt;-</span> </span>
 <span>  <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Tripulação'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></span>
 <span></span>
@@ -1161,7 +1162,7 @@ P(\text{não-tripulante}) =
 </li>
 <li>
 <p>Em R, podemos selecionar várias células de uma tabela; basta usar um vetor como índice:</p>
-<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb536"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ntrip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'1'</span>, <span class="st">'2'</span>, <span class="st">'3'</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ntrip</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
@@ -1172,7 +1173,7 @@ P(\text{não-tripulante}) =
 <p><span class="math display">\[
 P(\text{não-tripulante}) = 1 - P(\text{tripulante})
 \]</span></p>
-<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb538"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="va">ptrip</span></span></code></pre></div>
 <pre><code>## [1] 0,59791</code></pre>
 </li>
@@ -1192,7 +1193,7 @@ P(\text{sobrevivente}) =
 {711}
 {2.201}
 \]</span></p>
-<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'Total'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,323035</code></pre>
 </li>
@@ -1212,7 +1213,7 @@ P(\text{1ª classe}) =
 {325}
 {2.201}
 \]</span></p>
-<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,1476602</code></pre>
 </li>
@@ -1233,7 +1234,7 @@ P(\text{sobrevivente da 1ª classe}) =
 {203}
 {2.201}
 \]</span></p>
-<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,0922308</code></pre>
 </li>
@@ -1260,7 +1261,7 @@ P(\text{sobrevivente } \mid \text{ 1ª classe}) =
 {203}
 {325}
 \]</span></p>
-<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'1'</span><span class="op">]</span> </span></code></pre></div>
 <pre><code>## [1] 0,6246154</code></pre>
 </li>
@@ -1317,7 +1318,7 @@ P(\text{1ª classe } \mid \text{ sobreviveu}) =
 {203}
 {711}
 \]</span></p>
-<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,2855134</code></pre>
 <div class="rmdimportant">
@@ -1445,7 +1446,7 @@ P(B \mid A) = P(B)
 P(\text{sobreviver} \mid \text{1ª classe}) =
 \frac{203}{325}
 \]</span></p>
-<div class="sourceCode" id="cb552"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'1'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'1'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,6246154</code></pre>
 </li>
@@ -1454,7 +1455,7 @@ P(\text{sobreviver} \mid \text{1ª classe}) =
 <p><span class="math display">\[
 P(\text{sobreviver}) = \frac{711}{2.201}
 \]</span></p>
-<div class="sourceCode" id="cb554"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb552"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tit_tab</span><span class="op">[</span><span class="st">'Sim'</span>, <span class="st">'Total'</span><span class="op">]</span> <span class="op">/</span> <span class="va">tit_tab</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,323035</code></pre>
 </li>
@@ -1476,7 +1477,7 @@ P(\text{sobreviver}) = \frac{711}{2.201}
 </li>
 <li>
 <p>Vamos construir uma tabela:</p>
-<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb554"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">faltas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/array.html">array</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">72</span>, <span class="fl">24</span><span class="op">)</span>,</span>
 <span>  dim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
@@ -1502,7 +1503,7 @@ P(\text{Faltou}) =
 \frac{4}
 {100}
 \]</span></p>
-<div class="sourceCode" id="cb558"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">faltas</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Faltou'</span><span class="op">]</span> <span class="op">/</span> <span class="va">faltas</span><span class="op">[</span><span class="st">'Total'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,04</code></pre>
 </li>
@@ -1513,7 +1514,7 @@ P(\text{Faltou} \mid \text{Diurno}) =
 \frac{3}
 {75}
 \]</span></p>
-<div class="sourceCode" id="cb560"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb558"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">faltas</span><span class="op">[</span><span class="st">'Diurno'</span>, <span class="st">'Faltou'</span><span class="op">]</span> <span class="op">/</span> <span class="va">faltas</span><span class="op">[</span><span class="st">'Diurno'</span>, <span class="st">'Total'</span><span class="op">]</span></span></code></pre></div>
 <pre><code>## [1] 0,04</code></pre>
 </li>
@@ -2000,7 +2001,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/07/2024)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

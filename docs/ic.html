@@ -7,7 +7,7 @@
 <title>Capítulo 12 Intervalos de confiança | Probabilidade e Estatística com R</title>
 <meta name="author" content="Fernando Náufel">
 <meta name="description" content="12.1 Vídeo 1    12.2 Intervalos de confiança para a proporção  12.2.1 Exemplo: quem posta no FB diariamente?  Teoria Uma pesquisa com uma amostra aleatória de \(156\) jovens descobriu que \(48\)...">
-<meta name="generator" content="bookdown 0.36 with bs4_book()">
+<meta name="generator" content="bookdown 0.39 with bs4_book()">
 <meta property="og:title" content="Capítulo 12 Intervalos de confiança | Probabilidade e Estatística com R">
 <meta property="og:type" content="book">
 <meta property="og:image" content="/images/640px-Nightingale-mortality.jpg">
@@ -18,10 +18,10 @@
 <meta name="twitter:image" content="/images/640px-Nightingale-mortality.jpg">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.7/font.css" rel="stylesheet">
-<link href="libs/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="libs/Roboto-0.4.7/font.css" rel="stylesheet">
-<script src="libs/bs3compat-0.5.1/transition.js"></script><script src="libs/bs3compat-0.5.1/tabs.js"></script><script src="libs/bs3compat-0.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><link href="libs/Lexend-0.4.9/font.css" rel="stylesheet">
+<link href="libs/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="libs/Roboto-0.4.9/font.css" rel="stylesheet">
+<script src="libs/bs3compat-0.7.0/transition.js"></script><script src="libs/bs3compat-0.7.0/tabs.js"></script><script src="libs/bs3compat-0.7.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 <script src="html_files/alterar_detalhes.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><link rel="stylesheet" href="html_files/styles_all.css">
@@ -98,7 +98,7 @@
 <li><p>Uma pesquisa com uma amostra aleatória de <span class="math inline">\(156\)</span> jovens descobriu que <span class="math inline">\(48\)</span> deles postam no FB todo dia.</p></li>
 <li>
 <p>Qual a <span class="hl">proporção amostral</span> de jovens que postam no FB diariamente?</p>
-<div class="sourceCode" id="cb752"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_chapeu</span> <span class="op">&lt;-</span> <span class="fl">48</span><span class="op">/</span><span class="fl">156</span></span>
 <span><span class="va">p_chapeu</span></span></code></pre></div>
 <pre><code>## [1] 0,3076923</code></pre>
@@ -173,7 +173,7 @@ EP = \sqrt{\frac{\hat p(1-\hat p)}{n}}
 <li><p>Vamos simular uma população de <span class="math inline">\(200\)</span> mil valores booleanos: <code>FALSE</code> significa que a pessoa não posta no FB todo dia, <code>TRUE</code> significa que a pessoa posta no FB todo dia.</p></li>
 <li>
 <p>A proporção populacional <span class="math inline">\(p\)</span> que posta todo dia tem um valor específico, que não vou revelar aqui. Na vida real, você não vai saber o valor de <span class="math inline">\(p\)</span>.</p>
-<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">populacao</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span>, </span>
 <span>  <span class="fl">2e5</span>, </span>
@@ -183,13 +183,13 @@ EP = \sqrt{\frac{\hat p(1-\hat p)}{n}}
 </li>
 <li>
 <p>Vamos retirar uma amostra de <span class="math inline">\(156\)</span> pessoas:</p>
-<div class="sourceCode" id="cb755"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb761"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">156</span></span>
 <span><span class="va">amostra</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">populacao</span>, <span class="va">n</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Qual a proporção de pessoas que postam todo dia (<span class="math inline">\(\hat p\)</span>)?</p>
-<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb762"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_chapeu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">amostra</span><span class="op">)</span></span>
 <span><span class="va">p_chapeu</span></span></code></pre></div>
 <pre><code>## [1] 0,3012821</code></pre>
@@ -199,14 +199,14 @@ EP = \sqrt{\frac{\hat p(1-\hat p)}{n}}
 <ul>
 <li>
 <p>O erro-padrão é</p>
-<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb764"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ep</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">p_chapeu</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p_chapeu</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span><span class="op">)</span></span>
 <span><span class="va">ep</span></span></code></pre></div>
 <pre><code>## [1] 0,0367346</code></pre>
 </li>
 <li>
 <p>Para <span class="math inline">\(95\%\)</span>, precisamos usar <span class="math inline">\(1{,}96\)</span> como o número de desvios-padrão. A margem de erro será</p>
-<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">margem</span> <span class="op">&lt;-</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="va">ep</span></span>
 <span><span class="va">margem</span></span></code></pre></div>
 <pre><code>## [1] 0,07199981</code></pre>
@@ -223,7 +223,7 @@ EP = \sqrt{\frac{\hat p(1-\hat p)}{n}}
 <li><p>Na vida real, jamais saberíamos. Eu sei, porque fui eu que gerei a população, mas não vou falar ainda.</p></li>
 <li>
 <p>Vamos gerar mais <span class="math inline">\(50\)</span> amostras e examinar os intervalos de confiança calculados a partir delas. Como estamos trabalhando com <span class="math inline">\(95\%\)</span> de confiança, é razoável que <span class="math inline">\(2\)</span> ou <span class="math inline">\(3\)</span> dos intervalos — i.e., <span class="math inline">\(5\%\)</span> de <span class="math inline">\(50\)</span> — não capturem a proporção real:</p>
-<div class="sourceCode" id="cb763"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb769"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n_amostras</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
 <span></span>
 <span><span class="co"># Gero uma lista, cada elemento uma amostra (um vetor)</span></span>
@@ -307,7 +307,7 @@ EP = \sqrt{\frac{\hat p (1 - \hat p)}{n}}
 <ul>
 <li>
 <p>Calcular o valor crítico <span class="math inline">\(z^\star\)</span>: o valor tal que a área abaixo da curva normal padrão entre <span class="math inline">\(-z^\star\)</span> e <span class="math inline">\(z^\star\)</span> seja de <span class="math inline">\(c\)</span></p>
-<div class="sourceCode" id="cb765"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb771"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">z</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">qnorm</a></span><span class="op">(</span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">c</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li><p>No nosso exemplo, <code>z = -qnorm(0.025) = 1,96</code>.</p></li>
@@ -395,7 +395,7 @@ n = 0{,}5 \cdot 0{,}5 \cdot \left(\frac{1{,}96}{0{,}05}\right)^2 = 384{,}16
 <ul>
 <li>
 <p>Tudo isto já é feito pelo R base, com a função <code>binom.test</code>, embora o algoritmo seja um pouco diferente, como você pode ver pelos resultados:</p>
-<div class="sourceCode" id="cb766"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb772"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/binom.test.html">binom.test</a></span><span class="op">(</span><span class="fl">48</span>, <span class="fl">156</span><span class="op">)</span></span>
 <span><span class="va">bt</span></span></code></pre></div>
 <pre><code>## 
@@ -413,7 +413,7 @@ n = 0{,}5 \cdot 0{,}5 \cdot \left(\frac{1{,}96}{0{,}05}\right)^2 = 384{,}16
 <li><p>Esta função, além de computar o intervalo de confiança, faz um <em>teste de hipótese</em> (assunto de uma aula futura).</p></li>
 <li>
 <p>O valor de retorno desta função é uma lista:</p>
-<div class="sourceCode" id="cb768"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb774"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">bt</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## List of 9
 ##  $ statistic  : Named num 48
@@ -434,7 +434,7 @@ n = 0{,}5 \cdot 0{,}5 \cdot \left(\frac{1{,}96}{0{,}05}\right)^2 = 384{,}16
 </li>
 <li>
 <p>Se você quiser só o intervalo de confiança:</p>
-<div class="sourceCode" id="cb770"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb776"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bt</span><span class="op">$</span><span class="va">conf.int</span></span></code></pre></div>
 <pre><code>## [1] 0,2363644 0,3864933
 ## attr(,"conf.level")
@@ -449,7 +449,7 @@ n = 0{,}5 \cdot 0{,}5 \cdot \left(\frac{1{,}96}{0{,}05}\right)^2 = 384{,}16
 <li><p>Na verdade, existem muitos algoritmos diferentes para construir um intervalo de confiança para a proporção. <a href="https://www.ucl.ac.uk/english-usage/staff/sean/resources/binomialpoisson.pdf">Este artigo, de 2013</a>, examina diversas alternativas.</p></li>
 <li>
 <p>O pacote <code>binom</code> implementa vários destes algoritmos através da função <code>binom.confint</code>:</p>
-<div class="sourceCode" id="cb772"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">binom</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/binom/man/binom.confint.html">binom.confint</a></span><span class="op">(</span><span class="fl">48</span>, <span class="fl">156</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -780,12 +780,12 @@ EP \quad=\quad
 <li><p>Este teste pressupõe que você sabe o desvio-padrão populacional; esta situação é tão rara que o R base não tem uma função para isso. Na verdade, o teste z é usado principalmente para fins didáticos.</p></li>
 <li>
 <p>Vamos carregar um pacote que implementa o teste z:</p>
-<div class="sourceCode" id="cb773"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb779"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/alanarnholt/BSDA">BSDA</a></span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Esta função recebe o resumo (<em>summary</em>) da amostra e constrói o intervalo de confiança:</p>
-<div class="sourceCode" id="cb774"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb780"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://alanarnholt.github.io/BSDA/reference/zsum.test.html">zsum.test</a></span><span class="op">(</span>mean.x <span class="op">=</span> <span class="fl">5.41</span>, sigma.x <span class="op">=</span> <span class="fl">1.09</span>, n.x <span class="op">=</span> <span class="fl">48</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  One-sample z-Test
@@ -892,7 +892,7 @@ t^\star \cdot \frac{s}{\sqrt{n}} \quad=\quad
 <li><p>Este procedimento é chamado de <span class="hl">teste t.</span></p></li>
 <li>
 <p>No R base, use a função <code>t.test</code>, que também faz teste de hipóteses.</p>
-<div class="sourceCode" id="cb776"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb782"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">salmoes</span><span class="op">$</span><span class="va">mirex</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##  One Sample t-test
@@ -1170,7 +1170,7 @@ $(init_exercises)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 22/11/2023)</p>
+    <p>"<strong>Probabilidade e Estatística com R</strong>" por Fernando Náufel (versão de 02/07/2024)</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

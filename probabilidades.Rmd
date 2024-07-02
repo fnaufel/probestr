@@ -235,6 +235,8 @@ embed_yt('hJfyzRzEs44')
 
   ::: {.rmdcaution latex=1}
   
+  **A falácia do jogador**
+  
   Um [erro comum]{.hl} é achar que, se houve poucas caras nos lançamentos mais recentes, então a probabilidade de o resultado ser cara no próximo lançamento é maior, para que a proporção de caras fique mais perto de $0{,}5$.
   
   A lei dos grandes números fala sobre os resultados do experimento quando $n$ tende ao infinito, [não no futuro próximo]{.hl}.
